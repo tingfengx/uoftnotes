@@ -1,0 +1,147 @@
+% Meta data
+\documentclass[12pt]{book}
+\usepackage[utf8x]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{hyperref}
+
+% Environment, new commands
+\newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.$}
+
+
+\title{%
+  \textbf{MAT224 Linear Algebra}\\
+  \large Definitions, Lemmas, Theorems, Corollaries \\
+    and their related proofs}
+\author{Tingfeng Xia}
+\date{Winter 2019}
+
+\begin{document}
+\maketitle
+\newpage % make a new page for actual contents, possibly a content table
+\mbox{}
+\vfill
+© Copyright by Tingfeng Xia \\
+
+Materials in this booklet are based heavily on Prof. Nicolas Hoell's lectures as well as A COURSE IN LINEAR ALGEBRA by David B. Damiano and John B. Little\newline\newline
+The course website could be found here:\newline \url{http://www.math.toronto.edu/nhoell/MAT224/}
+\newpage
+\tableofcontents
+
+\chapter{Vector Spaces}
+\section{(Real) Vector Space}
+\settag{1.1.1}
+\begin{enumerate}
+    \item{\textbf{Definition of real vector space:}} A real vector space is a set $V$ together with scalar
+    \begin{enumerate}
+        \item \textbf{Closure under vector addition:} an operation called vector addition, which for each pair of vectors $\vec{x}, \vec{y}\in V$ produces another vector in $V$ denoted $\vec{x} + \vec{y}$, (i.e. $\forall \vec{x}, \vec{y}\in V, \vec{x} + \vec{y} \in V$) and
+        \item \textbf{Closure under scalar multiplication:} an operation called multiplication by a scalar (a real number), which for each vector $\vec{x}\in V$, an each scalar $c\in \mathbb{R}$ produces another vector in $V$ denoted $c\vec{x}$. (i.e. $\forall \vec{x}\in V, \forall c \in \mathbb{R}, c \vec{x} \in V$)
+    \end{enumerate}
+    Furthermore, the two operations must satisfy the following axioms:(important)
+    %\begin{enumerate}
+        %\item For all vectors \textbf{x, y}, and \textbf{z} $\in V$, %(\textbf{x}+\textbf{y})+\textbf{x} 
+    %\end{enumerate}
+    \begin{enumerate}
+        \item $\forall \vec{x}, \vec{y}, \vec{z} \in V, (\vec{x} + \vec{y}) + \vec{z} = \vec{x} + (\vec{y} + \vec{z})$
+        \item $\forall \vec{v}, \vec{y} \in V, \vec{x} + \vec{y} = \vec{y} + \vec{x}$
+        \item $\exists \vec{0} \in V s.t. \forall \vec{x} \in V, \vec{x} + \vec{0} = \vec{x}$ (Note that this property is a.k.a existence of additive identity)
+        \item $\forall \vec{x} \in V, \exists (-\vec{x}) \in V~s.t.~\vec{x} + (-\vec{x}) = \vec{0}$ (Note that this property is a.k.a existence of additive inverse)
+        \item $\forall \vec{x}, \vec{y} \in V, c \in \mathbb{R}, c(\vec{x} + \vec{y}) = c\vec{x} + c\vec{y}$
+        \item $\forall \vec{x} \in V, c,d \in \mathbb{R}, (c + d)\vec{x} = c\vec{x} + d\vec{x}$
+        \item $\forall \vec{x} \in V, c,d \in \mathbb{R}, (cd)\vec{x} = c(d\vec{x})$
+        \item $\forall \vec{x} \in V, 1\vec{x} = \vec{x}$
+    \end{enumerate}
+    \settag{1.1.6}
+    \item \textbf{Propositions for a R-v.s.} Let $V$ be a vector space. Then 
+    \begin{enumerate}
+        \item The zero vector is unique. Note that it might not necessarily be actually the zero vector in $\mathbb{R}^n$ that we are somewhat used to use.
+        \item $\forall \vec{x} \in V, 0\vec{x}=0$
+        \item $\forall \vec{x} \in V, $ the additive inverse is unique. Note that it might not necessarily be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use.
+        \item $\forall \vec{x} \in V,~\forall c\in \mathbb{R}, ~(-c)\vec{x}=~-(c\vec{x})$
+    \end{enumerate}
+\end{enumerate}
+
+\section{Sub-spaces}
+    \begin{enumerate}
+        \settag{1.2.4}
+        \item \textbf{Usual definition of subspace applied to functions in $C^0(\mathbb{R})$}. Note that by $C^n(\cdot)$ we mean the function in this set are all of $Class-n$. Let $f,g \in C^0(\mathbb{R)}, let c\in \mathbb{R}$. Then, 
+        \begin{enumerate}
+            \item $f+g\in C^0(\R)$, and
+            \item $cf \in C(\R)$
+        \end{enumerate}
+        The proof of this lemma relies on limit theorems of calculus.
+        
+        \settag{1.2.6}
+        \item \textbf{(Intuitive) definition of (vector) subspace} Let $V$ be a vector space and let $W\subseteq V$ be a subset. Then $W$ is a (vector) subspace if $W$ is a vector subspace itself under the operations of vector sum and scalar multiplication from $V$.
+        
+        \settag{1.2.8}
+        \item \textbf{Quick check rule for a subspace.} Let $V$ be a vector subspace, and let $W$ be a \textbf{non empty} subset of $V$. Then $W$ is a subspace of $V$ if and only if $\forall \vec{x}, \vec{y}\in W,~\forall c\in \R$, we have $c\vec{x}+\vec{y}\in W$.
+        \settag{1.2.9}
+        \item \textbf{Remark on the necessary condition of non-emptiness of subspace.} According to the definition of vector space that we gave in 1.1.1, a vector space must contain an additive identity element, hence it is necessary that we ensure $W\subseteq V$(from 1.2.6) is not an empty set.
+        
+        \settag{1.2.13}
+        \item \textbf{Theorem: Intersection of sub-spaces is a subspace.} Let $V$ be a vector space. Then the intersection of any collection of sub-spaces of $V$ is a subspace of $V$.
+        
+        \settag{1.2.14}
+        \item \textbf{Corollary: Hyper planes in $\R^n$ are sub-spaces of $\R^n$.} Let $a_{ij}(1\leq i\leq m)$, let $W_i = \{(x_1, ..., x_n)\in \R^n|a_{i1}x_1 + ... + a_{in}x_n = 0,~\forall 1 \leq i \leq m\}$. Then $W$ is a subspace of $\R^n$.
+        
+    \end{enumerate}
+    
+\section{Linear Combinations}
+    \begin{enumerate}
+        \settag{1.3.1}
+        \item \textbf{Definitions regarding L.C. and derived spans.} Let $S$ be a subset of a vector space $V$, that is $S\subseteq V$.
+        \begin{enumerate}
+            \item a \textit{linear combination} of vectors in $S$ is any sum $a_1\vec{x}_1 + ... + a_n\vec{x}_n$, where the $a_i \in \R$, and the $x_i \in S$.
+            \item we define the $Span$ of a set of vectors as follows to consider the special case of $S\stackrel{?}{=}\emptyset \in V$.
+            \textbf{Case1: $S\neq \emptyset$.} In this case, we define $Span(S)$ to be all possible linear combinations using vectors in $S$.
+            \textbf{Case2: $S= \emptyset$.} In this case, we define $Span(S = \emptyset)=\{\vec{0}\}$
+            
+            \item If $W=Span(S)$, we say $S$ \textit{spans(\text{or} generates)} $W$.
+        \end{enumerate}
+        
+        \settag{1.3.4}
+        \item \textbf{Span of a  subset of a vector space is a subspace.} Let $V$ be a vector space and let $S$ be any subset of $V$. Then $Span(S)$ is a subspace of $V$.
+        
+        \settag{1.3.5}
+        \item \textbf{Sum of sets(with application to subs-paces).} Let $W_1\wedge W_2$ be sub spaces of a vector space $V$. The sum of $W_1$ and $W_2$ is the set
+        \begin{center}
+            $W_1+W_2 :=\{\vec{x}\in V |\vec{x}=\vec{x_1}+\vec{x_2}, \text{for some } \vec{x_1}\in W_1, \vec{x_2} \in W_2\}$
+        \end{center}
+        We think of the sum of the two sub-spaces(the two sets) as the set of vectors that can be built up from the vectors in $W_1$ and $W_2$ by linear combinations. Conversely, the vectors in the set $W_1+W_2$ are precisely the vectors that can be broken down into the sum of a vector in $W_1$ and a vector in $W_2$. One may find it helpful to view this as a analogue to a Cartesian product of the two set with a new constraint on the result.
+        
+        \settag{1.3.8} 
+        \item \textbf{Proposition: The sum of spans of sets is the span of the union of the sets.} Let $W_1 = Span(S_1)$ and $W_2 = Span(S_2)$ be sub-spaces of a\textit{(the same)} vector space $V$. Then $W_1 + W_2 = Span(S_1 \cup S_2)$.
+        %TODO: Review the proof for this.
+        
+        \settag{1.3.9}
+        \item \textbf{The sum of sub-spaces is also a subspace.} Let $W_1$ and $W_2$ be sub-spaces of a vector space $V$. Then $W_1 + W_2$ is also a subspace of $V$.\newline
+        \textit{Proof:}\newline
+        It is clear that $W_1 + W_2$ is non-empty, since neither $W_1$ nor $W_2$ is empty. Let $\vec{X}, \vec{y}$ be two vectors in $W_1+W_2$, let $c\in \R$. By our choice of $\vec{x}\text{and } \vec{y}$, we have
+        \begin{align*}
+            c\vec{x} + \vec{y} & = c(\vec{x}_1 + \vec{x}_2) + (\vec{y_1} + \vec{y_2}) \\
+            & = (c\vec{x}_1 + \vec{y}_1) + (c\vec{x}_2 + \vec{y}_2) \in W_1+W_2
+        \end{align*}
+        Since $W_1$ and $W_2$ are sub-spaces of $V$, we have $(c\vec{x}_1 + \vec{y}_1) \in W_1\wedge (c\vec{x}_2 + \vec{y}_2)\in W_2$. Then by (1.2.8), we see that indeed $W_1 + W_2$ is a subspace of $V$. \qed
+        
+        \settag{1.3.10}
+        \item \textbf{Remark on?}
+        %TODO
+        
+        \settag{1.3.11}
+        \item \textbf{Proposition.} Let $W_1$ and $W_2$ be sub-spaces of vector space $V$ and let $W$ be a subspace of $V$ such that $W\supseteq W_1 \cup W_2$, then $W\supseteq W_1 + W_2$
+        
+        
+        
+    \end{enumerate}
+
+
+
+
+
+
+\end{document}
