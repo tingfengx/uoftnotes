@@ -1,5 +1,5 @@
 % Meta data
-\documentclass[12pt]{book}
+\documentclass[oneside, 12pt]{book}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsfonts}
@@ -10,8 +10,10 @@
 % Environment, new commands
 \newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
 \newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.$}
-
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
 
 \title{%
   \textbf{MAT224 Linear Algebra}\\
@@ -25,10 +27,11 @@
 \newpage % make a new page for actual contents, possibly a content table
 \mbox{}
 \vfill
-by Tingfeng (Steven) Xia \\
+by Tingfeng Xia \\
+
 
 Materials in this booklet are based heavily on Prof. Nicolas Hoell's lectures as well as A COURSE IN LINEAR ALGEBRA by David B. Damiano and John B. Little\newline\newline
-The course website could be found here:\newline \url{http://www.math.toronto.edu/nhoell/MAT224/}
+The course website could be found here:\newline \url{http://www.math.toronto.edu/nhoell/MAT224/}\newline
 \newpage
 \tableofcontents
 
@@ -98,8 +101,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{enumerate}
             \item a \textit{linear combination} of vectors in $S$ is any sum $a_1\vec{x}_1 + ... + a_n\vec{x}_n$, where the $a_i \in \R$, and the $x_i \in S$.
             \item we define the $Span$ of a set of vectors as follows to consider the special case of $S\stackrel{?}{=}\emptyset \in V$.
-            \textbf{Case1: $S\neq \emptyset$.} In this case, we define $Span(S)$ to be all possible linear combinations using vectors in $S$.
-            \textbf{Case2: $S= \emptyset$.} In this case, we define $Span(S = \emptyset)=\{\vec{0}\}$
+            \newline \underline{\tit{Case1: $S\neq \emptyset$:}} In this case, we define $Span(S)$ to be all possible linear combinations using vectors in $S$.\newline
+            \underline{\tit{Case2: $S= \emptyset$:}} In this case, we define $Span(S = \emptyset)=\{\vec{0}\}$
             
             \item If $W=Span(S)$, we say $S$ \textit{spans(\text{or} generates)} $W$.
         \end{enumerate}
@@ -132,10 +135,22 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         Since $W_1$ and $W_2$ are sub-spaces of $V$, we have $(c\vec{x}_1 + \vec{y}_1) \in W_1\wedge (c\vec{x}_2 + \vec{y}_2)\in W_2$. Then by (1.2.8), we see that indeed $W_1 + W_2$ is a subspace of $V$. \qed
         
         \settag{1.3.10}
-        \item \textbf{Remark.} In general =, if $W_1$ and $W_2$ are subspaces of $V$, then $W_1 \cup W_2$ will not be a subspace of $V$. For example, consider the two sub-spaces of $\R^2$ given in example (1.3.6). In that case $W_1\cup W_2$ is the union of two lines through the origin in $\R^2$. 
+        \item \textbf{Remark.} In general =, if $W_1$ and $W_2$ are sub-spaces of $V$, then $W_1 \cup W_2$ will not be a subspace of $V$. For example, consider the two sub-spaces of $\R^2$ given in example (1.3.6). In that case $W_1\cup W_2$ is the union of two lines through the origin in $\R^2$. 
         
         \settag{1.3.11}
-        \item \textbf{Proposition.} Let $W_1$ and $W_2$ be sub-spaces of vector space $V$ and let $W$ be a subspace of $V$ such that $W\supseteq W_1 \cup W_2$, then $W\supseteq W_1 + W_2$ 
+        \item \textbf{Proposition.} Let $W_1$ and $W_2$ be sub-spaces of vector space $V$ and let $W$ be a subspace of $V$ such that $W\supseteq W_1 \cup W_2$, then $W\supseteq W_1 + W_2$. Informally speaking, this proposition saying: "$W_1+W_2$ is the smallest subspace containing $W_1\cup W_2$", i.e., Any subspace that contains $W_1\cup W_2$ must be a super set of $W_1 + W_2$. \newline
+        \tit{\underline{Proof:}}\newline
+        We want to show: $W\supseteq W_1\cup W_2\Longrightarrow W\supseteq W_1 + W_2$\newline
+            \begin{align*}
+                \text{Assume that } \text{$W\supseteq W_1 \cup W_2$. Let $w_1\in W_1,~w_2\in W_2$.}\\
+                \text{We notice that } w_1,~w_2\in W_1\cup W_2 \subseteq W \\
+                \implies& w_1, w_2\in W \\
+                \text{(Since $W$ is a subspace, so it is closed under addition)}\\
+                \implies& w_1 + w_2 \in W\\
+                \implies W_1 + W_2 \subseteq W \iff& W \supseteq W_1 + W_2 
+            \end{align*}
+            \qed
+        
     \end{enumerate}
 
 \section{Linear (In)dependence}
@@ -146,10 +161,20 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
                 \item A \textit{linear dependence} among the vectors of $S$ is an equation $a_1\vec{x} + ... + a_n\vec{x}_n = \vec{0}$ where the $x_i\in S$, and the $a_i\in \R$ are not all zero(i.e., at least one of the $a_i\neq 0$). In familiar\footnote{Familiar from MAT223, Prof. Jason Siefken's IBL(Inquiry Based Learning) notes.} words, there exists a non-trivial solution to the equation mentioned above.
                 \item the set $S$ is said to be \textit{linearly dependent} if there exists a linear dependence among the vectors in $S$.
             \end{enumerate}
-        
+            \tbf{Remark: }It can be shown that the geometric\footnote{A set of vectors is said to be dependent of each other there exists a vector in this set, that it is in the Span of all other vectors in the set. I.e., There is some vectors in this set that are "redundant", it's position can be taken by some linear combination of the other vectors in the set.} definition and this are, in-fact, equivalent to each other. I will now produce the proof. \newline
+        \tit{\underline{Proof of equivalence of definitions:}} \newline
+        Let $V$ be a vector space, and let $S\subseteq V$. Consider the following equation:
+        \begin{align*}
+            a_1\vec{x}_1 + a_2\vec{x}_2 + ... + a_n\vec{x}_n &= 0\text{, where } \exists a_i\neq 0 \\
+            \text{(WLOG, assume that } a_n &\neq \vec{0}\text{)}\\
+            \implies \frac{a_1\vec{x}_1 + a_2\vec{x}_2 + ... + a_n\vec{x}_n}{a_n}&=\vec{0}\\
+            \implies \vec{x}_n &= -\sum_{i=1}^{n-1}a_i\vec{x}_i
+        \end{align*}
+        Notice that the result $\vec{x}_n$ is in terms of all the other $(n-1)$ vectors in the set, hence a linear combination of those vectors, and this completes the proof.
+        \qed
         
         \settag{1.4.4}
-        \item \textbf{Algebraic definition of linear independence.} Let $V$ be a vector space, and $S\subseteq V$. Then $S$ is \textit{linearly independent} if whenever we have $a_i\in \R$ and $x_i\in S$ such that $a_1\vec{x}_1+...+a_n\vec{x}_n = \vec{0}$, then $a_i = 0,~\forall i$. A more conceivable way to understand this is if the aforementioned equation exists and only exists a set of trivial solution then the vectors involved in the equation are \textit{linearly independent}
+        \item \textbf{Algebraic definition of linear independence.} Let $V$ be a vector space, and $S\subseteq V$. Then $S$ is \textit{linearly independent} if whenever we have $a_i\in \R$ and $x_i\in S$ such that $a_1\vec{x}_1+...+a_n\vec{x}_n = \vec{0}$, then $a_i = 0,~\forall i$. A more conceivable way to understand this is if the aforementioned equation exists and only exists a set of trivial solution then the vectors involved in the equation are \textit{linearly independent}. 
         
         \settag{1.4.7}
         \item \textbf{Propositions regarding linear (in)dependency.}
@@ -157,12 +182,16 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
                 \item Let $S$ be a linearly dependent subset of a vector space $V$, and let $S'$ be another subset of $V$ that contains $S$. Then $S'$ is also linearly dependent.
                 \item Let $S$ be a linearly independent subset of vector space $V$ and let $S'$ be another subset of $V$ that is contained in $S$. Then $S'$ is also linearly independent.
             \end{enumerate}
-        \underline{\textit{Proof of (a):}}
+        \underline{\tit{Proof of (a):}}
         Since $S$ is linearly dependent, there exists a linear dependence among the vectors in $S$, say, $a_1\vec{x}_1 + ...+ a_n\vec{x}_n = \vec{0}$. Since $S$ is contained in $S'$, this is also a linear dependence among the vectors in $S'$. Hence $S'$ is linear dependent.\qed\newline
-        \underline{\textit{Proof of (b):}}
+        \underline{\tit{Proof of (b):}}
         Consider any equation $a_1\vec{x}_1 + ...+ a_n\vec{x}_n = \vec{0}$, where the $a_i \in \R,~\vec{x}_i \in S'$. Since $S'$ is contained in $S$, we can also view this as a potential linear dependence among vectors in $S$. However, $S$ is linearly independent, so it follows that all the $a_i = 0\in \R$. Hence $S'$ is also linearly independent.\qed
     \end{enumerate}
     
-\section{Interlude on solving systems of linear equations.} 
+\section{Interlude on solving systems of linear equations}
+    \begin{enumerate}
+        \settag{1.5.1}
+        \item \tbf{Definition}
+    \end{enumerate}
     
 \end{document}
