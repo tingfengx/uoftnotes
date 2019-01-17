@@ -30,8 +30,8 @@
 by Tingfeng Xia \\
 
 
-Materials in this booklet are based heavily on Prof. Nicolas Hoell's lectures as well as A COURSE IN LINEAR ALGEBRA by David B. Damiano and John B. Little\newline\newline
-The course website could be found here:\newline \url{http://www.math.toronto.edu/nhoell/MAT224/}\newline
+Materials in this booklet are based heavily on Prof. Nicolas Hoell's lectures as well as A COURSE IN LINEAR ALGEBRA by David B. Damiano and John B. Little.\newline\newline
+The course website could be found here:\newline \url{http://www.math.toronto.edu/nhoell/MAT224/}
 \newpage
 \tableofcontents
 
@@ -171,10 +171,11 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \implies \vec{x}_n &= -\sum_{i=1}^{n-1}a_i\vec{x}_i
         \end{align*}
         Notice that the result $\vec{x}_n$ is in terms of all the other $(n-1)$ vectors in the set, hence a linear combination of those vectors, and this completes the proof.
-        \qed
+        \qed\newline
+        \textbf{Re-Remark: }We can also use this proof as an argument towards the following problem: Show that at least one of the vectors in a linearly dependent set is redundant. We could take take a similar proof and argue that the linear combination could be written without at least one of the vectors.
         
         \settag{1.4.4}
-        \item \textbf{Algebraic definition of linear independence.} Let $V$ be a vector space, and $S\subseteq V$. Then $S$ is \textit{linearly independent} if whenever we have $a_i\in \R$ and $x_i\in S$ such that $a_1\vec{x}_1+...+a_n\vec{x}_n = \vec{0}$, then $a_i = 0,~\forall i$. A more conceivable way to understand this is if the aforementioned equation exists and only exists a set of trivial solution then the vectors involved in the equation are \textit{linearly independent}. 
+        \item \textbf{Algebraic definition of linear independence.} Let $V$ be a vector space, and $S\subseteq V$. Then $S$ is \textit{linearly independent} if whenever we have $a_i\in \R$ and $x_i\in S$ such that $a_1\vec{x}_1+...+a_n\vec{x}_n = \vec{0}$, then $a_i = 0,~\forall i$. A more conceivable way to understand this is if the aforementioned equation exists and only exists a set of trivial solution then the vectors involved in the equation are \textit{linearly independent}. \newline \tbf{Remark: }A set of vector is linearly independent \tit{if and only if} it is not linearly dependent.
         
         \settag{1.4.7}
         \item \textbf{Propositions regarding linear (in)dependency.}
