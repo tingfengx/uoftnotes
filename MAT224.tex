@@ -31,6 +31,7 @@ by Tingfeng Xia \\
 
 
 Materials in this booklet are based heavily on Prof. Nicolas Hoell's lectures as well as A COURSE IN LINEAR ALGEBRA by David B. Damiano and John B. Little.\newline\newline
+Items in this booklet is, in fact, very similar to those in the book and are intended to be used as a quick review guide to all the knowledge points and should \tit{certainly not} be used as a substitute for the actual learning material. Please notice that I make\tit{ no promise} about the accuracy of statements appearing in these notes.\newline\newline
 The course website could be found here:\newline \url{http://www.math.toronto.edu/nhoell/MAT224/}
 \newpage
 \tableofcontents
@@ -102,7 +103,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \item a \textit{linear combination} of vectors in $S$ is any sum $a_1\vec{x}_1 + ... + a_n\vec{x}_n$, where the $a_i \in \R$, and the $x_i \in S$.
             \item we define the $Span$ of a set of vectors as follows to consider the special case of $S\stackrel{?}{=}\emptyset \in V$.
             \newline \underline{\tit{Case1: $S\neq \emptyset$:}} In this case, we define $Span(S)$ to be all possible linear combinations using vectors in $S$.\newline
-            \underline{\tit{Case2: $S= \emptyset$:}} In this case, we define $Span(S = \emptyset)=\{\vec{0}\}$
+            \underline{\tit{Case2: $S= \emptyset$:}} In this case, we define $Span(S = \emptyset)=\{\vec{0}\}$. We call this the zero-space.
             
             \item If $W=Span(S)$, we say $S$ \textit{spans(\text{or} generates)} $W$.
         \end{enumerate}
@@ -237,6 +238,25 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.6.10}
         \item \tbf{Theorem on cardinality of linearly independent set.} Let $V$ be a vector space and let $S$ be a spanning set for $V$, which has $m$ elements. Then no linearly independent set in $V$ can have more than $m$ elements.\newline
         \tit{\underline{Proof:}}\newline
+        To show that there are no linearly independent set in $V$ that can have more than $m$ elements in it, it suffices to show that every set in $V$ that has more than $m$ elements in it is linearly dependent. Let $S=\{y_1,...,y_m\}$ and $S'=\{y_1,...,y_n\}\subset V$ where $n>m$. Now we consider the following equation:
+        \begin{equation}
+            a_1\vec{x}_1 + ... + a_n\vec{x}_n = \vec{0}~~~~\text{    where }\vec{x}_i \in S',a_i\in \R
+        \end{equation}
+        Since $S$ is a spanning set for $V$, then $\exists b_{ij}\in \R,~s.t.~\forall 1\leq i \leq m$:
+        \begin{equation*}
+            \vec{x}_i = b_{i1}\vec{y}_1 + ... + b_{im}\vec{y}_m = \sum_{j=1}^{m}b_{ij}\vec{y}_j
+        \end{equation*}
+        Then we substitute the $\vec{x}_i$'s into equation (1.1):
+        \begin{equation}
+            a_1\left(\sum_{j=1}^{m}b_{1j}\vec{y}_j\right) + ... +  a_n\left(\sum_{j=1}^{m}b_{nj}\vec{y}_j\right) = \vec{0}
+        \end{equation}
+        Rearranging (1.2), we have:
+        \begin{equation*}
+            \left(\sum_{j=1}^{n}b_{1j}a_{j}\right)\vec{y}_1 + ... +  \left(\sum_{j=1}^{n}b_{mj}a_{j}\right)\vec{y}_m = \vec{0}
+        \end{equation*}
+        Now we consider the following SLE:
+        %todo
+        
         
         \settag{1.6.11}
         \item \tbf{Bases of a vector space should shall have same cardinality.} Let $V$ be a vector space and let $S$ and $S'$ be two bases of  with $m$ and $m'$ elements, respectively. Then $m=m;$. \newline
@@ -261,7 +281,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{enumerate}
             \item For each $n$, dim($\R^n$) $=n$. This is a consequence of the standard basis for $\R^n$ is of the form: $\{\vec{e}_1, ..., \vec{e}_n\}$ has $n$ elements in it.
             \item dim($P_n(\R)$) $=n+1$, since $|\{1, x^1, x^2, ..., x^n\}|=n+1$.\footnote{The absolute value marks around a set returns the cardinality of the set.}
-            \item The vector spaces $P(\R),~C^n(\R)$, where $n\in \mathbb{N}^{\geq 0}$, are not of finite dimension, and hence are called \tit{infinite dimensional}.
+            \item The vector spaces $P(\R)$\footnote{Here $P(\R)$ means the vector space of all polynomials that are $\R \xrightarrow{} \R$.}$,~C^n(\R)$, where $n\in \mathbb{N}^{\geq 0}$, are not of finite dimension, and hence are called \tit{infinite dimensional}.
         \end{enumerate}
         
         \settag{1.6.14}
@@ -288,9 +308,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \item $\forall \vec{u},\vec{v}\in V,~T(\vec{u} + \vec{v}) = T(\vec{u}) + T(\vec(u))$
             \item $\forall \alpha \in \R, \vec{v} \in V,~ T(\alpha\vec{v}) = \alpha T(\vec{v})$
         \end{enumerate}
-
-        \settag{2.1.2}
-        \item
+        
+        
     \end{enumerate}
     
     
