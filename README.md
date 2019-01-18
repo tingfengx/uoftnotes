@@ -7,7 +7,23 @@ The notes that are currently in edit are
 There were a few macros that were created and used during the type-setting process to speed up the entire process
 
 ## License
-All the pdf(Portable Document File) is licenses under GNU General Public License v3.0. According to the license, you are free to:
-1. Use for commercial/private purposes
-2. Modify the files
-3. Distribute
+This project is licensed under GNU General Public License v3.0. Find out more here: <https://www.gnu.org/licenses/gpl-3.0.en.html>
+
+According to the license you have:
+1. Permisions
+    * Commercial use
+    * Distribution
+    * Modification
+    * Patent use
+    * Private use
+    
+2. Conditions
+    * Disclose source
+    * License and copyright notice
+    * Same license
+    * State changes
+    
+3. Limitations
+    * Liability
+    * Warranty
+
