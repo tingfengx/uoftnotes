@@ -189,10 +189,108 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         Consider any equation $a_1\vec{x}_1 + ...+ a_n\vec{x}_n = \vec{0}$, where the $a_i \in \R,~\vec{x}_i \in S'$. Since $S'$ is contained in $S$, we can also view this as a potential linear dependence among vectors in $S$. However, $S$ is linearly independent, so it follows that all the $a_i = 0\in \R$. Hence $S'$ is also linearly independent.\qed
     \end{enumerate}
     
-\section{Interlude on solving systems of linear equations}
+\section{Interlude on solving SLEs}
     \begin{enumerate}
+        \settag{1.5.*}
+        \item \tbf{Note Aside: }This section of the book is covered, although not rigoriously but completely, in MAT223. Hence the vast majority of definitions and corollary in this section were omitted. Consult the book for more detail on this.
+        
         \settag{1.5.1}
-        \item \tbf{Definition}
+        \item \tbf{Definition of (homogeneous) SLEs\footnote{System of Linear Equations}} A system of $m$ equations in $n$ unknowns $x_1,...,x_n$ of the form:
+        \begin{align*}
+            a_{11}\vec{x_1}+...+a_{1n}\vec{x_n} &= b_1 \\
+            a_{21}\vec{x_1}+...+a_{2n}\vec{x_n} &= b_2 \\
+            &\mbox{...} \\
+            a_{m_1}\vec{x_1}+...+a_{mn}\vec{x_n} &= b_m
+        \end{align*}
+        where the $a_{ij},~b_i\in \R$, is called a \tit{system of linear equations.} The scalars $a_{ij}$ are called coefficients or \tit{weights} of the equations. We call this system \textbf{homogeneous} if and only if all the $b_i$ are 0's.
+        
+        \settag{1.5.2}
+        \item \tbf{Definition of equivalent SLEs} Two systems of linear equations are said to be equivalent if their sets of solutions are the same(i.e., mutual inclusion of the two solution sets)
+        
+        \settag{1.5.3}
+        \item \tbf{Propositions on operations on SLEs\footnote{This should be familiar from MAT223, operations involved in row reducing an augmented matrix for a system of linear equations}}
+        \begin{enumerate}
+            \item The system obtained buy adding any multiple of any one equation to any second equation, while leaving the other other equations unchanged, is an equivalent system.
+            \item The system obtained by multiplying any one equation by a non-zero scalar and leaving the other equations unchanged is an equivalent system.
+            \item The system obtained by interchanging any two equations is an equivalent system.
+        \end{enumerate}
+        
+        \settag{1.5.13}
+        \item \tbf{Corollary} If $m<n$, every homogeneous system of $m$ linear equations in $n$ unknowns has a non-trivial solution.
     \end{enumerate}
+    
+
+\section{Bases and Dimension}
+    \begin{enumerate}
+        \settag{1.6.1}
+        \item \tbf{Definition of basis.} A subset $S$ of a vector space $V$ is called a basis if $V=Span(S)$ and the set $S$ is linearly independent.
+        
+        \settag{1.6.3}
+        \item \tbf{Theorem. }Let $V$ be a vector space, and let $S$ be a non-empty subset of $V$. Then $S$ is a basis of $V$ if and only if $\forall \vec{x} \in V, \vec{x}$ can be written \tit{uniquely} as a linear combination of the vectors in $S$.
+        
+        \settag{1.6.6}
+        \item \tbf{Theorem. }Let $V$ be a vector space that has a finite spanning set, and let $S$ be a linealy independent subset of $V$. Then there exists a basis $S'$ of $V$, such that $S\subseteq S'.$ Note that this theorem is can be summarized as follows: Every linearly independent set of vectors could be extended to a basis. We do so by adding yet another vector that is linearly independent to all the vectors already in the set, but notice that this process should possibly be repeated but \tit{not} infinite.
+        
+        \settag{1.6.8}
+        \item \tbf{Lemma on linear independence towards a set and a vector.} Let $S$ be a linearly independent subset of $V$ and let $\vec{x}\in V$, but $\vec{x} \notin S$. Then $S\cup \{\vec{x} \}$ is linearly independent if and only if $\vec{x} \notin Span(S)$.
+        
+        \settag{1.6.10}
+        \item \tbf{Theorem on cardinality of linearly independent set.} Let $V$ be a vector space and let $S$ be a spanning set for $V$, which has $m$ elements. Then no linearly independent set in $V$ can have more than $m$ elements.\newline
+        \tit{\underline{Proof:}}\newline
+        
+        \settag{1.6.11}
+        \item \tbf{Bases of a vector space should shall have same cardinality.} Let $V$ be a vector space and let $S$ and $S'$ be two bases of  with $m$ and $m'$ elements, respectively. Then $m=m;$. \newline
+        \tit\underline{Proof: (Euclid's style)} \newline
+        Let $S$ and $S'$ with properties given as above. Since they are bases, we know: (By Theorem 1.6.10)
+        \begin{enumerate}
+            \item $S$ is a spanning set and $S'$ is a linearly independent set \newline $\Longrightarrow$ $m'=|S'| \leq |S|=m$
+            \item $S'$ is a spanning set and $S$ is a linearly independent set \newline $\Longrightarrow$ $m=|S| \leq |S'|=m'$
+        \end{enumerate}
+        Then, $m'=m$. \qed
+        
+        \settag{1.6.12}
+        \item \tbf{Definitions of (in)finite-dimension}
+        \begin{enumerate}
+            \item If $V$ is a vector space with some finite basis (possibly empty), we sat $V$ is \tit{finite-dimensional}. We say the vector space is \tit{infinite-dimensional} otherwise.
+            \item Let $V$ be a \tit{finite-dimensional} vector space. The dimension of $V$, denoted as dim($V$), is the number of elements in a (hence any) basis of $V$.
+            \item If $V=\{\vec{0}\}$, we define dim($V$)$=0$. \tbf{Remark: }Please note that is consistent with our definition of span of a empty set. We defined the span of empty set to be $\{\vec{0}\}$, and hence $\{\vec{0}\}$ is the resulting space of all the possibly linear combination of vectors in the empty set(where there is none). Then the cardinality of the empty set(which is zero) is here defined as the dimension of the zero vector space.
+        \end{enumerate}
+        
+        \settag{1.6.13}
+        \item \tbf{Examples on dimensions of vector spaces. }If we have a basis of $V$, then computing dim($V$) is simply a mtter of counting the number of vectors in a (hence any) basis for the vectors space. We explore this by looking at the following examples
+        \begin{enumerate}
+            \item For each $n$, dim($\R^n$) $=n$. This is a consequence of the standard basis for $\R^n$ is of the form: $\{\vec{e}_1, ..., \vec{e}_n\}$ has $n$ elements in it.
+            \item dim($P_n(\R)$) $=n+1$, since $|\{1, x^1, x^2, ..., x^n\}|=n+1$.\footnote{The absolute value marks around a set returns the cardinality of the set.}
+            \item The vector spaces $P(\R),~C^n(\R)$, where $n\in \mathbb{N}^{\geq 0}$, are not of finite dimension, and hence are called \tit{infinite dimensional}.
+        \end{enumerate}
+        
+        \settag{1.6.14}
+        \item \tbf{Corollary. }Let $W$ be a subspace of a finite-dimensional vector space $V$. Then dim($W$) $\leq$ dim($V$). Furthermore, dim($W$) $=$ dim($V$) if and only if $W=V$.
+        
+        \settag{1.6.15}
+        \item \tbf{Corollary. }Let $W$ be a subspace of $\R^n$ defined by a system of homogeneous linear equations. The dim($W$) is equal to the number of free variables in the corresponding echelon form of the equations.
+        
+        \settag{1.6.18}
+        \item \tbf{Inclusion-Exclusion principle of dimensions.} Let $W_1$ and $W_2$ be finite dimensional sub-spaces of a vector space $V$. Then,
+        \begin{center}
+            dim($W_1+W_2$) = dim($W_1$) $+$ dim($W_2$) $-$ dim($W_1\cap W_2$)
+        \end{center}
+        
+    \end{enumerate}
+    
+\chapter{Linear Transformations}
+\section{Linear Transformations}
+
+    \begin{enumerate}
+        \settag{2.1.1}
+        \item \tbf{Definition of linear transformation.\footnote{Familiar from MAT223}} A function $T:V\xrightarrow{}W$ is called a \tit{linear mapping} or a \tit{linear transformation} if it satisfies:
+        \begin{enumerate}
+            \item $\forall \vec{u},\vec{v}\in V,~T(\vec{u} + \vec{v}) = T(\vec{u}) + T(\vec(u))$
+            \item $\forall \alpha \in \R, \vec{v} \in V,~ T(\alpha\vec{v}) = \alpha T(\vec{v})$
+        \end{enumerate}
+        
+        
+    \end{enumerate}
+    
     
 \end{document}
