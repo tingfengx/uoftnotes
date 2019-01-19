@@ -31,7 +31,7 @@ by Tingfeng Xia \\
 
 
 Materials in this booklet are based heavily on Prof. Nicolas Hoell's lectures as well as A COURSE IN LINEAR ALGEBRA by David B. Damiano and John B. Little.\newline\newline
-Items in this booklet are, in fact, very similar to those in the book and are intended to be used as a quick review guide to all the knowledge points and should \tit{certainly not} be used as a substitute for the actual learning material. Please notice that I make\tit{ no promise} about the accuracy of statements appearing in these notes.\newline\newline
+Items in this booklet are, in fact, very similar to those in the book and are intended to be used as a bullet point guide to (almost) all the knowledge points and should \tit{certainly not} be used as a substitute for the actual learning material. Please notice that I make\tit{ no promise} about the accuracy of statements appearing in these notes.\newline\newline
 The course website could be found here:\newline \url{http://www.math.toronto.edu/nhoell/MAT224/}
 \newpage
 \tableofcontents
@@ -193,7 +193,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Interlude on solving SLEs}
     \begin{enumerate}
         \settag{1.5.*}
-        \item \tbf{Note Aside: }This section of the book is covered, although not rigoriously but completely, in MAT223. Hence the vast majority of definitions and corollary in this section were omitted. Consult the book for more detail on this.
+        \item \tbf{Note Aside: }This section of the book is covered, although not rigorously but completely, in MAT223. Hence the vast majority of definitions and corollary in this section were omitted. Consult the book for more detail on this.
         
         \settag{1.5.1}
         \item \tbf{Definition of (homogeneous) SLEs\footnote{System of Linear Equations}} A system of $m$ equations in $n$ unknowns $x_1,...,x_n$ of the form:
@@ -230,7 +230,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item \tbf{Theorem. }Let $V$ be a vector space, and let $S$ be a non-empty subset of $V$. Then $S$ is a basis of $V$ if and only if $\forall \vec{x} \in V, \vec{x}$ can be written \tit{uniquely} as a linear combination of the vectors in $S$.
         
         \settag{1.6.6}
-        \item \tbf{Theorem. }Let $V$ be a vector space that has a finite spanning set, and let $S$ be a linealy independent subset of $V$. Then there exists a basis $S'$ of $V$, such that $S\subseteq S'.$ Note that this theorem is can be summarized as follows: Every linearly independent set of vectors could be extended to a basis. We do so by adding yet another vector that is linearly independent to all the vectors already in the set, but notice that this process should possibly be repeated but \tit{not} infinite.
+        \item \tbf{Theorem. }Let $V$ be a vector space that has a finite spanning set, and let $S$ be a linearly independent subset of $V$. Then there exists a basis $S'$ of $V$, such that $S\subseteq S'.$ Note that this theorem is can be summarized as follows: Every linearly independent set of vectors could be extended to a basis. We do so by adding yet another vector that is linearly independent to all the vectors already in the set, but notice that this process should possibly be repeated but \tit{not} infinite.
         
         \settag{1.6.8}
         \item \tbf{Lemma on linear independence towards a set and a vector.} Let $S$ be a linearly independent subset of $V$ and let $\vec{x}\in V$, but $\vec{x} \notin S$. Then $S\cup \{\vec{x} \}$ is linearly independent if and only if $\vec{x} \notin Span(S)$.
@@ -265,12 +265,12 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \end{cases}
             $
         \end{center}
-        If we can find a set of $a_1, ..., a_n$ that are not all zero that solves the above SLE, then those scalers will give us a linear dependence aming the vectors in $S'$ in (1.1). But the above SLE is a system of homogeneous linear equations in the $n$ unknowns $a_i$'s, hence since $m < n$, by Corollary (1.5.13), there exists a non-trivial solution. Then $s'$ is linearly dependent and this completes the proof. \qed
+        If we can find a set of $a_1, ..., a_n$ that are not all zero that solves the above SLE, then those scalars will give us a linear dependence among the vectors in $S'$ in (1.1). But the above SLE is a system of homogeneous linear equations in the $n$ unknowns $a_i$'s, hence since $m < n$, by Corollary (1.5.13), there exists a non-trivial solution. Then $s'$ is linearly dependent and this completes the proof. \qed
         
         
         \settag{1.6.11}
         \item \tbf{Bases of a vector space should shall have same cardinality.} Let $V$ be a vector space and let $S$ and $S'$ be two bases of  with $m$ and $m'$ elements, respectively. Then $m=m;$. \newline
-        \tit\underline{Proof: (Euclid's style)} \newline
+        \tit{\underline{Proof: (Euclid's style)}} \newline
         Let $S$ and $S'$ with properties given as above. Since they are bases, we know: (By Theorem 1.6.10)
         \begin{enumerate}
             \item $S$ is a spanning set and $S'$ is a linearly independent set \newline $\Longrightarrow$ $m'=|S'| \leq |S|=m$
@@ -287,7 +287,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \end{enumerate}
         
         \settag{1.6.13}
-        \item \tbf{Examples on dimensions of vector spaces. }If we have a basis of $V$, then computing dim($V$) is simply a mtter of counting the number of vectors in a (hence any) basis for the vectors space. We explore this by looking at the following examples
+        \item \tbf{Examples on dimensions of vector spaces. }If we have a basis of $V$, then computing dim($V$) is simply a matter of counting the number of vectors in a (hence any) basis for the vectors space. We explore this by looking at the following examples
         \begin{enumerate}
             \item For each $n$, dim($\R^n$) $=n$. This is a consequence of the standard basis for $\R^n$ is of the form: $\{\vec{e}_1, ..., \vec{e}_n\}$ has $n$ elements in it.
             \item dim($P_n(\R)$) $=n+1$, since $|\{1, x^1, x^2, ..., x^n\}|=n+1$.\footnote{The absolute value marks around a set returns the cardinality of the set.}
@@ -336,7 +336,44 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \end{align*}
         Since $\alpha\in \R, \vec{u}\in V$ are arbitrary, this completes the proof. \qed
         
+        \settag{2.1.3}
+        \item \tbf{Corollary.} A function $T:V\xrightarrow{}W$ is a linear transformation if and only if
+        \begin{equation*}
+            \forall a_1,...,a_k\in \R, \forall \vec{v}_1, ...,\vec{k}\in V:~ 
+            T\left(\sum_{i=1}^{k}a_i\vec{v}_i\right) = \sum_{i=1}^{k}a_i T\left(\vec{v}_i\right)
+        \end{equation*}
+        \tit{\underline{Proof:}} %todo. I think this question could use some help from simple induction to formalize a little more.
+        
+        \settag{2.1.9}
+        \item \tbf{Angle between two vectors.} If $\vec{0}\neq \vec{a}\in \R^2$ and $\vec{0}\neq \vec{b}\in \R^2$, then the angle $\theta$ between them must be\footnote{The angle brackets here denotes the inner product of vectors}
+        \begin{equation*}
+            \theta = \arccos\left( \frac{\left<\vec{a},\vec{b}\right>}{\lVert\vec{a}\rVert \cdot \lVert\vec{b}\rVert}\right)
+        \end{equation*}
+        \tbf{Remark.} Notice that this definition could also be extended to $\R^3$.
+        
+        \settag{2.1.10}
+        \item \tbf{Corollary on orthogonality of vectors.} If $\R^2\ni \vec{a}\neq \vec{0}$ and $\R^2\ni \vec{b}\neq \vec{0}$, then the angle $\theta$ between them is a right angle if and only if $\left<\vec{a},\vec{b}\right>=0$.\newline
+        \tbf{Remark.} Note this definition of orthogonality could be extended to all euclidean vector spaces. The orthogonal complement of a subspace is the space of all vectors that are orthogonal to every vector in the subspace. In a three-dimensional Euclidean vector space, the orthogonal complement of a line through the origin is the plane through the origin perpendicular to it, and vice versa. In four-dimensional Euclidean space, for example, the orthogonal complement of a line is a hyper-plane and vice versa, and that of a plane is a plane.
+        
+        \settag{2.1.14}
+        \item \tbf{Proposition.} If $T:V\xrightarrow{}W$ is a linear transformation and $V$ is finite-dimensional, then $T$ is uniquely determined by its values on the members of a basis of $V$. To make this proposition more clear, we present the proof below. We will show that if $S$ and $T$ are linear transformations that take the same values on each member of a basis for $V$, then in fact $S=T$.\newline
+        \tit{\underline{Proof:}} \newline
+        Let $\{ \vec{v}_1, ..., \vec{v}_k\}$ be a basis for $V$, and let $S$ and $T$ be two linear transformations that satisfy $T(\vec{v}_1)=S(\vec{v}_1), \forall i \in \{1,...,k\}$. If $\vec{v}\in V, ~\vec{v} = a_1\vec{v}_1 + ... + a_k\vec{k}$, then
+        \begin{align*}
+            T(\vec{v}) &= T(a_1\vec{v}_1 + ... + a_k\vec{k}) \\
+            &= a_1T(\vec{v}_1) + ... + a_k T(\vec{v}_k)~~~~\text{// Since $T$ is linear}\\
+            &= a_1S(\vec{v}_1) + ... + a_k S(\vec{v}_k) \\
+            &= S(a_1\vec{v}_1 + ... + a_k\vec{k})~~~~~~~~~~\text{// Since $S$ is linear} \\
+            &=S(\vec{v})
+        \end{align*}
+        Hence $S$ and $T$ are equal as mappings from $V$ to $W$. \qed
+        
     \end{enumerate}
     
+\section{L.Ts between finite dimensional v.s's}
+    \begin{enumerate}
+        \settag{2.2.1}
+        \item \tbf{Proposition.} Let $T:V\xrightarrow{}W$ be a linear transformation between the finite dimensional vector spaces $V$ and $W$. If $\{\vec{v}_1,...,\vec{v}_k\}$ is a basis for $V$ and $\{\vec{w}_1,...,\vec{w}_l\}$ is a basis for $W$, then $T:V\xrightarrow{}W$ is uniquely determined by the $l\cdot k$ scalars used to express $T(\vec{v}_j)$, where $j\in \{1,...,k\}$, in terms of $\vec{w}_1,...,\vec{w}_l$.
+    \end{enumerate}
     
 \end{document}
