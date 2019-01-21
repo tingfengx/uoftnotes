@@ -188,6 +188,36 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         Since $S$ is linearly dependent, there exists a linear dependence among the vectors in $S$, say, $a_1\vec{x}_1 + ...+ a_n\vec{x}_n = \vec{0}$. Since $S$ is contained in $S'$, this is also a linear dependence among the vectors in $S'$. Hence $S'$ is linear dependent.\qed\newline
         \underline{\tit{Proof of (b):}}
         Consider any equation $a_1\vec{x}_1 + ...+ a_n\vec{x}_n = \vec{0}$, where the $a_i \in \R,~\vec{x}_i \in S'$. Since $S'$ is contained in $S$, we can also view this as a potential linear dependence among vectors in $S$. However, $S$ is linearly independent, so it follows that all the $a_i = 0\in \R$. Hence $S'$ is also linearly independent.\qed
+        
+        \settag{1.4.*}
+        \item \tbf{Example of showing linear independence.(1)} Show that the set $\{1,x,x^2,x^3,...,x^n\}$ is linearly independent. We consider the following equation:
+        \begin{equation*}
+            0 = a_0 + a_1x + ... + a_{n-1}x^{n-1}+a_n x^n~~~~~~(*)
+        \end{equation*}
+        Then we take the derivative:
+        \begin{equation*}
+            \frac{d^n}{dx^n}(*)= 0 = n!\cdot a_n
+        \end{equation*}
+        Then since $n! \neq 0$, we know $a_n=0$. We repeat the same process, taking derivatives $(n-1)$ times w.r.t. $x$ we get $a_{n-1}=0$ and so on. As a last step we have:
+        \begin{equation*}
+            \frac{d}{dx}(*) = 0 = 1!\cdot a_1 \implies a_1 = 0
+        \end{equation*}
+        Then we have $0 = 0 + 0 +... + a_0 \implies a_0 = 0$. So the equation has and only has a trivial solution, thus the set $\{1,x,x^2,x^3,...,x^n\}$ is linearly independent. \qed
+        
+        \settag{1.4.*}
+        \item \tbf{Example of showing linear independence.(2)} Show that the set $\{e^x, e^{2x}\}$ is linearly independent. We consider the following equation:
+        \begin{equation*}
+            0 = ae^x + be^{2x}~~~~~(1)
+        \end{equation*}
+        We take derivative on both sides of $(1)$ w.r.t. $x$ and we have:
+        \begin{equation*}
+            0 = ae^x + 2be^{2x}~~~~(2)
+        \end{equation*}
+        We subtract $(2)$ from $(1)$ to get:
+        \begin{equation*}
+            0 = be^{2x} \implies b = 0 \implies 0 = ae^x + 0 \implies a = 0
+        \end{equation*}
+        Since $a=b=0$ is the one and only solution to $(1)$, we claim they are linearly independent. \qed
     \end{enumerate}
     
 \section{Interlude on solving SLEs}
@@ -265,7 +295,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \end{cases}
             $
         \end{center}
-        If we can find a set of $a_1, ..., a_n$ that are not all zero that solves the above SLE, then those scalars will give us a linear dependence among the vectors in $S'$ in (1.1). But the above SLE is a system of homogeneous linear equations in the $n$ unknowns $a_i$'s, hence since $m < n$, by Corollary (1.5.13), there exists a non-trivial solution. Then $s'$ is linearly dependent and this completes the proof. \qed
+        If we can find a set of $a_1, ..., a_n$ that are not all zero that solves the above SLE, then those scalars will give us a linear dependence among the vectors in $S'$ in (1.1). But the above SLE is a system of homogeneous linear equations in the $n$ unknowns $a_i$'s, hence since $m < n$, by Corollary (1.5.13), there exists a non-trivial solution. Then $S'$ is linearly dependent and this completes the proof. \qed
         
         
         \settag{1.6.11}
@@ -374,6 +404,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \begin{enumerate}
         \settag{2.2.1}
         \item \tbf{Proposition.} Let $T:V\xrightarrow{}W$ be a linear transformation between the finite dimensional vector spaces $V$ and $W$. If $\{\vec{v}_1,...,\vec{v}_k\}$ is a basis for $V$ and $\{\vec{w}_1,...,\vec{w}_l\}$ is a basis for $W$, then $T:V\xrightarrow{}W$ is uniquely determined by the $l\cdot k$ scalars used to express $T(\vec{v}_j)$, where $j\in \{1,...,k\}$, in terms of $\vec{w}_1,...,\vec{w}_l$.
+        
+        \settag{}
     \end{enumerate}
     
 \end{document}
