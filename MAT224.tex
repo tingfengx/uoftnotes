@@ -420,16 +420,48 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         
     \end{enumerate}
     
-\section{L.Ts between finite dimensional v.s's}
+\section{Linear Transformations between finite dimensional vector spaces}
     \begin{enumerate}
         \settag{2.2.1}
         \item \tbf{Proposition.} Let $T:V\xrightarrow{}W$ be a linear transformation between the finite dimensional vector spaces $V$ and $W$. If $\{\vec{v}_1,...,\vec{v}_k\}$ is a basis for $V$ and $\{\vec{w}_1,...,\vec{w}_l\}$ is a basis for $W$, then $T:V\xrightarrow{}W$ is uniquely determined by the $l\cdot k$ scalars used to express $T(\vec{v}_j)$, where $j\in \{1,...,k\}$, in terms of $\vec{w}_1,...,\vec{w}_l$.
         
         \settag{2.2.6}
         \item \tbf{Induced transformation applied to change of basis.} Let $T:V\xrightarrow{}W$ be a linear transformation between finite-dimensional vector spaces $V$ and $W$, and let $\alpha = \{\vec{v}_1,...,\vec{v}_k \}$ and $\beta = \{\vec{w}_1,...,\vec{w}_l\}$, respectively, be any bases\footnote{That is, spanning and linearly independent} for $V$ and $W$. 
-        Let $a_{ij}$, where $1\leq i \leq l$ and $1\leq j \leq k$ be the $l\cdot k$ scalars that determined $T$ with respect to the bases $\alpha$ and $\beta$. The matrix whole entries are the scalars $a{ij}$, given above, is called the \tit{matrix of the linear transformation $T$ with respect to the bases $\alpha$ for $V$ and $\beta$ for $W$}. We denote such matrix with following notation: $[T]^\beta_\alpha$. \tbf{Notice that}, again, $\alpha$ is a basis for $V$, the domain of the transformation and $\beta$ is a basis for $W$, the co-domain of the transformation.
+        Let $a_{ij}$, where $1\leq i \leq l$ and $1\leq j \leq k$ be the $l\cdot k$ scalars that determined $T$ with respect to the bases $\alpha$ and $\beta$. The matrix whole entries are the scalars $a_{ij}$, given above, is called the \tit{matrix of the linear transformation $T$ with respect to the bases $\alpha$ for $V$ and $\beta$ for $W$}. We denote such matrix with following notation: $\left[T\right]^\beta_\alpha$. \newline 
+        \tbf{Notice that}, again, $\alpha$ is a basis for $V$, the domain of the transformation and $\beta$ is a basis for $W$, the co-domain of the transformation.
         
-        \settag{}
+        \settag{2.2.15}
+        \item \tbf{Proposition: Linear Transformation on alternative basis.} Let $T:V\xrightarrow{} W$ be a linear transformation between vector spaces $V$ of dimension $k$ and $W$ of dimension $l$. Let $\alpha = \{\vec{v}_1,...,\vec{v}_k\}$ be a basis for $V$, and let $\beta = \{\vec{w}_1,...,\vec{w}_l\}$ be a basis for $W$. Then for each $\vec{v} \in V$, we have the following:
+        \begin{equation*}
+            \left[T(\vec{v})\right]_\beta = \left[T\right]^\beta_\alpha\left[\vec{v}\right]_\alpha
+        \end{equation*}
+        One can think about this in the sense that the same transformation could have been accomplished under another basis. We just have to convert the original problem into some easy to solve basis, perform the transformation under that basis, and then convert the result back. We now present the proof for this proposition.\newline
+        \tit{\underline{Proof:}} Let $\vec{v}=x_1\vec{v}_1 + ... + x_k\vec{v}_k\in V$. Then if $T(\vec{v}_j)=a_{1j}\vec{w}_1 + ... + a_{lj}\vec{w}_l$, 
+        \begin{align*}
+            T(\vec{v}) &= \sum_{j=1}^k x_j T(\vec{v}_j) \\
+            &= \sum_{j=1}^k x_j \left(\sum_{i=1}^{l}a_{ij}\vec{w}_i\right) \\
+            &= \sum_{i=1}^l\left(\sum_{j=1}^k x_j a_{ij} \right)\vec{w}_i
+        \end{align*}
+        Thus the $i$-th coefficient of $T(\vec{v})$ in terms of $\beta$ is $\sum_{j=1}^k x_j a_{ij}$, and
+        \begin{equation*}
+            \left[T(\vec{v})\right]_\beta = 
+            \begin{bmatrix}\sum_{j=1}^kx_ja_{1j} \\ \dots \\ \dots \\ \dots \\ \sum_{j=1}^kx_ja_{lj}\end{bmatrix}
+        \end{equation*}
+        \qed
+        
+        \settag{2.2.18}
+        \tbf{Proposition: Property of matrix \tit{times} L.C. of vectors.} Note that in this proposition, we assume the vectors and the matrix are compatible\footnote{i.e., They can \tit{always} perform the operations that we want}. Let $A$ be an $l\times k$ matrix and $\vec{u}$ and $\vec{v}$ be column vectors with $k$ entries. Then,
+        \begin{equation*}
+            \forall~ \text{pairs of}~a\in\R, b\in\R, A(a\vec{u} + b\vec{v}) = aA\vec{u} + bA\vec{v}
+        \end{equation*}
+        \tit{\underline{Proof:}} Since $\vec{u}, \vec{v}\in \R^k$, let them be $\vec{u} = (u_1,...,u_k)^T$ and $\vec{v} = (v_1,...,v_k)^T$. Fix $a,b\in \R$. Then,
+        \begin{align*}
+            A\left(a\vec{u} + b\vec{v}\right) &=  A\left(a\left(u_1,...,u_k\right)^T + b\left(v_1,...,v_k\right)^T\right) \\
+            &=  A\left(\left(a\cdot u_1,...,a\cdot u_k\right)^T + \left(b \cdot v_1,...,b\cdot v_k\right)^T\right) \\
+            &=  A\left(a\cdot u_1 + b \cdot v_1,...,a\cdot u_k + b\cdot v_k \right)^T \\
+            &= ... % change this vector notation!
+        \end{align*}
+        
     \end{enumerate}
     
 \end{document}
