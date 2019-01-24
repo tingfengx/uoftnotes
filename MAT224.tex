@@ -19,6 +19,7 @@
 \newcommand{\vb}{\vec{b}}
 \newcommand{\vv}{\vec{v}}
 \newcommand{\vw}{\vec{w}}
+\newcommand{\vx}{\vec{x}}
 
 
 \title{%
@@ -46,7 +47,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{(Real) Vector Space}
 \settag{1.1.1}
 \begin{enumerate}
-    \item{\textbf{Definition of real vector space:}} A real vector space is a set $V$ together with scalar
+    \item{\textbf{Definition of real vector space:}} A real vector space is a set $V$ together with
     \begin{enumerate}
         \item \textbf{Closure under vector addition:} an operation called vector addition, which for each pair of vectors $\vec{x}, \vec{y}\in V$ produces another vector in $V$ denoted $\vec{x} + \vec{y}$, (i.e. $\forall \vec{x}, \vec{y}\in V, \vec{x} + \vec{y} \in V$) and
         \item \textbf{Closure under scalar multiplication:} an operation called multiplication by a scalar (a real number), which for each vector $\vec{x}\in V$, an each scalar $c\in \mathbb{R}$ produces another vector in $V$ denoted $c\vec{x}$. (i.e. $\forall \vec{x}\in V, \forall c \in \mathbb{R}, c \vec{x} \in V$)
@@ -65,6 +66,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item $\forall \vec{x} \in V, c,d \in \mathbb{R}, (cd)\vec{x} = c(d\vec{x})$
         \item $\forall \vec{x} \in V, 1\vec{x} = \vec{x}$
     \end{enumerate}
+    \tbf{Remark.} Note that here we are not explicitly defining a vector space to be non-empty, however, if a set ever fails to have a larger than zero cardinality, it must not be a vector space. This is a consequence of axiom $(c)$, the existence of the one and only zero vector in the space.
+    
     \settag{1.1.6}
     \item \textbf{Propositions for a R-v.s.} Let $V$ be a vector space. Then 
     \begin{enumerate}
@@ -75,16 +78,22 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \end{equation*}
         Simple algebraic manipulation yields us $\vec{x} + \vec{a} = \vec{a} + \vec{x} \implies \vec{a} = \vec{b}$ $\longrightarrow\!\longleftarrow$ Contradiction! \qed
         
-        \item $\forall \vec{x} \in V, 0\vec{x}=0$
-        \item $\forall \vec{x} \in V, $ the additive inverse is unique. Note that it might not necessarily be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use.
-        \item $\forall \vec{x} \in V,~\forall c\in \mathbb{R}, ~(-c)\vec{x}=~-(c\vec{x})$
+        \item $\forall \vec{x} \in V, 0\vec{x}=0$ \newline
+        \tit{\underline{Proof:}} We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields us $\vec{0} = 0\vx$ as wanted. \qed
+        
+        \item $\forall \vec{x} \in V, $ the additive inverse is unique. Note that it might not necessarily be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use. \newline
+        \tit{\underline{Proof:}} 
+        
+        \item $\forall \vec{x} \in V,~\forall c\in \mathbb{R}, ~(-c)\vec{x}=~-(c\vec{x})$ \newline
+        \tit{\underline{Proof:}} 
+        
     \end{enumerate}
 \end{enumerate}
 
 \section{Sub-spaces}
     \begin{enumerate}
         \settag{1.2.4}
-        \item \textbf{Usual definition of subspace applied to functions in $C^0(\mathbb{R})$}. Note that by $C^n(\cdot)$ we mean the function in this set are all of $Class-n$. Let $f,g \in C^0(\mathbb{R)}, let c\in \mathbb{R}$. Then, 
+        \item \textbf{Usual definition of subspace applied to functions in $C^0(\mathbb{R})$}. Note that by $C^n(\cdot)$ we mean the function in this set are all of $Class-n$. Let $f,g \in C^0(\mathbb{R)}, \text{let} ~c\in \mathbb{R}$. Then, 
         \begin{enumerate}
             \item $f+g\in C^0(\R)$, and
             \item $cf \in C(\R)$
@@ -143,7 +152,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.3.9}
         \item \textbf{The sum of sub-spaces is also a subspace.} Let $W_1$ and $W_2$ be sub-spaces of a vector space $V$. Then $W_1 + W_2$ is also a subspace of $V$.\newline
         \underline{\textit{Proof:}}\newline
-        It is clear that $W_1 + W_2$ is non-empty, since neither $W_1$ nor $W_2$ is empty. Let $\vec{X}, \vec{y}$ be two vectors in $W_1+W_2$, let $c\in \R$. By our choice of $\vec{x}\text{and } \vec{y}$, we have
+        It is clear that $W_1 + W_2$ is non-empty, since neither $W_1$ nor $W_2$ is empty. Let $\vec{x}, \vec{y}$ be two vectors in $W_1+W_2$, let $c\in \R$. By our choice of $\vec{x}\text{and } \vec{y}$, we have
         \begin{align*}
             c\vec{x} + \vec{y} & = c(\vec{x}_1 + \vec{x}_2) + (\vec{y_1} + \vec{y_2}) \\
             & = (c\vec{x}_1 + \vec{y}_1) + (c\vec{x}_2 + \vec{y}_2) \\
@@ -344,7 +353,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item \tbf{Corollary. }Let $W$ be a subspace of a finite-dimensional vector space $V$. Then dim($W$) $\leq$ dim($V$). Furthermore, dim($W$) $=$ dim($V$) if and only if $W=V$.
         
         \settag{1.6.15}
-        \item \tbf{Corollary. }Let $W$ be a subspace of $\R^n$ defined by a system of homogeneous linear equations. The dim($W$) is equal to the number of free variables in the corresponding echelon form of the equations.
+        \item \tbf{Corollary. }Let $W$ be a subspace of $\R^n$ defined by a system of homogeneous linear equations. The dim($W$) is equal to the number of free variables in the corresponding echelon form of the equations.\newline
+        \tbf{Generalization.} It is also worth pointing out that by setting the free variables equal to one in turn\footnote{By in turn we mean set one of them to one and all others zero, one at a time}, we can always generate a basis for the subspace. Referring to example $(1.6.16)$ in the book, we see that we have two free variables, and the two (linearly independent) vectors obtained from the method described above that form a 2-dimensional subspace of $\R^5$. 
+        
         
         \settag{1.6.18}
         \item \tbf{Inclusion-Exclusion principle of dimensions.} Let $W_1$ and $W_2$ be finite dimensional sub-spaces of a vector space $V$. Then,
@@ -393,7 +404,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             T\left(\sum_{i=1}^{k}a_i\vec{v}_i\right) = \sum_{i=1}^{k}a_i T\left(\vec{v}_i\right)
         \end{equation}
         \tit{\underline{Proof:}} To show this if and only if relationship, we have to consider the implication of both directions. Since $(2.1.2)$ is just a special case of $(2.1.3)$ then we are done in proving $(2.1.3)\implies (2.1.2)$. We will prove the other direction by induction (on $k$) to generalize the case of $k=2$ to arbitrary $n\in \double{N}$. \newline
-        Define $P(k): \text{"}(2.1)~\text{holds"}$. \newline
+        Define $P(k): \text{``}(2.1)~\text{holds"}$. \newline
         Claim that $\forall k \in \double{N}^{\geq 2}, P(k)$.\newline
         \tbf{\underline{BASIS CASE:}} $k = 2$. In this case the wanted equality is the same as the one proved in $(2.1.2)$, so $P(2)$. \newline
         \tbf{\underline{INDUCTIVE STEP:}} Let $k\in \double{N}^{\geq 2}$, assume $P(k-1)$, we want to show that $P(k)$ follows.\newline
@@ -438,9 +449,11 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item \tbf{Proposition.} Let $T:V\xrightarrow{}W$ be a linear transformation between the finite dimensional vector spaces $V$ and $W$. If $\{\vec{v}_1,...,\vec{v}_k\}$ is a basis for $V$ and $\{\vec{w}_1,...,\vec{w}_l\}$ is a basis for $W$, then $T:V\xrightarrow{}W$ is uniquely determined by the $l\cdot k$ scalars used to express $T(\vec{v}_j)$, where $j\in \{1,...,k\}$, in terms of $\vec{w}_1,...,\vec{w}_l$.
         
         \settag{2.2.6}
-        \item \tbf{Induced transformation applied to change of basis.} Let $T:V\xrightarrow{}W$ be a linear transformation between finite-dimensional vector spaces $V$ and $W$, and let $\alpha = \{\vec{v}_1,...,\vec{v}_k \}$ and $\beta = \{\vec{w}_1,...,\vec{w}_l\}$, respectively, be any bases\footnote{That is, spanning and linearly independent} for $V$ and $W$. 
+        \item \tbf{Matrix of a transformation w.r.t.$\alpha,\beta$.} Let $T:V\xrightarrow{}W$ be a linear transformation between finite-dimensional vector spaces $V$ and $W$, and let $\alpha = \{\vec{v}_1,...,\vec{v}_k \}$ and $\beta = \{\vec{w}_1,...,\vec{w}_l\}$, respectively, be any basis for $V$ and $W$. 
         Let $a_{ij}$, where $1\leq i \leq l$ and $1\leq j \leq k$ be the $l\cdot k$ scalars that determined $T$ with respect to the bases $\alpha$ and $\beta$. The matrix whole entries are the scalars $a_{ij}$, given above, is called the \tit{matrix of the linear transformation $T$ with respect to the bases $\alpha$ for $V$ and $\beta$ for $W$}. We denote such matrix with following notation: $\left[T\right]^\beta_\alpha$. \newline 
         \tbf{Notice that}, again, $\alpha$ is a basis for $V$, the domain of the transformation and $\beta$ is a basis for $W$, the co-domain of the transformation.
+        \newline
+        \tbf{Remark.} This should be familiar from MAT223, where we perform transformation on each and every element in a basis for a space, and transcribe them, in terms of another basis, into a standard matrix for the transformation.
         
         \settag{2.2.15}
         \item \tbf{Proposition: Linear Transformation on alternative basis.} Let $T:V\xrightarrow{} W$ be a linear transformation between vector spaces $V$ of dimension $k$ and $W$ of dimension $l$. Let $\alpha = \{\vec{v}_1,...,\vec{v}_k\}$ be a basis for $V$, and let $\beta = \{\vec{w}_1,...,\vec{w}_l\}$ be a basis for $W$. Then for each $\vec{v} \in V$, we have the following:
@@ -466,7 +479,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{equation*}
             \forall~ \text{pairs of}~a\in\R, b\in\R, A(a\vec{u} + b\vec{v}) = aA\vec{u} + bA\vv
         \end{equation*}
-        \tit{\underline{Proof:}} Since $\vec{u}, \vec{v}\in \R^k$, let them be $\vec{u} = (u_1,...,u_k)^T$ and $\vec{v} = (v_1,...,v_k)^T$. Fix $a,b\in \R$. Then,
+        \tit{\underline{Proof:}} Since $\vec{u}, \vec{v}\in \R^k$, let them be $\vec{u} = (u_1,...,u_k)^T$ and $\vec{v} = (v_1,...,v_k)^T$.\newline 
+        Fix $a,b\in \R$. Then,
         \begin{align*}
             A\left(a\vec{u} + b\vec{v}\right) &=  A\left(a\left(u_1,...,u_k\right)^T + b\left(v_1,...,v_k\right)^T\right) \\
             &=  A\left(\left(a\cdot u_1,...,a\cdot u_k\right)^T + \left(b \cdot v_1,...,b\cdot v_k\right)^T\right) \\
