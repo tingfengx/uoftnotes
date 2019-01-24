@@ -18,6 +18,7 @@
 \newcommand{\va}{\vec{a}}
 \newcommand{\vb}{\vec{b}}
 \newcommand{\vv}{\vec{v}}
+\newcommand{\vu}{\vec{u}}
 \newcommand{\vw}{\vec{w}}
 \newcommand{\vx}{\vec{x}}
 
@@ -487,6 +488,37 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             &=  A\left(a\cdot u_1 + b \cdot v_1,...,a\cdot u_k + b\cdot v_k \right)^T \\
             &= ... % change this vector notation!
         \end{align*}
+        
+        \settag{2.2.19}
+        \tbf{Proposition.} Let $\alpha = \{\vv_1,...,\vv_k\}$ be a basis for $V$ and $\beta= \{\vw_1,...,\vw_l\}$ be a basis for $W$, and let $\vec{v}=x_1\vv_1+...+x_k\vv_k\in V$.
+        \begin{enumerate}
+            \item If $A$ is an $l \times k$ matrix, then the function $T(\vec{v}) = \vec{w}$, where $\left[\vw\right]_\beta A\left[\vv\right]_\alpha$ is a linear transformation.
+            \item If $A = [S]_\alpha^\beta$ is the matrix of a transformation $S:V\xrightarrow{} W$, then the transformation $T$ constructed from $[S]_\alpha^\beta$ is equal to $S$.
+            \item If $T$ is the transformation of (a) constructed from $A$, then $[T]_\alpha^\beta = A$.
+        \end{enumerate}
+        
+        \settag{2.2.20}
+        \item \tbf{Proposition.} Let $V$ and $W$ be finite-dimensional vector spaces. Let $\alpha$ be a basis for $V$ and $\beta$ a basis for $W$. Then the assignment of a matrix to a linear transformation from $V$ to $w$ given by $T$ goes to $[T]_\alpha^\beta$ is bijective\footnote{Injective and surjective}.
+    \end{enumerate}
+    
+\section{Kernel and image}
+    \begin{enumerate}
+        \settag{2.3.1}
+        \item \tbf{Definition of Kernel.}\footnote{a.k.a Null Space} The \tit{kernel} of $T$, denoted Ker($T$), is the subset of $V$ consisting of all vectors $\vv\in V$ such that $T(\vv) = \vec{0}$. Writing in familiar set builder notation:
+        \begin{equation*}
+            \text{Ker}(T) := \{\vv \in V | T(\vv) = \vec{0}\} =: \text{Null}(T)
+        \end{equation*}
+        
+        \settag{2.3.2}
+        \item \tbf{Proposition: Kernel is a subspace.}\footnote{In fact, kernel is one the three fundamental sub-spaces related to a vector space. The others are Row Space and Column Space.} Let $T: V\xrightarrow{} W$ be a linear transformation. Ker($T$) is a subspace of $V$. \newline
+        \tit{\underline{Proof:}} \newline
+        Since Ker($T$) $\subset V$, it suffices to show that Ker($T$) is closed under addition and scalar multiplication. Since $T$ is linear, $\forall \vu, \vv \in \text{Ker}(T)~\text{and}~a\in \R$, we have
+        \begin{equation*}
+            T(\vu + a\vv) = T(\vu) + aT(\vv) = \vec{0} + a\vec{0} \implies \vu + a\vv \in \text{Ker}(T)
+        \end{equation*}
+        \qed
+        
+        
         
     \end{enumerate}
     
