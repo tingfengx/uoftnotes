@@ -14,6 +14,12 @@
 \newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.$}
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
+\newcommand{\va}{\vec{a}}
+\newcommand{\vb}{\vec{b}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\vw}{\vec{w}}
+
 
 \title{%
   \textbf{MAT224 Linear Algebra}\\
@@ -62,7 +68,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{1.1.6}
     \item \textbf{Propositions for a R-v.s.} Let $V$ be a vector space. Then 
     \begin{enumerate}
-        \item The zero vector is unique. Note that it might not necessarily be actually the zero vector in $\mathbb{R}^n$ that we are somewhat used to use.
+        \item The zero vector is unique. Note that it might not necessarily be actually the zero vector in $\mathbb{R}^n$ that we are somewhat used to use.\newline
+        \tit{\underline{Proof:}} Suppose, for the sake of contradiction, that $\vec{a},\vec{b}$ are two \tit{different} zero vectors of the vector space $V$. Then, by the definition of zero vector, we have 
+        \begin{equation*}
+            \forall \vec{x}\in V,\vec{x} +\vec{a} = \vec{x} \wedge \vec{x} + \vec{b} = \vec{x}
+        \end{equation*}
+        Simple algebraic manipulation yields us $\vec{x} + \vec{a} = \vec{a} + \vec{x} \implies \vec{a} = \vec{b}$ $\longrightarrow\!\longleftarrow$ Contradiction! \qed
+        
         \item $\forall \vec{x} \in V, 0\vec{x}=0$
         \item $\forall \vec{x} \in V, $ the additive inverse is unique. Note that it might not necessarily be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use.
         \item $\forall \vec{x} \in V,~\forall c\in \mathbb{R}, ~(-c)\vec{x}=~-(c\vec{x})$
@@ -80,7 +92,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         The proof of this lemma relies on limit theorems of calculus.
         
         \settag{1.2.6}
-        \item \textbf{(Intuitive) definition of (vector) subspace} Let $V$ be a vector space and let $W\subseteq V$ be a subset. Then $W$ is a (vector) subspace if $W$ is a vector subspace itself under the operations of vector sum and scalar multiplication from $V$.
+        \item \textbf{(Intuitive) definition of (vector) subspace.} Let $V$ be a vector space and let $W\subseteq V$ be a subset. Then $W$ is a (vector) subspace if $W$ is a vector subspace itself under the operations of vector sum and scalar multiplication from $V$.
         
         \settag{1.2.8}
         \item \textbf{Quick check rule for a subspace.} Let $V$ be a vector subspace, and let $W$ be a \textbf{non empty} subset of $V$. Then $W$ is a subspace of $V$ if and only if 
@@ -452,7 +464,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{2.2.18}
         \tbf{Proposition: Property of matrix \tit{times} L.C. of vectors.} Note that in this proposition, we assume the vectors and the matrix are compatible\footnote{i.e., They can \tit{always} perform the operations that we want}. Let $A$ be an $l\times k$ matrix and $\vec{u}$ and $\vec{v}$ be column vectors with $k$ entries. Then,
         \begin{equation*}
-            \forall~ \text{pairs of}~a\in\R, b\in\R, A(a\vec{u} + b\vec{v}) = aA\vec{u} + bA\vec{v}
+            \forall~ \text{pairs of}~a\in\R, b\in\R, A(a\vec{u} + b\vec{v}) = aA\vec{u} + bA\vv
         \end{equation*}
         \tit{\underline{Proof:}} Since $\vec{u}, \vec{v}\in \R^k$, let them be $\vec{u} = (u_1,...,u_k)^T$ and $\vec{v} = (v_1,...,v_k)^T$. Fix $a,b\in \R$. Then,
         \begin{align*}
