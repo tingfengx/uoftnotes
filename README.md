@@ -1,7 +1,10 @@
 # uoftnotes
 Notes for some of my courses at University of Toronto
-The notes that are currently in edit are
-1. MAT224, Linear Algebra II
+* The notes in this repository that are currently in edit are
+   1. MAT224, Linear Algebra II.
+* Other notes that I participated in typesetting:
+   1. MAT237, Advanced Calculus, a short guide to theorems, lemmas and propositions. Available here:  https://github.com/yuchenWYC/MAT237
+   
 
 ## LaTeX Code
 There were a few macros that were created and used during the type-setting process to speed up the entire process
