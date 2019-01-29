@@ -15,12 +15,21 @@
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
 \newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
-\newcommand{\va}{\vec{a}}
-\newcommand{\vb}{\vec{b}}
-\newcommand{\vv}{\vec{v}}
-\newcommand{\vu}{\vec{u}}
-\newcommand{\vw}{\vec{w}}
-\newcommand{\vx}{\vec{x}}
+% Call settag{...} first to initialize, and then \para{} for a new paragraph
+\newcommand{\para}[1]{\item \tbf{#1}}
+\newcommand{\va}{\mathbf{a}}
+\newcommand{\vb}{\mathbf{b}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\vu}{\mathbf{u}}
+\newcommand{\vw}{\mathbf{w}}
+\newcommand{\vx}{\mathbf{x}}
+% For convenience, I am setting both of these to refer to the same thing.
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
 
 
 \title{%
@@ -46,46 +55,46 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 
 \chapter{Vector Spaces}
 \section{(Real) Vector Space}
-\settag{1.1.1}
 \begin{enumerate}
+    \settag{1.1.1}
     \item{\textbf{Definition of real vector space:}} A real vector space is a set $V$ together with
     \begin{enumerate}
-        \item \textbf{Closure under vector addition:} an operation called vector addition, which for each pair of vectors $\vec{x}, \vec{y}\in V$ produces another vector in $V$ denoted $\vec{x} + \vec{y}$, (i.e. $\forall \vec{x}, \vec{y}\in V, \vec{x} + \vec{y} \in V$) and
-        \item \textbf{Closure under scalar multiplication:} an operation called multiplication by a scalar (a real number), which for each vector $\vec{x}\in V$, an each scalar $c\in \mathbb{R}$ produces another vector in $V$ denoted $c\vec{x}$. (i.e. $\forall \vec{x}\in V, \forall c \in \mathbb{R}, c \vec{x} \in V$)
+        \item \textbf{Closure under vector addition:} an operation called vector addition, which for each pair of vectors $\mathbf{x}, \mathbf{y}\in V$ produces another vector in $V$ denoted $\mathbf{x} + \mathbf{y}$, (i.e. $\forall \mathbf{x}, \mathbf{y}\in V, \mathbf{x} + \mathbf{y} \in V$) and
+        \item \textbf{Closure under scalar multiplication:} an operation called multiplication by a scalar (a real number), which for each vector $\mathbf{x}\in V$, an each scalar $c\in \mathbb{R}$ produces another vector in $V$ denoted $c\mathbf{x}$. (i.e. $\forall \mathbf{x}\in V, \forall c \in \mathbb{R}, c \mathbf{x} \in V$)
     \end{enumerate}
     Furthermore, the two operations must satisfy the following axioms:(important)
     %\begin{enumerate}
         %\item For all vectors \textbf{x, y}, and \textbf{z} $\in V$, %(\textbf{x}+\textbf{y})+\textbf{x} 
     %\end{enumerate}
     \begin{enumerate}
-        \item $\forall \vec{x}, \vec{y}, \vec{z} \in V, (\vec{x} + \vec{y}) + \vec{z} = \vec{x} + (\vec{y} + \vec{z})$
-        \item $\forall \vec{v}, \vec{y} \in V, \vec{x} + \vec{y} = \vec{y} + \vec{x}$
-        \item $\exists \vec{0} \in V s.t. \forall \vec{x} \in V, \vec{x} + \vec{0} = \vec{x}$ (Note that this property is a.k.a existence of additive identity)
-        \item $\forall \vec{x} \in V, \exists (-\vec{x}) \in V~s.t.~\vec{x} + (-\vec{x}) = \vec{0}$ (Note that this property is a.k.a existence of additive inverse)
-        \item $\forall \vec{x}, \vec{y} \in V, c \in \mathbb{R}, c(\vec{x} + \vec{y}) = c\vec{x} + c\vec{y}$
-        \item $\forall \vec{x} \in V, c,d \in \mathbb{R}, (c + d)\vec{x} = c\vec{x} + d\vec{x}$
-        \item $\forall \vec{x} \in V, c,d \in \mathbb{R}, (cd)\vec{x} = c(d\vec{x})$
-        \item $\forall \vec{x} \in V, 1\vec{x} = \vec{x}$
+        \item $\forall \mathbf{x}, \mathbf{y}, \mathbf{z} \in V, (\mathbf{x} + \mathbf{y}) + \mathbf{z} = \mathbf{x} + (\mathbf{y} + \mathbf{z})$
+        \item $\forall \mathbf{v}, \mathbf{y} \in V, \mathbf{x} + \mathbf{y} = \mathbf{y} + \mathbf{x}$
+        \item $\exists \mathbf{0} \in V s.t. \forall \mathbf{x} \in V, \mathbf{x} + \mathbf{0} = \mathbf{x}$ (Note that this property is a.k.a existence of additive identity)
+        \item $\forall \mathbf{x} \in V, \exists (-\mathbf{x}) \in V~s.t.~\mathbf{x} + (-\mathbf{x}) = \mathbf{0}$ (Note that this property is a.k.a existence of additive inverse)
+        \item $\forall \mathbf{x}, \mathbf{y} \in V, c \in \mathbb{R}, c(\mathbf{x} + \mathbf{y}) = c\mathbf{x} + c\mathbf{y}$
+        \item $\forall \mathbf{x} \in V, c,d \in \mathbb{R}, (c + d)\mathbf{x} = c\mathbf{x} + d\mathbf{x}$
+        \item $\forall \mathbf{x} \in V, c,d \in \mathbb{R}, (cd)\mathbf{x} = c(d\mathbf{x})$
+        \item $\forall \mathbf{x} \in V, 1\mathbf{x} = \mathbf{x}$
     \end{enumerate}
     \tbf{Remark.} Note that here we are not explicitly defining a vector space to be non-empty, however, if a set ever fails to have a larger than zero cardinality, it must not be a vector space. This is a consequence of axiom $(c)$, the existence of the one and only zero vector in the space.
     
     \settag{1.1.6}
-    \item \textbf{Propositions for a R-v.s.} Let $V$ be a vector space. Then 
+    \para{Propositions for a R-v.s.} Let $V$ be a vector space. Then 
     \begin{enumerate}
         \item The zero vector is unique. Note that it might not necessarily be actually the zero vector in $\mathbb{R}^n$ that we are somewhat used to use.\newline
-        \tit{\underline{Proof:}} Suppose, for the sake of contradiction, that $\vec{a},\vec{b}$ are two \tit{different} zero vectors of the vector space $V$. Then, by the definition of zero vector, we have 
+        \tit{\underline{Proof:}} Suppose, for the sake of contradiction, that $\mathbf{a},\mathbf{b}$ are two \tit{different} zero vectors of the vector space $V$. Then, by the definition of zero vector, we have 
         \begin{equation*}
-            \forall \vec{x}\in V,\vec{x} +\vec{a} = \vec{x} \wedge \vec{x} + \vec{b} = \vec{x}
+            \forall \mathbf{x}\in V,\mathbf{x} +\mathbf{a} = \mathbf{x} \wedge \mathbf{x} + \mathbf{b} = \mathbf{x}
         \end{equation*}
-        Simple algebraic manipulation yields us $\vec{x} + \vec{a} = \vec{a} + \vec{x} \implies \vec{a} = \vec{b}$ $\longrightarrow\!\longleftarrow$ Contradiction! \qed
+        Simple algebraic manipulation yields us $\mathbf{x} + \mathbf{a} = \mathbf{a} + \mathbf{x} \implies \mathbf{a} = \mathbf{b}$ $\longrightarrow\!\longleftarrow$ Contradiction! \qed
         
-        \item $\forall \vec{x} \in V, 0\vec{x}=0$ \newline
-        \tit{\underline{Proof:}} We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields us $\vec{0} = 0\vx$ as wanted. \qed
+        \item $\forall \mathbf{x} \in V, 0\mathbf{x}=0$ \newline
+        \tit{\underline{Proof:}} We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields us $\mathbf{0} = 0\vx$ as wanted. \qed
         
-        \item $\forall \vec{x} \in V, $ the additive inverse is unique. Note that it might not necessarily be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use. \newline
+        \item $\forall \mathbf{x} \in V, $ the additive inverse is unique. Note that it might not necessarily be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use. \newline
         \tit{\underline{Proof:}} 
         
-        \item $\forall \vec{x} \in V,~\forall c\in \mathbb{R}, ~(-c)\vec{x}=~-(c\vec{x})$ \newline
+        \item $\forall \mathbf{x} \in V,~\forall c\in \mathbb{R}, ~(-c)\mathbf{x}=~-(c\mathbf{x})$ \newline
         \tit{\underline{Proof:}} 
         
     \end{enumerate}
@@ -107,7 +116,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.2.8}
         \item \textbf{Quick check rule for a subspace.} Let $V$ be a vector subspace, and let $W$ be a \textbf{non empty} subset of $V$. Then $W$ is a subspace of $V$ if and only if 
         \begin{equation*}
-            \forall \vec{x}, \vec{y}\in W,~\forall c\in \R, \text{ we have } c\vec{x}+\vec{y}\in W
+            \forall \mathbf{x}, \mathbf{y}\in W,~\forall c\in \R, \text{ we have } c\mathbf{x}+\mathbf{y}\in W
         \end{equation*}
         \settag{1.2.9}
         \item \textbf{Remark on the necessary condition of non-emptiness of subspace.} According to the definition of vector space that we gave in 1.1.1, a vector space must contain an additive identity element, hence it is necessary that we ensure $W\subseteq V$(from 1.2.6) is not an empty set.
@@ -125,10 +134,10 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.3.1}
         \item \textbf{Definitions regarding L.C. and derived spans.} Let $S$ be a subset of a vector space $V$, that is $S\subseteq V$.
         \begin{enumerate}
-            \item a \textit{linear combination} of vectors in $S$ is any sum $a_1\vec{x}_1 + ... + a_n\vec{x}_n$, where the $a_i \in \R$, and the $x_i \in S$.
+            \item a \textit{linear combination} of vectors in $S$ is any sum $a_1\mathbf{x}_1 + ... + a_n\mathbf{x}_n$, where the $a_i \in \R$, and the $x_i \in S$.
             \item we define the $Span$ of a set of vectors as follows to consider the special case of $S\stackrel{?}{=}\emptyset \in V$.
             \newline \underline{\tit{Case1: $S\neq \emptyset$:}} In this case, we define $Span(S)$ to be all possible linear combinations using vectors in $S$.\newline
-            \underline{\tit{Case2: $S= \emptyset$:}} In this case, we define $Span(S = \emptyset)=\{\vec{0}\}$. We call this the zero-space.
+            \underline{\tit{Case2: $S= \emptyset$:}} In this case, we define $Span(S = \emptyset)=\{\mathbf{0}\}$. We call this the zero-space.
             
             \item If $W=Span(S)$, we say $S$ \textit{spans(\text{or} generates)} $W$.
         \end{enumerate}
@@ -139,7 +148,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.3.5}
         \item \textbf{Sum of sets(with application to subs-paces).} Let $W_1\wedge W_2$ be sub spaces of a vector space $V$. The sum of $W_1$ and $W_2$ is the set
         \begin{center}
-            $W_1+W_2 :=\{\vec{x}\in V |\vec{x}=\vec{x_1}+\vec{x_2}, \text{for some } \vec{x_1}\in W_1, \vec{x_2} \in W_2\}$
+            $W_1+W_2 :=\{\mathbf{x}\in V |\mathbf{x}=\mathbf{x_1}+\mathbf{x_2}, \text{for some } \mathbf{x_1}\in W_1, \mathbf{x_2} \in W_2\}$
         \end{center}
         We think of the sum of the two sub-spaces(the two sets) as the set of vectors that can be built up from the vectors in $W_1$ and $W_2$ by linear combinations. Conversely, the vectors in the set $W_1+W_2$ are precisely the vectors that can be broken down into the sum of a vector in $W_1$ and a vector in $W_2$. One may find it helpful to view this as an analogue to a Cartesian product of the two set with a new constraint on the result.
         
@@ -153,13 +162,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.3.9}
         \item \textbf{The sum of sub-spaces is also a subspace.} Let $W_1$ and $W_2$ be sub-spaces of a vector space $V$. Then $W_1 + W_2$ is also a subspace of $V$.\newline
         \underline{\textit{Proof:}}\newline
-        It is clear that $W_1 + W_2$ is non-empty, since neither $W_1$ nor $W_2$ is empty. Let $\vec{x}, \vec{y}$ be two vectors in $W_1+W_2$, let $c\in \R$. By our choice of $\vec{x}\text{and } \vec{y}$, we have
+        It is clear that $W_1 + W_2$ is non-empty, since neither $W_1$ nor $W_2$ is empty. Let $\mathbf{x}, \mathbf{y}$ be two vectors in $W_1+W_2$, let $c\in \R$. By our choice of $\mathbf{x}\text{and } \mathbf{y}$, we have
         \begin{align*}
-            c\vec{x} + \vec{y} & = c(\vec{x}_1 + \vec{x}_2) + (\vec{y_1} + \vec{y_2}) \\
-            & = (c\vec{x}_1 + \vec{y}_1) + (c\vec{x}_2 + \vec{y}_2) \\
+            c\mathbf{x} + \mathbf{y} & = c(\mathbf{x}_1 + \mathbf{x}_2) + (\mathbf{y_1} + \mathbf{y_2}) \\
+            & = (c\mathbf{x}_1 + \mathbf{y}_1) + (c\mathbf{x}_2 + \mathbf{y}_2) \\
             &\in W_1+W_2
         \end{align*}
-        Since $W_1$ and $W_2$ are sub-spaces of $V$, we have $(c\vec{x}_1 + \vec{y}_1) \in W_1\wedge (c\vec{x}_2 + \vec{y}_2)\in W_2$. Then by (1.2.8), we see that indeed $W_1 + W_2$ is a subspace of $V$. \qed
+        Since $W_1$ and $W_2$ are sub-spaces of $V$, we have $(c\mathbf{x}_1 + \mathbf{y}_1) \in W_1\wedge (c\mathbf{x}_2 + \mathbf{y}_2)\in W_2$. Then by (1.2.8), we see that indeed $W_1 + W_2$ is a subspace of $V$. \qed
         
         \settag{1.3.10}
         \item \textbf{Remark.} In general, if $W_1$ and $W_2$ are sub-spaces of $V$, then $W_1 \cup W_2$ will not be a subspace of $V$. For example, consider the two sub-spaces of $\R^2$ given in example (1.3.6). In that case $W_1\cup W_2$ is the union of two lines through the origin in $\R^2$. 
@@ -185,24 +194,24 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.4.2}
         \item \textbf{Algebraic definition of linear dependence.} Let $V$ be a vector space, and let $S\subseteq V$.
             \begin{enumerate}
-                \item A \textit{linear dependence} among the vectors of $S$ is an equation $a_1\vec{x} + ... + a_n\vec{x}_n = \vec{0}$ where the $x_i\in S$, and the $a_i\in \R$ are not all zero(i.e., at least one of the $a_i\neq 0$). In familiar\footnote{Familiar from MAT223, Prof. Jason Siefken's IBL(Inquiry Based Learning) notes.} words, there exists a non-trivial solution to the equation mentioned above.
+                \item A \textit{linear dependence} among the vectors of $S$ is an equation $a_1\mathbf{x} + ... + a_n\mathbf{x}_n = \mathbf{0}$ where the $x_i\in S$, and the $a_i\in \R$ are not all zero(i.e., at least one of the $a_i\neq 0$). In familiar\footnote{Familiar from MAT223, Prof. Jason Siefken's IBL(Inquiry Based Learning) notes.} words, there exists a non-trivial solution to the equation mentioned above.
                 \item the set $S$ is said to be \textit{linearly dependent} if there exists a linear dependence among the vectors in $S$.
             \end{enumerate}
             \tbf{Remark: }It can be shown that the geometric\footnote{A set of vectors is said to be dependent of each other there exists a vector in this set, that it is in the Span of all other vectors in the set. I.e., There is some vectors in this set that are "redundant", it's position can be taken by some linear combination of the other vectors in the set.} definition and this are, in-fact, equivalent to each other. I will now produce the proof. \newline
         \tit{\underline{Proof of equivalence of definitions:}} \newline
         Let $V$ be a vector space, and let $S\subseteq V$. Consider the following equation:
         \begin{align*}
-            a_1\vec{x}_1 + a_2\vec{x}_2 + ... + a_n\vec{x}_n &= 0\text{, where } \exists a_i\neq 0 \\
-            \text{(WLOG, assume that } a_n &\neq \vec{0}\text{)}\\
-            \implies \frac{a_1\vec{x}_1 + a_2\vec{x}_2 + ... + a_n\vec{x}_n}{a_n}&=\vec{0}\\
-            \implies \vec{x}_n &= -\sum_{i=1}^{n-1}a_i\vec{x}_i
+            a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + ... + a_n\mathbf{x}_n &= 0\text{, where } \exists a_i\neq 0 \\
+            \text{(WLOG, assume that } a_n &\neq \mathbf{0}\text{)}\\
+            \implies \frac{a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + ... + a_n\mathbf{x}_n}{a_n}&=\mathbf{0}\\
+            \implies \mathbf{x}_n &= -\sum_{i=1}^{n-1}a_i\mathbf{x}_i
         \end{align*}
-        Notice that the result $\vec{x}_n$ is in terms of all the other $(n-1)$ vectors in the set, hence a linear combination of those vectors, and this completes the proof.
+        Notice that the result $\mathbf{x}_n$ is in terms of all the other $(n-1)$ vectors in the set, hence a linear combination of those vectors, and this completes the proof.
         \qed\newline
         \textbf{Re-Remark: }We can also use this proof as an argument towards the following problem: Show that at least one of the vectors in a linearly dependent set is redundant. We could take take a similar proof and argue that the linear combination could be written without at least one of the vectors.
         
         \settag{1.4.4}
-        \item \textbf{Algebraic definition of linear independence.} Let $V$ be a vector space, and $S\subseteq V$. Then $S$ is \textit{linearly independent} if whenever we have $a_i\in \R$ and $x_i\in S$ such that $a_1\vec{x}_1+...+a_n\vec{x}_n = \vec{0}$, then $a_i = 0,~\forall i$. A more conceivable way to understand this is if the aforementioned equation exists and only exists a set of trivial solution then the vectors involved in the equation are \textit{linearly independent}. \newline \tbf{Remark: }A set of vector is linearly independent \tit{if and only if} it is not linearly dependent.
+        \item \textbf{Algebraic definition of linear independence.} Let $V$ be a vector space, and $S\subseteq V$. Then $S$ is \textit{linearly independent} if whenever we have $a_i\in \R$ and $x_i\in S$ such that $a_1\mathbf{x}_1+...+a_n\mathbf{x}_n = \mathbf{0}$, then $a_i = 0,~\forall i$. A more conceivable way to understand this is if the aforementioned equation exists and only exists a set of trivial solution then the vectors involved in the equation are \textit{linearly independent}. \newline \tbf{Remark: }A set of vector is linearly independent \tit{if and only if} it is not linearly dependent.
         
         \settag{1.4.7}
         \item \textbf{Propositions regarding linear (in)dependency.}
@@ -211,9 +220,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
                 \item Let $S$ be a linearly independent subset of vector space $V$ and let $S'$ be another subset of $V$ that is contained in $S$. Then $S'$ is also linearly independent.
             \end{enumerate}
         \underline{\tit{Proof of (a):}}
-        Since $S$ is linearly dependent, there exists a linear dependence among the vectors in $S$, say, $a_1\vec{x}_1 + ...+ a_n\vec{x}_n = \vec{0}$. Since $S$ is contained in $S'$, this is also a linear dependence among the vectors in $S'$. Hence $S'$ is linear dependent.\qed\newline
+        Since $S$ is linearly dependent, there exists a linear dependence among the vectors in $S$, say, $a_1\mathbf{x}_1 + ...+ a_n\mathbf{x}_n = \mathbf{0}$. Since $S$ is contained in $S'$, this is also a linear dependence among the vectors in $S'$. Hence $S'$ is linear dependent.\qed\newline
         \underline{\tit{Proof of (b):}}
-        Consider any equation $a_1\vec{x}_1 + ...+ a_n\vec{x}_n = \vec{0}$, where the $a_i \in \R,~\vec{x}_i \in S'$. Since $S'$ is contained in $S$, we can also view this as a potential linear dependence among vectors in $S$. However, $S$ is linearly independent, so it follows that all the $a_i = 0\in \R$. Hence $S'$ is also linearly independent.\qed
+        Consider any equation $a_1\mathbf{x}_1 + ...+ a_n\mathbf{x}_n = \mathbf{0}$, where the $a_i \in \R,~\mathbf{x}_i \in S'$. Since $S'$ is contained in $S$, we can also view this as a potential linear dependence among vectors in $S$. However, $S$ is linearly independent, so it follows that all the $a_i = 0\in \R$. Hence $S'$ is also linearly independent.\qed
         
         \settag{1.4.*}
         \item \tbf{Example of showing linear independence.(1)} Show that the set $\{1,x,x^2,x^3,...,x^n\}$ is linearly independent. We consider the following equation:
@@ -254,10 +263,10 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.5.1}
         \item \tbf{Definition of (homogeneous) SLEs\footnote{System of Linear Equations}} A system of $m$ equations in $n$ unknowns $x_1,...,x_n$ of the form:
         \begin{align*}
-            a_{11}\vec{x_1}+...+a_{1n}\vec{x_n} &= b_1 \\
-            a_{21}\vec{x_1}+...+a_{2n}\vec{x_n} &= b_2 \\
+            a_{11}\mathbf{x_1}+...+a_{1n}\mathbf{x_n} &= b_1 \\
+            a_{21}\mathbf{x_1}+...+a_{2n}\mathbf{x_n} &= b_2 \\
             &\mbox{...} \\
-            a_{m_1}\vec{x_1}+...+a_{mn}\vec{x_n} &= b_m
+            a_{m_1}\mathbf{x_1}+...+a_{mn}\mathbf{x_n} &= b_m
         \end{align*}
         where the $a_{ij},~b_i\in \R$, is called a \tit{system of linear equations.} The scalars $a_{ij}$ are called coefficients or \tit{weights} of the equations. We call this system \textbf{homogeneous} if and only if all the $b_i$ are 0's.
         
@@ -283,32 +292,32 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item \tbf{Definition of basis.} A subset $S$ of a vector space $V$ is called a basis if $V=Span(S)$ and the set $S$ is linearly independent.
         
         \settag{1.6.3}
-        \item \tbf{Theorem. }Let $V$ be a vector space, and let $S$ be a non-empty subset of $V$. Then $S$ is a basis of $V$ if and only if $\forall \vec{x} \in V, \vec{x}$ can be written \tit{uniquely} as a linear combination of the vectors in $S$.
+        \item \tbf{Theorem. }Let $V$ be a vector space, and let $S$ be a non-empty subset of $V$. Then $S$ is a basis of $V$ if and only if $\forall \mathbf{x} \in V, \mathbf{x}$ can be written \tit{uniquely} as a linear combination of the vectors in $S$.
         
         \settag{1.6.6}
         \item \tbf{Theorem. }Let $V$ be a vector space that has a finite spanning set, and let $S$ be a linearly independent subset of $V$. Then there exists a basis $S'$ of $V$, such that $S\subseteq S'.$ Note that this theorem is can be summarized as follows: Every linearly independent set of vectors could be extended to a basis. We do so by adding yet another vector that is linearly independent to all the vectors already in the set, but notice that this process should possibly be repeated but \tit{not} infinite.
         
         \settag{1.6.8}
-        \item \tbf{Lemma on linear independence towards a set and a vector.} Let $S$ be a linearly independent subset of $V$ and let $\vec{x}\in V$, but $\vec{x} \notin S$. Then $S\cup \{\vec{x} \}$ is linearly independent if and only if $\vec{x} \notin Span(S)$.
+        \item \tbf{Lemma on linear independence towards a set and a vector.} Let $S$ be a linearly independent subset of $V$ and let $\mathbf{x}\in V$, but $\mathbf{x} \notin S$. Then $S\cup \{\mathbf{x} \}$ is linearly independent if and only if $\mathbf{x} \notin Span(S)$.
         
         \settag{1.6.10}
         \item \tbf{Theorem on cardinality of linearly independent set.} Let $V$ be a vector space and let $S$ be a spanning set for $V$, which has $m$ elements. Then no linearly independent set in $V$ can have more than $m$ elements.\newline
         \tit{\underline{Proof:}}\newline
         To show that there are no linearly independent set in $V$ that can have more than $m$ elements in it, it suffices to show that every set in $V$ that has more than $m$ elements in it is linearly dependent. Let $S=\{y_1,...,y_m\}$ and $S'=\{y_1,...,y_n\}\subset V$ where $n>m$. Now we consider the following equation:
         \begin{equation}
-            a_1\vec{x}_1 + ... + a_n\vec{x}_n = \vec{0}~~~~\text{    where }\vec{x}_i \in S',a_i\in \R
+            a_1\mathbf{x}_1 + ... + a_n\mathbf{x}_n = \mathbf{0}~~~~\text{    where }\mathbf{x}_i \in S',a_i\in \R
         \end{equation}
         Since $S$ is a spanning set for $V$, then $\exists b_{ij}\in \R,~s.t.~\forall 1\leq i \leq m$:
         \begin{equation*}
-            \vec{x}_i = b_{i1}\vec{y}_1 + ... + b_{im}\vec{y}_m = \sum_{j=1}^{m}b_{ij}\vec{y}_j
+            \mathbf{x}_i = b_{i1}\mathbf{y}_1 + ... + b_{im}\mathbf{y}_m = \sum_{j=1}^{m}b_{ij}\mathbf{y}_j
         \end{equation*}
-        Then we substitute the $\vec{x}_i$'s into equation (1.1):
+        Then we substitute the $\mathbf{x}_i$'s into equation (1.1):
         \begin{equation}
-            a_1\left(\sum_{j=1}^{m}b_{1j}\vec{y}_j\right) + ... +  a_n\left(\sum_{j=1}^{m}b_{nj}\vec{y}_j\right) = \vec{0}
+            a_1\left(\sum_{j=1}^{m}b_{1j}\mathbf{y}_j\right) + ... +  a_n\left(\sum_{j=1}^{m}b_{nj}\mathbf{y}_j\right) = \mathbf{0}
         \end{equation}
         Rearranging (1.2), we have:
         \begin{equation}
-            \left(\sum_{j=1}^{n}b_{1j}a_{j}\right)\vec{y}_1 + ... +  \left(\sum_{j=1}^{n}b_{mj}a_{j}\right)\vec{y}_m = \vec{0}
+            \left(\sum_{j=1}^{n}b_{1j}a_{j}\right)\mathbf{y}_1 + ... +  \left(\sum_{j=1}^{n}b_{mj}a_{j}\right)\mathbf{y}_m = \mathbf{0}
         \end{equation}
         Now we consider the following SLE(The coefficients of (1.3)):
         \begin{center}
@@ -339,13 +348,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{enumerate}
             \item If $V$ is a vector space with some finite basis (possibly empty), we sat $V$ is \tit{finite-dimensional}. We say the vector space is \tit{infinite-dimensional} otherwise.
             \item Let $V$ be a \tit{finite-dimensional} vector space. The dimension of $V$, denoted as dim($V$), is the number of elements in a (hence any) basis of $V$.
-            \item If $V=\{\vec{0}\}$, we define dim($V$)$=0$. \tbf{Remark: }Please note that is consistent with our definition of span of a empty set. We defined the span of empty set to be $\{\vec{0}\}$, and hence $\{\vec{0}\}$ is the resulting space of all the possibly linear combination of vectors in the empty set(where there is none). Then the cardinality of the empty set(which is zero) is here defined as the dimension of the zero vector space.
+            \item If $V=\{\mathbf{0}\}$, we define dim($V$)$=0$. \tbf{Remark: }Please note that is consistent with our definition of span of a empty set. We defined the span of empty set to be $\{\mathbf{0}\}$, and hence $\{\mathbf{0}\}$ is the resulting space of all the possibly linear combination of vectors in the empty set(where there is none). Then the cardinality of the empty set(which is zero) is here defined as the dimension of the zero vector space.
         \end{enumerate}
         
         \settag{1.6.13}
         \item \tbf{Examples on dimensions of vector spaces. }If we have a basis of $V$, then computing dim($V$) is simply a matter of counting the number of vectors in a (hence any) basis for the vectors space. We explore this by looking at the following examples
         \begin{enumerate}
-            \item For each $n$, dim($\R^n$) $=n$. This is a consequence of the standard basis for $\R^n$ is of the form: $\{\vec{e}_1, ..., \vec{e}_n\}$ has $n$ elements in it.
+            \item For each $n$, dim($\R^n$) $=n$. This is a consequence of the standard basis for $\R^n$ is of the form: $\{\mathbf{e}_1, ..., \mathbf{e}_n\}$ has $n$ elements in it.
             \item dim($P_n(\R)$) $=n+1$, since $|\{1, x^1, x^2, ..., x^n\}|=n+1$.\footnote{The absolute value marks around a set returns the cardinality of the set.}
             \item The vector spaces $P(\R)$\footnote{Here $P(\R)$ means the vector space of all polynomials that are $\R \xrightarrow{} \R$.}$,~C^n(\R)$, where $n\in \mathbb{N}^{\geq 0}$, are not of finite dimension, and hence are called \tit{infinite dimensional}.
         \end{enumerate}
@@ -374,35 +383,35 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{2.1.1}
         \item \tbf{Definition of linear transformation.\footnote{Familiar from MAT223}} A function $T:V\xrightarrow{}W$ is called a \tit{linear mapping} or a \tit{linear transformation} if it satisfies:
         \begin{enumerate}
-            \item $\forall \vec{u},\vec{v}\in V,~T(\vec{u} + \vec{v}) = T(\vec{u}) + T(\vec{u})$
-            \item $\forall \alpha \in \R, \vec{v} \in V,~ T(\alpha\vec{v}) = \alpha T(\vec{v})$
+            \item $\forall \mathbf{u},\mathbf{v}\in V,~T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{u})$
+            \item $\forall \alpha \in \R, \mathbf{v} \in V,~ T(\alpha\mathbf{v}) = \alpha T(\mathbf{v})$
         \end{enumerate}
         
         \settag{2.1.2}
         \item \tbf{Proposition: alternative definition of L.T.s} A function $T:V\xrightarrow{}W$ is a linear transformation if and only if 
         \begin{equation*}
-            \forall \alpha,\beta \in \R, \forall \vec{u}, \vec{v} \in V, T(\alpha \vec{u}+\beta \vec{v})=\alpha T(\vec{u}) + \beta T(\vec{v}).
+            \forall \alpha,\beta \in \R, \forall \mathbf{u}, \mathbf{v} \in V, T(\alpha \mathbf{u}+\beta \mathbf{v})=\alpha T(\mathbf{u}) + \beta T(\mathbf{v}).
         \end{equation*}
         \tit{\underline{Proof($\implies$):}}\newline
-        Assuming that $T$ is a linear transformation, then the definition in (2.1.1) must satisfy. Let $\alpha,\beta \in \R, \vec{u},\vec{v}\in V$, then: 
+        Assuming that $T$ is a linear transformation, then the definition in (2.1.1) must satisfy. Let $\alpha,\beta \in \R, \mathbf{u},\mathbf{v}\in V$, then: 
         \begin{align*}
-            T(\alpha\vec{u} + \beta\vec{v}) &= T(\alpha\vec{u}) + T(\beta\vec{u})~~~~\text{// by (a)} \\
-            &= \alpha T(\vec{u}) + \beta T(\vec{v})~~~~\text{// by (b)}
+            T(\alpha\mathbf{u} + \beta\mathbf{v}) &= T(\alpha\mathbf{u}) + T(\beta\mathbf{u})~~~~\text{// by (a)} \\
+            &= \alpha T(\mathbf{u}) + \beta T(\mathbf{v})~~~~\text{// by (b)}
         \end{align*}
         \tit{\underline{Proof($\impliedby$):}}\newline
-        Assuming the alternative definition, we want to show the definition given in (2.1.1). Since the quantifier is $\forall$, we can take $\alpha = \beta  =1, \text{(arbitrary)}~\vec{u},\vec{v}\in V$ in the alternative definition which directly yields us (a) of (2.1.1). Then we take $\alpha \in \R, \beta =0, \vec{u}, \vec{v}\in V$. In this case, we want to show that $T(\alpha \vec{u}) = \alpha T(\vec{u})$. We proceed as follows: 
+        Assuming the alternative definition, we want to show the definition given in (2.1.1). Since the quantifier is $\forall$, we can take $\alpha = \beta  =1, \text{(arbitrary)}~\mathbf{u},\mathbf{v}\in V$ in the alternative definition which directly yields us (a) of (2.1.1). Then we take $\alpha \in \R, \beta =0, \mathbf{u}, \mathbf{v}\in V$. In this case, we want to show that $T(\alpha \mathbf{u}) = \alpha T(\mathbf{u})$. We proceed as follows: 
         \begin{align*}
-            T(\alpha\vec{u} + \beta\vec{v}) &= T(\alpha\vec{u} + 0\vec{v}) \\
-            &= \alpha T(\vec{u}) + 0T(\vec{u}) \\
-            &= \alpha T(\vec{u})
+            T(\alpha\mathbf{u} + \beta\mathbf{v}) &= T(\alpha\mathbf{u} + 0\mathbf{v}) \\
+            &= \alpha T(\mathbf{u}) + 0T(\mathbf{u}) \\
+            &= \alpha T(\mathbf{u})
         \end{align*}
-        Since $\alpha\in \R, \vec{u}\in V$ are arbitrary, this completes the proof. \qed
+        Since $\alpha\in \R, \mathbf{u}\in V$ are arbitrary, this completes the proof. \qed
         
         \settag{2.1.3}
         \item \tbf{Corollary.} A function $T:V\xrightarrow{}W$ is a linear transformation if and only if
         \begin{equation}
-            \forall a_1,...,a_k\in \R, \forall \vec{v}_1, ...,\vec{v}_k\in V:~ 
-            T\left(\sum_{i=1}^{k}a_i\vec{v}_i\right) = \sum_{i=1}^{k}a_i T\left(\vec{v}_i\right)
+            \forall a_1,...,a_k\in \R, \forall \mathbf{v}_1, ...,\mathbf{v}_k\in V:~ 
+            T\left(\sum_{i=1}^{k}a_i\mathbf{v}_i\right) = \sum_{i=1}^{k}a_i T\left(\mathbf{v}_i\right)
         \end{equation}
         \tit{\underline{Proof:}} To show this if and only if relationship, we have to consider the implication of both directions. Since $(2.1.2)$ is just a special case of $(2.1.3)$ then we are done in proving $(2.1.3)\implies (2.1.2)$. We will prove the other direction by mathematical induction (on $k$) to generalize the case of $k=2$ to arbitrary $k\in \double{N}$. \newline
         Define $P(k): \text{``}(2.1)~\text{holds"}$. \newline
@@ -410,35 +419,35 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \tbf{\underline{BASIS CASE:}} $k = 2$. In this case the wanted equality is the same as the one proved in $(2.1.2)$, so $P(2)$. \newline
         \tbf{\underline{INDUCTIVE STEP:}} Let $k\in \double{N}^{\geq 2}$, assume $P(k-1)$, we want to show that $P(k)$ follows.\newline
         \begin{align*}
-            T\left(\sum_{i=1}^{k}a_i\vec{v}_i\right) &= T\left(a_k\vec{v}_k + \sum_{i=1}^{k-1}a_i\vec{v}_i\right) \\
-            &= a_k T(\vec{v}_k) + T\left(\sum_{i=1}^{k-1}a_i\vec{v}_i\right)~~~~\text{// By $(2.1.1)$} \\
-            &= a_k T(\vec{v}_k) + \sum_{i=1}^{k-1}a_i T\left(\vec{v}_i\right)~~~~~~\text{// By $P(k-1)$}\\
-            &= \sum_{i=1}^{k}a_i T\left(\vec{v}_i\right)
+            T\left(\sum_{i=1}^{k}a_i\mathbf{v}_i\right) &= T\left(a_k\mathbf{v}_k + \sum_{i=1}^{k-1}a_i\mathbf{v}_i\right) \\
+            &= a_k T(\mathbf{v}_k) + T\left(\sum_{i=1}^{k-1}a_i\mathbf{v}_i\right)~~~~\text{// By $(2.1.1)$} \\
+            &= a_k T(\mathbf{v}_k) + \sum_{i=1}^{k-1}a_i T\left(\mathbf{v}_i\right)~~~~~~\text{// By $P(k-1)$}\\
+            &= \sum_{i=1}^{k}a_i T\left(\mathbf{v}_i\right)
         \end{align*}
         So $P(k)$ follows in this case.
         \qed
         
         \settag{2.1.9}
-        \item \tbf{Angle between two vectors.} If $\vec{0}\neq \vec{a}\in \R^2$ and $\vec{0}\neq \vec{b}\in \R^2$, then the angle $\theta$ between them must be\footnote{The angle brackets here denotes the inner product of vectors}
+        \item \tbf{Angle between two vectors.} If $\mathbf{0}\neq \mathbf{a}\in \R^2$ and $\mathbf{0}\neq \mathbf{b}\in \R^2$, then the angle $\theta$ between them must be\footnote{The angle brackets here denotes the inner product of vectors}
         \begin{equation*}
-            \theta = \arccos\left( \frac{\left<\vec{a},\vec{b}\right>}{\lVert\vec{a}\rVert \cdot \lVert\vec{b}\rVert}\right)
+            \theta = \arccos\left( \frac{\left<\mathbf{a},\mathbf{b}\right>}{\lVert\mathbf{a}\rVert \cdot \lVert\mathbf{b}\rVert}\right)
         \end{equation*}
         \tbf{Remark.} Notice that this definition could also be extended to $\R^3$.
         
         \settag{2.1.10}
-        \item \tbf{Corollary on orthogonality of vectors.} If $\R^2\ni \vec{a}\neq \vec{0}$ and $\R^2\ni \vec{b}\neq \vec{0}$, then the angle $\theta$ between them is a right angle if and only if $\left<\vec{a},\vec{b}\right>=0$.\newline
+        \item \tbf{Corollary on orthogonality of vectors.} If $\R^2\ni \mathbf{a}\neq \mathbf{0}$ and $\R^2\ni \mathbf{b}\neq \mathbf{0}$, then the angle $\theta$ between them is a right angle if and only if $\left<\mathbf{a},\mathbf{b}\right>=0$.\newline
         \tbf{Remark.} Note this definition of orthogonality could be extended to all euclidean vector spaces. The orthogonal complement of a subspace is the space of all vectors that are orthogonal to every vector in the subspace. In a three-dimensional Euclidean vector space, the orthogonal complement of a line through the origin is the plane through the origin perpendicular to it, and vice versa. In four-dimensional Euclidean space, for example, the orthogonal complement of a line is a hyper-plane and vice versa, and that of a plane is a plane.
         
         \settag{2.1.14}
         \item \tbf{Proposition.} If $T:V\xrightarrow{}W$ is a linear transformation and $V$ is finite-dimensional, then $T$ is uniquely determined by its values on the members of a basis of $V$. To make this proposition more clear, we present the proof below. We will show that if $S$ and $T$ are linear transformations that take the same values on each member of a basis for $V$, then in fact $S=T$.\newline
         \tit{\underline{Proof:}} \newline
-        Let $\{ \vec{v}_1, ..., \vec{v}_k\}$ be a basis for $V$, and let $S$ and $T$ be two linear transformations that satisfy $T(\vec{v}_1)=S(\vec{v}_1), \forall i \in \{1,...,k\}$. If $\vec{v}\in V, ~\vec{v} = a_1\vec{v}_1 + ... + a_k\vec{k}$, then
+        Let $\{ \mathbf{v}_1, ..., \mathbf{v}_k\}$ be a basis for $V$, and let $S$ and $T$ be two linear transformations that satisfy $T(\mathbf{v}_1)=S(\mathbf{v}_1), \forall i \in \{1,...,k\}$. If $\mathbf{v}\in V, ~\mathbf{v} = a_1\mathbf{v}_1 + ... + a_k\mathbf{k}$, then
         \begin{align*}
-            T(\vec{v}) &= T(a_1\vec{v}_1 + ... + a_k\vec{k}) \\
-            &= a_1T(\vec{v}_1) + ... + a_k T(\vec{v}_k)~~~~\text{// Since $T$ is linear}\\
-            &= a_1S(\vec{v}_1) + ... + a_k S(\vec{v}_k) \\
-            &= S(a_1\vec{v}_1 + ... + a_k\vec{k})~~~~~~~~~~\text{//  Since $S$ is linear} \\
-            &=S(\vec{v})
+            T(\mathbf{v}) &= T(a_1\mathbf{v}_1 + ... + a_k\mathbf{k}) \\
+            &= a_1T(\mathbf{v}_1) + ... + a_k T(\mathbf{v}_k)~~~~\text{// Since $T$ is linear}\\
+            &= a_1S(\mathbf{v}_1) + ... + a_k S(\mathbf{v}_k) \\
+            &= S(a_1\mathbf{v}_1 + ... + a_k\mathbf{k})~~~~~~~~~~\text{//  Since $S$ is linear} \\
+            &=S(\mathbf{v})
         \end{align*}
         Hence $S$ and $T$ are equal as mappings from $V$ to $W$. \qed
         
@@ -447,52 +456,52 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Linear Transformations between finite dimensional vector spaces}
     \begin{enumerate}
         \settag{2.2.1}
-        \item \tbf{Proposition.} Let $T:V\xrightarrow{}W$ be a linear transformation between the finite dimensional vector spaces $V$ and $W$. If $\{\vec{v}_1,...,\vec{v}_k\}$ is a basis for $V$ and $\{\vec{w}_1,...,\vec{w}_l\}$ is a basis for $W$, then $T:V\xrightarrow{}W$ is uniquely determined by the $l\times k$ scalars used to express $T(\vec{v}_j)$, where $j\in \{1,...,k\}$, in terms of $\vec{w}_1,...,\vec{w}_l$.
+        \item \tbf{Proposition.} Let $T:V\xrightarrow{}W$ be a linear transformation between the finite dimensional vector spaces $V$ and $W$. If $\{\mathbf{v}_1,...,\mathbf{v}_k\}$ is a basis for $V$ and $\{\mathbf{w}_1,...,\mathbf{w}_l\}$ is a basis for $W$, then $T:V\xrightarrow{}W$ is uniquely determined by the $l\times k$ scalars used to express $T(\mathbf{v}_j)$, where $j\in \{1,...,k\}$, in terms of $\mathbf{w}_1,...,\mathbf{w}_l$.
         
         \settag{2.2.6}
-        \item \tbf{Matrix of a transformation w.r.t.$\alpha,\beta$.} Let $T:V\xrightarrow{}W$ be a linear transformation between finite-dimensional vector spaces $V$ and $W$, and let $\alpha = \{\vec{v}_1,...,\vec{v}_k \}$ and $\beta = \{\vec{w}_1,...,\vec{w}_l\}$, respectively, be any basis for $V$ and $W$. 
+        \item \tbf{Matrix of a transformation w.r.t.$\alpha,\beta$.} Let $T:V\xrightarrow{}W$ be a linear transformation between finite-dimensional vector spaces $V$ and $W$, and let $\alpha = \{\mathbf{v}_1,...,\mathbf{v}_k \}$ and $\beta = \{\mathbf{w}_1,...,\mathbf{w}_l\}$, respectively, be any basis for $V$ and $W$. 
         Let $a_{ij}$, where $1\leq i \leq l$ and $1\leq j \leq k$ be the $l\cdot k$ scalars that determined $T$ with respect to the bases $\alpha$ and $\beta$. The matrix whole entries are the scalars $a_{ij}$, given above, is called the \tit{matrix of the linear transformation $T$ with respect to the bases $\alpha$ for $V$ and $\beta$ for $W$}. We denote such matrix with following notation: $\left[T\right]^\beta_\alpha$. \newline 
         \tbf{Notice that}, again, $\alpha$ is a basis for $V$, the domain of the transformation and $\beta$ is a basis for $W$, the co-domain of the transformation.
         \newline
         \tbf{Remark.} This should be familiar from MAT223, where we perform transformation on each and every element in a basis for a space, and transcribe them, in terms of another basis, into a standard matrix for the transformation.
         
         \settag{2.2.15}
-        \item \tbf{Proposition: Linear Transformation on alternative basis.} Let $T:V\xrightarrow{} W$ be a linear transformation between vector spaces $V$ of dimension $k$ and $W$ of dimension $l$. Let $\alpha = \{\vec{v}_1,...,\vec{v}_k\}$ be a basis for $V$, and let $\beta = \{\vec{w}_1,...,\vec{w}_l\}$ be a basis for $W$. Then for each $\vec{v} \in V$, we have the following:
+        \item \tbf{Proposition: Linear Transformation on alternative basis.} Let $T:V\xrightarrow{} W$ be a linear transformation between vector spaces $V$ of dimension $k$ and $W$ of dimension $l$. Let $\alpha = \{\mathbf{v}_1,...,\mathbf{v}_k\}$ be a basis for $V$, and let $\beta = \{\mathbf{w}_1,...,\mathbf{w}_l\}$ be a basis for $W$. Then for each $\mathbf{v} \in V$, we have the following:
         \begin{equation*}
-            \left[T(\vec{v})\right]_\beta = \left[T\right]^\beta_\alpha\left[\vec{v}\right]_\alpha
+            \left[T(\mathbf{v})\right]_\beta = \left[T\right]^\beta_\alpha\left[\mathbf{v}\right]_\alpha
         \end{equation*}
         One can think about this in the sense that the same transformation could have been accomplished under another basis. We just have to convert the original problem into some easy to solve basis, perform the transformation under that basis, and then convert the result back. We now present the proof for this proposition.\newline
-        \tit{\underline{Proof:}} Let $\vec{v}=x_1\vec{v}_1 + ... + x_k\vec{v}_k\in V$. Then if $T(\vec{v}_j)=a_{1j}\vec{w}_1 + ... + a_{lj}\vec{w}_l$, 
+        \tit{\underline{Proof:}} Let $\mathbf{v}=x_1\mathbf{v}_1 + ... + x_k\mathbf{v}_k\in V$. Then if $T(\mathbf{v}_j)=a_{1j}\mathbf{w}_1 + ... + a_{lj}\mathbf{w}_l$, 
         \begin{align*}
-            T(\vec{v}) &= \sum_{j=1}^k x_j T(\vec{v}_j) \\
-            &= \sum_{j=1}^k x_j \left(\sum_{i=1}^{l}a_{ij}\vec{w}_i\right) \\
-            &= \sum_{i=1}^l\left(\sum_{j=1}^k x_j a_{ij} \right)\vec{w}_i
+            T(\mathbf{v}) &= \sum_{j=1}^k x_j T(\mathbf{v}_j) \\
+            &= \sum_{j=1}^k x_j \left(\sum_{i=1}^{l}a_{ij}\mathbf{w}_i\right) \\
+            &= \sum_{i=1}^l\left(\sum_{j=1}^k x_j a_{ij} \right)\mathbf{w}_i
         \end{align*}
-        Thus the $i$-th coefficient of $T(\vec{v})$ in terms of $\beta$ is $\sum_{j=1}^k x_j a_{ij}$, and
+        Thus the $i$-th coefficient of $T(\mathbf{v})$ in terms of $\beta$ is $\sum_{j=1}^k x_j a_{ij}$, and
         \begin{equation*}
-            \left[T(\vec{v})\right]_\beta = 
+            \left[T(\mathbf{v})\right]_\beta = 
             \begin{bmatrix}\sum_{j=1}^kx_ja_{1j} \\ \dots \\ \dots \\ \dots \\ \sum_{j=1}^kx_ja_{lj}\end{bmatrix}
         \end{equation*}
         \qed
         
         \settag{2.2.18}
-        \tbf{Proposition: Property of matrix \tit{times} L.C. of vectors.} Note that in this proposition, we assume the vectors and the matrix are compatible\footnote{i.e., They can \tit{always} perform the operations that we want}. Let $A$ be an $l\times k$ matrix and $\vec{u}$ and $\vec{v}$ be column vectors with $k$ entries. Then,
+        \item \tbf{Proposition: Property of matrix \tit{times} L.C. of vectors.} Note that in this proposition, we assume the vectors and the matrix are compatible\footnote{i.e., They can \tit{always} perform the operations that we want}. Let $A$ be an $l\times k$ matrix and $\mathbf{u}$ and $\mathbf{v}$ be column vectors with $k$ entries. Then,
         \begin{equation*}
-            \forall~ \text{pairs of}~a\in\R, b\in\R, A(a\vec{u} + b\vec{v}) = aA\vec{u} + bA\vv
+            \forall~ \text{pairs of}~a\in\R, b\in\R, A(a\mathbf{u} + b\mathbf{v}) = aA\mathbf{u} + bA\vv
         \end{equation*}
-        \tit{\underline{Proof:}} Since $\vec{u}, \vec{v}\in \R^k$, let them be $\vec{u} = (u_1,...,u_k)^T$ and $\vec{v} = (v_1,...,v_k)^T$.\newline 
+        \tit{\underline{Proof:}} Since $\mathbf{u}, \mathbf{v}\in \R^k$, let them be $\mathbf{u} = (u_1,...,u_k)^T$ and $\mathbf{v} = (v_1,...,v_k)^T$.\newline 
         Fix $a,b\in \R$. Then,
         \begin{align*}
-            A\left(a\vec{u} + b\vec{v}\right) &=  A\left(a\left(u_1,...,u_k\right)^T + b\left(v_1,...,v_k\right)^T\right) \\
+            A\left(a\mathbf{u} + b\mathbf{v}\right) &=  A\left(a\left(u_1,...,u_k\right)^T + b\left(v_1,...,v_k\right)^T\right) \\
             &=  A\left(\left(a\cdot u_1,...,a\cdot u_k\right)^T + \left(b \cdot v_1,...,b\cdot v_k\right)^T\right) \\
             &=  A\left(a\cdot u_1 + b \cdot v_1,...,a\cdot u_k + b\cdot v_k \right)^T \\
-            &= ... % change this vector notation!
+            &\text{\%TODO: change this vector notation and finish the proof..}
         \end{align*}
         
         \settag{2.2.19}
-        \tbf{Proposition.} Let $\alpha = \{\vv_1,...,\vv_k\}$ be a basis for $V$ and $\beta= \{\vw_1,...,\vw_l\}$ be a basis for $W$, and let $\vec{v}=x_1\vv_1+...+x_k\vv_k\in V$.
+        \item \tbf{Proposition.} Let $\alpha = \{\vv_1,...,\vv_k\}$ be a basis for $V$ and $\beta= \{\vw_1,...,\vw_l\}$ be a basis for $W$, and let $\mathbf{v}=x_1\vv_1+...+x_k\vv_k\in V$.
         \begin{enumerate}
-            \item If $A$ is an $l \times k$ matrix, then the function $T(\vec{v}) = \vec{w}$, where $\left[\vw\right]_\beta A\left[\vv\right]_\alpha$ is a linear transformation.
+            \item If $A$ is an $l \times k$ matrix, then the function $T(\mathbf{v}) = \mathbf{w}$, where $\left[\vw\right]_\beta A\left[\vv\right]_\alpha$ is a linear transformation.
             \item If $A = [S]_\alpha^\beta$ is the matrix of a transformation $S:V\xrightarrow{} W$, then the transformation $T$ constructed from $[S]_\alpha^\beta$ is equal to $S$.
             \item If $T$ is the transformation of (a) constructed from $A$, then $[T]_\alpha^\beta = A$.
         \end{enumerate}
@@ -504,9 +513,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Kernel and image}
     \begin{enumerate}
         \settag{2.3.1}
-        \item \tbf{Definition of Kernel.}\footnote{a.k.a Null Space} The \tit{kernel} of $T$, denoted Ker($T$), is the subset of $V$ consisting of all vectors $\vv\in V$ such that $T(\vv) = \vec{0}$. Writing in familiar set builder notation:
+        \item \tbf{Definition of Kernel.}\footnote{a.k.a Null Space} The \tit{kernel} of $T$, denoted Ker($T$), is the subset of $V$ consisting of all vectors $\vv\in V$ such that $T(\vv) = \mathbf{0}$. Writing in familiar set builder notation:
         \begin{equation*}
-            \text{Ker}(T) := \{\vv \in V | T(\vv) = \vec{0}\} =: \text{Null}(T)
+            \text{Ker}(T) := \{\vv \in V | T(\vv) = \mathbf{0}\} =: \text{Null}(T)
         \end{equation*}
         
         \settag{2.3.2}
@@ -514,7 +523,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \tit{\underline{Proof:}} \newline
         Since Ker($T$) $\subset V$, it suffices to show that Ker($T$) is closed under addition and scalar multiplication. Since $T$ is linear, $\forall \vu, \vv \in \text{Ker}(T)~\text{and}~a\in \R$, we have
         \begin{equation*}
-            T(\vu + a\vv) = T(\vu) + aT(\vv) = \vec{0} + a\vec{0} \implies \vu + a\vv \in \text{Ker}(T)
+            T(\vu + a\vv) = T(\vu) + aT(\vv) = \mathbf{0} + a\mathbf{0} \implies \vu + a\vv \in \text{Ker}(T)
         \end{equation*}
         \qed
         
