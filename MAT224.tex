@@ -7,7 +7,7 @@
 \usepackage{url}
 \usepackage{hyperref}
 
-% Environment, new commands
+% customized commands
 \newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
@@ -15,7 +15,12 @@
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
 \newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
-% Call settag{...} first to initialize, and then \para{} for a new paragraph
+\newcommand{\proof}{\tit{\underline{Proof:}}}
+\newcommand{\proofforward}{\tit{\underline{Proof($\implies$):}}}
+\newcommand{\proofback}{\tit{\underline{Proof($\impliedby$):}}}
+\newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
+\newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
+% Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
 \newcommand{\para}[1]{\item \tbf{#1}}
 \newcommand{\va}{\mathbf{a}}
 \newcommand{\vb}{\mathbf{b}}
@@ -82,20 +87,20 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \para{Propositions for a R-v.s.} Let $V$ be a vector space. Then 
     \begin{enumerate}
         \item The zero vector is unique. Note that it might not necessarily be actually the zero vector in $\mathbb{R}^n$ that we are somewhat used to use.\newline
-        \tit{\underline{Proof:}} Suppose, for the sake of contradiction, that $\mathbf{a},\mathbf{b}$ are two \tit{different} zero vectors of the vector space $V$. Then, by the definition of zero vector, we have 
+        \proof Suppose, for the sake of contradiction, that $\mathbf{a},\mathbf{b}$ are two \tit{different} zero vectors of the vector space $V$. Then, by the definition of zero vector, we have 
         \begin{equation*}
             \forall \mathbf{x}\in V,\mathbf{x} +\mathbf{a} = \mathbf{x} \wedge \mathbf{x} + \mathbf{b} = \mathbf{x}
         \end{equation*}
         Simple algebraic manipulation yields us $\mathbf{x} + \mathbf{a} = \mathbf{a} + \mathbf{x} \implies \mathbf{a} = \mathbf{b}$ $\longrightarrow\!\longleftarrow$ Contradiction! \qed
         
         \item $\forall \mathbf{x} \in V, 0\mathbf{x}=0$ \newline
-        \tit{\underline{Proof:}} We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields us $\mathbf{0} = 0\vx$ as wanted. \qed
+        \proof We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields us $\mathbf{0} = 0\vx$ as wanted. \qed
         
         \item $\forall \mathbf{x} \in V, $ the additive inverse is unique. Note that it might not necessarily be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use. \newline
-        \tit{\underline{Proof:}} 
+        \proof 
         
         \item $\forall \mathbf{x} \in V,~\forall c\in \mathbb{R}, ~(-c)\mathbf{x}=~-(c\mathbf{x})$ \newline
-        \tit{\underline{Proof:}} 
+        \proof 
         
     \end{enumerate}
 \end{enumerate}
@@ -125,7 +130,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item \textbf{Theorem: Intersection of sub-spaces is a subspace.} Let $V$ be a vector space. Then the intersection of any collection of sub-spaces of $V$ is a subspace of $V$.
         
         \settag{1.2.14}
-        \item \textbf{Corollary: Hyper planes in $\R^n$ are sub-spaces of $\R^n$.} Let $a_{ij}(1\leq i\leq m)$, let $W_i = \{(x_1, ..., x_n)\in \R^n|a_{i1}x_1 + ... + a_{in}x_n = 0,~\forall 1 \leq i \leq m\}$. Then $W$ is a subspace of $\R^n$.
+        \item \textbf{Corollary: Hyper planes in $\R^n$ are sub-spaces of $\R^n$.} Let $a_{ij}(1\leq i\leq m)$, let $W_i = \{(x_1, \ldots, x_n)\in \R^n|a_{i1}x_1 + \ldots + a_{in}x_n = 0,~\forall 1 \leq i \leq m\}$. Then $W$ is a subspace of $\R^n$.
         
     \end{enumerate}
     
@@ -134,7 +139,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.3.1}
         \item \textbf{Definitions regarding L.C. and derived spans.} Let $S$ be a subset of a vector space $V$, that is $S\subseteq V$.
         \begin{enumerate}
-            \item a \textit{linear combination} of vectors in $S$ is any sum $a_1\mathbf{x}_1 + ... + a_n\mathbf{x}_n$, where the $a_i \in \R$, and the $x_i \in S$.
+            \item a \textit{linear combination} of vectors in $S$ is any sum $a_1\mathbf{x}_1 + \ldots + a_n\mathbf{x}_n$, where the $a_i \in \R$, and the $x_i \in S$.
             \item we define the $Span$ of a set of vectors as follows to consider the special case of $S\stackrel{?}{=}\emptyset \in V$.
             \newline \underline{\tit{Case1: $S\neq \emptyset$:}} In this case, we define $Span(S)$ to be all possible linear combinations using vectors in $S$.\newline
             \underline{\tit{Case2: $S= \emptyset$:}} In this case, we define $Span(S = \emptyset)=\{\mathbf{0}\}$. We call this the zero-space.
@@ -175,7 +180,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         
         \settag{1.3.11}
         \item \textbf{Proposition.} Let $W_1$ and $W_2$ be sub-spaces of vector space $V$ and let $W$ be a subspace of $V$ such that $W\supseteq W_1 \cup W_2$, then $W\supseteq W_1 + W_2$. Informally speaking, this proposition saying: "$W_1+W_2$ is the smallest subspace containing $W_1\cup W_2$", i.e., Any subspace that contains $W_1\cup W_2$ must be a super set of $W_1 + W_2$. \newline
-        \tit{\underline{Proof:}}\newline
+        \proof\newline
         We want to show: $W\supseteq W_1\cup W_2\Longrightarrow W\supseteq W_1 + W_2$\newline
             \begin{align*}
                 \text{Assume that } \text{$W\supseteq W_1 \cup W_2$. Let $w_1\in W_1,~w_2\in W_2$.}\\
@@ -194,16 +199,16 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.4.2}
         \item \textbf{Algebraic definition of linear dependence.} Let $V$ be a vector space, and let $S\subseteq V$.
             \begin{enumerate}
-                \item A \textit{linear dependence} among the vectors of $S$ is an equation $a_1\mathbf{x} + ... + a_n\mathbf{x}_n = \mathbf{0}$ where the $x_i\in S$, and the $a_i\in \R$ are not all zero(i.e., at least one of the $a_i\neq 0$). In familiar\footnote{Familiar from MAT223, Prof. Jason Siefken's IBL(Inquiry Based Learning) notes.} words, there exists a non-trivial solution to the equation mentioned above.
+                \item A \textit{linear dependence} among the vectors of $S$ is an equation $a_1\mathbf{x} + \ldots + a_n\mathbf{x}_n = \mathbf{0}$ where the $x_i\in S$, and the $a_i\in \R$ are not all zero(i.e., at least one of the $a_i\neq 0$). In familiar\footnote{Familiar from MAT223, Prof. Jason Siefken's IBL(Inquiry Based Learning) notes.} words, there exists a non-trivial solution to the equation mentioned above.
                 \item the set $S$ is said to be \textit{linearly dependent} if there exists a linear dependence among the vectors in $S$.
             \end{enumerate}
             \tbf{Remark: }It can be shown that the geometric\footnote{A set of vectors is said to be dependent of each other there exists a vector in this set, that it is in the Span of all other vectors in the set. I.e., There is some vectors in this set that are "redundant", it's position can be taken by some linear combination of the other vectors in the set.} definition and this are, in-fact, equivalent to each other. I will now produce the proof. \newline
         \tit{\underline{Proof of equivalence of definitions:}} \newline
         Let $V$ be a vector space, and let $S\subseteq V$. Consider the following equation:
         \begin{align*}
-            a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + ... + a_n\mathbf{x}_n &= 0\text{, where } \exists a_i\neq 0 \\
+            a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + \ldots + a_n\mathbf{x}_n &= 0\text{, where } \exists a_i\neq 0 \\
             \text{(WLOG, assume that } a_n &\neq \mathbf{0}\text{)}\\
-            \implies \frac{a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + ... + a_n\mathbf{x}_n}{a_n}&=\mathbf{0}\\
+            \implies \frac{a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + \ldots + a_n\mathbf{x}_n}{a_n}&=\mathbf{0}\\
             \implies \mathbf{x}_n &= -\sum_{i=1}^{n-1}a_i\mathbf{x}_i
         \end{align*}
         Notice that the result $\mathbf{x}_n$ is in terms of all the other $(n-1)$ vectors in the set, hence a linear combination of those vectors, and this completes the proof.
@@ -211,7 +216,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \textbf{Re-Remark: }We can also use this proof as an argument towards the following problem: Show that at least one of the vectors in a linearly dependent set is redundant. We could take take a similar proof and argue that the linear combination could be written without at least one of the vectors.
         
         \settag{1.4.4}
-        \item \textbf{Algebraic definition of linear independence.} Let $V$ be a vector space, and $S\subseteq V$. Then $S$ is \textit{linearly independent} if whenever we have $a_i\in \R$ and $x_i\in S$ such that $a_1\mathbf{x}_1+...+a_n\mathbf{x}_n = \mathbf{0}$, then $a_i = 0,~\forall i$. A more conceivable way to understand this is if the aforementioned equation exists and only exists a set of trivial solution then the vectors involved in the equation are \textit{linearly independent}. \newline \tbf{Remark: }A set of vector is linearly independent \tit{if and only if} it is not linearly dependent.
+        \item \textbf{Algebraic definition of linear independence.} Let $V$ be a vector space, and $S\subseteq V$. Then $S$ is \textit{linearly independent} if whenever we have $a_i\in \R$ and $x_i\in S$ such that $a_1\mathbf{x}_1+\ldots+a_n\mathbf{x}_n = \mathbf{0}$, then $a_i = 0,~\forall i$. A more conceivable way to understand this is if the aforementioned equation exists and only exists a set of trivial solution then the vectors involved in the equation are \textit{linearly independent}. \newline \tbf{Remark: }A set of vector is linearly independent \tit{if and only if} it is not linearly dependent.
         
         \settag{1.4.7}
         \item \textbf{Propositions regarding linear (in)dependency.}
@@ -220,14 +225,14 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
                 \item Let $S$ be a linearly independent subset of vector space $V$ and let $S'$ be another subset of $V$ that is contained in $S$. Then $S'$ is also linearly independent.
             \end{enumerate}
         \underline{\tit{Proof of (a):}}
-        Since $S$ is linearly dependent, there exists a linear dependence among the vectors in $S$, say, $a_1\mathbf{x}_1 + ...+ a_n\mathbf{x}_n = \mathbf{0}$. Since $S$ is contained in $S'$, this is also a linear dependence among the vectors in $S'$. Hence $S'$ is linear dependent.\qed\newline
+        Since $S$ is linearly dependent, there exists a linear dependence among the vectors in $S$, say, $a_1\mathbf{x}_1 + \ldots+ a_n\mathbf{x}_n = \mathbf{0}$. Since $S$ is contained in $S'$, this is also a linear dependence among the vectors in $S'$. Hence $S'$ is linear dependent.\qed\newline
         \underline{\tit{Proof of (b):}}
-        Consider any equation $a_1\mathbf{x}_1 + ...+ a_n\mathbf{x}_n = \mathbf{0}$, where the $a_i \in \R,~\mathbf{x}_i \in S'$. Since $S'$ is contained in $S$, we can also view this as a potential linear dependence among vectors in $S$. However, $S$ is linearly independent, so it follows that all the $a_i = 0\in \R$. Hence $S'$ is also linearly independent.\qed
+        Consider any equation $a_1\mathbf{x}_1 + \ldots+ a_n\mathbf{x}_n = \mathbf{0}$, where the $a_i \in \R,~\mathbf{x}_i \in S'$. Since $S'$ is contained in $S$, we can also view this as a potential linear dependence among vectors in $S$. However, $S$ is linearly independent, so it follows that all the $a_i = 0\in \R$. Hence $S'$ is also linearly independent.\qed
         
         \settag{1.4.*}
-        \item \tbf{Example of showing linear independence.(1)} Show that the set $\{1,x,x^2,x^3,...,x^n\}$ is linearly independent. We consider the following equation:
+        \item \tbf{Example of showing linear independence.(1)} Show that the set $\{1,x,x^2,x^3,\ldots,x^n\}$ is linearly independent. We consider the following equation:
         \begin{equation*}
-            0 = a_0 + a_1x + ... + a_{n-1}x^{n-1}+a_n x^n~~~~~~(*)
+            0 = a_0 + a_1x + \ldots + a_{n-1}x^{n-1}+a_n x^n~~~~~~(*)
         \end{equation*}
         Then we take the derivative:
         \begin{equation*}
@@ -237,7 +242,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{equation*}
             \frac{d}{dx}(*) = 0 = 1!\cdot a_1 \implies a_1 = 0
         \end{equation*}
-        Then we have $0 = 0 + 0 +... + a_0 \implies a_0 = 0$. So the equation has and only has a trivial solution, thus the set $\{1,x,x^2,x^3,...,x^n\}$ is linearly independent. \qed
+        Then we have $0 = 0 + 0 +\ldots + a_0 \implies a_0 = 0$. So the equation has and only has a trivial solution, thus the set $\{1,x,x^2,x^3,\ldots,x^n\}$ is linearly independent. \qed
         
         \settag{1.4.*}
         \item \tbf{Example of showing linear independence.(2)} Show that the set $\{e^x, e^{2x}\}$ is linearly independent. We consider the following equation:
@@ -261,12 +266,12 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item \tbf{Note Aside: }This section of the book is covered, although not rigorously but completely, in MAT223. Hence the vast majority of definitions and corollary in this section were omitted. Consult the book for more detail on this.
         
         \settag{1.5.1}
-        \item \tbf{Definition of (homogeneous) SLEs\footnote{System of Linear Equations}} A system of $m$ equations in $n$ unknowns $x_1,...,x_n$ of the form:
+        \item \tbf{Definition of (homogeneous) SLEs\footnote{System of Linear Equations}} A system of $m$ equations in $n$ unknowns $x_1,\ldots,x_n$ of the form:
         \begin{align*}
-            a_{11}\mathbf{x_1}+...+a_{1n}\mathbf{x_n} &= b_1 \\
-            a_{21}\mathbf{x_1}+...+a_{2n}\mathbf{x_n} &= b_2 \\
-            &\mbox{...} \\
-            a_{m_1}\mathbf{x_1}+...+a_{mn}\mathbf{x_n} &= b_m
+            a_{11}\mathbf{x_1}+\ldots+a_{1n}\mathbf{x_n} &= b_1 \\
+            a_{21}\mathbf{x_1}+\ldots+a_{2n}\mathbf{x_n} &= b_2 \\
+            &\mbox{\ldots} \\
+            a_{m_1}\mathbf{x_1}+\ldots+a_{mn}\mathbf{x_n} &= b_m
         \end{align*}
         where the $a_{ij},~b_i\in \R$, is called a \tit{system of linear equations.} The scalars $a_{ij}$ are called coefficients or \tit{weights} of the equations. We call this system \textbf{homogeneous} if and only if all the $b_i$ are 0's.
         
@@ -302,35 +307,35 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         
         \settag{1.6.10}
         \item \tbf{Theorem on cardinality of linearly independent set.} Let $V$ be a vector space and let $S$ be a spanning set for $V$, which has $m$ elements. Then no linearly independent set in $V$ can have more than $m$ elements.\newline
-        \tit{\underline{Proof:}}\newline
-        To show that there are no linearly independent set in $V$ that can have more than $m$ elements in it, it suffices to show that every set in $V$ that has more than $m$ elements in it is linearly dependent. Let $S=\{y_1,...,y_m\}$ and $S'=\{y_1,...,y_n\}\subset V$ where $n>m$. Now we consider the following equation:
+        \proof\newline
+        To show that there are no linearly independent set in $V$ that can have more than $m$ elements in it, it suffices to show that every set in $V$ that has more than $m$ elements in it is linearly dependent. Let $S=\{y_1,\ldots,y_m\}$ and $S'=\{y_1,\ldots,y_n\}\subset V$ where $n>m$. Now we consider the following equation:
         \begin{equation}
-            a_1\mathbf{x}_1 + ... + a_n\mathbf{x}_n = \mathbf{0}~~~~\text{    where }\mathbf{x}_i \in S',a_i\in \R
+            a_1\mathbf{x}_1 + \ldots + a_n\mathbf{x}_n = \mathbf{0}~~~~\text{    where }\mathbf{x}_i \in S',a_i\in \R
         \end{equation}
         Since $S$ is a spanning set for $V$, then $\exists b_{ij}\in \R,~s.t.~\forall 1\leq i \leq m$:
         \begin{equation*}
-            \mathbf{x}_i = b_{i1}\mathbf{y}_1 + ... + b_{im}\mathbf{y}_m = \sum_{j=1}^{m}b_{ij}\mathbf{y}_j
+            \mathbf{x}_i = b_{i1}\mathbf{y}_1 + \ldots + b_{im}\mathbf{y}_m = \sum_{j=1}^{m}b_{ij}\mathbf{y}_j
         \end{equation*}
         Then we substitute the $\mathbf{x}_i$'s into equation (1.1):
         \begin{equation}
-            a_1\left(\sum_{j=1}^{m}b_{1j}\mathbf{y}_j\right) + ... +  a_n\left(\sum_{j=1}^{m}b_{nj}\mathbf{y}_j\right) = \mathbf{0}
+            a_1\left(\sum_{j=1}^{m}b_{1j}\mathbf{y}_j\right) + \ldots +  a_n\left(\sum_{j=1}^{m}b_{nj}\mathbf{y}_j\right) = \mathbf{0}
         \end{equation}
         Rearranging (1.2), we have:
         \begin{equation}
-            \left(\sum_{j=1}^{n}b_{1j}a_{j}\right)\mathbf{y}_1 + ... +  \left(\sum_{j=1}^{n}b_{mj}a_{j}\right)\mathbf{y}_m = \mathbf{0}
+            \left(\sum_{j=1}^{n}b_{1j}a_{j}\right)\mathbf{y}_1 + \ldots +  \left(\sum_{j=1}^{n}b_{mj}a_{j}\right)\mathbf{y}_m = \mathbf{0}
         \end{equation}
         Now we consider the following SLE(The coefficients of (1.3)):
         \begin{center}
             $
             \begin{cases}
-            b_{11}a_1 + ... + b_{1n}a_n &= 0 \\
-            b_{21}a_1 + ... + b_{2n}a_n &= 0 \\
+            b_{11}a_1 + \ldots + b_{1n}a_n &= 0 \\
+            b_{21}a_1 + \ldots + b_{2n}a_n &= 0 \\
             &\vdots \\
-            b_{m1}a_1 + ... + b_{mn}a_n &= 0
+            b_{m1}a_1 + \ldots + b_{mn}a_n &= 0
             \end{cases}
             $
         \end{center}
-        If we can find a set of $a_1, ..., a_n$ that are not all zero that solves the above SLE, then those scalars will give us a linear dependence among the vectors in $S'$ in (1.1). But the above SLE is a system of homogeneous linear equations in the $n$ unknowns $a_i$'s, hence since $m < n$, by Corollary (1.5.13), there exists a non-trivial solution. Then $S'$ is linearly dependent and this completes the proof. \qed
+        If we can find a set of $a_1, \ldots, a_n$ that are not all zero that solves the above SLE, then those scalars will give us a linear dependence among the vectors in $S'$ in (1.1). But the above SLE is a system of homogeneous linear equations in the $n$ unknowns $a_i$'s, hence since $m < n$, by Corollary (1.5.13), there exists a non-trivial solution. Then $S'$ is linearly dependent and this completes the proof. \qed
         
         
         \settag{1.6.11}
@@ -354,8 +359,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.6.13}
         \item \tbf{Examples on dimensions of vector spaces. }If we have a basis of $V$, then computing dim($V$) is simply a matter of counting the number of vectors in a (hence any) basis for the vectors space. We explore this by looking at the following examples
         \begin{enumerate}
-            \item For each $n$, dim($\R^n$) $=n$. This is a consequence of the standard basis for $\R^n$ is of the form: $\{\mathbf{e}_1, ..., \mathbf{e}_n\}$ has $n$ elements in it.
-            \item dim($P_n(\R)$) $=n+1$, since $|\{1, x^1, x^2, ..., x^n\}|=n+1$.\footnote{The absolute value marks around a set returns the cardinality of the set.}
+            \item For each $n$, dim($\R^n$) $=n$. This is a consequence of the standard basis for $\R^n$ is of the form: $\{\mathbf{e}_1, \ldots, \mathbf{e}_n\}$ has $n$ elements in it.
+            \item dim($P_n(\R)$) $=n+1$, since $|\{1, x^1, x^2, \ldots, x^n\}|=n+1$.\footnote{The absolute value marks around a set returns the cardinality of the set.}
             \item The vector spaces $P(\R)$\footnote{Here $P(\R)$ means the vector space of all polynomials that are $\R \xrightarrow{} \R$.}$,~C^n(\R)$, where $n\in \mathbb{N}^{\geq 0}$, are not of finite dimension, and hence are called \tit{infinite dimensional}.
         \end{enumerate}
         
@@ -410,10 +415,10 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{2.1.3}
         \item \tbf{Corollary.} A function $T:V\xrightarrow{}W$ is a linear transformation if and only if
         \begin{equation}
-            \forall a_1,...,a_k\in \R, \forall \mathbf{v}_1, ...,\mathbf{v}_k\in V:~ 
+            \forall a_1,\ldots,a_k\in \R, \forall \mathbf{v}_1, \ldots,\mathbf{v}_k\in V:~ 
             T\left(\sum_{i=1}^{k}a_i\mathbf{v}_i\right) = \sum_{i=1}^{k}a_i T\left(\mathbf{v}_i\right)
         \end{equation}
-        \tit{\underline{Proof:}} To show this if and only if relationship, we have to consider the implication of both directions. Since $(2.1.2)$ is just a special case of $(2.1.3)$ then we are done in proving $(2.1.3)\implies (2.1.2)$. We will prove the other direction by mathematical induction (on $k$) to generalize the case of $k=2$ to arbitrary $k\in \double{N}$. \newline
+        \proof To show this if and only if relationship, we have to consider the implication of both directions. Since $(2.1.2)$ is just a special case of $(2.1.3)$ then we are done in proving $(2.1.3)\implies (2.1.2)$. We will prove the other direction by mathematical induction (on $k$) to generalize the case of $k=2$ to arbitrary $k\in \double{N}$. \newline
         Define $P(k): \text{``}(2.1)~\text{holds"}$. \newline
         Claim that $\forall k \in \double{N}^{\geq 2}, P(k)$.\newline
         \tbf{\underline{BASIS CASE:}} $k = 2$. In this case the wanted equality is the same as the one proved in $(2.1.2)$, so $P(2)$. \newline
@@ -440,13 +445,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         
         \settag{2.1.14}
         \item \tbf{Proposition.} If $T:V\xrightarrow{}W$ is a linear transformation and $V$ is finite-dimensional, then $T$ is uniquely determined by its values on the members of a basis of $V$. To make this proposition more clear, we present the proof below. We will show that if $S$ and $T$ are linear transformations that take the same values on each member of a basis for $V$, then in fact $S=T$.\newline
-        \tit{\underline{Proof:}} \newline
-        Let $\{ \mathbf{v}_1, ..., \mathbf{v}_k\}$ be a basis for $V$, and let $S$ and $T$ be two linear transformations that satisfy $T(\mathbf{v}_1)=S(\mathbf{v}_1), \forall i \in \{1,...,k\}$. If $\mathbf{v}\in V, ~\mathbf{v} = a_1\mathbf{v}_1 + ... + a_k\mathbf{k}$, then
+        \proof \newline
+        Let $\{ \mathbf{v}_1, \ldots, \mathbf{v}_k\}$ be a basis for $V$, and let $S$ and $T$ be two linear transformations that satisfy $T(\mathbf{v}_1)=S(\mathbf{v}_1), \forall i \in \{1,\ldots,k\}$. If $\mathbf{v}\in V, ~\mathbf{v} = a_1\mathbf{v}_1 + \ldots + a_k\mathbf{k}$, then
         \begin{align*}
-            T(\mathbf{v}) &= T(a_1\mathbf{v}_1 + ... + a_k\mathbf{k}) \\
-            &= a_1T(\mathbf{v}_1) + ... + a_k T(\mathbf{v}_k)~~~~\text{// Since $T$ is linear}\\
-            &= a_1S(\mathbf{v}_1) + ... + a_k S(\mathbf{v}_k) \\
-            &= S(a_1\mathbf{v}_1 + ... + a_k\mathbf{k})~~~~~~~~~~\text{//  Since $S$ is linear} \\
+            T(\mathbf{v}) &= T(a_1\mathbf{v}_1 + \ldots + a_k\mathbf{k}) \\
+            &= a_1T(\mathbf{v}_1) + \ldots + a_k T(\mathbf{v}_k)~~~~\text{// Since $T$ is linear}\\
+            &= a_1S(\mathbf{v}_1) + \ldots + a_k S(\mathbf{v}_k) \\
+            &= S(a_1\mathbf{v}_1 + \ldots + a_k\mathbf{k})~~~~~~~~~~\text{//  Since $S$ is linear} \\
             &=S(\mathbf{v})
         \end{align*}
         Hence $S$ and $T$ are equal as mappings from $V$ to $W$. \qed
@@ -456,22 +461,22 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Linear Transformations between finite dimensional vector spaces}
     \begin{enumerate}
         \settag{2.2.1}
-        \item \tbf{Proposition.} Let $T:V\xrightarrow{}W$ be a linear transformation between the finite dimensional vector spaces $V$ and $W$. If $\{\mathbf{v}_1,...,\mathbf{v}_k\}$ is a basis for $V$ and $\{\mathbf{w}_1,...,\mathbf{w}_l\}$ is a basis for $W$, then $T:V\xrightarrow{}W$ is uniquely determined by the $l\times k$ scalars used to express $T(\mathbf{v}_j)$, where $j\in \{1,...,k\}$, in terms of $\mathbf{w}_1,...,\mathbf{w}_l$.
+        \item \tbf{Proposition.} Let $T:V\xrightarrow{}W$ be a linear transformation between the finite dimensional vector spaces $V$ and $W$. If $\{\mathbf{v}_1,\ldots,\mathbf{v}_k\}$ is a basis for $V$ and $\{\mathbf{w}_1,\ldots,\mathbf{w}_l\}$ is a basis for $W$, then $T:V\xrightarrow{}W$ is uniquely determined by the $l\times k$ scalars used to express $T(\mathbf{v}_j)$, where $j\in \{1,\ldots,k\}$, in terms of $\mathbf{w}_1,\ldots,\mathbf{w}_l$.
         
         \settag{2.2.6}
-        \item \tbf{Matrix of a transformation w.r.t.$\alpha,\beta$.} Let $T:V\xrightarrow{}W$ be a linear transformation between finite-dimensional vector spaces $V$ and $W$, and let $\alpha = \{\mathbf{v}_1,...,\mathbf{v}_k \}$ and $\beta = \{\mathbf{w}_1,...,\mathbf{w}_l\}$, respectively, be any basis for $V$ and $W$. 
+        \item \tbf{Matrix of a transformation w.r.t.$\alpha,\beta$.} Let $T:V\xrightarrow{}W$ be a linear transformation between finite-dimensional vector spaces $V$ and $W$, and let $\alpha = \{\mathbf{v}_1,\ldots,\mathbf{v}_k \}$ and $\beta = \{\mathbf{w}_1,\ldots,\mathbf{w}_l\}$, respectively, be any basis for $V$ and $W$. 
         Let $a_{ij}$, where $1\leq i \leq l$ and $1\leq j \leq k$ be the $l\cdot k$ scalars that determined $T$ with respect to the bases $\alpha$ and $\beta$. The matrix whole entries are the scalars $a_{ij}$, given above, is called the \tit{matrix of the linear transformation $T$ with respect to the bases $\alpha$ for $V$ and $\beta$ for $W$}. We denote such matrix with following notation: $\left[T\right]^\beta_\alpha$. \newline 
         \tbf{Notice that}, again, $\alpha$ is a basis for $V$, the domain of the transformation and $\beta$ is a basis for $W$, the co-domain of the transformation.
         \newline
         \tbf{Remark.} This should be familiar from MAT223, where we perform transformation on each and every element in a basis for a space, and transcribe them, in terms of another basis, into a standard matrix for the transformation.
         
         \settag{2.2.15}
-        \item \tbf{Proposition: Linear Transformation on alternative basis.} Let $T:V\xrightarrow{} W$ be a linear transformation between vector spaces $V$ of dimension $k$ and $W$ of dimension $l$. Let $\alpha = \{\mathbf{v}_1,...,\mathbf{v}_k\}$ be a basis for $V$, and let $\beta = \{\mathbf{w}_1,...,\mathbf{w}_l\}$ be a basis for $W$. Then for each $\mathbf{v} \in V$, we have the following:
+        \item \tbf{Proposition: Linear Transformation on alternative basis.} Let $T:V\xrightarrow{} W$ be a linear transformation between vector spaces $V$ of dimension $k$ and $W$ of dimension $l$. Let $\alpha = \{\mathbf{v}_1,\ldots,\mathbf{v}_k\}$ be a basis for $V$, and let $\beta = \{\mathbf{w}_1,\ldots,\mathbf{w}_l\}$ be a basis for $W$. Then for each $\mathbf{v} \in V$, we have the following:
         \begin{equation*}
             \left[T(\mathbf{v})\right]_\beta = \left[T\right]^\beta_\alpha\left[\mathbf{v}\right]_\alpha
         \end{equation*}
         One can think about this in the sense that the same transformation could have been accomplished under another basis. We just have to convert the original problem into some easy to solve basis, perform the transformation under that basis, and then convert the result back. We now present the proof for this proposition.\newline
-        \tit{\underline{Proof:}} Let $\mathbf{v}=x_1\mathbf{v}_1 + ... + x_k\mathbf{v}_k\in V$. Then if $T(\mathbf{v}_j)=a_{1j}\mathbf{w}_1 + ... + a_{lj}\mathbf{w}_l$, 
+        \proof Let $\mathbf{v}=x_1\mathbf{v}_1 + \ldots + x_k\mathbf{v}_k\in V$. Then if $T(\mathbf{v}_j)=a_{1j}\mathbf{w}_1 + \ldots + a_{lj}\mathbf{w}_l$, 
         \begin{align*}
             T(\mathbf{v}) &= \sum_{j=1}^k x_j T(\mathbf{v}_j) \\
             &= \sum_{j=1}^k x_j \left(\sum_{i=1}^{l}a_{ij}\mathbf{w}_i\right) \\
@@ -480,7 +485,22 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         Thus the $i$-th coefficient of $T(\mathbf{v})$ in terms of $\beta$ is $\sum_{j=1}^k x_j a_{ij}$, and
         \begin{equation*}
             \left[T(\mathbf{v})\right]_\beta = 
-            \begin{bmatrix}\sum_{j=1}^kx_ja_{1j} \\ \dots \\ \dots \\ \dots \\ \sum_{j=1}^kx_ja_{lj}\end{bmatrix}
+            \begin{bmatrix}\sum_{j=1}^kx_ja_{1j} 
+            \\ \dots 
+            \\ \dots 
+            \\ \dots 
+            \\ \sum_{j=1}^kx_ja_{lj}
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            a_{11} & \cdots & a_{1k} \\
+            \vdots & \ddots & \vdots \\
+            a_{l1} & \cdots & a_{lk}
+            \end{bmatrix}
+            \begin{bmatrix}
+            a_1 \\ \vdots \\ a_k
+            \end{bmatrix}
+            =\left[T\right]_\alpha^\beta\left[\vv\right]_\alpha
         \end{equation*}
         \qed
         
@@ -489,17 +509,17 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{equation*}
             \forall~ \text{pairs of}~a\in\R, b\in\R, A(a\mathbf{u} + b\mathbf{v}) = aA\mathbf{u} + bA\vv
         \end{equation*}
-        \tit{\underline{Proof:}} Since $\mathbf{u}, \mathbf{v}\in \R^k$, let them be $\mathbf{u} = (u_1,...,u_k)^T$ and $\mathbf{v} = (v_1,...,v_k)^T$.\newline 
+        \proof Since $\mathbf{u}, \mathbf{v}\in \R^k$, let them be $\mathbf{u} = (u_1,\ldots,u_k)^T$ and $\mathbf{v} = (v_1,\ldots,v_k)^T$.\newline 
         Fix $a,b\in \R$. Then,
         \begin{align*}
-            A\left(a\mathbf{u} + b\mathbf{v}\right) &=  A\left(a\left(u_1,...,u_k\right)^T + b\left(v_1,...,v_k\right)^T\right) \\
-            &=  A\left(\left(a\cdot u_1,...,a\cdot u_k\right)^T + \left(b \cdot v_1,...,b\cdot v_k\right)^T\right) \\
-            &=  A\left(a\cdot u_1 + b \cdot v_1,...,a\cdot u_k + b\cdot v_k \right)^T \\
+            A\left(a\mathbf{u} + b\mathbf{v}\right) &=  A\left(a\left(u_1,\ldots,u_k\right)^T + b\left(v_1,\ldots,v_k\right)^T\right) \\
+            &=  A\left(\left(a\cdot u_1,\ldots,a\cdot u_k\right)^T + \left(b \cdot v_1,\ldots,b\cdot v_k\right)^T\right) \\
+            &=  A\left(a\cdot u_1 + b \cdot v_1,\ldots,a\cdot u_k + b\cdot v_k \right)^T \\
             &\text{\%TODO: change this vector notation and finish the proof..}
         \end{align*}
         
         \settag{2.2.19}
-        \item \tbf{Proposition.} Let $\alpha = \{\vv_1,...,\vv_k\}$ be a basis for $V$ and $\beta= \{\vw_1,...,\vw_l\}$ be a basis for $W$, and let $\mathbf{v}=x_1\vv_1+...+x_k\vv_k\in V$.
+        \item \tbf{Proposition.} Let $\alpha = \{\vv_1,\ldots,\vv_k\}$ be a basis for $V$ and $\beta= \{\vw_1,\ldots,\vw_l\}$ be a basis for $W$, and let $\mathbf{v}=x_1\vv_1+\ldots+x_k\vv_k\in V$.
         \begin{enumerate}
             \item If $A$ is an $l \times k$ matrix, then the function $T(\mathbf{v}) = \mathbf{w}$, where $\left[\vw\right]_\beta A\left[\vv\right]_\alpha$ is a linear transformation.
             \item If $A = [S]_\alpha^\beta$ is the matrix of a transformation $S:V\xrightarrow{} W$, then the transformation $T$ constructed from $[S]_\alpha^\beta$ is equal to $S$.
@@ -507,26 +527,100 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \end{enumerate}
         
         \settag{2.2.20}
-        \item \tbf{Proposition.} Let $V$ and $W$ be finite-dimensional vector spaces. Let $\alpha$ be a basis for $V$ and $\beta$ a basis for $W$. Then the assignment of a matrix to a linear transformation from $V$ to $w$ given by $T$ goes to $[T]_\alpha^\beta$ is bijective\footnote{Injective and surjective}.
+        \item \tbf{Proposition.} Let $V$ and $W$ be finite-dimensional vector spaces. Let $\alpha$ be a basis for $V$ and $\beta$ a basis for $W$. Then the assignment of a matrix to a linear transformation from $V$ to $W$ given by $T$ goes to $[T]_\alpha^\beta$ is bijective\footnote{Injective and surjective}.
     \end{enumerate}
     
 \section{Kernel and image}
     \begin{enumerate}
         \settag{2.3.1}
-        \item \tbf{Definition of Kernel.}\footnote{a.k.a Null Space} The \tit{kernel} of $T$, denoted Ker($T$), is the subset of $V$ consisting of all vectors $\vv\in V$ such that $T(\vv) = \mathbf{0}$. Writing in familiar set builder notation:
+        \item \tbf{Definition of Kernel.} The \tit{kernel} of $T$, denoted Ker($T$), is the subset of $V$ consisting of all vectors $\vv\in V$ such that $T(\vv) = \mathbf{0}$. Writing in familiar set builder notation:
         \begin{equation*}
-            \text{Ker}(T) := \{\vv \in V | T(\vv) = \mathbf{0}\} =: \text{Null}(T)
+            \text{Ker}(T) := \{\vv \in V | T(\vv) = \mathbf{0}\}
         \end{equation*}
+        One should notice the difference between the familiar Null Space of a transformation and the Kernel here. Kernel is defined for all vector spaces, however, null-spaces are for $\R^n$ only.
         
         \settag{2.3.2}
-        \item \tbf{Proposition: Kernel is a subspace.}\footnote{In fact, kernel is one the three fundamental sub-spaces related to a vector space. The others are Row Space and Column Space.} Let $T: V\xrightarrow{} W$ be a linear transformation. Ker($T$) is a subspace of $V$. \newline
-        \tit{\underline{Proof:}} \newline
+        \item \tbf{Proposition: Kernel is a subspace.} Let $T: V\xrightarrow{} W$ be a linear transformation. Ker($T$) is a subspace of $V$. \newline
+        \proof \newline
         Since Ker($T$) $\subset V$, it suffices to show that Ker($T$) is closed under addition and scalar multiplication. Since $T$ is linear, $\forall \vu, \vv \in \text{Ker}(T)~\text{and}~a\in \R$, we have
         \begin{equation*}
             T(\vu + a\vv) = T(\vu) + aT(\vv) = \mathbf{0} + a\mathbf{0} \implies \vu + a\vv \in \text{Ker}(T)
         \end{equation*}
         \qed
         
+        \settag{2.3.7}
+        \para{Proposition.} Let $T:V\rightarrow{} W$ be a linear transformation of finite-dimensional vector spaces, and let $\alpha, \beta$ be bases for $V,W$ respectively. Then $\bx \in \text{Ker}(T)$ if and only if the coordinate vector of $\bx$, $[\bx]_\alpha$, satisfies the system of equations
+        \begin{center}
+            $\begin{cases}
+            a_{11}x_1 + \ldots + a_{1k}x_k &= 0 \\
+            &\vdots \\
+            a_{l1}x_1 + \ldots + a_{lk}x_k &= 0
+            \end{cases}$
+        \end{center}
+        where the coefficient $a_{ij}$ are the entries of the matrix $[T]_\alpha^\beta$
+        % \begin{center}
+        %     $
+        %     \begin{cases}
+        %     b_{11}a_1 + \ldots + b_{1n}a_n &= 0 \\
+        %     b_{21}a_1 + \ldots + b_{2n}a_n &= 0 \\
+        %     &\vdots \\
+        %     b_{m1}a_1 + \ldots + b_{mn}a_n &= 0
+        %     \end{cases}
+        %     $
+        % \end{center}
+        
+        \settag{2.3.8}
+        \item \tbf{Independence is basis-independent.} If $\alpha = \{v_1,\ldots,v_k\}$ is a basis for $V$, then $\vx_1,\ldots,\vx_m\in V$ are independent if and only if $[\bx_1]_\alpha,\ldots,[\bx_m]_\alpha$ are independent.
+        
+        \settag{2.3.10}
+        \para{Definition of Image.} The subset of $W$ constsing of vectors $\vw\in W$ for which there exists a $\vv\in V$ such that $T(\vv) = \vw$ is called the \tit{image} of $T$ and is denoted by Im$(T)$. In set builder notation we have
+        \begin{equation*}
+            \text{Im}(T) := \{\vw\in W|T(\vv) = \vw~\text{for some}~\vv \in V\}~~\text{where}~T:V\rightarrow{} W
+        \end{equation*}
+        
+        \settag{2.3.11}
+        \para{Proposition: Image is subspace.} Let $T:V\rightarrow{} W$ be a linear transformation. The image of $T$ is a subspace of $W$, the co-domain.\newline
+        \proof\newline
+        Let, $\vw_1,\vw_2\in\text{Im}(T)$, and let $a\in \R$. Since $\vw_1$ and $\vw_2\in V$ with $T(\vv_1) = \vw_1$ and $T(\vv_2) = \vw_2$. Then we have
+        \begin{align*}
+            a\vw_1 + \vw_2 
+            &= aT(\vv_1) + T(\vv_2) \\
+            &= T(a\vv_1 + \vv_2) 
+            \implies a\vw_1 +\vw_2 \in \text{Im}(T)\text{ by linearity}
+        \end{align*}
+        Hence, by the ``quick check rule", we know that image is a subspace of the co-domain. \qed
+        
+        \settag{2.3.12}
+        \para{Proposition.} If $\{\vv_1,\ldots,\vv_m\}$ is ant set that spans $V$ (in particular, it could be a basis of $V$), then $\{T(\vv_1),\ldots,T(\vv_m)\}$ spans\footnote{By ``spans" we mean equal to each other} Im$(T)$. \newline
+        \underline{\tit{Proof($\supseteq$):}} \newline
+        Let $\vw\in \text{Im}(T)$, then $\exists \vv\in V$ with $T(\vv) = \vw$. Since $Span\{\vv_1,\ldots,\vv_m\} = V$, then $\exists a_1,\ldots,a_m$ s.t. $a_1\vv_1 + \ldots + a_m\vv_m = \vv$. Then, 
+        \begin{align*}
+            \vw &= T(\vv) \\
+            &= T\left(\sum_{i=1}^m a_i\vv_i \right) \\
+            &= \sum_{i=1}^m a_iT(\vv_i) ~~~~~~\mbox{// by linearity}
+        \end{align*}
+        Therefore, Im($T$) is contained in $Span\{T(\vv_1),\ldots,T(\vv_m)\}$. \newline
+        \underline{\tit{Proof($\subseteq$):}} \newline
+        Let $\vw\in Span\{T(\vv_1,\ldots,\vv_m)\}$, then (reversing what we did previously) we have
+        \begin{align*}
+            \vw &= \sum_{i=1}^m a_iT(\vv_i) \\
+            &= T\left(\sum_{i=1}^m a_i\vv_i \right) \\
+            &= T(\vv)\in \text{Im}(T)
+        \end{align*}
+        Hence mutual inclusion yields us the wanted result, and this completes the proof. \qed
+        
+        \settag{2.3.13}
+        \para{Corollary.} If $\alpha = \{\vv_1,\ldots,\vv_k\}$ is a basis for $V$, and $\beta = \{\vw_1,\ldots,\vw_l\}$ is a basis for $W$, then the vectors in $W$ whose coordinate vectors (in terms of $\beta$) are the column of $[T]_\alpha^\beta$ span Im($T$).
+        
+        \settag{2.3.17}
+        \para{Rank-Nullity Theorem.} If $V$ is a finite-dimensional vector space and $T:V\rightarrow{}W$ is a linear transformation, then 
+        \begin{equation*}
+            \text{dim(Ker($T$))} + \text{dim(Im($T$))} = \text{dim}(V)
+        \end{equation*}
+        Or equivalently\footnote{also, dim(Im($T$)) = dim(Rol($T$)) = dim(Col($T$)) = \#pivot in r.r.e.f},
+        \begin{equation*}
+            \text{dim(Ker($T$))} + \text{Rank($T$)} = \text{dim}(V)
+        \end{equation*}
         
         
     \end{enumerate}
