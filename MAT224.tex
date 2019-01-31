@@ -15,7 +15,7 @@
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
 \newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
-\newcommand{\proof}{\tit{\underline{Proof:}}}
+\newcommand{\proof}{\tit{\underline{Proof:}}} % This equivalent to the \begin{proof}\end{proof} block
 \newcommand{\proofforward}{\tit{\underline{Proof($\implies$):}}}
 \newcommand{\proofback}{\tit{\underline{Proof($\impliedby$):}}}
 \newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
@@ -627,11 +627,11 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             &= \sum_{i=1}^m a_iT(\vv_i) ~~~~~~\mbox{// by linearity}
         \end{align*}
         Therefore, Im($T$) is contained in $Span\{T(\vv_1),\ldots,T(\vv_m)\}$. \newline
-        \underline{\tit{Proof($\subseteq$):}} \newline
+        \proofsubset \newline
         Let $\vw\in Span\{T(\vv_1,\ldots,\vv_m)\}$, then (reversing what we did previously) we have
         \begin{align*}
             \vw &= \sum_{i=1}^m a_iT(\vv_i) \\
-            &= T\left(\sum_{i=1}^m a_i\vv_i \right) \\
+            &= T\left(\sum_{i=1}^m a_i\vv_i \right) ~~~~~~\mbox{// by linearity}\\
             &= T(\vv)\in \text{Im}(T)
         \end{align*}
         Hence mutual inclusion yields us the wanted result, and this completes the proof. \qed
