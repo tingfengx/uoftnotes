@@ -6,8 +6,8 @@ Notes for some of my courses at University of Toronto
    1. MAT237, Advanced Calculus, a short guide to theorems, lemmas and propositions. This particular set of notes was made together with @yuchenWYC. @AndyTQ also made some useful comments for the improvment of the .tex file. They are available here:  https://github.com/yuchenWYC/MAT237
    
 
-## LaTeX Code
-There were a few macros that were created and used during the type-setting process to speed up the entire process
+## Typesetting in LaTeX
+There were a few macros that were created and used during the type-setting process to speed up the entire process, check them out in the .tex source files! I write my Q.E.D for proofs with characters QED in math caligraphy followed by a sword to say "I win!".
 
 ## pushall.sh
 This shell script was written to ease the routine of pushing pdf and tex files to the server, since these updates ussally do not include new files nor large modification to the existing code.
