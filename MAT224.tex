@@ -11,7 +11,7 @@
 \newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
-\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.$}
+\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
 \newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
@@ -20,6 +20,8 @@
 \newcommand{\proofback}{\tit{\underline{Proof($\impliedby$):}}}
 \newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
 \newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
+\newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
+\newcommand{\dime}[1]{\text{dim}(#1)}
 % Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
 \newcommand{\para}[1]{\item \tbf{#1}}
 \newcommand{\va}{\mathbf{a}}
@@ -87,20 +89,45 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \para{Propositions for a R-v.s.} Let $V$ be a vector space. Then 
     \begin{enumerate}
         \item The zero vector is unique. Note that it might not necessarily be actually the zero vector in $\mathbb{R}^n$ that we are somewhat used to use.\newline
-        \proof Suppose, for the sake of contradiction, that $\mathbf{a},\mathbf{b}$ are two \tit{different} zero vectors of the vector space $V$. Then, by the definition of zero vector, we have 
+        \proof \newline
+        Suppose, for the sake of contradiction, that $\mathbf{a},\mathbf{b}$ are two \tit{different} zero vectors of the vector space $V$. Then, by the definition of zero vector, we have 
         \begin{equation*}
-            \forall \mathbf{x}\in V,\mathbf{x} +\mathbf{a} = \mathbf{x} \wedge \mathbf{x} + \mathbf{b} = \mathbf{x}
+            \forall \mathbf{x}\in V,\mathbf{x} +\mathbf{a} = \mathbf{x} \land \mathbf{x} + \mathbf{b} = \mathbf{x}
         \end{equation*}
         Simple algebraic manipulation yields us $\mathbf{x} + \mathbf{a} = \mathbf{a} + \mathbf{x} \implies \mathbf{a} = \mathbf{b}$ $\longrightarrow\!\longleftarrow$ Contradiction! \qed
         
         \item $\forall \mathbf{x} \in V, 0\mathbf{x}=0$ \newline
-        \proof We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields us $\mathbf{0} = 0\vx$ as wanted. \qed
+        \proof \newline 
+        We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields us $\mathbf{0} = 0\vx$ as wanted. \qed
         
         \item $\forall \mathbf{x} \in V, $ the additive inverse is unique. Note that it might not necessarily be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use. \newline
-        \proof 
+        \proof \newline
+        Let $\vx\in V$, and let $(-\vx),(-\vx)'$ be two additive inverse of $\vx$. Then, on one hand, by axioms 1, 4 and 3 we have 
+        \begin{align*}
+            \vx + (-\vx) + (-\vx)'
+            &= (\vx + (-\vx)) + (-\vx)' \\
+            &= \mathbf{0} + (-\vx)' \\
+            &= (-\vx)'
+        \end{align*}
+        On the other hand, by axiom 2, we have 
+        \begin{align*}
+            \vx + (-\vx) +(-\vx)' 
+            &= \vx + (-\vx)' + (-\vx) \\
+            &= (\vx + (-\vx)') + (-\vx) \\
+            &= \mathbf{0} + (-\vx) \\
+            &= -\vx
+        \end{align*}
+        Hence we conclude that $(-\vx) = (-\vx)'$, and this completes the proof. \qed
         
         \item $\forall \mathbf{x} \in V,~\forall c\in \mathbb{R}, ~(-c)\mathbf{x}=~-(c\mathbf{x})$ \newline
-        \proof 
+        \proof \newline
+        We have
+        \begin{align*}
+            c\vx + (-c)\vx &= (c +~-c)\vx \\
+            &= \mathbf{0}\vx \\
+            &= \mathbf{0}
+        \end{align*}
+        Then we notice that equating the fist and the last of the equations above completes the proof. \qed
         
     \end{enumerate}
 \end{enumerate}
@@ -151,14 +178,14 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item \textbf{Span of a  subset of a vector space is a subspace.} Let $V$ be a vector space and let $S$ be any subset of $V$. Then $Span(S)$ is a subspace of $V$.
         
         \settag{1.3.5}
-        \item \textbf{Sum of sets(with application to subs-paces).} Let $W_1\wedge W_2$ be sub spaces of a vector space $V$. The sum of $W_1$ and $W_2$ is the set
+        \item \textbf{Sum of sets(with application to subs-paces).} Let $W_1\land W_2$ be sub spaces of a vector space $V$. The sum of $W_1$ and $W_2$ is the set
         \begin{center}
             $W_1+W_2 :=\{\mathbf{x}\in V |\mathbf{x}=\mathbf{x_1}+\mathbf{x_2}, \text{for some } \mathbf{x_1}\in W_1, \mathbf{x_2} \in W_2\}$
         \end{center}
         We think of the sum of the two sub-spaces(the two sets) as the set of vectors that can be built up from the vectors in $W_1$ and $W_2$ by linear combinations. Conversely, the vectors in the set $W_1+W_2$ are precisely the vectors that can be broken down into the sum of a vector in $W_1$ and a vector in $W_2$. One may find it helpful to view this as an analogue to a Cartesian product of the two set with a new constraint on the result.
         
         \settag{1.3.6}
-        \item \textbf{Example.} If $W_1 = \{(a_1, a_2)\in \R^2|a_2 = 0\}$ and $W_2 \{(a_1, a_2)\in \R^2|a_1 = 0\}$, then $W_1 + W_2= \R^2$, since every vector in $\R^2$ can be written as the sum of vector in $W_1$ and a vector in $W_2$. For instance, we have $(5, -6)=(0, 5)+(0, -6)$, and $(5, 0)\in W_1 \wedge (0, -6)\in W_2$
+        \item \textbf{Example.} If $W_1 = \{(a_1, a_2)\in \R^2|a_2 = 0\}$ and $W_2 \{(a_1, a_2)\in \R^2|a_1 = 0\}$, then $W_1 + W_2= \R^2$, since every vector in $\R^2$ can be written as the sum of vector in $W_1$ and a vector in $W_2$. For instance, we have $(5, -6)=(0, 5)+(0, -6)$, and $(5, 0)\in W_1 \land (0, -6)\in W_2$
         
         
         \settag{1.3.8} 
@@ -173,7 +200,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             & = (c\mathbf{x}_1 + \mathbf{y}_1) + (c\mathbf{x}_2 + \mathbf{y}_2) \\
             &\in W_1+W_2
         \end{align*}
-        Since $W_1$ and $W_2$ are sub-spaces of $V$, we have $(c\mathbf{x}_1 + \mathbf{y}_1) \in W_1\wedge (c\mathbf{x}_2 + \mathbf{y}_2)\in W_2$. Then by (1.2.8), we see that indeed $W_1 + W_2$ is a subspace of $V$. \qed
+        Since $W_1$ and $W_2$ are sub-spaces of $V$, we have $(c\mathbf{x}_1 + \mathbf{y}_1) \in W_1\land (c\mathbf{x}_2 + \mathbf{y}_2)\in W_2$. Then by (1.2.8), we see that indeed $W_1 + W_2$ is a subspace of $V$. \qed
         
         \settag{1.3.10}
         \item \textbf{Remark.} In general, if $W_1$ and $W_2$ are sub-spaces of $V$, then $W_1 \cup W_2$ will not be a subspace of $V$. For example, consider the two sub-spaces of $\R^2$ given in example (1.3.6). In that case $W_1\cup W_2$ is the union of two lines through the origin in $\R^2$. 
@@ -613,7 +640,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \para{Corollary.} If $\alpha = \{\vv_1,\ldots,\vv_k\}$ is a basis for $V$, and $\beta = \{\vw_1,\ldots,\vw_l\}$ is a basis for $W$, then the vectors in $W$ whose coordinate vectors (in terms of $\beta$) are the column of $[T]_\alpha^\beta$ span Im($T$).
         
         \settag{2.3.17}
-        \para{Rank-Nullity Theorem.} If $V$ is a finite-dimensional vector space and $T:V\rightarrow{}W$ is a linear transformation, then 
+        \para{Rank-Nullity Theorem.\footnote{Known as The Dimension Theorem in book}} If $V$ is a finite-dimensional vector space and $T:V\rightarrow{}W$ is a linear transformation, then 
         \begin{equation*}
             \text{dim(Ker($T$))} + \text{dim(Im($T$))} = \text{dim}(V)
         \end{equation*}
@@ -621,8 +648,45 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{equation*}
             \text{dim(Ker($T$))} + \text{Rank($T$)} = \text{dim}(V)
         \end{equation*}
-        
-        
     \end{enumerate}
     
+\section{Applications of Rank-Nullity Theorem}
+    \begin{enumerate}
+        \settag{2.4.2}
+        \para{Proposition.} A linear transformation $T:V\rightarrow{} W$ is injective if and only of $\text{dim(Ker}(T\text{))}=0$. Informally speaking, we can think of this as ``No information is lost during the linear transformation".
+        
+        \settag{2.4.3}
+        \para{Corollary.} A linear mapping $T:V\rightarrow{} W$ on a finite-dimensional vector space $V$ is injective if and only if $\text{dim(Im(}T\text{)) = dim(}V\text{)}$
+        
+        \settag{2.4.4}
+        \para{Corollary.} If dim($W$) $<$ dim($V$) and \trans{T}{V}{W} is a linear mapping, then $T$ is not injective.
+        
+        \settag{2.4.5}
+        \para{Corollary.} If $V$ and $W$ are finite dimensional, then a linear mapping \trans{T}{V}{W} can be injective only if $\dime{W} \geq \dime{V}$
+        
+        \settag{2.4.7}
+        \para{Proposition.} If $W$ is finite-dimensional, then a linear mapping \trans{T}{V}{W} is surjective if and only if dim(Im($T$))$ =\dime{W}$.
+        
+        \settag{2.4.8}
+        \para{Corollary.} If $V$ and $W$ are finite-dimensional, with $\dime{V} < \dime(W)$, then there is no surjective linear mapping \trans{T}{V}{W}.
+        
+        \settag{2.4.9}
+        \para{Corollary.} A linear mapping \trans{T}{V}{W} can be surjective only if $\dime{V} \geq \dime{W}$.
+        
+        \settag{2.4.10}
+        \para{Proposition.} Let $\dime{V} = \dime{W}$. A linear transformation \trans{T}{V}{W} is injective if and only if it is surjective
+        
+        \settag{2.4.11}
+        \para{Proposition.} Let \trans{T}{V}{W} be a linear transformation, and let $\vw \in \text{Im}(T)$. Let $\vv_1$ be any fixed vector with $T(\vv_1) = \vw$. Then every vector $\vv_2\in T^{-1}\left(\{\vw\}\right)$ can be written uniquely as $\vv_2 = \vv_1 + \vu$, where $\vu \in \text{ker}(T)$
+        
+        \settag{2.4.15}
+        \para{Corollary.} Let \trans{T}{V}{W} be a linear transformation of finite-dimensional vector spaces, and let $\vw\in W$. Then $\exists! \vv \in V~s.t.~T(\vv) = \vw$ if and only if
+        \begin{enumerate}
+            \item $\vw \in \text{Im}(T)$, and
+            \item dim(Ker($T$)) = $0$
+        \end{enumerate}
+        
+        \settag{}
+    \end{enumerate}
+
 \end{document}
