@@ -69,7 +69,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item \textbf{Closure under vector addition:} an operation called vector addition, which for each pair of vectors $\mathbf{x}, \mathbf{y}\in V$ produces another vector in $V$ denoted $\mathbf{x} + \mathbf{y}$, (i.e. $\forall \mathbf{x}, \mathbf{y}\in V, \mathbf{x} + \mathbf{y} \in V$) and
         \item \textbf{Closure under scalar multiplication:} an operation called multiplication by a scalar (a real number), which for each vector $\mathbf{x}\in V$, an each scalar $c\in \mathbb{R}$ produces another vector in $V$ denoted $c\mathbf{x}$. (i.e. $\forall \mathbf{x}\in V, \forall c \in \mathbb{R}, c \mathbf{x} \in V$)
     \end{enumerate}
-    Furthermore, the two operations must satisfy the following axioms:(important)
+    Furthermore, the two operations must satisfy the following axioms:
     %\begin{enumerate}
         %\item For all vectors \textbf{x, y}, and \textbf{z} $\in V$, %(\textbf{x}+\textbf{y})+\textbf{x} 
     %\end{enumerate}
@@ -135,21 +135,23 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Sub-spaces}
     \begin{enumerate}
         \settag{1.2.4}
-        \item \textbf{Usual definition of subspace applied to functions in $C^0(\mathbb{R})$}. Note that by $C^n(\cdot)$ we mean the function in this set are all of $Class-n$. Let $f,g \in C^0(\mathbb{R)}, \text{let} ~c\in \mathbb{R}$. Then, 
+        \item \textbf{Lemma on functions in $C^0(\mathbb{R})$}. Note that by $C^n(\cdot)$ we mean the function in this set are all of $Class-n$. Let $f,g \in C^0(\mathbb{R)}, \text{let} ~c\in \mathbb{R}$. Then, 
         \begin{enumerate}
             \item $f+g\in C^0(\R)$, and
-            \item $cf \in C(\R)$
+            \item $cf \in C^0(\R)$
         \end{enumerate}
-        The proof of this lemma relies on limit theorems of calculus.
+        The proof of this lemma relies on limit theorems of calculus.\newline
         
         \settag{1.2.6}
         \item \textbf{(Intuitive) definition of (vector) subspace.} Let $V$ be a vector space and let $W\subseteq V$ be a subset. Then $W$ is a (vector) subspace if $W$ is a vector subspace itself under the operations of vector sum and scalar multiplication from $V$.
         
         \settag{1.2.8}
-        \item \textbf{Quick check rule for a subspace.} Let $V$ be a vector subspace, and let $W$ be a \textbf{non empty} subset of $V$. Then $W$ is a subspace of $V$ if and only if 
+        \item \textbf{Quick check rule for a subspace.} Let $V$ be a vector subspace, and let $W$ be a \textbf{non empty} subset of $V$. Then $W$ is a subspace of $V$ \tit{if and only if} 
         \begin{equation*}
             \forall \mathbf{x}, \mathbf{y}\in W,~\forall c\in \R, \text{ we have } c\mathbf{x}+\mathbf{y}\in W
         \end{equation*}
+        Notice that the \tit{if and only if} makes this theorem extremely powerful in the sense that it will save you a lot of time to come up with a dis-proofing counter example. However, do keep in mind that there are cases that this theorem is very hard to check, for example, Exercise 1.2, Question 3(c).
+        
         \settag{1.2.9}
         \item \textbf{Remark on the necessary condition of non-emptiness of subspace.} According to the definition of vector space that we gave in 1.1.1, a vector space must contain an additive identity element, hence it is necessary that we ensure $W\subseteq V$(from 1.2.6) is not an empty set.
         
