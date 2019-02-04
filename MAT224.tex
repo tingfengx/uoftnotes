@@ -435,7 +435,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \tit{\underline{Proof($\impliedby$):}}\newline
         Assuming the alternative definition, we want to show the definition given in (2.1.1). Since the quantifier is $\forall$, we can take $\alpha = \beta  =1, \text{(arbitrary)}~\mathbf{u},\mathbf{v}\in V$ in the alternative definition which directly yields us (a) of (2.1.1). Then we take $\alpha \in \R, \beta =0, \mathbf{u}, \mathbf{v}\in V$. In this case, we want to show that $T(\alpha \mathbf{u}) = \alpha T(\mathbf{u})$. We proceed as follows: 
         \begin{align*}
-            T(\alpha\mathbf{u} + \beta\mathbf{v}) &= T(\alpha\mathbf{u} + 0\mathbf{v}) \\
+            T(\alpha\mathbf{u} + \beta\mathbf{v}) &= T(\alpha\mathbf{u} + 0\mathbf{v}) = T(\alpha\mathbf{u})\\
             &= \alpha T(\mathbf{u}) + 0T(\mathbf{u}) \\
             &= \alpha T(\mathbf{u})
         \end{align*}
@@ -447,8 +447,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \forall a_1,\ldots,a_k\in \R, \forall \mathbf{v}_1, \ldots,\mathbf{v}_k\in V:~ 
             T\left(\sum_{i=1}^{k}a_i\mathbf{v}_i\right) = \sum_{i=1}^{k}a_i T\left(\mathbf{v}_i\right)
         \end{equation}
-        \proof To show this if and only if relationship, we have to consider the implication of both directions. Since $(2.1.2)$ is just a special case of $(2.1.3)$ then we are done in proving $(2.1.3)\implies (2.1.2)$. We will prove the other direction by mathematical induction (on $k$) to generalize the case of $k=2$ to arbitrary $k\in \double{N}$. \newline
-        Define $P(k): \text{``}(2.1)~\text{holds"}$. \newline
+        \proof To show this if and only if relationship, we have to consider the implication of both directions. Since $(2.1.2)$ is just a special case of $(2.1.3)$ then we are done in proving $(2.1.3)\implies (2.1.2)$. We will prove the other direction by mathematical induction (on $k$) to generalize the case of $k=2$ to arbitrary $k\in \double{N}^{\geq 2}$. \newline
+        Define predicate $P(k): \double{N}^{\geq 2} \rightarrow{} \{0, 1\}~\text{as ``}(2.1)~\text{holds"}$. \newline
         Claim that $\forall k \in \double{N}^{\geq 2}, P(k)$.\newline
         \tbf{\underline{BASIS CASE:}} $k = 2$. In this case the wanted equality is the same as the one proved in $(2.1.2)$, so $P(2)$. \newline
         \tbf{\underline{INDUCTIVE STEP:}} Let $k\in \double{N}^{\geq 2}$, assume $P(k-1)$, we want to show that $P(k)$ follows.\newline
@@ -655,8 +655,12 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Applications of Rank-Nullity Theorem}
     \begin{enumerate}
         \settag{2.4.2}
-        \para{Proposition.} A linear transformation $T:V\rightarrow{} W$ is injective if and only of $\text{dim(Ker}(T\text{))}=0$. Informally speaking, we can think of this as ``No information is lost during the linear transformation".
-        
+        \para{Proposition.} A linear transformation $T:V\rightarrow{} W$ is injective if and only of $\text{dim(Ker}(T\text{))}=0$. Informally speaking, we can think of this as ``No information is lost during the linear transformation". \newline
+        \proofforward \newline
+            If $T$ is injective, then by definition, there $\exists!\vv \in V$ with $T(\vv) = \mathbf{0}$. Since we know that $T(\mathbf{0}) = 0, \forall~\text{linear mappings}$, the zero vector is the unique vector $\vv$ satisfying $T(\vv) = \mathbf{0}$. Thus the kernel of $T$ consists of only the zero vector. Therefore, dim(Ker($T$)) = 0. \newline
+        \proofback \newline
+            Conversely, assume that dim(Ker($T$)) = 0. Let $\vv_1, \vv_2 \in V$ with $T(\vv_1) = T(\vv_2)$. We want to show that $\vv_1 = \vv_2$. Since $T(\vv_1) = T(\vv_2)$, $T(\vv_1 - \vv_2) = \mathbf{0}$, so $\vv_1 - \vv_2 \in \text{Ker}(T)$. But if dim(Ker($T$)) = 0, it follows that Ker($T$) = $\{\mathbf{0}\}$. It follows that $\vv_1 - \vv_2 = \mathbf{0} \implies \vv_1 = \vv_2$ as wanted. Thus, $T$ is injective. \qed
+            
         \settag{2.4.3}
         \para{Corollary.} A linear mapping $T:V\rightarrow{} W$ on a finite-dimensional vector space $V$ is injective if and only if $\text{dim(Im(}T\text{)) = dim(}V\text{)}$
         
@@ -667,7 +671,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \para{Corollary.} If $V$ and $W$ are finite dimensional, then a linear mapping \trans{T}{V}{W} can be injective only if $\dime{W} \geq \dime{V}$
         
         \settag{2.4.7}
-        \para{Proposition.} If $W$ is finite-dimensional, then a linear mapping \trans{T}{V}{W} is surjective if and only if dim(Im($T$))$ =\dime{W}$.
+        \para{Proposition.} If $W$ is finite-dimensional, then a linear mapping \trans{T}{V}{W} is surjective if and only if dim(Im($T$))$ =\dime{W}$. \newline
+        \textbf{Remark.} Since dim(Im($T$)) $\leq$ dim($V$) by the theorem, if dim($V$) $<$ dim($W$), then we have dim(Im($T$)) $<$ dim($W$), hence $T$ is not surjective.
         
         \settag{2.4.8}
         \para{Corollary.} If $V$ and $W$ are finite-dimensional, with $\dime{V} < \dime(W)$, then there is no surjective linear mapping \trans{T}{V}{W}.
@@ -676,7 +681,11 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \para{Corollary.} A linear mapping \trans{T}{V}{W} can be surjective only if $\dime{V} \geq \dime{W}$.
         
         \settag{2.4.10}
-        \para{Proposition.} Let $\dime{V} = \dime{W}$. A linear transformation \trans{T}{V}{W} is injective if and only if it is surjective
+        \para{Proposition.} Let $\dime{V} = \dime{W}$. A linear transformation \trans{T}{V}{W} is injective if and only if it is surjective. \newline
+        \proofforward \newline
+        If $T$ is injective, then dim(Ker($T$)) = 0 by proposition (2.4.2). By Theorem (2.3.17), we have dim(Im($T$)) = dim($V$). Therefore, by proposition (2.4.7), $T$ is injective \newline
+        \proofback \newline
+        If $T$ is surjective, then by Proposition (2.4.7), dim(Im($T$)) = dim($W$) = dim($V$). Therefore, by Theorem (2.3.17), dim(Ker($T$)) = 0. Hence, by proposition (2.4.2), $T$ is injective. \qed
         
         \settag{2.4.11}
         \para{Proposition.} Let \trans{T}{V}{W} be a linear transformation, and let $\vw \in \text{Im}(T)$. Let $\vv_1$ be any fixed vector with $T(\vv_1) = \vw$. Then every vector $\vv_2\in T^{-1}\left(\{\vw\}\right)$ can be written uniquely as $\vv_2 = \vv_1 + \vu$, where $\vu \in \text{ker}(T)$
@@ -688,7 +697,44 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \item dim(Ker($T$)) = $0$
         \end{enumerate}
         
-        \settag{}
+        \settag{2.4.16}
+        \para{Proposition.}
+        \begin{enumerate}
+            \item The set of solutions of the system of linear equations $A\vx = \vb$ is the subset $T^{-1}\left(\{\vb\}\right)$ of $V = \R^n$
+            \item The set of solutions of the system of linear equations $A\vx = \vb$ is a subspace of $V$ if and only if the system is homogeneous, in which case the set of solutions is Ker($T$).
+        \end{enumerate}
+        
+        \settag{2.4.17}
+        \para{Corollary.} 
+        \begin{enumerate}
+            \item The number of free variables in the homogeneous system $A\vx = \mathbf{0}$ (or its echelon form equivalent) is equal to dim(Ker($T$)).
+            \item The number of basic variables of the system is equal to dim(Im($T$)).
+        \end{enumerate}
+        Now, if the system is \tit{not homogeneous}, then from Proposition (2.4.16) we see that $A\vx = \vb$ has a solution if and only if $\vb \in \text{Im}(T)$. Let us assume then that $\vb \in \text{Im}(T)$, then this yields us the following terminology:
+        
+        \settag{2.4.18}
+        \para{Definition of particular solution of a SLE (in-homo).} Given an in-homogeneous system of equations, $A\vx = \vb$, any single vector $\vx$ satisfying the system (necessarily $\vx \neq \mathbf{0}$) is called a \tit{particular solution} of the system of equations.
+        
+        \settag{2.4.19}
+        \para{Proposition.} Let $\vx_p$ be a particular solution of the system $A\vx = \vb$. Then every other solution to $A\vx = \vb$ is of the form $\vx = \vx_p = \vx_h$, where $\vx_h$ is a solution of the corresponding homogeneous system of equations $A\vx = \mathbf{0}$. Furthermore, given $\vx_p$ and $\vx$, there is a unique $\vx_h$ such that $\vx = \vx_p + \vx_h$.
+        
+        \settag{2.4.20}
+        \para{Corollary.} The syetem $A\vx = \vb$ has a unique solution if and only if $\vb \in \text{Im}(T)$ and the only solution to $A\vx = \mathbf{0}$ is the zero vector.
     \end{enumerate}
+    
+\section{Composition of Linear Transformations}
+\begin{enumerate}
+    \settag{2.5.1}
+    \para{Proposition.} If \trans{S}{U}{V} and \trans{T}{V}{W} are linear transformations, then so is $TS$. \newline
+    \proof \newline
+    Let $\alpha ,\beta \in \R$ and let $\vu_1,\vu_2 \in U$. We must show that $TS$ satisfies Proposition (2.1.2).
+    \begin{align*}
+        TS(\alpha \vu_1 + \beta \vu_2) &= T(S(\alpha \vu_1 + \beta \vu_2)) ~~~~~~~~~~~~~\text{// by definition of $TS$}\\
+        &= T(\alpha S(\vu_1) + \beta S(\vu_2))~~~~~~~~~\text{// by linearity of $S$}  \\
+        &= \alpha T(S(\vu_1)) + \beta T(S(\vu_2))~~~~\text{// by linearity of $T$} \\
+        &= \alpha TS(\vu_1) + \beta TS(\vu_2)
+    \end{align*}
+    \qed
+\end{enumerate}
 
 \end{document}
