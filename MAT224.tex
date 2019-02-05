@@ -735,6 +735,33 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         &= \alpha TS(\vu_1) + \beta TS(\vu_2)
     \end{align*}
     \qed
+    
+    \settag{2.5.4}
+    \para{Propositions.} 
+    \begin{enumerate}
+        \item \textbf{Associativity.} Let \trans{R}{U}{V}, and \trans{T}{W}{X} be linear transformation of the vectors spaces $W,V,W$, and $X$ as indicated, then 
+        \begin{equation*}
+            T(SR) = (TS)R
+        \end{equation*}
+        \item \textbf{Distributivity I.} Let \trans{R}{U}{V}, \trans{S}{U}{V} and \trans{T}{V}{W} be linear transformations of the vectors spaces $U,V$ and $W$ as indicated, then
+        \begin{equation*}
+            T(R+S) = TR+ TS
+        \end{equation*}
+        \item \textbf{Distributivity II.} Let \trans{R}{U}{V}, \trans{S}{V}{W} and \trans{T}{V}{W} be linear transformations of the vectors spaces $U, W$ and $W$ as indicated, then
+        \begin{equation*}
+            (T+S)R = TR + SR
+        \end{equation*}
+    \end{enumerate}
+    
+    \settag{2.5.6}
+    \para{Proposition.} Let \trans{S}{U}{V} and \trans{T}{V}{W} be linear transformation, then
+    \begin{enumerate}
+        \item $\text{Ker}(S)\subset \text{Ker}(TS)$
+        \item $\text{Im}(TS)\subset \text{Im}(T)$
+    \end{enumerate}
+    \proof \newline
+    We will prove (a) here.     
+    
 \end{enumerate}
 
 \end{document}
