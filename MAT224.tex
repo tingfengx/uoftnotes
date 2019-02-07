@@ -22,6 +22,7 @@
 \newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
 \newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
 \newcommand{\dime}[1]{\text{dim}(#1)}
+\newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
 % Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
 \newcommand{\para}[1]{\item \tbf{#1}}
 \newcommand{\va}{\mathbf{a}}
@@ -760,7 +761,61 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item $\text{Im}(TS)\subset \text{Im}(T)$
     \end{enumerate}
     \proof \newline
-    We will prove (a) here.     
+    We will prove (a) here. If $\vu \in \text{Ker}(S)$, $S(\vu) = \mathbf{0}$. Then 
+    \begin{equation*}
+        TS(\vu) = T(\mathbf{0}) = \mathbf{0}
+    \end{equation*}
+    where we notice that the first and last term tells us $\vu \in \text{Ker}(TS)$ and this completes the proof. \qed
+    
+    \settag{2.5.7}
+    \para{Corollary.} Let \trans{S}{U}{V} and \trans{T}{V}{W} be linear transformations of fin-dim vector spaces, then
+    \begin{enumerate}
+        \item dim(Ker($S$)) $\leq$ dim(Ker($TS$))
+        \item dim(Im($TS$)) $\leq$ dim(Im($T$))
+    \end{enumerate}
+    \tbf{Remark.} In naive words, the statement (a) is saying that no transformation can bring what has been smashed to zero back, and thus the composition result of two linear transformations must have a larger kernel. The statement (b) is saying that each time we perform a linear transformation, the ``Image Range" of the final output would be restricted, and thus a composition would only result in a tighter restriction.
+    
+    \settag{2.5.9}
+    \para{Proposition: Compatible Matrix Product.} If $\left[S\right]_\alpha^\beta$ has entries $a_{ij}$, where $i\in \{1, \ldots, n\}$ and $j\in \{1, \ldots, m\}$ and $\left[T\right]_\beta^\gamma$ has entries $b_{kl}$, where $k\in \{1, \ldots, p\}$ and $l\in \{1, \ldots, n\}$, then the entries of $\left[TS\right]_\alpha^\gamma$ are 
+    \begin{equation*}
+        \sum_{l=1}^nb_{kl}a_{lj}
+    \end{equation*}
+    
+    \settag{2.5.13}
+    \para{Proposition: Composition of Transformations Induced By Matrices.} Let \trans{S}{U}{V} and \trans{T}{V}{W} be linear transformation between fin-dim vector spaces. Let $\alpha, \beta, \gamma$ be bases for $U, V$ and $W$, respectively. Then
+    \begin{equation*}
+        \left[TS\right]_\alpha^\gamma = \left[T\right]_\beta^\gamma \left[S\right]_\alpha^\beta
+    \end{equation*}
+    One can comprehend this as: the standard matrix of a transformation that is a composition of two transformations induced by matrices is the matrix product of those matrices. Also note that matrix product \tit{does not} commute.
+    
+    \settag{2.5.14}
+    \para{Propositions.}
+    \begin{enumerate}
+        \item \tbf{Associativity.} Let $A\in M_{m\times n}(\R), B\in M_{n\times p}(\R), C\in M_{p\times r}(\R)$, then
+        \begin{equation*}
+            (AB)C = A(BC)
+        \end{equation*}
+        
+        \item \tbf{Distributivity I.} Let $A\in M_{m\times n}(\R)$ and $B, C\in M_{n\times p}(\R)$, then
+        \begin{equation*}
+            A(B+C) = AB + AC
+        \end{equation*}
+        
+        \item \tbf{Distributivity II.} Let $A, B\in \mat{m}{n}, C\in \mat{n}{p}$, then
+        \begin{equation*}
+            (A+B)C = AC + BC
+        \end{equation*}
+    \end{enumerate}
+\end{enumerate}
+
+\section{The Inverse of A Linear Transformations}
+\begin{enumerate}
+    \settag{2.6.1}
+    \para{Proposition.} Let \trans{T}{V}{W} be bijective, then the inverse function \trans{S}{W}{V} is a linear transformation.
+    
+    \settag{2.6.2}
+    \para{Proposition.} If \trans{T}{V}{W} is a linear transformation that has an inverse transformation \trans{S}{W}{V}, we say that $T$ is \tit{invertible}, and we denote the inverse of $T$ here $T^{-1} := S$ 
+    
     
 \end{enumerate}
 
