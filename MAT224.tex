@@ -23,6 +23,7 @@
 \newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
 \newcommand{\dime}[1]{\text{dim}(#1)}
 \newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
+\newcommand\aug{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
 % Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
 \newcommand{\para}[1]{\item \tbf{#1}}
 \newcommand{\va}{\mathbf{a}}
@@ -808,14 +809,75 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{enumerate}
 \end{enumerate}
 
-\section{The Inverse of A Linear Transformations}
+\section{The Inverse of A Linear Transformation}
 \begin{enumerate}
     \settag{2.6.1}
     \para{Proposition.} Let \trans{T}{V}{W} be bijective, then the inverse function \trans{S}{W}{V} is a linear transformation.
     
     \settag{2.6.2}
-    \para{Proposition.} If \trans{T}{V}{W} is a linear transformation that has an inverse transformation \trans{S}{W}{V}, we say that $T$ is \tit{invertible}, and we denote the inverse of $T$ here $T^{-1} := S$ 
+    \para{Proposition.} A linear transformation \trans{T}{V}{W} has an inverse linear transformation $S$ \tit{if and only if} $T$ is injective and surjective.
     
+    \settag{2.6.3}
+    \para{Definition of Inverse and Invertible.} If \trans{T}{V}{W} is a linear transformation that has an inverse transformation \trans{S}{W}{V}, we say that $T$ is \tit{invertible}, and we denote the inverse of $T$ here $T^{-1} := S$ 
+    
+    \settag{2.6.4}
+    \para{Definition of isomorphism.} If \trans{T}{V}{W} is an invertible linear transformation, $T$ is called an \tit{isomorphism}, and we say $V$ and $W$ are \tit{isomorphic} vector spaces.
+    
+    \settag{2.6.5}
+    \para{Remark on the $T^{-1}$ notation.} Please note that the inverse here that is acting on a vector is denotes the inverse transformation. For example we have \trans{T}{V}{W}, then $w\in W, T^{-1}(w)\in V$ denotes the inverse transformation. We \textit{must} differentiate this from the other notation we encountered earlier which acts on a set rather than on a vector. As an example, we have \trans{T}{V}{W} and $\mathbf{0}\in W$, then
+    \begin{equation*}
+        T^{-1}\left(\{\mathbf{0}\}\right) \equiv \{\vv\in V, T(\vv) = \mathbf{0}\}
+    \end{equation*}
+    Notice that this special example is a.k.a the Kernel of the transformation by definition.
+    
+    \settag{2.6.7}
+    \para{Proposition.} If $V$ and $W$ are finite-dimensional vector spaces, then there is an isomorphism \trans{T}{V}{W} \tit{if and only if} dim($V$) $=$ dim($W$). \newline
+    \proofforward \newline
+    If $T$ is an isomorphism, then we know that $T$ is bijective. So,
+    dim(Ker($T$)) = 0 and dim(Im($T$)) = dim($W$). Then by the Rank-Nullity Theorem, we conclude that dim($V$) = dim($W$).\newline
+    \proofback \newline
+    If dim($V$) = dim($W$), we must produce an isomorphism \trans{T}{V}{W}. Let $\alpha = \{\vv_1, \ldots, \vv_n\}$ be a basis for $B$ and $\beta = \{\vw_1,\ldots,\vw_n\}$ be a basis for $W$. Define $T$ to be the linear transformation from $V$ to $W$ with $T(\vv_i) = w_i, i = 1,\ldots,n$. By Proposition (2.1.14), $T$ is uniquely determined by tis choice of values on $\alpha$. To see that $T$ is injective, notice that if
+    \begin{equation*}
+        T(a_1\vv_1 + \ldots + a_n\vv_n) = \mathbf{0}
+    \end{equation*}
+    then we have
+    \begin{equation*}
+        a_1\vw_1 + \ldots + a_n\vw_n = \mathbf{0}
+    \end{equation*}
+    Since the $\vw$'s are a basis, we know immediately that $a_1 = \ldots = a_n = 0$. Then Ker($T$) = $\{\mathbf{0}\}$ and $T$ is injective. By proposition (2.4.10) $T$ is also surjective, and then by Proposition (2.6.2) it is an isomorphism.
+    
+    \settag{2.6.9}
+    \para{The Gauss-Jordan Method of Inverse\footnote{Extended based on this example}.} Suppose we have the following matrix:
+    \begin{equation*}
+    A = \left[T\right]_\alpha^\beta = 
+        \begin{bmatrix}
+            a_{11} & \hdots & a_{1n} \\
+            \vdots & \ddots & \vdots \\
+            a_{n1} & \ldots & a_{nn}
+        \end{bmatrix}
+    \end{equation*}
+    and we want to find the matrix inverse $B = \left[T^{-1}\right]_\beta^\alpha$. To achieve this, we augment this matrix with the compatible identity map $I_{n\times n}$.
+    \begin{equation}
+        \begin{bmatrix}
+            a_{11} & \hdots & a_{1n} &\aug & 1 & \ldots & 0 \\
+            \vdots & \ddots & \vdots &\aug & \vdots & \ddots & \vdots \\
+            a_{n1} & \ldots & a_{nn} &\aug & 0 & \ldots & 1
+        \end{bmatrix} 
+        = \left[A|I\right]
+    \end{equation}
+    We row reduce (2.2) w.r.t the left half matrix with a result of the following form:
+    \begin{equation*}
+        \begin{bmatrix}
+            1 & \ldots & 0 &\aug & b_{11} & \hdots & b_{1n}  \\
+            \vdots & \ddots & \vdots &\aug & \vdots & \ddots & \vdots \\
+            0 & \ldots & 1 &\aug & b_{n_1} & \ldots & b_{nn}
+        \end{bmatrix} 
+        = \left[I|B\right] = \left[I|A^{-1}\right]
+    \end{equation*}
+    We then record the $n\times n$ coefficients ($b_{ij}$) on the right hand side which is our end result of the inverse.
+    
+    \settag{2.6.10}
+    \para{Definition of invertible matrices.} An $n \times n $ matrix is called invertible if there exists an $n\times n$ matrix $B$ so that $AB = BA = I$. Where the $I$ denotes the compatible identity map and $B$ is called an inverse of $A$ and $A^{-1} := B$
     
     
 \end{enumerate}
