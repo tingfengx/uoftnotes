@@ -499,7 +499,14 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         Let $a_{ij}$, where $1\leq i \leq l$ and $1\leq j \leq k$ be the $l\cdot k$ scalars that determined $T$ with respect to the bases $\alpha$ and $\beta$. The matrix whole entries are the scalars $a_{ij}$, given above, is called the \tit{matrix of the linear transformation $T$ with respect to the bases $\alpha$ for $V$ and $\beta$ for $W$}. We denote such matrix with following notation: $\left[T\right]^\beta_\alpha$. \newline 
         \tbf{Notice that}, again, $\alpha$ is a basis for $V$, the domain of the transformation and $\beta$ is a basis for $W$, the co-domain of the transformation.
         \newline
-        \tbf{Remark.} This should be familiar from MAT223, where we perform transformation on each and every element in a basis for a space, and transcribe them, in terms of another basis, into a standard matrix for the transformation.
+        \tbf{Remark.} This should be familiar from MAT223, where we perform transformation on each and every element in a basis for a space, and transcribe them, in terms of another basis, into a standard matrix for the transformation. In terms of standardized formulaic calculations, we have
+        \begin{equation*}
+            \left[T\right]_\alpha^\beta =
+            \begin{bmatrix}
+                \left[T(\alpha_1) \right]_\beta & \ldots & \left[T(\alpha_n) \right]_\beta
+            \end{bmatrix}
+        \end{equation*}
+        where the $\alpha_i$'s denotes the $i$-th element of the $\alpha$ basis, and is itself a vector.
         
         \settag{2.2.15}
         \item \tbf{Proposition: Linear Transformation on alternative basis.} Let $T:V\xrightarrow{} W$ be a linear transformation between vector spaces $V$ of dimension $k$ and $W$ of dimension $l$. Let $\alpha = \{\mathbf{v}_1,\ldots,\mathbf{v}_k\}$ be a basis for $V$, and let $\beta = \{\mathbf{w}_1,\ldots,\mathbf{w}_l\}$ be a basis for $W$. Then for each $\mathbf{v} \in V$, we have the following:
