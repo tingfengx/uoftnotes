@@ -13,7 +13,7 @@ There were a few macros that were created and used during the type-setting proce
 This shell script was written to ease the routine of pushing pdf and tex files to the server, since these updates ussally do not include new files nor large modification to the existing code.
 
 ## Makefile
-This Makefile contains several rules for pushing my routine updates to this repository. I am also considering adding a compiling dependency so that each time I push, it compiles a fresh pdf file if necessary.
+This Makefile contains several rules for pushing my routine updates to this repository. There is also a compiling dependency so that each time I push, it compiles a fresh pdf file if necessary.
 
 ## License
 This project is licensed under GNU General Public License v3.0. Find out more here: <https://www.gnu.org/licenses/gpl-3.0.en.html>
