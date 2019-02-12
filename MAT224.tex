@@ -21,6 +21,7 @@
 \newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
 \newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
 \newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
+\newcommand{\map}[3]{\text{$\left[#1\right]_{#2}^{#3}$}}
 \newcommand{\dime}[1]{\text{dim}(#1)}
 \newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
 \newcommand\aug{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
@@ -897,6 +898,48 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     
     \settag{2.6.10}
     \para{Definition of invertible matrices.} An $n \times n $ matrix is called invertible if there exists an $n\times n$ matrix $B$ so that $AB = BA = I$. Where the $I$ denotes the compatible identity map and $B$ is called an inverse of $A$ and $A^{-1} := B$
+    
+    \settag{2.6.11}
+    \para{Proposition.} Let \trans{T}{V}{W} be an isomorphism of finite-dimensional vector spaces. Then for any choice of bases $\alpha$ for $V$ and $\beta$ for $W$, we have
+    \begin{equation*}
+        \left[T^{-1}\right]_\beta^\alpha = \left[\left[T\right]^\beta_\alpha\right]^{-1}
+    \end{equation*}
+    \proof \newline
+    To show the above identity, it suffices to show that $\left[T^{-1}\right]_\beta^\alpha$ is the matrix inverse of $\left[T\right]_\alpha^\beta$. On one hand we have
+    \begin{equation*}
+        \left[T^{-1}\right]_\beta^\alpha \left[T\right]^\beta_\alpha = \left[T^{-1}T\right]_\alpha^\alpha = \left[I_{n \times n}\right]_\alpha^\alpha
+    \end{equation*}
+    On the other hand, we have
+    \begin{equation*}
+        \left[T\right]^\beta_\alpha \left[T^{-1}\right]_\beta^\alpha = \left[TT^{-1}\right]_\beta^\beta = \left[I_{n \times n}\right]_\beta^\beta
+    \end{equation*}
+    Then, since the $n\times n$ identity map is unique, $\left[I_{n \times n}\right]_\beta^\beta = \left[I_{n \times n}\right]_\alpha^\alpha$, we can equate the above two equations, which, by definition tells us that $\left[T^{-1}\right]_\beta^\alpha$ is the matrix inverse of $\left[T\right]_\alpha^\beta$. We conclude that the above identity is true.\qed
+\end{enumerate}
+
+\section{Change of Basis}
+\begin{enumerate}
+    \settag{2.7.2}
+    \para{Remark on the notation.} Note that the here the $[I]_\alpha^{\alpha'}$ is \textit{not} the identity map since $\alpha \neq \alpha'$. This notation will come up in the following chapter naturally but it is important to differentiate this notation with the identity map.
+    
+    \settag{2.7.3}
+    \para{Proposition.} Let $V$ be a finite-dimensional vector space, and let $\alpha, \alpha'$ be bases for $V$. Let $\vv \in V$. Then the coordinate vector $[\vv]_{\alpha'}$ of $\vv$ in the basis $\alpha'$ is related to the coordinate vector $[\vv]_\alpha$ of $\vv$ in the basis $\alpha$ by
+    \begin{equation*}
+        [I]_\alpha^{\alpha'}[\vv]_\alpha = [\vv]_{\alpha'}
+    \end{equation*}
+    
+    \settag{2.7.5}
+    \para{Theorem.} Let \trans{T}{V}{W} be a linear transformation between fin-dim vector spaces $V$ and $W$. Let \trans{I_V}{V}{V} and \trans{I_W}{W}{W} be respective identity transformations of $V$ and $W$. Let $\alpha, \alpha'$ be two bases for $V$ and let $\beta, \beta'$ be two bases for $W$, then
+    \begin{equation*}
+        \map{T}{\alpha'}{\beta'} = \map{I_W}{\beta}{\beta'}\cdot \map{T}{\alpha}{\beta}\cdot \map{I_V}{\alpha'}{\alpha}
+    \end{equation*}
+    \textbf{Remark.} In naive words, in order to produce a transformation from bases $\alpha'$ to $\beta'$ we first make the change of basis from $\alpha'$ to $\alpha$, then we perform the transformation from $\alpha$ basis to $\beta$ basis and lastly we change the basis to the wanted $\beta'$ through a ``cross basis identity map".
+    
+    \settag{2.7.6}
+    \para{Definition of Similar Matrices.} Let $A, B$ be $n\times n$ matrices. $A$ and $B$ are said to be \textit{similar} if there exists an invertible matrix $Q$ such that:
+    \begin{equation*}
+        B = Q^{-1}AQ
+    \end{equation*}
+    Applying this new definition, we can see the follows: Let \trans{T}{V}{V} is a linear transformation and $\alpha, \alpha'$ are two bases for $V$, then $A = \map{T}{\alpha}{\alpha}$ is similar to $B = \map{T}{\alpha'}{\alpha'}$, and the invertible matrix $Q$ in the definition is the matrix $Q = \map{I_V}{\alpha'}{\alpha}$
     
     
 \end{enumerate}
