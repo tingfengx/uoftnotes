@@ -940,7 +940,16 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \begin{equation*}
         \map{T}{\alpha'}{\beta'} = \map{I_W}{\beta}{\beta'}\cdot \map{T}{\alpha}{\beta}\cdot \map{I_V}{\alpha'}{\alpha}
     \end{equation*}
-    \textbf{Remark.} In naive words, in order to produce a transformation from bases $\alpha'$ to $\beta'$ we first make the change of basis from $\alpha'$ to $\alpha$, then we perform the transformation from $\alpha$ basis to $\beta$ basis and lastly we change the basis to the wanted $\beta'$ through a ``cross basis identity map".
+    \textbf{Remark.} In naive words, in order to produce a transformation from bases $\alpha'$ to $\beta'$ we first make the change of basis from $\alpha'$ to $\alpha$, then we perform the transformation from $\alpha$ basis to $\beta$ basis and lastly we change the basis to the wanted $\beta'$ through a ``cross basis identity map". \newline
+    We now present the proof, using the change of basis facts: \newline
+    \proof \newline
+    Since $T = I_WTI_V$, we can write
+    \begin{align*}
+        \map{T}{\alpha'}{\beta'} &= \map{I_WTI_V}{\alpha'}{\beta'} \\
+        &= \map{I_WT}{\alpha}{\beta'}\map{I_V}{\alpha'}{\alpha} \\
+        &= \map{I_W}{\beta}{\beta'}\map{T}{\alpha}{\beta} \map{I_V}{\alpha'}{\alpha}
+    \end{align*}
+    \qed
     
     \settag{2.7.6}
     \para{Definition of Similar Matrices.} Let $A, B$ be $n\times n$ matrices. $A$ and $B$ are said to be \textit{similar} if there exists an invertible matrix $Q$ such that:
