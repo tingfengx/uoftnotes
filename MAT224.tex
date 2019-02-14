@@ -887,7 +887,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \end{bmatrix} 
         = \left[A|I\right]
     \end{equation}
-    We row reduce (2.2) w.r.t the left half matrix with a result of the following form:
+    We row reduce (2.2) \textit{w.r.t} the left half matrix with a result of the following form:
     \begin{equation*}
         \begin{bmatrix}
             1 & \ldots & 0 &\aug & b_{11} & \hdots & b_{1n}  \\
@@ -916,7 +916,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \left[T\right]^\beta_\alpha \left[T^{-1}\right]_\beta^\alpha = \left[TT^{-1}\right]_\beta^\beta = \left[I_{n \times n}\right]_\beta^\beta
     \end{equation*}
     Then, since the $n\times n$ identity map is unique, $\left[I_{n \times n}\right]_\beta^\beta = \left[I_{n \times n}\right]_\alpha^\alpha$, we can equate the above two equations, which, by definition tells us that $\left[T^{-1}\right]_\beta^\alpha$ is the matrix inverse of $\left[T\right]_\alpha^\beta$. We conclude that the above identity is true.\qed \newline
-    \tit{\underline{Proof(From class):}} \newline
+    \tit{\underline{Proof(from class):}} \newline
     Starting from the identity matrix in the $\alpha$ basis, we have
     \begin{equation}
         \map{I}{\alpha}{\alpha} = \map{TT^{-1}}{\alpha}{\alpha} = \map{T^{-1}}{\alpha}{\beta} \map{T}{\beta}{\alpha} 
@@ -927,7 +927,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Change of Basis}
 \begin{enumerate}
     \settag{2.7.2}
-    \para{Remark on the notation.} Note that the here the $[I]_\alpha^{\alpha'}$ is \textit{not} the identity map since $\alpha \neq \alpha'$. This notation will come up in the following chapter naturally but it is important to differentiate this notation with the identity map.
+    \para{Remarks on the notation.} Note that the here the $[I]_\alpha^{\alpha'}$ is \textit{not} the identity map since $\alpha \neq \alpha'$. This notation will come up in the following chapter naturally but it is important to differentiate this notation with the identity map.
+    
+    \settag{2.7.*}
+    \para{Remark on the identity map.} Note that the inverse of a identity map is itself, that is
+    \begin{equation*}
+        \left[\map{I}{\alpha}{\beta}\right]^{-1} \equiv \map{I}{\alpha}{\beta}, \forall~\text{$\alpha,\beta$ bases $\forall~\text{vector spaces}~V$}
+    \end{equation*}
     
     \settag{2.7.3}
     \para{Proposition.} Let $V$ be a finite-dimensional vector space, and let $\alpha, \alpha'$ be bases for $V$. Let $\vv \in V$. Then the coordinate vector $[\vv]_{\alpha'}$ of $\vv$ in the basis $\alpha'$ is related to the coordinate vector $[\vv]_\alpha$ of $\vv$ in the basis $\alpha$ by
