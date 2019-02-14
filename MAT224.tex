@@ -33,6 +33,7 @@
 \newcommand{\vu}{\mathbf{u}}
 \newcommand{\vw}{\mathbf{w}}
 \newcommand{\vx}{\mathbf{x}}
+\newcommand{\ve}{\mathbf{e}}
 % For convenience, I am setting both of these to refer to the same thing.
 \newcommand{\ba}{\mathbf{a}}
 \newcommand{\bb}{\mathbf{b}}
@@ -40,6 +41,7 @@
 \newcommand{\bu}{\mathbf{u}}
 \newcommand{\bw}{\mathbf{w}}
 \newcommand{\bx}{\mathbf{x}}
+\newcommand{\be}{\mathbf{e}}
 
 
 \pdfinfo{
@@ -940,8 +942,59 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         B = Q^{-1}AQ
     \end{equation*}
     Applying this new definition, we can see the follows: Let \trans{T}{V}{V} is a linear transformation and $\alpha, \alpha'$ are two bases for $V$, then $A = \map{T}{\alpha}{\alpha}$ is similar to $B = \map{T}{\alpha'}{\alpha'}$, and the invertible matrix $Q$ in the definition is the matrix $Q = \map{I_V}{\alpha'}{\alpha}$
-    
-    
 \end{enumerate}
+
+\chapter{The Determinant Function}
+\section{The determinant as area}
+\begin{enumerate}
+    \settag{3.1.1}
+    \para{Propositions: Geometry of a parallelogram in $\R^2$} 
+    \begin{enumerate}
+        \item The area of the parallelogram with vertices $\mathbf{0}, \va_1, \va_2$, and $\va_1 + \va_2$ is $\pm\left(a_{11}a_{22} - a_{12}a_{21}\right)$
+        \item The area is not zero if and only if the vectors $\va_1$ and $\va_2$ are linearly independent.
+    \end{enumerate}
+    
+    \settag{3.1.2}
+    \para{Corollary.} Let $V=\R^2$, \trans{T}{V}{V} is an isomorphism if and only if the area of the parallelogram constructed previously is non-zero
+    
+    \settag{3.1.3}
+    \para{Proposition.} The function $Area(\va_1, \va_2)$ has the following properties for $\va_1,\va_2, \va_1'$, and $\va_2'\in \R^2$
+    \begin{enumerate}
+        \item $Area(b\va_1 + c\va_1', \va_2) = b~Area(\va_1,\va_2) + c~Area(\va_1', \va_2)~\text{for $b, c \in \R$}$
+        \item \footnote{This essentially the same as (a)}$Area(\va_1, b\va_2 + c\va_2') = b~Area(\va_1,\va_2) + c~Area(\va_1, \va_2')~\text{for $b, c \in \R$}$
+        \item $Area(\va_1, \va_2) = -Area(\va_2, \va_1)$, and
+        \item $Area((1, 0), (0, 1) = 1$.
+    \end{enumerate}
+    \textbf{Remark.} Recall that (d) is the \textit{n-cube} in $\R^2$, where n-cube is defined as follows: (with $\ve_i$'s as components of $\xi$ basis for $\R^n$ Euclidean Space)
+    \begin{equation*}
+        C_n := \left\{\vx \in \R^n| \vx = \sum_{i = 1}^n \alpha_i \ve_i~\text{for some $\alpha_i\in \left[0, 1\right]$}\right\} \equiv \left[0, 1\right]^n
+    \end{equation*}
+    
+    \settag{3.1.4}
+    \para{Proposition.} If $B(\va_1, \va_2)$ is any real-valued function of $\va_1, \va_2\in \R^2$ that satisfies Properties (a), (c) and (d) of Proposition (3.1.3), then $B$ is equal to the area function.
+    
+    \settag{3.1.5}
+    \para{Definition of \textit{determinant} of a $2 \times 2$ matrix.}
+    \begin{enumerate}
+        \item $\det(b\va_1 + c\va_1', \va_2) = b\det(\va_1, \va_2) + c\det(\va_1', \va_2)$ for $b, c\in \R$
+        \item $\det(\va_1, \va_2) = -\det(\va_2, \va_1)$, and
+        \item $\det(\ve_1, \ve_2) = 1$
+    \end{enumerate}
+    As a consequence of (3.1.4), $\det(A)$ is given by
+    \begin{equation*}
+        \det(A)\equiv a_{11}a_{22} - a_{12}a_{21}
+    \end{equation*}
+    where $a_{ij}$ refers to the $i$-th row, $j$-th column of the matrix $A$.
+    
+    \settag{3.1.6}
+    \para{Propositions: Determinant in relations.}
+    \begin{enumerate}
+        \item A $2 \times 2$ matrix $A$ is invertible if and only if $\det(A)\neq 0$
+        \item If \trans{T}{V}{V} is linear transformation of a two-dimensional vector space $V$, then $T$ is an isomorphism if and only if $\det(\map{T}{\alpha}{\alpha}) \neq 0$
+    \end{enumerate}
+        
+\end{enumerate}
+
+
 
 \end{document}
