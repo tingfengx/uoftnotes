@@ -906,7 +906,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \begin{equation*}
         \left[T^{-1}\right]_\beta^\alpha = \left[\left[T\right]^\beta_\alpha\right]^{-1}
     \end{equation*}
-    \proof \newline
+    \tit{\underline{Proof(from the book):}} \newline
     To show the above identity, it suffices to show that $\left[T^{-1}\right]_\beta^\alpha$ is the matrix inverse of $\left[T\right]_\alpha^\beta$. On one hand we have
     \begin{equation*}
         \left[T^{-1}\right]_\beta^\alpha \left[T\right]^\beta_\alpha = \left[T^{-1}T\right]_\alpha^\alpha = \left[I_{n \times n}\right]_\alpha^\alpha
@@ -915,7 +915,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \begin{equation*}
         \left[T\right]^\beta_\alpha \left[T^{-1}\right]_\beta^\alpha = \left[TT^{-1}\right]_\beta^\beta = \left[I_{n \times n}\right]_\beta^\beta
     \end{equation*}
-    Then, since the $n\times n$ identity map is unique, $\left[I_{n \times n}\right]_\beta^\beta = \left[I_{n \times n}\right]_\alpha^\alpha$, we can equate the above two equations, which, by definition tells us that $\left[T^{-1}\right]_\beta^\alpha$ is the matrix inverse of $\left[T\right]_\alpha^\beta$. We conclude that the above identity is true.\qed
+    Then, since the $n\times n$ identity map is unique, $\left[I_{n \times n}\right]_\beta^\beta = \left[I_{n \times n}\right]_\alpha^\alpha$, we can equate the above two equations, which, by definition tells us that $\left[T^{-1}\right]_\beta^\alpha$ is the matrix inverse of $\left[T\right]_\alpha^\beta$. We conclude that the above identity is true.\qed \newline
+    \tit{\underline{Proof(From class):}} \newline
+    Starting from the identity matrix in the $\alpha$ basis, we have
+    \begin{equation}
+        \map{I}{\alpha}{\alpha} = \map{TT^{-1}}{\alpha}{\alpha} = \map{T^{-1}}{\alpha}{\beta} \map{T}{\beta}{\alpha} 
+    \end{equation}
+    from where we equate the first and last term of the above line, and notice that by definition \map{T}{\beta}{\alpha} is a inverse of \map{T^{-1}}{\alpha}{\beta}, so \left[\map{T}{\beta}{\alpha} \right]^{-1} = \map{T^{-1}}{\alpha}{\beta} and this completes the proof. \qed
 \end{enumerate}
 
 \section{Change of Basis}
