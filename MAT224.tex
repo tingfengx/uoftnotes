@@ -683,8 +683,15 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \proofforward \newline
             If $T$ is injective, then by definition, there $\exists!\vv \in V$ with $T(\vv) = \mathbf{0}$. Since we know that $T(\mathbf{0}) = 0, \forall~\text{linear mappings}$, the zero vector is the unique vector $\vv$ satisfying $T(\vv) = \mathbf{0}$. Thus the kernel of $T$ consists of only the zero vector. Therefore, dim(Ker($T$)) = 0. \newline
         \proofback \newline
-            Conversely, assume that dim(Ker($T$)) = 0. Let $\vv_1, \vv_2 \in V$ with $T(\vv_1) = T(\vv_2)$. We want to show that $\vv_1 = \vv_2$. Since $T(\vv_1) = T(\vv_2)$, $T(\vv_1 - \vv_2) = \mathbf{0}$, so $\vv_1 - \vv_2 \in \text{Ker}(T)$. But if dim(Ker($T$)) = 0, it follows that Ker($T$) = $\{\mathbf{0}\}$. It follows that $\vv_1 - \vv_2 = \mathbf{0} \implies \vv_1 = \vv_2$ as wanted. Thus, $T$ is injective. \qed
-            
+            Conversely, assume that dim(Ker($T$)) = 0. Let $\vv_1, \vv_2 \in V$ with $T(\vv_1) = T(\vv_2)$. We want to show that $\vv_1 = \vv_2$. Since $T(\vv_1) = T(\vv_2)$, $T(\vv_1 - \vv_2) = \mathbf{0}$, so $\vv_1 - \vv_2 \in \text{Ker}(T)$. But if dim(Ker($T$)) = 0, it follows that Ker($T$) = $\{\mathbf{0}\}$. It follows that $\vv_1 - \vv_2 = \mathbf{0} \implies \vv_1 = \vv_2$ as wanted. Thus, $T$ is injective. \qed \newline
+        \textbf{Remark.} This proposition is so important that we summarize it as follows, again. Let \trans{T}{V}{W}, with $\dim{V} = \dim{W}$, then
+        \begin{align*}
+            &~~~~~~~~~ \text{$T$ is injective} \\
+            &\iff \text{$T$ is surjective} \\
+            &\iff \text{$\ker(T)$ is trivial} \\
+            &\iff \text{Im($T$) $= W$}
+        \end{align*}
+        
         \settag{2.4.3}
         \para{Corollary.} A linear mapping $T:V\rightarrow{} W$ on a finite-dimensional vector space $V$ is injective if and only if $\text{dim(Im(}T\text{)) = dim(}V\text{)}$
         
