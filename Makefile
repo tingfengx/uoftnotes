@@ -6,8 +6,8 @@ update:
 	git commit -m"Routine update (with Make)"
 
 %.pdf: %.tex
-	pdflatex $%
-	pdflatex $%
+	pdflatex $<
+	pdflatex $<
 	rm *.aux
 	rm *.log
 	rm *.out
