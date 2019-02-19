@@ -1020,7 +1020,83 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item A $2 \times 2$ matrix $A$ is invertible if and only if $\det(A)\neq 0$
         \item If \trans{T}{V}{V} is linear transformation of a two-dimensional vector space $V$, then $T$ is an isomorphism if and only if $\det(\map{T}{\alpha}{\alpha}) \neq 0$
     \end{enumerate}
-        
+\end{enumerate}
+
+\section{The Determinant of an $n \times n$ Matrix}
+\begin{enumerate}
+    \settag{3.2.1}
+    \para{Definition of Multi-linear.} A function $f$of the rows of a matrix $A$ is called multi-linear of $f$ is linear function of each of its rows when the remaining rows are held fixed. That is, $f$ is multi-linear if for all $b, b' \in \R$,
+    \begin{multline*}
+        f(\va_1,\ldots,b\va_i + b'\va_i',\ldots,\va_n) \\
+        = bf(\va_1,\ldots,\va_i,\ldots,\va_n) + b'f(\va_1,\ldots,\va_i',\ldots,\va_n)
+    \end{multline*}
+    
+    \settag{3.2.2}
+    \para{Definition of Alternating.} A function $f$ of rows of a matrix $A$ is said to be alternating if whenever any two rows of A are interchanged $f$ changes sign. That is, for all $i\neq j, 1\leq i, j \leq n$, we have
+    \begin{equation*}
+        f(\va_1,...,\va_i,...,\va_j,...,\va_n) = -f(\va_1,...,\va_j,...,\va_i,...,\va_n)
+    \end{equation*}
+    Do notice the switched position of $\va_i$ and $\va_j$ in the above equality.
+    
+    \settag{3.2.2}
+    \para{Lemma.} If $f$ is an alternating real-valued function of the rows of an $n\times n$ matrix $A$ are identical, then $f(A) = 0$. \newline
+    \proof \newline
+    Assume that $\va_i = \va_j$. Then,
+    \begin{align*}
+        f(A) &= f(\va_1,...,\va_i,...,\va_j,...,\va_n) \\
+        &= -f(\va_1,...,\va_j,...,\va_i,...,\va_n) \\
+        &= -f(A)
+    \end{align*}
+    Hence $f(A) = 0$. \qed \newline
+    \textbf{Remark: Sanity check in $\R^2$.} Notice that we have
+    \begin{equation*}
+        \det
+        \begin{bmatrix}
+            a & b \\
+            a & b \\
+        \end{bmatrix}
+        =ab-ab = 0
+    \end{equation*}
+    
+    \settag{3.2.4}
+    \para{Definition of Cofactor.}\footnote{Refered to as the Minor Matrix in the book.} Let the $A$ be an $n\times n$ matrix with entries $a_{ij}$, where $i, j = 1, ..., n$. The $ij$-th \tit{cofactor matrix} of $A$ is defined to be the $(n-1) \times (n -1)$ matrix by deleting the $i$-th row and $j$-th column of $A$. We denote such cofactor matrix as $A_{ij}$.
+    
+    \settag{3.2.5}
+    \para{Proposition.} Let $A$ be a $3 \times 3$ matrix, and let $f$ be an alternating multi-linear function. Then
+    \begin{equation*}
+        f(A) = \left[a_{11}\det(A_{11}) - a_{12}\det(A_{12}) + a_{13}\det(A_{13})\right]f(I)
+    \end{equation*}
+    
+    \settag{3.2.6}
+    \para{Corollary.} There exists exactly one multi-linear alternating function $f$ of the rows of a $3 \times 3$ matrix such that $f(I) = 1$.
+    
+    \settag{3.2.7}
+    \para{The \tit{det} of $3 \times 3$ matrices.} The determinant function of a $3 \times 3$ matrix is the unique alternating multi-linear function f with f(I) = 1. We denote this function by $\det{(A)}$.
+    
+    \settag{3.2.8}
+    \para{Theorem.} There exits exactly one alternating multi-linear function \trans{f}{M_{n\times n}(\R)}{\R} satisfying $f(I) = 1$, which is called the determinant function $f(A) = \det(A)$. Further, any alternating multi-linear function $f$ satisfies $f(A) = \det(A)f(I)$.
+    
+    \settag{3.2.10}
+    \para{Proposition: non-invertible square matrix have zero \tit{det}.} If an $n \times n$ matrix $A$ is not invertible, then $\det(A) = 0$. \newline
+    \proof \newline
+    If $A$ is not invertible, then the row space of $A$ has dimension at most $(n - 1)$. Therefore, there is a linear dependence among the rows of $A$, 
+    \begin{equation*}
+        x_1\va_1 + ... + x_n\va_n = \mathbf{0}~~~~~~\exists i~s.t.~ x_i \neq 0
+    \end{equation*}
+    Without loss of generality, we assume that $x_1 \neq 0$, then we can divide the entire equation by $x_1$. Solving for $\va_1$ yields us 
+    \begin{equation*}
+        \va_1 = -\frac{1}{x_1(x_2\va_2 + ... + x_n\va_n)} = \sum_{i = 2}^{n}\left(\frac{-x_i}{x_1}\va_i\right)
+    \end{equation*}
+    Then we consider the determinant function, 
+    \begin{align*}
+        \det(A) &= \det(\va_1,...,\va_n) \\
+        &= \det\left(\sum_{i = 2}^{n}\left(\frac{-x_i}{x_1}\va_i\right), \va_2, ..., \va_n\right) \\
+        &= \sum_{i = 2}^{n} \left(\frac{-x_i}{x_1}\right)\det(\va_i, \va_2,...,\va_n) \\
+        &= 0
+    \end{align*}
+    since each term in the final sum is the determinant of a matrix with repeated rows, and by (3.2.2), we conclude the proof. \qed
+    
+    
 \end{enumerate}
 
 
