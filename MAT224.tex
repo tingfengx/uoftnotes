@@ -1096,6 +1096,58 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{align*}
     since each term in the final sum is the determinant of a matrix with repeated rows, and by (3.2.2), we conclude the proof. \qed
     
+    \settag{3.2.11}
+    \para{Proposition.} The following equality always holds:
+    \begin{equation*}
+        \det(\va_1,...,\va_n) = \det(\va_1,...,\va_i + b\va_j,...,\va_n)
+    \end{equation*}
+    where $\va_i + b\va_j$ appears in the $i$-th position. \newline
+    \proof \newline
+    This result could be shown using some algebraic manipulation, we proceed as follows:
+    \begin{multline*}
+        \det(\va_1,...,\va_i + b\va_j,...,\va_n) = \\ \det(\va_1,...,\va_i,...,\va_n) +  b\det(\va_1,...,\va_j,...,\va_j,...,\va_n) \\ 
+        = \det(\va_1,...,\va_n)
+    \end{multline*}
+    Since the term $(\va_1,...,\va_j,...,\va_j,...,\va_n)$ contains repeated rows, hence $\det$ evaluates to zero. \qed
+    
+    \settag{3.2.12}
+    \para{Lemma: Determinant of a diagonal matrix.} If $A \in M_{n\times n}(\R)$ is a diagonal matrix, then $\det(A) = a_{11}a_{22}\cdots a_{nn} = \prod^n_{i = 1}a_{ii}$ \newline
+    \proof \newline
+    We can actually show a more general claim than this. \newline
+    \underline{Claim:} If $A \in M_{n\times n}(\R)$ is a upper/lower triangular matrix, then $\det(A) = \prod^n_{i = 1}a_{ii}$. We proceed by mathematical induction on $n$, the size of the matrix.
+    Define predicate $P(n):\text{If}~A \in M_{n\times n}(\R)$ is upper/lower triangular than $\det(A) = \prod^n_{i = 1}a_{ii}$. This is our Induction Hypothesis. Consider only square matrices. \newline
+    \tbf{\underline{BASIS CASE:}} $n = 1$. In this case, it is clearly the case that 
+    \begin{equation*}
+        \det(A) = a_{11} = \left[\prod^n_{i = 1}a_{ii}\right|_{n = 1}
+    \end{equation*}
+    so $P(1)$ holds.\newline
+    \tbf{\underline{INDUCTIVE STEP:}} Let $n \in \double{N}$. Assume $P(n)$, we must show that $P(n + 1)$ follows. Let $T_{n+1}$ be any upper/lower triangular $(n+1)\times (n + 1)$ matrix
+    \begin{equation*}
+        \det \left({T_{n + 1}}\right) = \sum_{k = 1}^{n + 1} a_{n + 1~k} T_{n + 1~k}
+    \end{equation*}
+    Because $T_{n+1}$ is upper triangular, $a_{n+1~k} = 0$ when $k < n + 1$, we have
+    \begin{equation*}
+        \det \left({T_{n + 1}}\right) = a_{n + 1~n + 1} T_{n + 1 ~n + 1} = a_{n + 1~n+1} \det(A)
+    \end{equation*}
+    where $A$ is some $n \times n$ triangular matrix.\newline
+    \%TODO: THIS PROOF IS STILL UNDER CONSTRUCTION
+    
+    \settag{3.2.13}
+    \para{Proposition.} If $A$ is invertible, then $\det(A)\neq 0$
+    
+    \settag{3.2.14}
+    \para{Theorem: Necessary and Sufficient Condition for Invertibility.} Let $A \in M_{n\times n}(\R)$ matrix. Then, $A$ is invertible if and only if $\det(A) \neq 0$
+\end{enumerate}
+
+\section{Further Properties of The Determinant.} 
+\begin{enumerate}
+    \settag{3.3.1}
+    \para{Proposition.} Let $A'$ be the matrix whose entries $a_{ij}'$ are the scalars $(-1)^{i+j}\det(A_{ji})$. We have,
+    \begin{equation*}
+        AA' = \det(A)I
+    \end{equation*}
+    The quantity $a_{ij}'$ is called the $ji$-th cofactor of $A$. Also notice that the indices are interchanged in the minor-it is $A_{ji}$ rather than $A_{ji}$.
+    
     
 \end{enumerate}
 
