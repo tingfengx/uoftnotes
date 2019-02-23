@@ -8,10 +8,7 @@ update:
 %.pdf: %.tex
 	pdflatex $<
 	pdflatex $<
-	rm *.aux
-	rm *.log
-	rm *.out
-	rm *.toc
+	rm *.aux *.log *.out *.toc
 
 push: update
 	git push
