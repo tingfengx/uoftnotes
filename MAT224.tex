@@ -1131,7 +1131,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{align}
     where the first $\left(T_{n+1}\right)_{i1}$ means the $i1$-th element in the matrix $T_{n+1}$ and the second one means the $i1$ minor. We notice that our I.H. tells us that
     \begin{equation*}
-        \det\left(\left(T_{n+1}\right)_{i1}\right) = \prod_{i = 2}^{n+1}a_{ii}
+        \left[\det\left(\left(T_{n+1}\right)_{i1}\right)\right|_{i=1} = \prod_{i = 2}^{n+1}a_{ii}
     \end{equation*}
     Then, we can rewrite (3.2) as follows
     \begin{equation*}
@@ -1160,8 +1160,40 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         (-1)^{i+j}\frac{\det(A_{ji})}{\det(A)}
     \end{equation*}
     
+    \settag{3.3.4}
+    \para{Proposition.} For any fixed $j$ such that $1 \leq j \leq n$, we have
+    \begin{equation*}
+        \det(A) = \sum_{i=1}^{n}(-1)^{i+j}a_{ij}\det(A_{ij})
+    \end{equation*}
+    
+    \settag{3.3.7}
+    \para{Proposition.} If $A$ and $B$ are $n\times n$ matrices, then
+    \begin{enumerate}
+        \item $\det(AB) = \det(A)\det(B)$
+        \item If $A$ is invertible, then $\det(A^{-1}) = 1/\det(A)$
+    \end{enumerate}
+    
+    \settag{3.3.8}
+    \para{Corollary.} If \trans{T}{V}{V} is a linear transformation, $\dim(V) = n$, then
+    \begin{equation*}
+        \det(\map{T}{\alpha}{\alpha}) = \det(\map{T}{\beta}{\beta}),\forall~\text{bases}~\alpha, \beta~\text{for}~V
+    \end{equation*}
+    
+    \settag{3.3.9}
+    \para{Definition: Determinant of a Linear Transformation.} The determinant of an linear transformation \trans{T}{V}{V} of a finite dimensional vector space is the determinant of \map{T}{\alpha}{\alpha} for any choice of $\alpha$. We denote this with $\det(T)$.
+    
+    \settag{3.3.11}
+    \para{Proposition: Determinant In Relation w/ Isomorphism.} A linear transformation \trans{T}{V}{V} of a finite-dimensional vector space is an isomorphism if and only if $\det(T)\neq 0$. \newline
+    \proof \newline
+    Notice that we proved $\det(T)\neq 0 \iff \map{T}{\alpha}{\alpha}$ is an isomorphism, so this proof is trivial. \qed
+    
+    \settag{3.3.12}
+    \para{Proposition.} Let \trans{S}{V}{V} and \trans{T}{V}{V} be linear transformations of a fin-dim vector space, then 
+    \begin{enumerate}
+        \item $\det(ST) = \det(S)\det(T)$
+        \item $T$ is an isomorphism $\implies \det(T^{-1}) = \det(T)^{-1}$
+    \end{enumerate}
+    
+    
 \end{enumerate}
-
-
-
 \end{document}
