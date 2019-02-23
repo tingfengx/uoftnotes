@@ -25,6 +25,8 @@
 \newcommand{\dime}[1]{\text{dim}(#1)}
 \newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
 \newcommand\aug{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
+\newcommand{\basecase}{\textsc{\underline{Basis Case:}}}
+\newcommand{\inductive}{\textsc{\underline{Inductive Step:}}}
 % Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
 \newcommand{\para}[1]{\item \tbf{#1}}
 \newcommand{\va}{\mathbf{a}}
@@ -467,8 +469,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \proof To show this if and only if relationship, we have to consider the implication of both directions. Since $(2.1.2)$ is just a special case of $(2.1.3)$ then we are done in proving $(2.1.3)\implies (2.1.2)$. We will prove the other direction by mathematical induction (on $k$) to generalize the case of $k=2$ to arbitrary $k\in \double{N}^{\geq 2}$. \newline
         Define predicate $P(k): \double{N}^{\geq 2} \rightarrow{} \{0, 1\}~\text{as ``}(2.1)~\text{holds"}$. \newline
         Claim that $\forall k \in \double{N}^{\geq 2}, P(k)$.\newline
-        \tbf{\underline{BASIS CASE:}} $k = 2$. In this case the wanted equality is the same as the one proved in $(2.1.2)$, so $P(2)$. \newline
-        \tbf{\underline{INDUCTIVE STEP:}} Let $k\in \double{N}^{\geq 2}$, assume $P(k-1)$, we want to show that $P(k)$ follows.\newline
+        \basecase $k = 2$. In this case the wanted equality is the same as the one proved in $(2.1.2)$, so $P(2)$. \newline
+        \inductive Let $k\in \double{N}^{\geq 2}$, assume $P(k-1)$, we want to show that $P(k)$ follows.\newline
         \begin{align*}
             T\left(\sum_{i=1}^{k}a_i\mathbf{v}_i\right) &= T\left(a_k\mathbf{v}_k + \sum_{i=1}^{k-1}a_i\mathbf{v}_i\right) \\
             &= a_k T(\mathbf{v}_k) + T\left(\sum_{i=1}^{k-1}a_i\mathbf{v}_i\right)~~~~\text{// By $(2.1.1)$} \\
@@ -1114,24 +1116,28 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \para{Lemma: Determinant of a diagonal matrix.} If $A \in M_{n\times n}(\R)$ is a diagonal matrix, then $\det(A) = a_{11}a_{22}\cdots a_{nn} = \prod^n_{i = 1}a_{ii}$ \newline
     \proof \newline
     We can actually show a more general claim than this. \newline
-    \underline{Claim:} If $A \in M_{n\times n}(\R)$ is a upper/lower triangular matrix, then $\det(A) = \prod^n_{i = 1}a_{ii}$. We proceed by mathematical induction on $n$, the size of the matrix.
-    Define predicate $P(n):\text{If}~A \in M_{n\times n}(\R)$ is upper/lower triangular than $\det(A) = \prod^n_{i = 1}a_{ii}$. This is our Induction Hypothesis. Consider only square matrices. \newline
-    \tbf{\underline{BASIS CASE:}} $n = 1$. In this case, it is clearly the case that 
+    \underline{Claim:} If $A \in M_{n\times n}(\R)$ is a upper/lower triangular matrix, then $\det(A) = \prod^n_{i = 1}a_{ii}$. Notice that we will only prove the case for the upper triangular matrix, since the other is basically a mirror image. \newline
+    We proceed by mathematical induction on $n$, the size of the matrix.
+    Define predicate $P(n):\text{If}~T_{n} \in M_{n\times n}(\R)$ is upper triangular than $\det(A) = \prod^n_{i = 1}a_{ii}$. This is our Induction Hypothesis. \newline
+    \basecase $n = 1$. It is clearly the case that 
     \begin{equation*}
         \det(A) = a_{11} = \left[\prod^n_{i = 1}a_{ii}\right|_{n = 1}
     \end{equation*}
     so $P(1)$ holds.\newline
-    \tbf{\underline{INDUCTIVE STEP:}} Let $n \in \double{N}$. Assume $P(n)$, we must show that $P(n + 1)$ follows. Let $T_{n+1}$ be any upper/lower triangular $(n+1)\times (n + 1)$ matrix
+    \inductive Let $n \in \double{N}^{\geq 1}$. Assume $P(n)$, we must show that $P(n + 1)$ follows. Let $T_{n+1}$ be any upper triangular matrix of size $(n+1)\times (n + 1)$. Using the minor matrices expansion of the left most column, we have
+    \begin{align}
+        \det \left({T_{n + 1}}\right) &= \sum_{i=1}^{n+1}\left(T_{n+1}\right)_{i1}\det\left(\left(T_{n+1}\right)_{i1}\right) \\
+        &= \left[\left(T_{n+1}\right)_{i1}\det\left(\left(T_{n+1}\right)_{i1}\right)\right|_{i = 1} + 0 +... +0
+    \end{align}
+    where the first $\left(T_{n+1}\right)_{i1}$ means the $i1$-th element in the matrix $T_{n+1}$ and the second one means the $i1$ minor. We notice that our I.H. tells us that
     \begin{equation*}
-        \det \left({T_{n + 1}}\right) = \sum_{k = 1}^{n + 1} a_{n + 1~k} T_{n + 1~k}
+        \det\left(\left(T_{n+1}\right)_{i1}\right) = \prod_{i = 2}^{n+1}a_{ii}
     \end{equation*}
-    Because $T_{n+1}$ is upper triangular, $a_{n+1~k} = 0$ when $k < n + 1$, we have
+    Then, we can rewrite (3.2) as follows
     \begin{equation*}
-        \det \left({T_{n + 1}}\right) = a_{n + 1~n + 1} T_{n + 1 ~n + 1} = a_{n + 1~n+1} \det(A)
+        \det(T_{n+1}) = (T_{n+1})_{11}\prod_{i = 2}^{n+1}a_{ii} = \prod_{i = 1}^{n+1}a_{ii}
     \end{equation*}
-    where $A$ is some $n \times n$ triangular matrix.\newline
-    \%TODO: THIS PROOF IS STILL UNDER CONSTRUCTION
-    
+    where the $a_{ij}$ represents the $ij$-th element in $T_{n+1}$. So $P(n)$ follows, and this completes the proof. \qed
     \settag{3.2.13}
     \para{Proposition.} If $A$ is invertible, then $\det(A)\neq 0$
     
@@ -1148,6 +1154,11 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{equation*}
     The quantity $a_{ij}'$ is called the $ji$-th cofactor of $A$. Also notice that the indices are interchanged in the minor-it is $A_{ji}$ rather than $A_{ji}$.
     
+    \settag{3.3.2}
+    \para{Corollary.} If $A$ is an invertible $n \times n$ matrix, then $A^{-1}$ is the matrix whose $ij$-th column is
+    \begin{equation*}
+        (-1)^{i+j}\frac{\det(A_{ji})}{\det(A)}
+    \end{equation*}
     
 \end{enumerate}
 
