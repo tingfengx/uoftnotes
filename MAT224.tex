@@ -25,8 +25,8 @@
 \newcommand{\dime}[1]{\text{dim}(#1)}
 \newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
 \newcommand\aug{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
-\newcommand{\basecase}{\textsc{\underline{Basis Case:}}}
-\newcommand{\inductive}{\textsc{\underline{Inductive Step:}}}
+\newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
+\newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
 % Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
 \newcommand{\para}[1]{\item \tbf{#1}}
 \newcommand{\va}{\mathbf{a}}
@@ -993,7 +993,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item $Area(b\va_1 + c\va_1', \va_2) = b~Area(\va_1,\va_2) + c~Area(\va_1', \va_2)~\text{for $b, c \in \R$}$
         \item \footnote{This essentially the same as (a)}$Area(\va_1, b\va_2 + c\va_2') = b~Area(\va_1,\va_2) + c~Area(\va_1, \va_2')~\text{for $b, c \in \R$}$
         \item $Area(\va_1, \va_2) = -Area(\va_2, \va_1)$, and
-        \item $Area((1, 0), (0, 1) = 1$.
+        \item $Area((1, 0), (0, 1)) = 1$.
     \end{enumerate}
     \textbf{Remark.} Recall that (d) is the \textit{n-cube} in $\R^2$, where n-cube is defined as follows: (with $\ve_i$'s as components of $\xi$ basis for $\R^n$ Euclidean Space)
     \begin{equation*}
@@ -1027,7 +1027,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{The Determinant of an $n \times n$ Matrix}
 \begin{enumerate}
     \settag{3.2.1}
-    \para{Definition of Multi-linear.} A function $f$of the rows of a matrix $A$ is called multi-linear of $f$ is linear function of each of its rows when the remaining rows are held fixed. That is, $f$ is multi-linear if for all $b, b' \in \R$,
+    \para{Definition of Multi-linear.} A function $f$ of the rows of a matrix $A$ is called multi-linear of $f$ is linear function of each of its rows when the remaining rows are held fixed. That is, $f$ is multi-linear if for all $b, b' \in \R$,
     \begin{multline*}
         f(\va_1,\ldots,b\va_i + b'\va_i',\ldots,\va_n) \\
         = bf(\va_1,\ldots,\va_i,\ldots,\va_n) + b'f(\va_1,\ldots,\va_i',\ldots,\va_n)
@@ -1036,7 +1036,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{3.2.2}
     \para{Definition of Alternating.} A function $f$ of rows of a matrix $A$ is said to be alternating if whenever any two rows of A are interchanged $f$ changes sign. That is, for all $i\neq j, 1\leq i, j \leq n$, we have
     \begin{equation*}
-        f(\va_1,...,\va_i,...,\va_j,...,\va_n) = -f(\va_1,...,\va_j,...,\va_i,...,\va_n)
+        f(\va_1,\ldots,\va_i,\ldots,\va_j,\ldots,\va_n) = -f(\va_1,\ldots,\va_j,\ldots,\va_i,\ldots,\va_n)
     \end{equation*}
     Do notice the switched position of $\va_i$ and $\va_j$ in the above equality.
     
@@ -1045,8 +1045,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \proof \newline
     Assume that $\va_i = \va_j$. Then,
     \begin{align*}
-        f(A) &= f(\va_1,...,\va_i,...,\va_j,...,\va_n) \\
-        &= -f(\va_1,...,\va_j,...,\va_i,...,\va_n) \\
+        f(A) &= f(\va_1,\ldots,\va_i,\ldots,\va_j,\ldots,\va_n) \\
+        &= -f(\va_1,\ldots,\va_j,\ldots,\va_i,\ldots,\va_n) \\
         &= -f(A)
     \end{align*}
     Hence $f(A) = 0$. \qed \newline
@@ -1061,7 +1061,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{equation*}
     
     \settag{3.2.4}
-    \para{Definition of Cofactor.}\footnote{Refered to as the Minor Matrix in the book.} Let the $A$ be an $n\times n$ matrix with entries $a_{ij}$, where $i, j = 1, ..., n$. The $ij$-th \tit{cofactor matrix} of $A$ is defined to be the $(n-1) \times (n -1)$ matrix by deleting the $i$-th row and $j$-th column of $A$. We denote such cofactor matrix as $A_{ij}$.
+    \para{Definition of Minor.} Let the $A$ be an $n\times n$ matrix with entries $a_{ij}$, where $i, j = 1, \ldots, n$. The $ij$-th \tit{minor matrix} of $A$ is defined to be the $(n-1) \times (n -1)$ matrix by deleting the $i$-th row and $j$-th column of $A$. We denote such minor matrix as $A_{ij}$.
     
     \settag{3.2.5}
     \para{Proposition.} Let $A$ be a $3 \times 3$ matrix, and let $f$ be an alternating multi-linear function. Then
@@ -1073,7 +1073,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \para{Corollary.} There exists exactly one multi-linear alternating function $f$ of the rows of a $3 \times 3$ matrix such that $f(I) = 1$.
     
     \settag{3.2.7}
-    \para{The \tit{det} of $3 \times 3$ matrices.} The determinant function of a $3 \times 3$ matrix is the unique alternating multi-linear function f with f(I) = 1. We denote this function by $\det{(A)}$.
+    \para{The \tit{det} of $3 \times 3$ matrices.} The determinant function of a $3 \times 3$ matrix is the unique alternating multi-linear function $f$ with $f(I) = 1$. We denote this function by $\det{(A)}$.
     
     \settag{3.2.8}
     \para{Theorem.} There exits exactly one alternating multi-linear function \trans{f}{M_{n\times n}(\R)}{\R} satisfying $f(I) = 1$, which is called the determinant function $f(A) = \det(A)$. Further, any alternating multi-linear function $f$ satisfies $f(A) = \det(A)f(I)$.
@@ -1083,17 +1083,17 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \proof \newline
     If $A$ is not invertible, then the row space of $A$ has dimension at most $(n - 1)$. Therefore, there is a linear dependence among the rows of $A$, 
     \begin{equation*}
-        x_1\va_1 + ... + x_n\va_n = \mathbf{0}~~~~~~\exists i~s.t.~ x_i \neq 0
+        x_1\va_1 + \ldots + x_n\va_n = \mathbf{0}~~~~~~\exists i~s.t.~ x_i \neq 0
     \end{equation*}
     Without loss of generality, we assume that $x_1 \neq 0$, then we can divide the entire equation by $x_1$. Solving for $\va_1$ yields us 
     \begin{equation*}
-        \va_1 = -\frac{1}{x_1(x_2\va_2 + ... + x_n\va_n)} = \sum_{i = 2}^{n}\left(\frac{-x_i}{x_1}\va_i\right)
+        \va_1 = -\frac{1}{x_1(x_2\va_2 + \ldots + x_n\va_n)} = \sum_{i = 2}^{n}\left(\frac{-x_i}{x_1}\va_i\right)
     \end{equation*}
     Then we consider the determinant function, 
     \begin{align*}
-        \det(A) &= \det(\va_1,...,\va_n) \\
-        &= \det\left(\sum_{i = 2}^{n}\left(\frac{-x_i}{x_1}\va_i\right), \va_2, ..., \va_n\right) \\
-        &= \sum_{i = 2}^{n} \left(\frac{-x_i}{x_1}\right)\det(\va_i, \va_2,...,\va_n) \\
+        \det(A) &= \det(\va_1,\ldots,\va_n) \\
+        &= \det\left(\sum_{i = 2}^{n}\left(\frac{-x_i}{x_1}\va_i\right), \va_2, \ldots, \va_n\right) \\
+        &= \sum_{i = 2}^{n} \left(\frac{-x_i}{x_1}\right)\det(\va_i, \va_2,\ldots,\va_n) \\
         &= 0
     \end{align*}
     since each term in the final sum is the determinant of a matrix with repeated rows, and by (3.2.2), we conclude the proof. \qed
@@ -1101,16 +1101,16 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{3.2.11}
     \para{Proposition.} The following equality always holds:
     \begin{equation*}
-        \det(\va_1,...,\va_n) = \det(\va_1,...,\va_i + b\va_j,...,\va_n)
+        \det(\va_1,\ldots,\va_n) = \det(\va_1,\ldots,\va_i + b\va_j,\ldots,\va_n)
     \end{equation*}
     where $\va_i + b\va_j$ appears in the $i$-th position. \newline
     \proof \newline
     This result could be shown using some algebraic manipulation, we proceed as follows:
     \begin{multline*}
-        \det(\va_1,...,\va_i + b\va_j,...,\va_n) = \\ \det(\va_1,...,\va_i,...,\va_n) +  b\det(\va_1,...,\va_j,...,\va_j,...,\va_n) \\ 
-        = \det(\va_1,...,\va_n)
+        \det(\va_1,\ldots,\va_i + b\va_j,\ldots,\va_n) = \\ \det(\va_1,\ldots,\va_i,\ldots,\va_n) +  b\det(\va_1,\ldots,\va_j,\ldots,\va_j,\ldots,\va_n) \\ 
+        = \det(\va_1,\ldots,\va_n)
     \end{multline*}
-    Since the term $(\va_1,...,\va_j,...,\va_j,...,\va_n)$ contains repeated rows, hence $\det$ evaluates to zero. \qed
+    Since the term $(\va_1,\ldots,\va_j,\ldots,\va_j,\ldots,\va_n)$ contains repeated rows, hence $\det$ evaluates to zero. \qed
     
     \settag{3.2.12}
     \para{Lemma: Determinant of a diagonal matrix.} If $A \in M_{n\times n}(\R)$ is a diagonal matrix, then $\det(A) = a_{11}a_{22}\cdots a_{nn} = \prod^n_{i = 1}a_{ii}$ \newline
@@ -1127,7 +1127,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \inductive Let $n \in \double{N}^{\geq 1}$. Assume $P(n)$, we must show that $P(n + 1)$ follows. Let $T_{n+1}$ be any upper triangular matrix of size $(n+1)\times (n + 1)$. Using the minor matrices expansion of the left most column, we have
     \begin{align}
         \det \left({T_{n + 1}}\right) &= \sum_{i=1}^{n+1}\left(T_{n+1}\right)_{i1}\det\left(\left(T_{n+1}\right)_{i1}\right) \\
-        &= \left[\left(T_{n+1}\right)_{i1}\det\left(\left(T_{n+1}\right)_{i1}\right)\right|_{i = 1} + 0 +... +0
+        &= \left[\left(T_{n+1}\right)_{i1}\det\left(\left(T_{n+1}\right)_{i1}\right)\right|_{i = 1} + 0 +\ldots +0
     \end{align}
     where the first $\left(T_{n+1}\right)_{i1}$ means the $i1$-th element in the matrix $T_{n+1}$ and the second one means the $i1$ minor. We notice that our I.H. tells us that
     \begin{equation*}
@@ -1147,12 +1147,15 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 
 \section{Further Properties of The Determinant.} 
 \begin{enumerate}
-    \settag{3.3.1}
-    \para{Proposition.} Let $A'$ be the matrix whose entries $a_{ij}'$ are the scalars $(-1)^{i+j}\det(A_{ji})$. We have,
+    \settag{3.3.*}
+    \para{Definition of Cofactor} Given that $A_{ij}$ is the minor matrix for row $i$ and column $j$ in a square matrix $A$, the \tit{cofactor} at position row $i$ and column $j$ is denoted as $C_{ij}$ and is calculated by the formula 
     \begin{equation*}
-        AA' = \det(A)I
+        C_{ij}=(−1)^{i+j}\det(A_{ij})
     \end{equation*}
-    The quantity $a_{ij}'$ is called the $ji$-th cofactor of $A$. Also notice that the indices are interchanged in the minor-it is $A_{ji}$ rather than $A_{ji}$.
+    \tbf{Remark.} Although the formula seems daunting, it is essentially assigning alternating plus and minus to each slot in each row, going left to right and top to bottom.
+
+    \settag{3.3.1}
+    \para{Proposition.} $AA'=\det(A)I$, where $A':=\left[ C_{ij} \right]_{ij} \in M_{n \times n}(\R)$ is the cofactor matrix.
     
     \settag{3.3.2}
     \para{Corollary.} If $A$ is an invertible $n \times n$ matrix, then $A^{-1}$ is the matrix whose $ij$-th column is
