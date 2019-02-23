@@ -1119,6 +1119,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \underline{Claim:} If $A \in M_{n\times n}(\R)$ is a upper/lower triangular matrix, then $\det(A) = \prod^n_{i = 1}a_{ii}$. Notice that we will only prove the case for the upper triangular matrix, since the other is basically a mirror image. \newline
     We proceed by mathematical induction on $n$, the size of the matrix.
     Define predicate $P(n):\text{If}~T_{n} \in M_{n\times n}(\R)$ is upper triangular than $\det(A) = \prod^n_{i = 1}a_{ii}$. This is our Induction Hypothesis. \newline
+    WTS: $\forall n \geq 1, P(n).$\newline
     \basecase $n = 1$. It is clearly the case that 
     \begin{equation*}
         \det(A) = a_{11} = \left[\prod^n_{i = 1}a_{ii}\right|_{n = 1}
@@ -1126,7 +1127,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     so $P(1)$ holds.\newline
     \inductive Let $n \in \double{N}^{\geq 1}$. Assume $P(n)$, we must show that $P(n + 1)$ follows. Let $T_{n+1}$ be any upper triangular matrix of size $(n+1)\times (n + 1)$. Using the minor matrices expansion of the left most column, we have
     \begin{align}
-        \det \left({T_{n + 1}}\right) &= \sum_{i=1}^{n+1}\left(T_{n+1}\right)_{i1}\det\left(\left(T_{n+1}\right)_{i1}\right) \\
+        \det \left({T_{n + 1}}\right) &= \sum_{i=1}^{n+1}(-1)^{i+1}\left(T_{n+1}\right)_{i1}\det\left(\left(T_{n+1}\right)_{i1}\right) \\
         &= \left[\left(T_{n+1}\right)_{i1}\det\left(\left(T_{n+1}\right)_{i1}\right)\right|_{i = 1} + 0 +\ldots +0
     \end{align}
     where the first $\left(T_{n+1}\right)_{i1}$ means the $i1$-th element in the matrix $T_{n+1}$ and the second one means the $i1$ minor. We notice that our I.H. tells us that
@@ -1145,7 +1146,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \para{Theorem: Necessary and Sufficient Condition for Invertibility.} Let $A \in M_{n\times n}(\R)$ matrix. Then, $A$ is invertible if and only if $\det(A) \neq 0$
 \end{enumerate}
 
-\section{Further Properties of The Determinant.} 
+\section{Further Properties of The Determinant} 
 \begin{enumerate}
     \settag{3.3.*}
     \para{Definition of Cofactor} Given that $A_{ij}$ is the minor matrix for row $i$ and column $j$ in a square matrix $A$, the \tit{cofactor} at position row $i$ and column $j$ is denoted as $C_{ij}$ and is calculated by the formula 
@@ -1162,6 +1163,11 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \begin{equation*}
         (-1)^{i+j}\frac{\det(A_{ji})}{\det(A)}
     \end{equation*}
+    We can re-write this in notation familiar from FM\footnote{CIE Advanced-Level Further Mathematics}
+    \begin{equation*}
+        A^{-1} = \frac{1}{\det(A)}\left[C_A\right]^T
+    \end{equation*}
+    where $C_A$ denotes the cofactor matrix, with entires calculated using the formula specified in (3.3.*) above.
     
     \settag{3.3.4}
     \para{Proposition.} For any fixed $j$ such that $1 \leq j \leq n$, we have
