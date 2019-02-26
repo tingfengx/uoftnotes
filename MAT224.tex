@@ -36,6 +36,7 @@
 \newcommand{\vw}{\mathbf{w}}
 \newcommand{\vx}{\mathbf{x}}
 \newcommand{\ve}{\mathbf{e}}
+\newcommand{\vzero}{\mathbf{0}}
 % For convenience, I am setting both of these to refer to the same thing.
 \newcommand{\ba}{\mathbf{a}}
 \newcommand{\bb}{\mathbf{b}}
@@ -44,6 +45,7 @@
 \newcommand{\bw}{\mathbf{w}}
 \newcommand{\bx}{\mathbf{x}}
 \newcommand{\be}{\mathbf{e}}
+\newcommand{\bzero}{\mathbf{0}}
 
 
 \pdfinfo{
@@ -95,8 +97,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \begin{enumerate}
         \item $\forall \mathbf{x}, \mathbf{y}, \mathbf{z} \in V, (\mathbf{x} + \mathbf{y}) + \mathbf{z} = \mathbf{x} + (\mathbf{y} + \mathbf{z})$
         \item $\forall \mathbf{v}, \mathbf{y} \in V, \mathbf{x} + \mathbf{y} = \mathbf{y} + \mathbf{x}$
-        \item $\exists \mathbf{0} \in V s.t. \forall \mathbf{x} \in V, \mathbf{x} + \mathbf{0} = \mathbf{x}$ (Note that this property is a.k.a existence of additive identity)
-        \item $\forall \mathbf{x} \in V, \exists (-\mathbf{x}) \in V~s.t.~\mathbf{x} + (-\mathbf{x}) = \mathbf{0}$ (Note that this property is a.k.a existence of additive inverse)
+        \item $\exists \vzero \in V s.t. \forall \mathbf{x} \in V, \mathbf{x} + \vzero = \mathbf{x}$ (Note that this property is a.k.a existence of additive identity)
+        \item $\forall \mathbf{x} \in V, \exists (-\mathbf{x}) \in V~s.t.~\mathbf{x} + (-\mathbf{x}) = \vzero$ (Note that this property is a.k.a existence of additive inverse)
         \item $\forall \mathbf{x}, \mathbf{y} \in V, c \in \mathbb{R}, c(\mathbf{x} + \mathbf{y}) = c\mathbf{x} + c\mathbf{y}$
         \item $\forall \mathbf{x} \in V, c,d \in \mathbb{R}, (c + d)\mathbf{x} = c\mathbf{x} + d\mathbf{x}$
         \item $\forall \mathbf{x} \in V, c,d \in \mathbb{R}, (cd)\mathbf{x} = c(d\mathbf{x})$
@@ -117,7 +119,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         
         \item $\forall \mathbf{x} \in V, 0\mathbf{x}=0$ \newline
         \proof \newline 
-        We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields us $\mathbf{0} = 0\vx$ as wanted. \qed
+        We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields us $\vzero = 0\vx$ as wanted. \qed
         
         \item $\forall \mathbf{x} \in V, $ the additive inverse is unique. Note that it might not necessarily be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use. \newline
         \proof \newline
@@ -125,7 +127,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{align*}
             \vx + (-\vx) + (-\vx)'
             &= (\vx + (-\vx)) + (-\vx)' \\
-            &= \mathbf{0} + (-\vx)' \\
+            &= \vzero + (-\vx)' \\
             &= (-\vx)'
         \end{align*}
         On the other hand, by axiom 2, we have 
@@ -133,7 +135,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \vx + (-\vx) +(-\vx)' 
             &= \vx + (-\vx)' + (-\vx) \\
             &= (\vx + (-\vx)') + (-\vx) \\
-            &= \mathbf{0} + (-\vx) \\
+            &= \vzero + (-\vx) \\
             &= -\vx
         \end{align*}
         Hence we conclude that $(-\vx) = (-\vx)'$, and this completes the proof. \qed
@@ -143,8 +145,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         We have
         \begin{align*}
             c\vx + (-c)\vx &= (c +~-c)\vx \\
-            &= \mathbf{0}\vx \\
-            &= \mathbf{0}
+            &= \vzero\vx \\
+            &= \vzero
         \end{align*}
         Then we notice that equating the fist and the last of the equations above completes the proof. \qed
         
@@ -190,7 +192,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \item a \textit{linear combination} of vectors in $S$ is any sum $a_1\mathbf{x}_1 + \ldots + a_n\mathbf{x}_n$, where the $a_i \in \R$, and the $x_i \in S$.
             \item we define the $Span$ of a set of vectors as follows to consider the special case of $S\stackrel{?}{=}\emptyset \in V$.
             \newline \underline{\tit{Case1: $S\neq \emptyset$:}} In this case, we define $Span(S)$ to be all possible linear combinations using vectors in $S$.\newline
-            \underline{\tit{Case2: $S= \emptyset$:}} In this case, we define $Span(S = \emptyset)=\{\mathbf{0}\}$. We call this the zero-space.
+            \underline{\tit{Case2: $S= \emptyset$:}} In this case, we define $Span(S = \emptyset)=\{\vzero\}$. We call this the zero-space.
             
             \item If $W=Span(S)$, we say $S$ \textit{spans(\text{or} generates)} $W$.
         \end{enumerate}
@@ -247,7 +249,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.4.2}
         \item \textbf{Algebraic definition of linear dependence.} Let $V$ be a vector space, and let $S\subseteq V$.
             \begin{enumerate}
-                \item A \textit{linear dependence} among the vectors of $S$ is an equation $a_1\mathbf{x} + \ldots + a_n\mathbf{x}_n = \mathbf{0}$ where the $x_i\in S$, and the $a_i\in \R$ are not all zero(i.e., at least one of the $a_i\neq 0$). In familiar\footnote{Familiar from MAT223, Prof. Jason Siefken's IBL(Inquiry Based Learning) notes.} words, there exists a non-trivial solution to the equation mentioned above.
+                \item A \textit{linear dependence} among the vectors of $S$ is an equation $a_1\mathbf{x} + \ldots + a_n\mathbf{x}_n = \vzero$ where the $x_i\in S$, and the $a_i\in \R$ are not all zero(i.e., at least one of the $a_i\neq 0$). In familiar\footnote{Familiar from MAT223, Prof. Jason Siefken's IBL(Inquiry Based Learning) notes.} words, there exists a non-trivial solution to the equation mentioned above.
                 \item the set $S$ is said to be \textit{linearly dependent} if there exists a linear dependence among the vectors in $S$.
             \end{enumerate}
             \tbf{Remark: }It can be shown that the geometric\footnote{A set of vectors is said to be dependent of each other there exists a vector in this set, that it is in the Span of all other vectors in the set. I.e., There is some vectors in this set that are "redundant", it's position can be taken by some linear combination of the other vectors in the set.} definition and this are, in-fact, equivalent to each other. I will now produce the proof. \newline
@@ -255,8 +257,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         Let $V$ be a vector space, and let $S\subseteq V$. Consider the following equation:
         \begin{align*}
             a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + \ldots + a_n\mathbf{x}_n &= 0\text{, where } \exists a_i\neq 0 \\
-            \text{(WLOG, assume that } a_n &\neq \mathbf{0}\text{)}\\
-            \implies \frac{a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + \ldots + a_n\mathbf{x}_n}{a_n}&=\mathbf{0}\\
+            \text{(WLOG, assume that } a_n &\neq \vzero\text{)}\\
+            \implies \frac{a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + \ldots + a_n\mathbf{x}_n}{a_n}&=\vzero\\
             \implies \mathbf{x}_n &= -\sum_{i=1}^{n-1}a_i\mathbf{x}_i
         \end{align*}
         Notice that the result $\mathbf{x}_n$ is in terms of all the other $(n-1)$ vectors in the set, hence a linear combination of those vectors, and this completes the proof.
@@ -264,7 +266,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \textbf{Re-Remark: }We can also use this proof as an argument towards the following problem: Show that at least one of the vectors in a linearly dependent set is redundant. We could take take a similar proof and argue that the linear combination could be written without at least one of the vectors.
         
         \settag{1.4.4}
-        \item \textbf{Algebraic definition of linear independence.} Let $V$ be a vector space, and $S\subseteq V$. Then $S$ is \textit{linearly independent} if whenever we have $a_i\in \R$ and $x_i\in S$ such that $a_1\mathbf{x}_1+\ldots+a_n\mathbf{x}_n = \mathbf{0}$, then $a_i = 0,~\forall i$. A more conceivable way to understand this is if the aforementioned equation exists and only exists a set of trivial solution then the vectors involved in the equation are \textit{linearly independent}. \newline \tbf{Remark: }A set of vector is linearly independent \tit{if and only if} it is not linearly dependent.
+        \item \textbf{Algebraic definition of linear independence.} Let $V$ be a vector space, and $S\subseteq V$. Then $S$ is \textit{linearly independent} if whenever we have $a_i\in \R$ and $x_i\in S$ such that $a_1\mathbf{x}_1+\ldots+a_n\mathbf{x}_n = \vzero$, then $a_i = 0,~\forall i$. A more conceivable way to understand this is if the aforementioned equation exists and only exists a set of trivial solution then the vectors involved in the equation are \textit{linearly independent}. \newline \tbf{Remark: }A set of vector is linearly independent \tit{if and only if} it is not linearly dependent.
         
         \settag{1.4.7}
         \item \textbf{Propositions regarding linear (in)dependency.}
@@ -273,9 +275,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
                 \item Let $S$ be a linearly independent subset of vector space $V$ and let $S'$ be another subset of $V$ that is contained in $S$. Then $S'$ is also linearly independent.
             \end{enumerate}
         \underline{\tit{Proof of (a):}}
-        Since $S$ is linearly dependent, there exists a linear dependence among the vectors in $S$, say, $a_1\mathbf{x}_1 + \ldots+ a_n\mathbf{x}_n = \mathbf{0}$. Since $S$ is contained in $S'$, this is also a linear dependence among the vectors in $S'$. Hence $S'$ is linear dependent.\qed\newline
+        Since $S$ is linearly dependent, there exists a linear dependence among the vectors in $S$, say, $a_1\mathbf{x}_1 + \ldots+ a_n\mathbf{x}_n = \vzero$. Since $S$ is contained in $S'$, this is also a linear dependence among the vectors in $S'$. Hence $S'$ is linear dependent.\qed\newline
         \underline{\tit{Proof of (b):}}
-        Consider any equation $a_1\mathbf{x}_1 + \ldots+ a_n\mathbf{x}_n = \mathbf{0}$, where the $a_i \in \R,~\mathbf{x}_i \in S'$. Since $S'$ is contained in $S$, we can also view this as a potential linear dependence among vectors in $S$. However, $S$ is linearly independent, so it follows that all the $a_i = 0\in \R$. Hence $S'$ is also linearly independent.\qed
+        Consider any equation $a_1\mathbf{x}_1 + \ldots+ a_n\mathbf{x}_n = \vzero$, where the $a_i \in \R,~\mathbf{x}_i \in S'$. Since $S'$ is contained in $S$, we can also view this as a potential linear dependence among vectors in $S$. However, $S$ is linearly independent, so it follows that all the $a_i = 0\in \R$. Hence $S'$ is also linearly independent.\qed
         
         \settag{1.4.*}
         \item \tbf{Example of showing linear independence.(1)} Show that the set $\{1,x,x^2,x^3,\ldots,x^n\}$ is linearly independent. We consider the following equation:
@@ -358,7 +360,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \proof\newline
         To show that there are no linearly independent set in $V$ that can have more than $m$ elements in it, it suffices to show that every set in $V$ that has more than $m$ elements in it is linearly dependent. Let $S=\{y_1,\ldots,y_m\}$ and $S'=\{y_1,\ldots,y_n\}\subset V$ where $n>m$. Now we consider the following equation:
         \begin{equation}
-            a_1\mathbf{x}_1 + \ldots + a_n\mathbf{x}_n = \mathbf{0}~~~~\text{    where }\mathbf{x}_i \in S',a_i\in \R
+            a_1\mathbf{x}_1 + \ldots + a_n\mathbf{x}_n = \vzero~~~~\text{    where }\mathbf{x}_i \in S',a_i\in \R
         \end{equation}
         Since $S$ is a spanning set for $V$, then $\exists b_{ij}\in \R,~s.t.~\forall 1\leq i \leq m$:
         \begin{equation*}
@@ -366,11 +368,11 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \end{equation*}
         Then we substitute the $\mathbf{x}_i$'s into equation (1.1):
         \begin{equation}
-            a_1\left(\sum_{j=1}^{m}b_{1j}\mathbf{y}_j\right) + \ldots +  a_n\left(\sum_{j=1}^{m}b_{nj}\mathbf{y}_j\right) = \mathbf{0}
+            a_1\left(\sum_{j=1}^{m}b_{1j}\mathbf{y}_j\right) + \ldots +  a_n\left(\sum_{j=1}^{m}b_{nj}\mathbf{y}_j\right) = \vzero
         \end{equation}
         Rearranging (1.2), we have:
         \begin{equation}
-            \left(\sum_{j=1}^{n}b_{1j}a_{j}\right)\mathbf{y}_1 + \ldots +  \left(\sum_{j=1}^{n}b_{mj}a_{j}\right)\mathbf{y}_m = \mathbf{0}
+            \left(\sum_{j=1}^{n}b_{1j}a_{j}\right)\mathbf{y}_1 + \ldots +  \left(\sum_{j=1}^{n}b_{mj}a_{j}\right)\mathbf{y}_m = \vzero
         \end{equation}
         Now we consider the following SLE(The coefficients of (1.3)):
         \begin{center}
@@ -401,7 +403,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{enumerate}
             \item If $V$ is a vector space with some finite basis (possibly empty), we sat $V$ is \tit{finite-dimensional}. We say the vector space is \tit{infinite-dimensional} otherwise.
             \item Let $V$ be a \tit{finite-dimensional} vector space. The dimension of $V$, denoted as dim($V$), is the number of elements in a (hence any) basis of $V$.
-            \item If $V=\{\mathbf{0}\}$, we define dim($V$)$=0$. \tbf{Remark: }Please note that is consistent with our definition of span of a empty set. We defined the span of empty set to be $\{\mathbf{0}\}$, and hence $\{\mathbf{0}\}$ is the resulting space of all the possibly linear combination of vectors in the empty set(where there is none). Then the cardinality of the empty set(which is zero) is here defined as the dimension of the zero vector space.
+            \item If $V=\{\vzero\}$, we define dim($V$)$=0$. \tbf{Remark: }Please note that is consistent with our definition of span of a empty set. We defined the span of empty set to be $\{\vzero\}$, and hence $\{\vzero\}$ is the resulting space of all the possibly linear combination of vectors in the empty set(where there is none). Then the cardinality of the empty set(which is zero) is here defined as the dimension of the zero vector space.
         \end{enumerate}
         
         \settag{1.6.13}
@@ -481,14 +483,14 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \qed
         
         \settag{2.1.9}
-        \item \tbf{Angle between two vectors.} If $\mathbf{0}\neq \mathbf{a}\in \R^2$ and $\mathbf{0}\neq \mathbf{b}\in \R^2$, then the angle $\theta$ between them must be\footnote{The angle brackets here denotes the inner product of vectors}
+        \item \tbf{Angle between two vectors.} If $\vzero\neq \mathbf{a}\in \R^2$ and $\vzero\neq \mathbf{b}\in \R^2$, then the angle $\theta$ between them must be\footnote{The angle brackets here denotes the inner product of vectors}
         \begin{equation*}
             \theta = \arccos\left( \frac{\left<\mathbf{a},\mathbf{b}\right>}{\lVert\mathbf{a}\rVert \cdot \lVert\mathbf{b}\rVert}\right)
         \end{equation*}
         \tbf{Remark.} Notice that this definition could also be extended to $\R^3$.
         
         \settag{2.1.10}
-        \item \tbf{Corollary on orthogonality of vectors.} If $\R^2\ni \mathbf{a}\neq \mathbf{0}$ and $\R^2\ni \mathbf{b}\neq \mathbf{0}$, then the angle $\theta$ between them is a right angle if and only if $\left<\mathbf{a},\mathbf{b}\right>=0$.\newline
+        \item \tbf{Corollary on orthogonality of vectors.} If $\R^2\ni \mathbf{a}\neq \vzero$ and $\R^2\ni \mathbf{b}\neq \vzero$, then the angle $\theta$ between them is a right angle if and only if $\left<\mathbf{a},\mathbf{b}\right>=0$.\newline
         \tbf{Remark.} Note this definition of orthogonality could be extended to all euclidean vector spaces. The orthogonal complement of a subspace is the space of all vectors that are orthogonal to every vector in the subspace. In a three-dimensional Euclidean vector space, the orthogonal complement of a line through the origin is the plane through the origin perpendicular to it, and vice versa. In four-dimensional Euclidean space, for example, the orthogonal complement of a line is a hyper-plane and vice versa, and that of a plane is a plane.
         
         \settag{2.1.14}
@@ -588,9 +590,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Kernel and image}
     \begin{enumerate}
         \settag{2.3.1}
-        \item \tbf{Definition of Kernel.} The \tit{kernel} of $T$, denoted Ker($T$), is the subset of $V$ consisting of all vectors $\vv\in V$ such that $T(\vv) = \mathbf{0}$. Writing in familiar set builder notation:
+        \item \tbf{Definition of Kernel.} The \tit{kernel} of $T$, denoted Ker($T$), is the subset of $V$ consisting of all vectors $\vv\in V$ such that $T(\vv) = \vzero$. Writing in familiar set builder notation:
         \begin{equation*}
-            \text{Ker}(T) := \{\vv \in V | T(\vv) = \mathbf{0}\}
+            \text{Ker}(T) := \{\vv \in V | T(\vv) = \vzero\}
         \end{equation*}
         One should notice the difference between the familiar Null Space of a transformation and the Kernel here. Kernel is defined for all vector spaces, however, null-spaces are for $\R^n$ only.
         
@@ -599,7 +601,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \proof \newline
         Since Ker($T$) $\subset V$, it suffices to show that Ker($T$) is closed under addition and scalar multiplication. Since $T$ is linear, $\forall \vu, \vv \in \text{Ker}(T)~\text{and}~a\in \R$, we have
         \begin{equation*}
-            T(\vu + a\vv) = T(\vu) + aT(\vv) = \mathbf{0} + a\mathbf{0} \implies \vu + a\vv \in \text{Ker}(T)
+            T(\vu + a\vv) = T(\vu) + aT(\vv) = \vzero + a\vzero \implies \vu + a\vv \in \text{Ker}(T)
         \end{equation*}
         \qed
         
@@ -683,9 +685,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{2.4.2}
         \para{Proposition.} A linear transformation $T:V\rightarrow{} W$ is injective if and only of $\text{dim(Ker}(T\text{))}=0$. Informally speaking, we can think of this as ``No information is lost during the linear transformation". \newline
         \proofforward \newline
-            If $T$ is injective, then by definition, there $\exists!\vv \in V$ with $T(\vv) = \mathbf{0}$. Since we know that $T(\mathbf{0}) = 0, \forall~\text{linear mappings}$, the zero vector is the unique vector $\vv$ satisfying $T(\vv) = \mathbf{0}$. Thus the kernel of $T$ consists of only the zero vector. Therefore, dim(Ker($T$)) = 0. \newline
+            If $T$ is injective, then by definition, there $\exists!\vv \in V$ with $T(\vv) = \vzero$. Since we know that $T(\vzero) = 0, \forall~\text{linear mappings}$, the zero vector is the unique vector $\vv$ satisfying $T(\vv) = \vzero$. Thus the kernel of $T$ consists of only the zero vector. Therefore, dim(Ker($T$)) = 0. \newline
         \proofback \newline
-            Conversely, assume that dim(Ker($T$)) = 0. Let $\vv_1, \vv_2 \in V$ with $T(\vv_1) = T(\vv_2)$. We want to show that $\vv_1 = \vv_2$. Since $T(\vv_1) = T(\vv_2)$, $T(\vv_1 - \vv_2) = \mathbf{0}$, so $\vv_1 - \vv_2 \in \text{Ker}(T)$. But if dim(Ker($T$)) = 0, it follows that Ker($T$) = $\{\mathbf{0}\}$. It follows that $\vv_1 - \vv_2 = \mathbf{0} \implies \vv_1 = \vv_2$ as wanted. Thus, $T$ is injective. \qed \newline
+            Conversely, assume that dim(Ker($T$)) = 0. Let $\vv_1, \vv_2 \in V$ with $T(\vv_1) = T(\vv_2)$. We want to show that $\vv_1 = \vv_2$. Since $T(\vv_1) = T(\vv_2)$, $T(\vv_1 - \vv_2) = \vzero$, so $\vv_1 - \vv_2 \in \text{Ker}(T)$. But if dim(Ker($T$)) = 0, it follows that Ker($T$) = $\{\vzero\}$. It follows that $\vv_1 - \vv_2 = \vzero \implies \vv_1 = \vv_2$ as wanted. Thus, $T$ is injective. \qed \newline
         \textbf{Remark.} This proposition is so important that we summarize it as follows, again. Let \trans{T}{V}{W}, with $\dim{V} = \dim{W}$, then
         \begin{align*}
             &~~~~~~~~~ \text{$T$ is injective} \\
@@ -740,19 +742,19 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{2.4.17}
         \para{Corollary.} 
         \begin{enumerate}
-            \item The number of free variables in the homogeneous system $A\vx = \mathbf{0}$ (or its echelon form equivalent) is equal to dim(Ker($T$)).
+            \item The number of free variables in the homogeneous system $A\vx = \vzero$ (or its echelon form equivalent) is equal to dim(Ker($T$)).
             \item The number of basic variables of the system is equal to dim(Im($T$)).
         \end{enumerate}
         Now, if the system is \tit{not homogeneous}, then from Proposition (2.4.16) we see that $A\vx = \vb$ has a solution if and only if $\vb \in \text{Im}(T)$. Let us assume then that $\vb \in \text{Im}(T)$, then this yields us the following terminology:
         
         \settag{2.4.18}
-        \para{Definition of particular solution of a SLE (in-homo).} Given an in-homogeneous system of equations, $A\vx = \vb$, any single vector $\vx$ satisfying the system (necessarily $\vx \neq \mathbf{0}$) is called a \tit{particular solution} of the system of equations.
+        \para{Definition of particular solution of a SLE (in-homo).} Given an in-homogeneous system of equations, $A\vx = \vb$, any single vector $\vx$ satisfying the system (necessarily $\vx \neq \vzero$) is called a \tit{particular solution} of the system of equations.
         
         \settag{2.4.19}
-        \para{Proposition.} Let $\vx_p$ be a particular solution of the system $A\vx = \vb$. Then every other solution to $A\vx = \vb$ is of the form $\vx = \vx_p + \vx_h$, where $\vx_h$ is a solution of the corresponding homogeneous system of equations $A\vx = \mathbf{0}$. Furthermore, given $\vx_p$ and $\vx$, there is a unique $\vx_h$ such that $\vx = \vx_p + \vx_h$.
+        \para{Proposition.} Let $\vx_p$ be a particular solution of the system $A\vx = \vb$. Then every other solution to $A\vx = \vb$ is of the form $\vx = \vx_p + \vx_h$, where $\vx_h$ is a solution of the corresponding homogeneous system of equations $A\vx = \vzero$. Furthermore, given $\vx_p$ and $\vx$, there is a unique $\vx_h$ such that $\vx = \vx_p + \vx_h$.
         
         \settag{2.4.20}
-        \para{Corollary.} The syetem $A\vx = \vb$ has a unique solution if and only if $\vb \in \text{Im}(T)$ and the only solution to $A\vx = \mathbf{0}$ is the zero vector.
+        \para{Corollary.} The syetem $A\vx = \vb$ has a unique solution if and only if $\vb \in \text{Im}(T)$ and the only solution to $A\vx = \vzero$ is the zero vector.
     \end{enumerate}
     
 \section{Composition of Linear Transformations}
@@ -793,9 +795,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item $\text{Im}(TS)\subset \text{Im}(T)$
     \end{enumerate}
     \proof \newline
-    We will prove (a) here. If $\vu \in \text{Ker}(S)$, $S(\vu) = \mathbf{0}$. Then 
+    We will prove (a) here. If $\vu \in \text{Ker}(S)$, $S(\vu) = \vzero$. Then 
     \begin{equation*}
-        TS(\vu) = T(\mathbf{0}) = \mathbf{0}
+        TS(\vu) = T(\vzero) = \vzero
     \end{equation*}
     where we notice that the first and last term tells us $\vu \in \text{Ker}(TS)$ and this completes the proof. \qed
     
@@ -855,9 +857,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \para{Definition of isomorphism.} If \trans{T}{V}{W} is an invertible linear transformation, $T$ is called an \tit{isomorphism}, and we say $V$ and $W$ are \tit{isomorphic} vector spaces.
     
     \settag{2.6.5}
-    \para{Remark on the $T^{-1}$ notation.} Please note that the inverse here that is acting on a vector is denotes the inverse transformation. For example we have \trans{T}{V}{W}, then $w\in W, T^{-1}(w)\in V$ denotes the inverse transformation. We \textit{must} differentiate this from the other notation we encountered earlier which acts on a set rather than on a vector. As an example, we have \trans{T}{V}{W} and $\mathbf{0}\in W$, then
+    \para{Remark on the $T^{-1}$ notation.} Please note that the inverse here that is acting on a vector is denotes the inverse transformation. For example we have \trans{T}{V}{W}, then $w\in W, T^{-1}(w)\in V$ denotes the inverse transformation. We \textit{must} differentiate this from the other notation we encountered earlier which acts on a set rather than on a vector. As an example, we have \trans{T}{V}{W} and $\vzero\in W$, then
     \begin{equation*}
-        T^{-1}\left(\{\mathbf{0}\}\right) \equiv \{\vv\in V, T(\vv) = \mathbf{0}\}
+        T^{-1}\left(\{\vzero\}\right) \equiv \{\vv\in V, T(\vv) = \vzero\}
     \end{equation*}
     Notice that this special example is a.k.a the Kernel of the transformation by definition.
     
@@ -869,13 +871,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \proofback \newline
     If dim($V$) = dim($W$), we must produce an isomorphism \trans{T}{V}{W}. Let $\alpha = \{\vv_1, \ldots, \vv_n\}$ be a basis for $B$ and $\beta = \{\vw_1,\ldots,\vw_n\}$ be a basis for $W$. Define $T$ to be the linear transformation from $V$ to $W$ with $T(\vv_i) = w_i, i = 1,\ldots,n$. By Proposition (2.1.14), $T$ is uniquely determined by tis choice of values on $\alpha$. To see that $T$ is injective, notice that if
     \begin{equation*}
-        T(a_1\vv_1 + \ldots + a_n\vv_n) = \mathbf{0}
+        T(a_1\vv_1 + \ldots + a_n\vv_n) = \vzero
     \end{equation*}
     then we have
     \begin{equation*}
-        a_1\vw_1 + \ldots + a_n\vw_n = \mathbf{0}
+        a_1\vw_1 + \ldots + a_n\vw_n = \vzero
     \end{equation*}
-    Since the $\vw$'s are a basis, we know immediately that $a_1 = \ldots = a_n = 0$. Then Ker($T$) = $\{\mathbf{0}\}$ and $T$ is injective. By proposition (2.4.10) $T$ is also surjective, and then by Proposition (2.6.2) it is an isomorphism.
+    Since the $\vw$'s are a basis, we know immediately that $a_1 = \ldots = a_n = 0$. Then Ker($T$) = $\{\vzero\}$ and $T$ is injective. By proposition (2.4.10) $T$ is also surjective, and then by Proposition (2.6.2) it is an isomorphism.
     
     \settag{2.6.9}
     \para{The Gauss-Jordan Method of Inverse\footnote{Extended based on this example}.} Suppose we have the following matrix:
@@ -980,7 +982,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{3.1.1}
     \para{Propositions: Geometry of a parallelogram in $\R^2$} 
     \begin{enumerate}
-        \item The area of the parallelogram with vertices $\mathbf{0}, \va_1, \va_2$, and $\va_1 + \va_2$ is $\pm\left(\va_{11}\va_{22} - \va_{12}\va_{21}\right)$
+        \item The area of the parallelogram with vertices $\vzero, \va_1, \va_2$, and $\va_1 + \va_2$ is $\pm\left(\va_{11}\va_{22} - \va_{12}\va_{21}\right)$
         \item The area is not zero if and only if the vectors $\va_1$ and $\va_2$ are linearly independent.
     \end{enumerate}
     
@@ -1083,7 +1085,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \proof \newline
     If $A$ is not invertible, then the row space of $A$ has dimension at most $(n - 1)$. Therefore, there is a linear dependence among the rows of $A$, 
     \begin{equation*}
-        x_1\va_1 + \ldots + x_n\va_n = \mathbf{0}~~~~~~\exists i~s.t.~ x_i \neq 0
+        x_1\va_1 + \ldots + x_n\va_n = \vzero~~~~~~\exists i~s.t.~ x_i \neq 0
     \end{equation*}
     Without loss of generality, we assume that $x_1 \neq 0$, then we can divide the entire equation by $x_1$. Solving for $\va_1$ yields us 
     \begin{equation*}
@@ -1202,7 +1204,20 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item $\det(ST) = \det(S)\det(T)$
         \item $T$ is an isomorphism $\implies \det(T^{-1}) = \det(T)^{-1}$
     \end{enumerate}
-    
-    
 \end{enumerate}
+
+\chapter{Eigen Problems}
+\section{Eigenvalues and Eigenvectors}
+\begin{enumerate}
+    \settag{4.1.2}
+    \para{Definitions.} Let \trans{T}{V}{V} be any linear mapping, then
+    \begin{enumerate}
+        \item A vector $\vv \in V$ is called an eigenvector of $T$ if
+        \begin{equation*}
+            \vv \neq \vzero \land \exists \lambda \in \R, T(\vv) = \lambda \vv
+        \end{equation*} 
+    \end{enumerate}
+
+\end{enumerate}
+
 \end{document}
