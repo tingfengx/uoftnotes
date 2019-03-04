@@ -1206,6 +1206,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{enumerate}
 \end{enumerate}
 
+\begin{center}
+\begin{large}
+\tbf{THIS CHAPTER IS CURRENTLY ARCHIVED...}
+\end{large}
+\end{center}
+
+
 \chapter{Eigen Problems}
 \section{Eigenvalues and Eigenvectors}
 \begin{enumerate}
@@ -1217,7 +1224,38 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \vv \neq \vzero \land \exists \lambda \in \R, T(\vv) = \lambda \vv
         \end{equation*} 
     \end{enumerate}
-
+    
+    \settag{4.1.5}
+    \para{Proposition.} A vector $\vx$ is an eigenvector of $T$ with eigenvalue $\lambda$ if and only if $\vx \neq \vzero \land \vx \in \ker(T-\lambda I)$
+    
+    \settag{4.1.6}
+    \para{Definition.} Let \trans{T}{V}{V} be a linear mapping, and let $\lambda \in \R$. The $\lambda-$eigenspace of $T$, denoted $E_\lambda$, is the set
+    \begin{equation*}
+        E_\lambda = \{\vx\in V|T(\vx) = \lambda \vx\}
+    \end{equation*}
+    
+    \settag{4.1.9}
+    \para{Proposition.} Let $A\in \mat{M}{n \times n}{\R}$. Then $\lambda \in \R$ is an eigenvalue of $A$ if and only if $\det(A-\lambda I) = 0$
+    
+    \settag{4.1.11}
+    \para{Definition of Characteristic Polynomial.} Let $A\in \mat{M}{n \times n}{\R}$. The polynomial $\det(A-\lambda I)$ is called the characteristic polynomial of $A$.
+    
+    \settag{4.1.12}
+    \para{Proposition: Similar matrices have equal char-polies}. If two matrices are similar to each other, then they have equal characteristic polynomial. \newline
+    \proof \newline
+    Suppose $A, B$ are two similar matrices, so that $B = Q^{-1}AQ$ for some invertible matrix $Q$. Then we have
+    \begin{align*}
+        \det(B-\lambda I) 
+        &= \det(Q^{-1}AQ - \lambda I) \\
+        &= \det(Q^{-1}AQ - Q^{-1}\lambda IQ) ~~~~~~~~~~~~~(*)\\
+        &= \det(Q^{-1}(A-\lambda I)Q) \\
+        &= \det(Q^{-1})\det(A-\lambda I)\det(Q) \\
+        &= \frac{\det(A-\lambda I)\det(Q)}{\det(Q)} = \det(A-\lambda I)
+    \end{align*}
+    and this completes the proof. \qed \newline
+    \tbf{Remark.} The step $(*)$ may seem odd at the first glance and one should think of it as a forward and backward change of basis, which does nothing to our matrix of interest $\lambda I$. Also, notice the assumed invertibility of $Q$.
+    
+    
 \end{enumerate}
 
 \end{document}
