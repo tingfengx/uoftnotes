@@ -1213,7 +1213,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \end{center}
 
 
-\chapter{Eigen Problems}
+\chapter{Eigen-Problems and Spectral Theorem}
 \section{Eigenvalues and Eigenvectors}
 \begin{enumerate}
     \settag{4.1.2}
@@ -1313,7 +1313,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \proof \newline
     Since $T$ has $n$ distinct real roots, then the algebraic multiplicity associated with each root must be 1. Then notice that $1\leq \dim(E_{\lambda_i}) \leq m_i = 1, \forall i$, and we conclude the result by applying Theorem (4.2.7). This completes the proof. \qed
     
-    
+    \settag{4.2.9}
+    \para{Corollary.} A linear mapping \trans{T}{V}{V} on a finite dimensional space $V$ is diagonalizable if and only if the sum of the multiplicities of the real eigenvalues is $n = \dim(V)$, and either
+    \begin{enumerate}
+        \item We have $\sum_{i=1}^k \dim(E_{\lambda_i}) = n$, where $\lambda_i$ are the distinct eigenvalues of $T$, or
+        \item We have $\sum_{i=1}^k (n - \dim(\text{Im}(T-\lambda_i I))) = n$, where again $\lambda_i$'s are the distinct eigenvalues.
+    \end{enumerate}
+    \tbf{Remark.} The second statement is a direct consequence of the Rank-Nullity Theorem.
     
 \end{enumerate}
 
