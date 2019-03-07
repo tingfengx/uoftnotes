@@ -1235,10 +1235,10 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{equation*}
     
     \settag{4.1.9}
-    \para{Proposition.} Let $A\in \mat{M}{n \times n}{\R}$. Then $\lambda \in \R$ is an eigenvalue of $A$ if and only if $\det(A-\lambda I) = 0$
+    \para{Proposition.} Let $A\in \mat{n}{n}$. Then $\lambda \in \R$ is an eigenvalue of $A$ if and only if $\det(A-\lambda I) = 0$
     
     \settag{4.1.11}
-    \para{Definition of Characteristic Polynomial.} Let $A\in \mat{M}{n \times n}{\R}$. The polynomial $\det(A-\lambda I)$ is called the characteristic polynomial of $A$.
+    \para{Definition of Characteristic Polynomial.} Let $A\in \mat{n}{n}$. The polynomial $\det(A-\lambda I)$ is called the characteristic polynomial of $A$.
     
     \settag{4.1.12}
     \para{Proposition: Similar matrices have equal char-polies}. If two matrices are similar to each other, then they have equal characteristic polynomial. \newline
@@ -1253,7 +1253,66 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         &= \frac{\det(A-\lambda I)\det(Q)}{\det(Q)} = \det(A-\lambda I)
     \end{align*}
     and this completes the proof. \qed \newline
-    \tbf{Remark.} The step $(*)$ may seem odd at the first glance and one should think of it as a forward and backward change of basis, which does nothing to our matrix of interest $\lambda I$. Also, notice the assumed invertibility of $Q$.
+    % \tbf{Remark.} The step $(*)$ may seem odd at the first glance and one should think of it as a forward and backward change of basis, which does nothing to our matrix of interest $\lambda I$. Also, notice the assumed invertibility of $Q$.
+    
+    \settag{4.1.13}
+    \para{Alternative form of char-poly of a $2 \times 2$ matrix.\footnote{Based on example (4.1.13).}} For a general $2\times 2$ matrix A, we have
+    \begin{equation*}
+        Char_A(\lambda)= \det(A-\lambda I) = \lambda^2 - Tr(A)\cdot\lambda + \det{A} 
+    \end{equation*}
+    \textbf{Remark.} This form of characteristic polynomial also takes a more general form for larger square matrices, but the expanded formula is messy so we omit it. \newline
+    \textbf{A special case of the Cayley–Hamilton Theorem.} Consider some $2\times 2$ matrix A, with characteristic polynomial $Char_A(\lambda)$. Then, if we treat $A$ as a number and brutally plug $A$ into its own characteristic polynomial, i.e. $Char_A(A)$, we will find that $Char_A(A) = 0_{2 \times 2}$, as if $A$ solves its own characteristic polynomial!
+    
+    \settag{4.1.14}
+    \para{Corollary.} Let $A\in \mat{n}{n}$. Then $A$ has no more than $n$ distinct eigenvalues. In addition, if $\lambda1,...,\lambda_k$ are the distinct eigenvalues of $A$ and $\lambda_i$ is an $m_i$-fold root\footnote{Root of the form $(\lambda_i \pm k)^{m_i}$, where $k \in \R$} of the characteristic polynomial, then $m_1+...+m_k \leq n$.
+    
+    \settag{4.1.18}
+    \para{Statement of the Cayley-Hamilton Theorem.} Let $A$ be any $n\times n$ matrix with characteristic polynomial $Char_A(\lambda)$, then
+    \begin{equation*}
+        Char_A(A) = 0_{n \times n}
+    \end{equation*}
+\end{enumerate}
+
+\section{Diagonalizability}
+\begin{enumerate}
+    \settag{4.2.1}
+    \para{Definition of Diagonalizability.} Let $V$ be a finite-dimensional vector space, and let \trans{T}{V}{V} be a linear mapping. $T$ is said to be diagonalizable if there exists a basis $V$, all of whose vectors are eigenvectors of $T$.
+    
+    \settag{4.2.2}
+    \para{Proposition.} \trans{T}{V}{V} is diagonalizable if and only if, for any basis $\alpha$ of $V$, the matrix $\map{T}{\alpha}{\alpha}$ is similar to a diagonal matrix. \newline
+    \proofforward \newline
+    \% to appear added later... \newline
+    \proofback \newline
+    If $A = \map{T}{\alpha}{\alpha}$ is similar to a diagonal matrix $D$, then by definition, there is some invertible matrix $P$ such that $P^{-1}AP = D$. Then, by re-arranging, we have $AP = DP$. Notice that since $D$ is diagonal matrix, the columns of $PD$ are just scalar multiples of the columns of $P$. Hence, the columns of $P$ are all eigenvectors for the matrix $A$, or equivalently, the columns of $P$ are the coordinate vectors of eigenvectors for the mapping $T$. On the other hand, since $P$ is invertible, we know its columns are linearly independent, hence those columns are coordinate vectors for a basis of $V$. Therefore, by definition, $T$ is diagonalizable. \tbf{Note} that eigenvalues of $T$ are the diagonal entries of $D$, and this completes the proof. \qed\newline
+    \tbf{In naive words, }in order for a linear mapping to be diagonalizable, it needs to have enough linearly independent eigenvectors to form a basis of $V$. To be specific, we need $n$ linearly independent eigenvectors for a $n$-dimensional to $n$-dimensional mapping to be diagonalizable.
+    
+    \settag{4.2.4}
+    \para{Proposition.} Let $\vx_i(1 \leq i \leq k)$ be eigenvectors of a linear mapping \trans{T}{V}{V} corresponding to distinct eigenvalues $\lambda_i$, then $\{\vx_1,...,\vx_k\}$ is linearly independent subset of $V$.
+    
+    \settag{4.2.5}
+    \para{Corollary.} For each $i(1 \leq i \leq k)$, let $\{\vx_{i, 1},...,\vx_{i, n_i}\}$ be a linearly independent set of eigenvectors of $T$ all with eigenvalue $\lambda_i$ and suppose the $\lambda_i$ are distinct. Then, 
+    \begin{equation*}
+        S=\bigcup_{i=1}^k\{\vx_{i, 1},...,\vx_{i, n_i}\}
+    \end{equation*}
+    is linearly independent.
+    
+    \settag{4.2.6}
+    \para{Proposition.} Let $V$ be finite-dimensional, and let \trans{T}{V}{V} be linear. Let $\lambda$ be an eigenvalue of $T$, and assume that $\lambda$ is an $m$-fold root of the characteristic polynomial of $T$. Then, $1\leq \dim(E_\lambda) \leq m$.
+    
+    \settag{4.2.7}
+    \para{Theorem.} Let \trans{T}{V}{V} be a linear mapping on a finite-dimensional vector space $V$, and let $\lambda_1,...,\lambda_k$ be its distinct eigenvalues. Let $m_i$ be the multiplicity of $\lambda_i$ as a root of the characteristic polynomial of $T$. Then $T$ is diagonalizable if and only if
+    \begin{enumerate}
+        \item $m_1+...+m_k = n = \dim(V)$, \tit{\tbf{and}} \newline
+        \tit{In naive words, }this means $T$ has to have $n$ real eigenvalues
+        \item $\forall i, \dim(E_{\lambda_i}) = m_i$ \newline
+        \tit{In naive words, }this means each of the $E_{\lambda_i}$ attains its maximum dimension specified in (4.2.6), i.e. $\dim(E_{\lambda_i}) = m_i$
+    \end{enumerate}
+    
+    \settag{4.2.8}
+    \para{Corollary.} Let \trans{T}{V}{V} be linear mapping on a finite-dimensional space $V$, and assume that $T$ has $\dim(V) = n$ distinct real eigenvalues. Then $T$ is diagonalizable. \newline
+    \proof \newline
+    Since $T$ has $n$ distinct real roots, then the algebraic multiplicity associated with each root must be 1. Then notice that $1\leq \dim(E_{\lambda_i}) \leq m_i = 1, \forall i$, and we conclude the result by applying Theorem (4.2.7). This completes the proof. \qed
+    
     
     
 \end{enumerate}
