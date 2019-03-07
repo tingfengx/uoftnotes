@@ -1247,13 +1247,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \begin{align*}
         \det(B-\lambda I) 
         &= \det(Q^{-1}AQ - \lambda I) \\
-        &= \det(Q^{-1}AQ - Q^{-1}\lambda IQ) ~~~~~~~~~~~~~(*)\\
+        &= \det(Q^{-1}AQ - \lambda(Q^{-1} IQ)) \\
+        &= \det(Q^{-1}AQ - Q^{-1}\lambda IQ) \\
         &= \det(Q^{-1}(A-\lambda I)Q) \\
         &= \det(Q^{-1})\det(A-\lambda I)\det(Q) \\
         &= \frac{\det(A-\lambda I)\det(Q)}{\det(Q)} = \det(A-\lambda I)
     \end{align*}
     and this completes the proof. \qed \newline
-    % \tbf{Remark.} The step $(*)$ may seem odd at the first glance and one should think of it as a forward and backward change of basis, which does nothing to our matrix of interest $\lambda I$. Also, notice the assumed invertibility of $Q$.
     
     \settag{4.1.13}
     \para{Alternative form of char-poly of a $2 \times 2$ matrix.\footnote{Based on example (4.1.13).}} For a general $2\times 2$ matrix A, we have
