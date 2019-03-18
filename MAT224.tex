@@ -27,6 +27,7 @@
 \newcommand\aug{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
 \newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
 \newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 % Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
 \newcommand{\para}[1]{\item \tbf{#1}}
 \newcommand{\va}{\mathbf{a}}
@@ -36,6 +37,8 @@
 \newcommand{\vw}{\mathbf{w}}
 \newcommand{\vx}{\mathbf{x}}
 \newcommand{\ve}{\mathbf{e}}
+\newcommand{\vy}{\mathbf{y}}
+\newcommand{\vz}{\mathbf{z}}
 \newcommand{\vzero}{\mathbf{0}}
 % For convenience, I am setting both of these to refer to the same thing.
 \newcommand{\ba}{\mathbf{a}}
@@ -45,6 +48,7 @@
 \newcommand{\bw}{\mathbf{w}}
 \newcommand{\bx}{\mathbf{x}}
 \newcommand{\be}{\mathbf{e}}
+\newcommand{\by}{\mathbf{y}}
 \newcommand{\bzero}{\mathbf{0}}
 
 
@@ -1320,6 +1324,118 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item We have $\sum_{i=1}^k (n - \dim(\text{Im}(T-\lambda_i I))) = n$, where again $\lambda_i$'s are the distinct eigenvalues.
     \end{enumerate}
     \tbf{Remark.} The second statement is a direct consequence of the Rank-Nullity Theorem.
+\end{enumerate}
+
+\section{Geometry in Euclidean Space}
+\begin{enumerate}
+    \settag{4.3.1}
+    \para{Definition: Standard Inner Product.} \footnote{The version of Inner product that appeared earlier in these notes will \tit{always} refer to the standard inner product for the $n$-dimensional Euclidean Space.}The standard inner product (or dot product) on $\R^n$ is the function
+    $\langle\cdot,\cdot\rangle: \R^n \times \R^n \rightarrow{} \R$
+    defined be the following rule: If $\vx = (x_1,...,x_n), \vy = (y_1,...,y_n)$ in the $\xi$ coordinate basis, then 
+    \begin{equation*}
+        \langle\vx,\vy \rangle := \sum_{i=1}^n x_iy_i
+    \end{equation*}
+    
+    \settag{4.3.2}
+    \para{Propositions.} The Inner Product has the following properties:
+    \begin{enumerate}
+        \item \textbf{Bi-linearity:} $\forall \vx, \vy, \vz \in \R^n, \forall c\in \R, \langle c\vx + \vy,\vz\rangle = c\langle\vx,\vz\rangle + \langle \vy,\vz \rangle$
+        \item \textbf{Symmetric:} $\forall \vx, \vy\in\R^n, \langle \vx,\vy\rangle = \langle \vy,\vx \rangle$
+        \item \textbf{Positive-Definite:} $\forall \vx \in \R^n, \langle \vx,\vx \rangle \geq 0 \land \langle \vx,\vx \rangle = 0 \iff \vx = \vzero$
+    \end{enumerate}
+    
+    \settag{4.3.3}
+    \para{Definitions.} We have the following related definitions:
+    \begin{enumerate}
+        \item The length, norm, of $\vx \in \R^n$ is the scaller defined as
+        \begin{equation*}
+            \norm{\vx} = \sqrt{\langle\vx,\vx\rangle}
+        \end{equation*}
+        \item $\vx$ is called a unit vector if $\norm{\vx} \equiv 1$, we can normalize a vector $\vx\in \R^n$ by $\frac{\vx}{\norm{\vx}}$
+    \end{enumerate}
+    
+    \settag{4.3.4-(1)}
+    \para{The Triangular Inequality.}
+    \begin{equation*}
+        \forall \vx, \vy \in \R^n, \norm{\vx + \vy}\leq \norm{\vx} + \norm{\vy}
+    \end{equation*}
+    This geometrically says that any side of a triangle is less than the sum of the other two sides. This is a consequence of the Cauchy-Schwarz Inequality below.
+    
+    \settag{4.3.4-(2)}
+    \para{The Cauchy-Schwarz Inequality.}
+    \begin{equation*}
+        \left|\langle \vx, \vy \rangle\right| \leq \norm{\vx} \cdot \norm{\vy}
+    \end{equation*}
+    This is a historically important inequality and we shall present the proof here: \newline
+    \proof
+    
+    \settag{4.3.5}
+    \para{Definition of angle between vectors.} The angle between two non-zero vectors $\vx,\vy \in \R^n$ is defined to be
+    \begin{equation*}
+        \theta = \cos^{-1}\left(\frac{\langle\vx,\vy\rangle}{\norm{\vx} \cdot \norm{\vy}}\right)
+    \end{equation*}
+    Notice that we defined this angle in chapter 2, but we focused on $\R^2$ and $\R^3$. This is an extension to arbitrary $n$-dimensional Euclidean Space.
+    
+    \settag{4.3.7}
+    \para{Definition of Orthogonality.} Two vectors $\vx,\vy \in \R^n$ are defined to be orthogonal if $\langle \vx,\vy\rangle = 0$
+    
+    \settag{4.3.9}
+    \para{Definitions: Orthogonal and Orthonormal}
+    \begin{enumerate}
+        \item A set of vectors $S\subset \R^n$ is said to be \tit{orthogonal} if $\forall \vx,\vy \in S, \vx \neq \vy \implies \langle \vx,\vy\rangle = 0$
+        \item A set of vectors $S\subset \R^n$ is said to be \tit{orthonormal} if $S$ is orthogonal and, in addition, $\forall \vx \in S, \norm{\vx} = 1$
+    \end{enumerate}
+    
+    \settag{4.3.10}
+    \para{Proposition: Orthogonal vectors are linearly independent.} If $\vx,\vy \in \R^n$ are orthogonal, with $\vx \neq \vzero \neq \vy$, then $\{\vx,\vy\}$ is linearly independent.
+
+\end{enumerate}
+
+\section{Orthogonal Projections and The Gram-Schmidt Process}
+\begin{enumerate}
+    \settag{4.4.1}
+    \para{Definition of Orthogonal Complement.} The orthogonal complement of $W$, denoted as $W^{\perp}$, is defined to be
+    \begin{equation*}
+        W^\perp := \{\vv\in \R^n | \langle \vv,\vw\rangle = 0, \forall \vw \in W\}
+    \end{equation*}
+    \textbf{Remark.} Notice that the $\vzero$ vector should be in any such $W^\perp$ sets, since the zero vectors is orthogonal to every vector.
+    
+    \settag{4.4.3}
+    \para{Propositions.}
+    \begin{enumerate}
+        \item $\forall$ subspace $W \subset \R^n, W^\perp\subset \R^n$ is also a subspace
+        \item $\dim(W) + \dim(W^\perp) = \dim(\R^n) = n$
+        \item $\forall\, W\subset \R^n$, $W$ is a subspace $\implies W \cap W^\perp = \{\vzero\}$
+        \item Given a subspace $W\subset \R^n$, $\forall \vx \in \R^n$, $\vx$ can be written uniquely as $\vx = \vx_1 + \vx_2$, where $\vx_1 \in W, \vx_2 \in W^\perp$. In summary, we have $\R^n = W \oplus W^\perp$
+    \end{enumerate}
+    
+    \settag{4.4.5}
+    \para{Propositions.}
+    \begin{enumerate}
+        \item $P_W$ is a linear mapping
+        \item Im$(P_W) = W, \vw \in W \implies P_W(\vw) = \vw$
+        \item Ker$(P_W) = W^\perp$
+    \end{enumerate}
+    
+    \settag{4.4.6}
+    \para{Proposition.} Let $\{\vw_1,...,\vw_k\}$ be an orthonormal basis for the subspace $W \subseteq \R^n$
+    \begin{enumerate}
+        \item 
+        $
+            \forall \vw \in W, \vw = \sum_{i = 1}^k \langle \vw,\vw_i \rangle \vw_i
+        $
+        \item 
+        $
+            \forall \vx \in \R^n, P_W(\vx) = \sum_{i = 1}^k \langle \vx,\vw_i \rangle \vw_i
+        $
+    \end{enumerate}
+    
+    \settag{4.4.9}
+    \para{Theorem: Every Subspace has an Orthonormal Basis.} Let $W$ be a subspace of $\R^n$. Then there exists an orthonormal basis of $W$. \newline 
+    \textbf{Remark.} A way to think of this theorem and make this trivial is that we first pick some orthogonal basis for such subspace, and then scale them so that they are unit vectors.
+    
+    
+    
     
 \end{enumerate}
 
