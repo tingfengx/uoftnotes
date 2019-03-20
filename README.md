@@ -2,6 +2,7 @@
 Notes for some of my courses at University of Toronto
 * The notes in this repository that are currently in edit are
    1. MAT224, Linear Algebra II.
+   2. STA261, Statistics II. A manuel for common test statistics.
 * Other notes that I participated in typesetting:
    1. MAT237, Advanced Calculus, a short guide to theorems, lemmas and propositions. This particular set of notes was made together with @yuchenWYC. @AndyTQ also made some useful comments for the improvment of the .tex file. They are available here:  https://github.com/yuchenWYC/MAT237
    
