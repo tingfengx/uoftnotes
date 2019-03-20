@@ -1,0 +1,103 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{Inferential Statistics, Test Statistics Manuel}
+\author{Tingfeng Xia}
+\date{2019, Winter Term}
+\begin{document}
+\maketitle
+
+\section{Test for $\mu = \mu_0$, w/$\sigma^2$ known}
+Assume that $X_i\sim N(\mu, \sigma^2)$ are i.i.d, then the test 
+statistic is
+\begin{equation*}
+    T(X) = \frac{\Bar{X} - \mu_0}{\sigma / \sqrt{n}} \sim N(0, 1)
+\end{equation*}
+then under $\alpha$ significance level, we have the rejection region
+\begin{equation*}
+    R_\alpha(T) = ( -\infty, z_{\frac{\alpha}{2}} ) \cup 
+(1-z_{\frac{\alpha}{2}}, \infty )
+\end{equation*}
+
+\section{Test for $\mu = \mu_0$, w/$\sigma^2$ unknown}
+Assume that $X_i\sim N(\mu, \sigma^2)$ are i.i.d, then the test 
+statistic is
+\begin{equation*}
+    T(X) = \frac{\Bar{X} - \mu_0}{S / \sqrt{n}} \sim t_{n-1}
+\end{equation*}
+then under $\alpha$ significance level, we have the rejection region
+\begin{equation*}
+    R_\alpha(T) = ( -\infty, t_{\frac{\alpha}{2}, df=n-1} ) \cup 
+(t_{1-\frac{\alpha}{2}, df=n-1}, \infty )
+\end{equation*}
+
+\section{Test for $\sigma^2 = \sigma_0^2$}
+Assume that $X_i\sim N(\mu, \sigma^2)$ are i.i.d, then the test 
+statistic is
+\begin{equation*}
+    T(X) = \frac{(n-1)S^2}{\sigma_0^2} \sim \chi^2_{df = n-1}
+\end{equation*}
+and the $\alpha$ significance level rejection region is 
+\begin{equation*}
+    R_\alpha(T) = ( -\infty, \chi^2_{\frac{\alpha}{2}, df=n-1} ) \cup 
+(\chi^2_{1-\frac{\alpha}{2}, df=n-1}, \infty )
+\end{equation*}
+
+\section{Likelihood Ratio Test}
+Define
+\begin{equation*}
+    \Lambda := \frac{max_{\theta \in 
+\Omega_0}[L(\theta)]}{L(\Hat{\theta})}
+\end{equation*}
+Denoting $p = \dim\Omega =$ number of free var in the whole space, and 
+$d = \dim\Omega_0 =$ number of free var under our null hypothesis, we 
+have
+\begin{equation*}
+    T(X) = -2\ln{\Lambda} \xrightarrow{D} \chi^2_{df = p-d}
+\end{equation*}
+
+\section{Equality of Variances $\sigma_x = \sigma_y$}
+If we have $X_1,...,X_n\sim N(\mu_x, \sigma^2_x)$ and $Y_1,...,Y_n\sim 
+N(\mu_y, \sigma^2_y)$, then
+\begin{equation*}
+    T(X,Y) = \frac{S_x^2}{S_y^2} \sim F_{(n-1)(m-1)}
+\end{equation*}
+With $\alpha$ significance level, we then have the rejection region
+\begin{equation*}
+     R_\alpha(T) = \left(-\infty,F_{\frac{\alpha}{2}(n-1)(m-1)}\right) 
+\cup \left(F_{\frac{1-\alpha}{2}(n-1)(m-1)}, \infty\right) 
+\end{equation*}
+
+\section{Equality of $\mu_x = \mu_y$, w/$\sigma_x, \sigma_y$ known}
+If we have $\Bar{X} \sim N\left( \mu_x, \frac{\sigma_x^2}{n} \right)$ 
+and $\Bar{Y} \sim N\left( \mu_y, \frac{\sigma_y^2}{n} \right)$, then 
+\begin{equation*}
+    T(X,Y) = \frac{\Bar{X} - \Bar{Y}}{\sqrt{\frac{\sigma_x^2}{n} + 
+\frac{\sigma_y^2}{m}}}\sim N(0, 1)
+\end{equation*}
+
+\section{Equality of $\mu_x = \mu_y$, w/$\sigma=\sigma_x=\sigma_y$ 
+known}
+If this is the case, we can pull the $\sigma_x = \sigma_y = \sigma$ 
+out from the above equation, we will have
+\begin{equation*}
+    T(X,Y) = \frac{\bar{X} - \bar{Y}}{\sigma \sqrt{(\frac{1}{n} + 
+\frac{1}{m})}} \sim N(0, 1)
+\end{equation*}
+
+\section{Equality of $\mu_x = \mu_y$, w/$\sigma = \sigma_x = \sigma_y$ 
+unknown}
+If we have $\Bar{X} \sim N\left( \mu_x, \frac{\sigma_x^2}{n} \right)$ 
+and $\Bar{Y} \sim N\left( \mu_y, \frac{\sigma_y^2}{n} \right)$, then 
+\begin{equation*}
+    T(X,Y) = \frac{\Bar{X} - \Bar{Y}}{S_p \sqrt{(\frac{1}{n} + 
+\frac{1}{m})}} \sim t_{n+m-2}
+\end{equation*}
+where, $S_p$ is the polled sample variance, defined as
+\begin{equation*}
+    S_p := \frac{(n-1)S_x^2 + (m-1)S_y^2}{n+m-2}
+\end{equation*}
+
+\end{document}
+
