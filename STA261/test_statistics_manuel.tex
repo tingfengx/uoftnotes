@@ -7,6 +7,8 @@
 \date{2019, Winter Term}
 \begin{document}
 \maketitle
+\tableofcontents
+\newpage
 \section{Test for $\mu = \mu_0$, w/$\sigma^2$ known}
 Assume that $X_i\sim N(\mu, \sigma^2)$ are i.i.d, then the test 
 statistic is
@@ -44,15 +46,15 @@ and the $\alpha$ significance level rejection region is
 \end{equation*}
 
 \section{Equality of Variances $\sigma_x = \sigma_y$}
-If we have $X_1,...,X_n\sim N(\mu_x, \sigma^2_x)$ and $Y_1,...,Y_n\sim 
+If we have $X_1,\ldots,X_n\sim N(\mu_x, \sigma^2_x)$ and $Y_1,\ldots,Y_n\sim 
 N(\mu_y, \sigma^2_y)$, then
 \begin{equation*}
-    T(X,Y) = \frac{S_x^2}{S_y^2} \sim F_{(n-1)(m-1)}
+    T(X,Y) = \frac{S_x^2/\sigma_x^2}{S_y^2/\sigma_y^2} = \frac{S_x^2}{S_y^2} \sim F_{(n-1)(m-1)}
 \end{equation*}
 With $\alpha$ significance level, we then have the rejection region
 \begin{equation*}
      R_\alpha(T) = \left(-\infty,F_{\frac{\alpha}{2}(n-1)(m-1)}\right) 
-\cup \left(F_{\frac{1-\alpha}{2}(n-1)(m-1)}, \infty\right) 
+\cup \left(F_{1-\frac{\alpha}{2}(n-1)(m-1)}, \infty\right) 
 \end{equation*}
 
 \section{Equality of $\mu_x = \mu_y$, w/$\sigma_x, \sigma_y$ known}
@@ -82,7 +84,17 @@ and $\Bar{Y} \sim N\left( \mu_y, \frac{\sigma_y^2}{n} \right)$, then
 \end{equation*}
 where, $S_p$ is the polled sample variance, defined as
 \begin{equation*}
-    S_p := \frac{(n-1)S_x^2 + (m-1)S_y^2}{n+m-2}
+    S_p^2 := \frac{(n-1)S_x^2 + (m-1)S_y^2}{n+m-2}
+\end{equation*}
+
+\section{Equality of $\mu_x = \mu_y$, w/$\sigma_x, \sigma_y$ unknown}
+In this case, we have a messy formula for the degrees of freedom, the
+test statistics that we use stays the same as above.
+
+\section{Test for equality of $\mu_x = \mu_y$ for paired data}
+We set the $H_0: \mu_x - \mu_y = 0$, define $D = X-Y$, then $\mu_d = \mu_x - \mu_y$. Notice that $\mu_d = 0 \iff \mu_x = \mu_y$, then our test statistic is
+\begin{equation*}
+    T(D) = \frac{\hat{D}}{s_d/\sqrt{n}} \sim t_{n-1}
 \end{equation*}
 
 \section{Restricted Likelihood Ratio Test}
@@ -98,8 +110,8 @@ have
     T(X) = -2\ln{\Lambda} \xrightarrow{D} \chi^2_{df = p-d}
 \end{equation*}
 
-\section{Unrestricted Likelihood Ratio Test for Normally Distributed Random Variables}
-Consider i.i.d $X_1,...,X_n \sim N(\mu_x, \sigma_x^2)$ and i.i.d $Y_1,...,Y_m \sim N(\mu_y, \sigma_y^2)$. Notice that we have $p-d = 2 - 1 = 1$ in this case, and the likelihood is
+\section{Unrestricted Likelihood Ratio Test for Equality of $\mu_x = \mu_y$ for Normally Distributed Random Variables}
+Consider i.i.d $X_1,\ldots,X_n \sim N(\mu_x, \sigma_x^2)$ and i.i.d $Y_1,\ldots,Y_m \sim N(\mu_y, \sigma_y^2)$. Notice that we have $p-d = 2 - 1 = 1$ in this case, and the likelihood is
 \begin{equation*}
     L(\mu_x, \mu_y) = \left\{\left(2\pi \sigma_x^2\right)^{-\frac{n}{2}}e^{-\frac{1}{2\sigma_x^2}\sum_i{\left(X_i - \mu_x\right)^2}}\right\} \left\{\left(2\pi \sigma_y^2\right)^{-\frac{m}{2}}e^{-\frac{1}{2\sigma_y^2}\sum_i{\left(Y_i - \mu_y\right)^2}}\right\} \\
 \end{equation*}    
@@ -112,12 +124,12 @@ Our test statistic is then
     T(X,Y) = -2 \ln \Lambda = -2 \ln \frac{L(\hat{\mu})}{L(\hat{\mu_x}, \hat{\mu_y})} \sim \chi^2_{df = 1}
 \end{equation*}
 
-\section{Chi-Squared Test of Goodness of Fit}
-Suppose, $X_1, X_2, ..., X_k$ are the observed counts of category 1, 2, ..., k respectively. Then
+\section{Chi-Square Test of Goodness of Fit}
+Suppose, $X_1, X_2, \ldots, X_k$ are the observed counts of category $1, 2, \ldots, k$ respectively. Then
 \begin{equation*}
-    (X_1, X_2, ..., X_k) \sim \text{Mult}(n, p_1, p_2, ..., p_k)~~~~\text{where}~E[X_i] = np_i (\geq 1), \forall i
+    (X_1, X_2, \ldots, X_k) \sim \text{Mult}(n, p_1, p_2, \ldots, p_k)~~~~\text{where}~E[X_i] = np_i (\geq 1), \forall i
 \end{equation*}
-We have the test statistic
+and our test statistic will be, in this case
 \begin{equation*}
     T(X) = X^2 = \sum_{i = 1}^k \frac{\left(X_i - np_i\right)^2}{np_i} \xrightarrow{D} \chi^2_{(df=k-1)}
 \end{equation*}
