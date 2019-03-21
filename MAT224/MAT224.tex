@@ -1420,23 +1420,51 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{4.4.6}
     \para{Proposition.} Let $\{\vw_1,...,\vw_k\}$ be an orthonormal basis for the subspace $W \subseteq \R^n$
     \begin{enumerate}
-        \item 
-        $
-            \forall \vw \in W, \vw = \sum_{i = 1}^k \langle \vw,\vw_i \rangle \vw_i
-        $
-        \item 
-        $
-            \forall \vx \in \R^n, P_W(\vx) = \sum_{i = 1}^k \langle \vx,\vw_i \rangle \vw_i
-        $
+        \item $\forall \vw \in W, \vw = \sum_{i = 1}^k \langle \vw,\vw_i \rangle \vw_i$
+        \item $\forall \vx \in \R^n, P_W(\vx) = \sum_{i = 1}^k \langle \vx,\vw_i \rangle \vw_i$
     \end{enumerate}
     
     \settag{4.4.9}
     \para{Theorem: Every Subspace has an Orthonormal Basis.} Let $W$ be a subspace of $\R^n$. Then there exists an orthonormal basis of $W$. \newline 
     \textbf{Remark.} A way to think of this theorem and make this trivial is that we first pick some orthogonal basis for such subspace, and then scale them so that they are unit vectors.
     
+    \settag{4.4.9*}
+    \para{Gram-Schmidt Process.} Consider $W = span\{\vw_j\}_{j=1}^k$, were the $\vw$'s are basis vectors for the vector space $W$. Then we calculate, in sequence
+    \begin{align*}
+        \vv_1 &= \vw_1 \\
+        \vv_2 &= \vw_2 - P_{span\{\vv_1\}}\vw_2 \\
+              &\cdots  \\
+        \vv_k &= \vw_k - P_{span\{\vv_1,...,\vv_{k-1}\}}\vw_k
+    \end{align*}
+    after which we normalize $\vv_i$ by $\hat{\vv}_i = \vv / \norm{\vv_i}$, then $\alpha = \{\hat{\vv}_1,...,\hat{\vv}_k\}$ is an orthonormal basis for the real vector space $W$.
+\end{enumerate}
+
+\section{Symmetric Matrices}
+\begin{enumerate}
+    \settag{4.5.2a}
+    \para{Proposition.} Let $A \in \mat{n}{n}$.
+    \begin{enumerate}
+        \item $\forall \vx,\vy \in \R^n, \langle A\vx,\vy\rangle = \langle \vx, A^T\vy\rangle$
+        \item $A$ is symmetric if and only if $\langle A\vx,\vy\rangle = \langle \vx,A\vy \rangle, \forall \vx, \vy \in \R^n$
+    \end{enumerate}
     
+    \settag{4.5.2b}
+    \para{Corollary.} Let $V$ be any subspace of $\R^n$, let \trans{T}{V}{V} be any linear transformation, and let $\alpha = \{\vx_1,...,\vx_k\}$ be any orthogonal basis for $V$. Then \map{T}{\alpha}{\alpha} is a symmetric matrix if and only if $$\langle T(\vx), \vy\rangle = \langle \vx,T(\vy)\rangle, \forall \vx, \vy \in V$$
     
+    \settag{4.5.3}
+    \para{Definition.} Let $V$ be a subspace of $\R^n$. A linear mapping \trans{T}{V}{V} is said to be symmetric if $\langle T(\vx),\vy\rangle = \langle \vx, T(\vy) \rangle, \forall \vx, \vy \in V$
     
+    \settag{4.5.6}
+    \para{Theorem: Symmetric Matrices have Real Eigenvalues.} Let $A \in \mat{n}{n}$ be a symmetric matrix. Then all the roots to the characteristic polynomial $char_A(\lambda)$ are real.
+    
+    \settag{4.5.7}
+    \para{Theorem.} Let $A \in \mat{n}{n}$ be a symmetric matrix, let $\vx_1, \vx_2$ be eigenvectors of $A$ with eigenvalues $\lambda_1, \lambda_2$ respectively. We have $\lambda_1 \neq \lambda_2 \implies \vx_1$ and $\vx_2$ are orthogonal vectors in $\R^n$.
+\end{enumerate}
+
+\section{The Spectral Theorem}
+\begin{enumerate}
+    \settag{4.6.1}
+    \para{To be filled}
 \end{enumerate}
 
 \end{document}
