@@ -124,6 +124,10 @@ Our test statistic is then
 \begin{equation*}
     T(X,Y) = -2 \ln \Lambda = -2 \ln \frac{L(\hat{\mu})}{L(\hat{\mu_x}, \hat{\mu_y})} \sim \chi^2_{df = 1}
 \end{equation*}
+where we remind ourselves that $\hat{\mu}_x = \Bar{x}$ and $\hat{\mu}_y = \Bar{y}$ here and $\hat{\mu}$ is some wright-ed average of $\Bar{x}$ and $\Bar{y}$ as below
+\begin{equation*}
+    \hat{\mu} = \left( \frac{\frac{1}{\sigma^2_x/n}}{ \frac{1}{\sigma^2_x/n} + \frac{1}{\sigma^2_y/m} }\right)\Bar{x} + \left( \frac{\frac{1}{\sigma^2_y/m}}{ \frac{1}{\sigma^2_x/n} + \frac{1}{\sigma^2_y/m} }\right)\Bar{y}
+\end{equation*}
 
 \section{Chi-Square Test of Goodness of Fit}
 Suppose, $X_1, X_2, \ldots, X_k$ are the observed counts of category $1, 2, \ldots, k$ respectively. Then
@@ -133,6 +137,12 @@ Suppose, $X_1, X_2, \ldots, X_k$ are the observed counts of category $1, 2, \ldo
 and our test statistic will be, in this case
 \begin{equation*}
     T(X) = X^2 = \sum_{i = 1}^k \frac{\left(X_i - np_i\right)^2}{np_i} \xrightarrow{D} \chi^2_{(df=k-1)}
+\end{equation*}
+
+\section{Discrepancy Statistic for Normal R.V.s}
+Consider $X_1,\ldots,X_n\sim N(\hat{\mu}, \sigma_0^2)$ where $\sigma_0^2$ is known. Define $R = X_i - \Bar{X}$, where $R\sim N(0, \sigma_0^2 (1 - \frac{1}{n}))$ then, the descrepancy statistic is defined as
+\begin{equation*}
+    D(R) = \frac{1}{\sigma_0^2}\sum_{i = 1}^n R_i^2 =  \frac{1}{\sigma_0^2}\sum_{i=1}^n(X_i - \Bar{X})^2 \sim \chi^2_{n-1}
 \end{equation*}
 
 \end{document}
