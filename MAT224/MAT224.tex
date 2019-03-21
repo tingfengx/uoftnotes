@@ -5,7 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{url}
-\usepackage{hyperref}
+\usepackage[pdfencoding=auto, psdextra]{hyperref}
 
 % customized commands
 \newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
@@ -314,7 +314,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         Since $a=b=0$ is the one and only solution to $(1)$, we claim they are linearly independent. \qed
     \end{enumerate}
     
-\section{Interlude on solving SLEs}
+\section{Interlude on Solving SLEs}
     \begin{enumerate}
         \settag{1.5.*}
         \item \tbf{Note Aside: }This section of the book is covered, although not rigorously but completely, in MAT223. Hence the vast majority of definitions and corollary in this section were omitted. Consult the book for more detail on this.
@@ -957,7 +957,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{equation*}
     
     \settag{2.7.5}
-    \para{Theorem.} Let \trans{T}{V}{W} be a linear transformation between fin-dim vector spaces $V$ and $W$. Let \trans{I_V}{V}{V} and \trans{I_W}{W}{W} be respective identity transformations of $V$ and $W$. Let $\alpha, \alpha'$ be two bases for $V$ and let $\beta, \beta'$ be two bases for $W$, then
+    \para{Theorem.} Let \trans{T}{V}{W} be a linear transformation Between FDVS $V$ and $W$. Let \trans{I_V}{V}{V} and \trans{I_W}{W}{W} be respective identity transformations of $V$ and $W$. Let $\alpha, \alpha'$ be two bases for $V$ and let $\beta, \beta'$ be two bases for $W$, then
     \begin{equation*}
         \map{T}{\alpha'}{\beta'} = \map{I_W}{\beta}{\beta'}\cdot \map{T}{\alpha}{\beta}\cdot \map{I_V}{\alpha'}{\alpha}
     \end{equation*}
