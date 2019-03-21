@@ -10,6 +10,8 @@
 % customized commands
 \newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
 \newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
 \newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
 \newcommand{\tbf}[1]{\textbf{#1}}
@@ -1157,7 +1159,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{3.3.*}
     \para{Definition of Cofactor} Given that $A_{ij}$ is the minor matrix for row $i$ and column $j$ in a square matrix $A$, the \tit{cofactor} at position row $i$ and column $j$ is denoted as $C_{ij}$ and is calculated by the formula 
     \begin{equation*}
-        C_{ij}=(−1)^{i+j}\det(A_{ij})
+        C_{ij}=(-1)^{i+j}\det(A_{ij})
     \end{equation*}
     \tbf{Remark.} Although the formula seems daunting, it is essentially assigning alternating plus and minus to each slot in each row, going left to right and top to bottom.
 
@@ -1265,7 +1267,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         Char_A(\lambda)= \det(A-\lambda I) = \lambda^2 - Tr(A)\cdot\lambda + \det{A} 
     \end{equation*}
     \textbf{Remark.} This form of characteristic polynomial also takes a more general form for larger square matrices, but the expanded formula is messy so we omit it. \newline
-    \textbf{A special case of the Cayley–Hamilton Theorem.} Consider some $2\times 2$ matrix A, with characteristic polynomial $Char_A(\lambda)$. Then, if we treat $A$ as a number and brutally plug $A$ into its own characteristic polynomial, i.e. $Char_A(A)$, we will find that $Char_A(A) = 0_{2 \times 2}$, as if $A$ solves its own characteristic polynomial!
+    \textbf{A special case of the Cayley-Hamilton Theorem.} Consider some $2\times 2$ matrix A, with characteristic polynomial $Char_A(\lambda)$. Then, if we treat $A$ as a number and brutally plug $A$ into its own characteristic polynomial, i.e. $Char_A(A)$, we will find that $Char_A(A) = 0_{2 \times 2}$, as if $A$ solves its own characteristic polynomial!
     
     \settag{4.1.14}
     \para{Corollary.} Let $A\in \mat{n}{n}$. Then $A$ has no more than $n$ distinct eigenvalues. In addition, if $\lambda1,...,\lambda_k$ are the distinct eigenvalues of $A$ and $\lambda_i$ is an $m_i$-fold root\footnote{Root of the form $(\lambda_i \pm k)^{m_i}$, where $k \in \R$} of the characteristic polynomial, then $m_1+...+m_k \leq n$.
@@ -1464,7 +1466,47 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{The Spectral Theorem}
 \begin{enumerate}
     \settag{4.6.1}
-    \para{To be filled}
+    \para{Theorem.} Let \trans{T}{V}{V} be a symmetric linear mapping. Then there is an \textit{orthonormal} basis of $\R^n$ consisting of eigenvectors of $T$. In particular, $T$ is diagonalizable.
+    
+    \settag{4.6.3}
+    \para{Theorem.} Let \trans{T}{\R^n}{\R^n} be a symmetric linear mapping, and let $\lambda_1,..,\lambda_k$ be the distinct eigenvalues of $T$. let $P_i$ be the orthogonal projection of $\R^n$ onto the eigenspace $E_{\lambda_i}$. Then
+    \begin{enumerate}
+        \item $T = \lambda_1P_1+...+\lambda_k P_k$, and
+        \item $I = P_1,...,P_k$
+    \end{enumerate}
+\end{enumerate}
+
+\section{Complex Numbers and Complex Vector Spaces}
+\begin{enumerate}
+    \settag{5.1.1}
+    \para{Definition.} The set of complex numbers, denoted as $\mathbb{C}$, is the set of ordered pairs of real numbers $(a,b) = (a+bi)$ with operations of addition and multiplication defined by
+    \begin{enumerate}
+        \item $\forall (a,b), (c,d)\in \mathbb{C}$, the sum of $(a,b)$ and $(c,d)$ is the complex number defined by
+        \begin{equation*}
+            (a+ib) + (c+id) = (a+c)+i(b+d)
+        \end{equation*}
+        \item $\forall (a,b),(c,d) \in \mathbb{C}$, the product of $(a,b)$ and $(c,d)$ is the complex number defined by
+        \begin{equation*}
+            (a+ib)(c+id) = (ac-bd)+i(ad+cb)
+        \end{equation*}
+    \end{enumerate}
+    
+    \settag{5.1.2}
+    \para{Definitions.} Let $z = a+bi \in \complex$. The real part of z is $Re(z) = a$, while the imaginary part of $z$ is $Im(z) = b$.
+    
+    \settag{5.1.4}
+    \para{Definition of Field.} A field is a set $\mathbb{F}$ with two operations $+$ and $\cdot$. In addition, it has to satisfy the following axioms:
+    \begin{enumerate}
+        \item \textbf{Commutativity of Addition:} $$\forall x, y \in \mathbb{F}, x+y = y+x$$
+        \item \textbf{Associativity of Addition:} $$\forall x, y , z \in \mathbb{F}, (x+y)+z = x +(y+z)$$
+        \item \textbf{Existence of Additive Identity:} $$\exists 0 \in \mathbb{F}, \forall x\in \mathbb{F}, 0+x = x$$
+        \item \textbf{Existence of Additive Inverse:} $$\forall x \in \mathbb{F}, \exists -x \in \mathbb{F}, x+(-x) = 0$$
+        \item \textbf{Commutativity of Multiplication:} $$\forall x, y \in \mathbb{F}, xy = yx$$
+        \item \textbf{Associativity of Multiplication:} $$\forall x,y,z \in \mathbb{F}, (xy)z = x(yz)$$
+        \item \textbf{Distributivity:} $$\forall x,y,z \in \mathbb{F}, (x+y)z = xz+yz \land x(y+z) = xy+xz$$
+        \item \textbf{Existence of Multiplicative Identity:} $$\exists 1\in \mathbb{F}, \forall x\in \mathbb{F}, 1\cdot x = x $$
+        \item \textbf{Existence of Multiplicative Inverse:} $$\forall x \in \mathbb{F}, x\neq 0\implies 1/x \in \mathbb{F}, x \cdot 1/x = 1$$
+    \end{enumerate}
 \end{enumerate}
 
 \end{document}
