@@ -1476,7 +1476,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{enumerate}
 \end{enumerate}
 
-\section{Complex Numbers and Complex Vector Spaces}
+\chapter{Complex Numbers and Complex Vector Spaces}
+\section{Complex Numbers}
 \begin{enumerate}
     \settag{5.1.1}
     \para{Definition.} The set of complex numbers, denoted as $\mathbb{C}$, is the set of ordered pairs of real numbers $(a,b) = (a+bi)$ with operations of addition and multiplication defined by
@@ -1497,16 +1498,73 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{5.1.4}
     \para{Definition of Field.} A field is a set $\mathbb{F}$ with two operations $+$ and $\cdot$. In addition, it has to satisfy the following axioms:
     \begin{enumerate}
-        \item \textbf{Commutativity of Addition:} $$\forall x, y \in \mathbb{F}, x+y = y+x$$
-        \item \textbf{Associativity of Addition:} $$\forall x, y , z \in \mathbb{F}, (x+y)+z = x +(y+z)$$
-        \item \textbf{Existence of Additive Identity:} $$\exists 0 \in \mathbb{F}, \forall x\in \mathbb{F}, 0+x = x$$
-        \item \textbf{Existence of Additive Inverse:} $$\forall x \in \mathbb{F}, \exists -x \in \mathbb{F}, x+(-x) = 0$$
-        \item \textbf{Commutativity of Multiplication:} $$\forall x, y \in \mathbb{F}, xy = yx$$
-        \item \textbf{Associativity of Multiplication:} $$\forall x,y,z \in \mathbb{F}, (xy)z = x(yz)$$
-        \item \textbf{Distributivity:} $$\forall x,y,z \in \mathbb{F}, (x+y)z = xz+yz \land x(y+z) = xy+xz$$
-        \item \textbf{Existence of Multiplicative Identity:} $$\exists 1\in \mathbb{F}, \forall x\in \mathbb{F}, 1\cdot x = x $$
-        \item \textbf{Existence of Multiplicative Inverse:} $$\forall x \in \mathbb{F}, x\neq 0\implies 1/x \in \mathbb{F}, x \cdot 1/x = 1$$
+        \item \textbf{Commutativity of Addition:} 
+        \begin{equation*} 
+            \forall x, y \in \mathbb{F}, x+y = y+x
+        \end{equation*}
+        \item \textbf{Associativity of Addition:} 
+        \begin{equation*} 
+            \forall x, y , z \in \mathbb{F}, (x+y)+z = x +(y+z)
+        \end{equation*}
+        \item \textbf{Existence of Additive Identity:} 
+        \begin{equation*} 
+            \exists!\, 0 \in \mathbb{F}, \forall x\in \mathbb{F}, 0+x = x
+        \end{equation*}
+        \item \textbf{Existence of Additive Inverse:} 
+        \begin{equation*}
+            \forall x \in \mathbb{F}, \exists! -x \in \mathbb{F}, x+(-x) = 0
+        \end{equation*}
+        \item \textbf{Commutativity of Multiplication:} 
+        \begin{equation*}
+            \forall x, y \in \mathbb{F}, xy = yx
+        \end{equation*}
+        \item \textbf{Associativity of Multiplication:} 
+        \begin{equation*}
+            \forall x,y,z \in \mathbb{F}, (xy)z = x(yz)
+        \end{equation*}
+        \item \textbf{Distributivity:}
+        \begin{equation*} 
+            \forall x,y,z \in \mathbb{F}, (x+y)z = xz+yz \land x(y+z) = xy+xz
+        \end{equation*}
+        \item \textbf{Existence of Multiplicative Identity:} 
+        \begin{equation*} 
+            \exists!\, 1\in \mathbb{F}, \forall x\in \mathbb{F}, 1\cdot x = x 
+        \end{equation*}
+        \item \textbf{Existence of Multiplicative Inverse:} 
+        \begin{equation*}
+            \forall x \in \mathbb{F}, x\neq 0\implies \exists!\,1/x \in \mathbb{F}, x \cdot 1/x = 1
+        \end{equation*}
+        Note that these are very different axioms from those that we encountered when defining a vector space. For example, multiplication wasn't even defined for vectors! Also, there are nine axioms here rather than eight that we used to have.
     \end{enumerate}
+    
+    \settag{5.1.4*}
+    \para{Examples and Counter Examples of Fields.}
+    First, some examples that are not fields.
+    \begin{enumerate}
+        \item First let's examine our good old friend: the space of polynomials $P_n(\R)$. Note that if a take a polynomial and try to construct a multiplicative inverse for it, the constructed object will no longer be within the field, (a rational function actually) so the set of all polynomials fails to be a field.
+        \item The set of integers, $\mathbb{Z}$, is another counter example. Notice that this set fails for exactly the same reason as the previous one, there is no multiplicative inverse for each element.
+    \end{enumerate}
+    Next, some examples for fields
+    \begin{enumerate}
+        \item One should recognize rather quickly that the set $\R$ is a field! In fact, field is an abstraction originated form the real numbers.
+        \item Similarly, the set of algebraic numbers is a field.
+        \begin{equation*}
+            \text{Algebraic Numbers}:= \{x\in \R|\, p(x) = 0~~\text{for some }p\in P(\R)\}
+        \end{equation*}
+        We like this set, because it is closed.
+    \end{enumerate}
+    
+    \settag{5.1.5}
+    \para{Proposition: Complex Numbers form a Field} The set of complex numbers is a field with the operations of addition and scalar multiplication as defined previously. \newline
+    \proof \newline
+    All of the axioms except for possibly the axiom (i) are trivial to show to be true, so will neglect them here. Now, if $a + ib\neq 0$, then necessarily $a \neq 0 \wedge b \neq 0$. We then can deduce that $a^2 + b^2 \neq 0$. Consider any real number $a + ib$, let
+    \begin{equation*}
+        1/(a+ib) := \frac{a-ib}{a^2+b^2} \in \complex
+    \end{equation*}
+    It is easy to show that $(a+ib)\cdot\frac{a-ib}{a^2+b^2} = \frac{a^2+b^2}{a^2+b^2} = 1$, so indeed we have a multiplicative inverse for any complex number. \qed
+    
+    \settag{5.1.7}
+    \para{Proposition on Uniqueness.} Note that, as indicated in Definition (5.1.4), all of the additive identity in a field, the additive inverse of an element of a field, the multiplicative identity of a field and the multiplicative inverse of a non-zero element of a field are unique.
 \end{enumerate}
 
 \end{document}
