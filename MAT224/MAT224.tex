@@ -12,6 +12,7 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\complex}{\mathbb{C}}
+\newcommand{\field}{\mathbb{F}}
 \newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
 \newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
 \newcommand{\tbf}[1]{\textbf{#1}}
@@ -26,7 +27,7 @@
 \newcommand{\map}[3]{\text{$\left[#1\right]_{#2}^{#3}$}}
 \newcommand{\dime}[1]{\text{dim}(#1)}
 \newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
-\newcommand\aug{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
+\newcommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
 \newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
 \newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
@@ -75,10 +76,11 @@
 \newpage % make a new page for actual contents, possibly a content table
 \mbox{}
 \vfill
-by Tingfeng Xia \\
+\noindent by Tingfeng Xia \\
 
 
-Materials in this booklet are based heavily on Prof. Nicholas Hoell's lectures as well as A COURSE IN LINEAR ALGEBRA by David B. Damiano and John B. Little.\newline\newline
+\noindent Materials in this booklet are based heavily on Prof. Nicholas Hoell's lectures as well as 
+A COURSE IN LINEAR ALGEBRA by David B. Damiano and John B. Little.\newline\newline
 Items in this booklet are, in fact, very similar to those in the book and are intended to be used as a bullet point guide to (almost) all the knowledge points and should \tit{certainly not} be used as a substitute for the actual learning material. Please notice that I make\tit{ no promise} about the accuracy of statements appearing in these notes.\newline\newline
 The course website could be found here:\newline \url{http://www.math.toronto.edu/nhoell/MAT224/}
 \newpage
@@ -1353,7 +1355,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{equation*}
             \norm{\vx} = \sqrt{\langle\vx,\vx\rangle}
         \end{equation*}
-        \item $\vx$ is called a unit vector if $\norm{\vx} \equiv 1$, we can normalize a vector $\vx\in \R^n$ by $\frac{\vx}{\norm{\vx}}$
+        \item $\vx$ is called a unit vector if $\norm{\vx} \equiv 1$, we can normalize 
+        a vector $\vx\in \R^n$ by $\frac{\vx}{\norm{\vx}}$
     \end{enumerate}
     
     \settag{4.3.4-(1)}
@@ -1361,7 +1364,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \begin{equation*}
         \forall \vx, \vy \in \R^n, \norm{\vx + \vy}\leq \norm{\vx} + \norm{\vy}
     \end{equation*}
-    This geometrically says that any side of a triangle is less than the sum of the other two sides. This is a consequence of the Cauchy-Schwarz Inequality below.
+    This geometrically says that any side of a triangle is less than the sum of the other 
+    two sides. This is a consequence of the Cauchy-Schwarz Inequality below.
     
     \settag{4.3.4-(2)}
     \para{The Cauchy-Schwarz Inequality.}
@@ -1372,35 +1376,43 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \proof
     
     \settag{4.3.5}
-    \para{Definition of angle between vectors.} The angle between two non-zero vectors $\vx,\vy \in \R^n$ is defined to be
+    \para{Definition of angle between vectors.} The angle between two non-zero vectors 
+    $\vx,\vy \in \R^n$ is defined to be
     \begin{equation*}
         \theta = \cos^{-1}\left(\frac{\langle\vx,\vy\rangle}{\norm{\vx} \cdot \norm{\vy}}\right)
     \end{equation*}
-    Notice that we defined this angle in chapter 2, but we focused on $\R^2$ and $\R^3$. This is an extension to arbitrary $n$-dimensional Euclidean Space.
+    Notice that we defined this angle in chapter 2, but we focused on $\R^2$ and $\R^3$. 
+    This is an extension to arbitrary $n$-dimensional Euclidean Space.
     
     \settag{4.3.7}
-    \para{Definition of Orthogonality.} Two vectors $\vx,\vy \in \R^n$ are defined to be orthogonal if $\langle \vx,\vy\rangle = 0$
+    \para{Definition of Orthogonality.} Two vectors $\vx,\vy \in \R^n$ are defined to be 
+    orthogonal if $\langle \vx,\vy\rangle = 0$
     
     \settag{4.3.9}
     \para{Definitions: Orthogonal and Orthonormal}
     \begin{enumerate}
-        \item A set of vectors $S\subset \R^n$ is said to be \tit{orthogonal} if $\forall \vx,\vy \in S, \vx \neq \vy \implies \langle \vx,\vy\rangle = 0$
-        \item A set of vectors $S\subset \R^n$ is said to be \tit{orthonormal} if $S$ is orthogonal and, in addition, $\forall \vx \in S, \norm{\vx} = 1$
+        \item A set of vectors $S\subset \R^n$ is said to be \tit{orthogonal} if $\forall 
+        \vx,\vy \in S, \vx \neq \vy \implies \langle \vx,\vy\rangle = 0$
+        \item A set of vectors $S\subset \R^n$ is said to be \tit{orthonormal} if $S$ 
+        is orthogonal and, in addition, $\forall \vx \in S, \norm{\vx} = 1$
     \end{enumerate}
     
     \settag{4.3.10}
-    \para{Proposition: Orthogonal vectors are linearly independent.} If $\vx,\vy \in \R^n$ are orthogonal, with $\vx \neq \vzero \neq \vy$, then $\{\vx,\vy\}$ is linearly independent.
+    \para{Proposition: Orthogonal vectors are linearly independent.} If $\vx,\vy \in \R^n$ 
+    are orthogonal, with $\vx \neq \vzero \neq \vy$, then $\{\vx,\vy\}$ is linearly independent.
 
 \end{enumerate}
 
 \section{Orthogonal Projections and The Gram-Schmidt Process}
 \begin{enumerate}
     \settag{4.4.1}
-    \para{Definition of Orthogonal Complement.} The orthogonal complement of $W$, denoted as $W^{\perp}$, is defined to be
+    \para{Definition of Orthogonal Complement.} The orthogonal complement of $W$, denoted as 
+    $W^{\perp}$, is defined to be
     \begin{equation*}
         W^\perp := \{\vv\in \R^n | \langle \vv,\vw\rangle = 0, \forall \vw \in W\}
     \end{equation*}
-    \textbf{Remark.} Notice that the $\vzero$ vector should be in any such $W^\perp$ sets, since the zero vectors is orthogonal to every vector.
+    \textbf{Remark.} Notice that the $\vzero$ vector should be in any such $W^\perp$ sets, 
+    since the zero vectors is orthogonal to every vector.
     
     \settag{4.4.3}
     \para{Propositions.}
@@ -1408,7 +1420,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item $\forall$ subspace $W \subset \R^n, W^\perp\subset \R^n$ is also a subspace
         \item $\dim(W) + \dim(W^\perp) = \dim(\R^n) = n$
         \item $\forall\, W\subset \R^n$, $W$ is a subspace $\implies W \cap W^\perp = \{\vzero\}$
-        \item Given a subspace $W\subset \R^n$, $\forall \vx \in \R^n$, $\vx$ can be written uniquely as $\vx = \vx_1 + \vx_2$, where $\vx_1 \in W, \vx_2 \in W^\perp$. In summary, we have $\R^n = W \oplus W^\perp$
+        \item Given a subspace $W\subset \R^n$, $\forall \vx \in \R^n$, $\vx$ can be written 
+        uniquely as $\vx = \vx_1 + \vx_2$, where $\vx_1 \in W, \vx_2 \in W^\perp$. In summary, 
+        we have $\R^n = W \oplus W^\perp$
     \end{enumerate}
     
     \settag{4.4.5}
@@ -1427,18 +1441,22 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{enumerate}
     
     \settag{4.4.9}
-    \para{Theorem: Every Subspace has an Orthonormal Basis.} Let $W$ be a subspace of $\R^n$. Then there exists an orthonormal basis of $W$. \newline 
-    \textbf{Remark.} A way to think of this theorem and make this trivial is that we first pick some orthogonal basis for such subspace, and then scale them so that they are unit vectors.
+    \para{Theorem: Every Subspace has an Orthonormal Basis.} Let $W$ be a subspace of $\R^n$. 
+    Then there exists an orthonormal basis of $W$. \newline 
+    \textbf{Remark.} A way to think of this theorem and make this trivial is that we first 
+    pick some orthogonal basis for such subspace, and then scale them so that they are unit vectors.
     
     \settag{4.4.9*}
-    \para{Gram-Schmidt Process.} Consider $W = span\{\vw_j\}_{j=1}^k$, were the $\vw$'s are basis vectors for the vector space $W$. Then we calculate, in sequence
+    \para{Gram-Schmidt Process.} Consider $W = span\{\vw_j\}_{j=1}^k$, were the $\vw$'s are 
+    basis vectors for the vector space $W$. Then we calculate, in sequence
     \begin{align*}
         \vv_1 &= \vw_1 \\
         \vv_2 &= \vw_2 - P_{span\{\vv_1\}}\vw_2 \\
               &\cdots  \\
         \vv_k &= \vw_k - P_{span\{\vv_1,...,\vv_{k-1}\}}\vw_k
     \end{align*}
-    after which we normalize $\vv_i$ by $\hat{\vv}_i = \vv / \norm{\vv_i}$, then $\alpha = \{\hat{\vv}_1,...,\hat{\vv}_k\}$ is an orthonormal basis for the real vector space $W$.
+    after which we normalize $\vv_i$ by $\hat{\vv}_i = \vv / \norm{\vv_i}$, then $\alpha = 
+    \{\hat{\vv}_1,...,\hat{\vv}_k\}$ is an orthonormal basis for the real vector space $W$.
 \end{enumerate}
 
 \section{Symmetric Matrices}
@@ -1447,29 +1465,41 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \para{Proposition.} Let $A \in \mat{n}{n}$.
     \begin{enumerate}
         \item $\forall \vx,\vy \in \R^n, \langle A\vx,\vy\rangle = \langle \vx, A^T\vy\rangle$
-        \item $A$ is symmetric if and only if $\langle A\vx,\vy\rangle = \langle \vx,A\vy \rangle, \forall \vx, \vy \in \R^n$
+        \item $A$ is symmetric if and only if $\langle A\vx,\vy\rangle = \langle \vx,A\vy 
+        \rangle, \forall \vx, \vy \in \R^n$
     \end{enumerate}
     
     \settag{4.5.2b}
-    \para{Corollary.} Let $V$ be any subspace of $\R^n$, let \trans{T}{V}{V} be any linear transformation, and let $\alpha = \{\vx_1,...,\vx_k\}$ be any orthogonal basis for $V$. Then \map{T}{\alpha}{\alpha} is a symmetric matrix if and only if $$\langle T(\vx), \vy\rangle = \langle \vx,T(\vy)\rangle, \forall \vx, \vy \in V$$
+    \para{Corollary.} Let $V$ be any subspace of $\R^n$, let \trans{T}{V}{V} be any linear 
+    transformation, and let $\alpha = \{\vx_1,...,\vx_k\}$ be any orthogonal basis for $V$. 
+    Then \map{T}{\alpha}{\alpha} is a symmetric matrix if and only if $$\langle T(\vx), 
+    \vy\rangle = \langle \vx,T(\vy)\rangle, \forall \vx, \vy \in V$$
     
     \settag{4.5.3}
-    \para{Definition.} Let $V$ be a subspace of $\R^n$. A linear mapping \trans{T}{V}{V} is said to be symmetric if $\langle T(\vx),\vy\rangle = \langle \vx, T(\vy) \rangle, \forall \vx, \vy \in V$
+    \para{Definition.} Let $V$ be a subspace of $\R^n$. A linear mapping \trans{T}{V}{V} 
+    is said to be symmetric if $\langle T(\vx),\vy\rangle = \langle \vx, T(\vy) \rangle, \forall \vx, \vy \in V$
     
     \settag{4.5.6}
-    \para{Theorem: Symmetric Matrices have Real Eigenvalues.} Let $A \in \mat{n}{n}$ be a symmetric matrix. Then all the roots to the characteristic polynomial $char_A(\lambda)$ are real.
+    \para{Theorem: Symmetric Matrices have Real Eigenvalues.} Let $A \in \mat{n}{n}$ be a 
+    symmetric matrix. Then all the roots to the characteristic polynomial $char_A(\lambda)$ are real.
     
     \settag{4.5.7}
-    \para{Theorem.} Let $A \in \mat{n}{n}$ be a symmetric matrix, let $\vx_1, \vx_2$ be eigenvectors of $A$ with eigenvalues $\lambda_1, \lambda_2$ respectively. We have $\lambda_1 \neq \lambda_2 \implies \vx_1$ and $\vx_2$ are orthogonal vectors in $\R^n$.
+    \para{Theorem.} Let $A \in \mat{n}{n}$ be a symmetric matrix, let $\vx_1, \vx_2$ be 
+    eigenvectors of $A$ with eigenvalues $\lambda_1, \lambda_2$ respectively. We have 
+    $\lambda_1 \neq \lambda_2 \implies \vx_1$ and $\vx_2$ are orthogonal vectors in $\R^n$.
 \end{enumerate}
 
 \section{The Spectral Theorem}
 \begin{enumerate}
     \settag{4.6.1}
-    \para{Theorem.} Let \trans{T}{V}{V} be a symmetric linear mapping. Then there is an \textit{orthonormal} basis of $\R^n$ consisting of eigenvectors of $T$. In particular, $T$ is diagonalizable.
+    \para{Theorem.} Let \trans{T}{V}{V} be a symmetric linear mapping. Then there is 
+    an \textit{orthonormal} basis of $\R^n$ consisting of eigenvectors of $T$. In particular, 
+    $T$ is diagonalizable.
     
     \settag{4.6.3}
-    \para{Theorem.} Let \trans{T}{\R^n}{\R^n} be a symmetric linear mapping, and let $\lambda_1,..,\lambda_k$ be the distinct eigenvalues of $T$. let $P_i$ be the orthogonal projection of $\R^n$ onto the eigenspace $E_{\lambda_i}$. Then
+    \para{Theorem.} Let \trans{T}{\R^n}{\R^n} be a symmetric linear mapping, and let 
+    $\lambda_1,..,\lambda_k$ be the distinct eigenvalues of $T$. let $P_i$ be the 
+    orthogonal projection of $\R^n$ onto the eigenspace $E_{\lambda_i}$. Then
     \begin{enumerate}
         \item $T = \lambda_1P_1+...+\lambda_k P_k$, and
         \item $I = P_1,...,P_k$
@@ -1480,23 +1510,29 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Complex Numbers}
 \begin{enumerate}
     \settag{5.1.1}
-    \para{Definition.} The set of complex numbers, denoted as $\mathbb{C}$, is the set of ordered pairs of real numbers $(a,b) = (a+bi)$ with operations of addition and multiplication defined by
+    \para{Definition.} The set of complex numbers, denoted as $\mathbb{C}$, is the set 
+    of ordered pairs of real numbers $(a,b) = (a+bi)$ with operations of addition and 
+    multiplication defined by
     \begin{enumerate}
-        \item $\forall (a,b), (c,d)\in \mathbb{C}$, the sum of $(a,b)$ and $(c,d)$ is the complex number defined by
+        \item $\forall (a,b), (c,d)\in \mathbb{C}$, the sum of $(a,b)$ and $(c,d)$ is 
+        the complex number defined by
         \begin{equation*}
             (a+ib) + (c+id) = (a+c)+i(b+d)
         \end{equation*}
-        \item $\forall (a,b),(c,d) \in \mathbb{C}$, the product of $(a,b)$ and $(c,d)$ is the complex number defined by
+        \item $\forall (a,b),(c,d) \in \mathbb{C}$, the product of $(a,b)$ and $(c,d)$ 
+        is the complex number defined by
         \begin{equation*}
             (a+ib)(c+id) = (ac-bd)+i(ad+cb)
         \end{equation*}
     \end{enumerate}
     
     \settag{5.1.2}
-    \para{Definitions.} Let $z = a+bi \in \complex$. The real part of z is $Re(z) = a$, while the imaginary part of $z$ is $Im(z) = b$.
+    \para{Definitions.} Let $z = a+bi \in \complex$. The real part of z is $Re(z) = a$, 
+    while the imaginary part of $z$ is $Im(z) = b$.
     
     \settag{5.1.4}
-    \para{Definition of Field.} A field is a set $\mathbb{F}$ with two operations $+$ and $\cdot$. In addition, it has to satisfy the following axioms:
+    \para{Definition of Field.} A field is a set $\mathbb{F}$ with two operations $+$ and 
+    $\cdot$. In addition, it has to satisfy the following axioms:
     \begin{enumerate}
         \item \textbf{Commutativity of Addition:} 
         \begin{equation*} 
@@ -1534,19 +1570,26 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \begin{equation*}
             \forall x \in \mathbb{F}, x\neq 0\implies \exists!\,1/x \in \mathbb{F}, x \cdot 1/x = 1
         \end{equation*}
-        Note that these are very different axioms from those that we encountered when defining a vector space. For example, multiplication wasn't even defined for vectors! Also, there are nine axioms here rather than eight that we used to have.
+        Note that these are very different axioms from those that we encountered when defining 
+        a vector space. For example, multiplication wasn't even defined for vectors! Also, there are nine axioms here rather than eight that we used to have.
     \end{enumerate}
     
     \settag{5.1.4*}
     \para{Examples and Counter Examples of Fields.}
     First, some examples that are not fields.
     \begin{enumerate}
-        \item First let's examine our good old friend: the space of polynomials $P_n(\R)$. Note that if a take a polynomial and try to construct a multiplicative inverse for it, the constructed object will no longer be within the field, (a rational function actually) so the set of all polynomials fails to be a field.
-        \item The set of integers, $\mathbb{Z}$, is another counter example. Notice that this set fails for exactly the same reason as the previous one, there is no multiplicative inverse for each element.
+        \item First let's examine our good old friend: the space of polynomials $P_n(\R)$. 
+        Note that if a take a polynomial and try to construct a multiplicative inverse for 
+        it, the constructed object will no longer be within the field, (a rational function actually) 
+        so the set of all polynomials fails to be a field.
+        \item The set of integers, $\mathbb{Z}$, is another counter example. Notice that 
+        this set fails for exactly the same reason as the previous one, there is no multiplicative 
+        inverse for each element.
     \end{enumerate}
     Next, some examples for fields
     \begin{enumerate}
-        \item One should recognize rather quickly that the set $\R$ is a field! In fact, field is an abstraction originated form the real numbers.
+        \item One should recognize rather quickly that the set $\R$ is a field! In fact, 
+        field is an abstraction originated form the real numbers.
         \item Similarly, the set of algebraic numbers is a field.
         \begin{equation*}
             \text{Algebraic Numbers}:= \{x\in \R|\, p(x) = 0~~\text{for some }p\in P(\R)\}
@@ -1555,16 +1598,53 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{enumerate}
     
     \settag{5.1.5}
-    \para{Proposition: Complex Numbers form a Field} The set of complex numbers is a field with the operations of addition and scalar multiplication as defined previously. \newline
+    \para{Proposition: Complex Numbers form a Field} The set of complex numbers is a field with the operations 
+    of addition and scalar multiplication as defined previously. \newline
     \proof \newline
-    All of the axioms except for possibly the axiom (i) are trivial to show to be true, so will neglect them here. Now, if $a + ib\neq 0$, then necessarily $a \neq 0 \wedge b \neq 0$. We then can deduce that $a^2 + b^2 \neq 0$. Consider any real number $a + ib$, let
+    All of the axioms except for possibly the axiom (i) are trivial to show to be true, so will neglect 
+    them here. Now, if $a + ib\neq 0$, then necessarily $a \neq 0 \wedge b \neq 0$. We then can deduce that $a^2 + b^2 \neq 0$. Consider any real number $a + ib$, let
     \begin{equation*}
         1/(a+ib) := \frac{a-ib}{a^2+b^2} \in \complex
     \end{equation*}
-    It is easy to show that $(a+ib)\cdot\frac{a-ib}{a^2+b^2} = \frac{a^2+b^2}{a^2+b^2} = 1$, so indeed we have a multiplicative inverse for any complex number. \qed
+    It is easy to show that $(a+ib)\cdot\frac{a-ib}{a^2+b^2} = \frac{a^2+b^2}{a^2+b^2} = 1$, so indeed we have a 
+    multiplicative inverse for any complex number. \qed
     
     \settag{5.1.7}
-    \para{Proposition on Uniqueness.} Note that, as indicated in Definition (5.1.4), all of the additive identity in a field, the additive inverse of an element of a field, the multiplicative identity of a field and the multiplicative inverse of a non-zero element of a field are unique.
+    \para{Proposition on Uniqueness.} Note that, as indicated in Definition (5.1.4), all of the additive identity in a field, 
+    the additive inverse of an element of a field, the multiplicative identity of a field and the multiplicative inverse of a 
+    non-zero element of a field are unique.
+
+    \settag{5.1.8}
+    \para{Definition of Absolute Value and Arugument.} The absolute value of the complex number $z = a + ib\in \complex$
+    is the non-negative real number defined as
+    \begin{equation*}
+        \mathbf{r} := |z| = \sqrt{a^2 + b^2}
+    \end{equation*}
+    and the argument of a the complex number is the angle between the two components, namely $a$ and $b$
+    on the complex plain. Then we have the following identity
+    \begin{equation*}
+        z = |z|(\cos \theta + i\sin \theta)
+    \end{equation*}
+    \paragraph{Perodicity of the above identity.} Notice that if we replace $\theta$ with $\theta \pm
+    2\pi k, k\in mathbb{Z}$, we defined exactly the same cpmplex number $z$. 
+
+    \settag{5.1.9}
+    \para{Statement of De Moivre's Theorem.}\footnote{This should be familiar from FM}
+    \begin{equation*}
+        \forall x\in \R, n\in \mathbb{Z}, \left(\cos(x) + i\sin(x)\right)^n = \cos(nx) + i\sin(nx)
+    \end{equation*}
+    We can also reformulate this into the familiar notation that we used above, denoting the absolute
+    value, or length, of the complex number, we have
+    \begin{equation*}
+        z^n = r^n\left(\cos(n\theta) + i\sin(n\theta)\right)
+    \end{equation*}
+
+    \settag{5.1.11}
+    \para{Definition of Algebraic Closure.} A field $\mathbb{F}$ is called algebraically closed if
+    \begin{equation*}
+        p(z) = a_nz^n + ... + a_1z + a_0\in P_n(\complex)~~~\text{where}~a_i\in \mathbb{F}~\text{and}~a_n\neq 0
+    \end{equation*}
+    has $n$ roots counted with multiplicity in $\mathbb{F}$.
 \end{enumerate}
 
 \end{document}
