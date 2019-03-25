@@ -18,6 +18,7 @@
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
 \newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 \newcommand{\proof}{\tit{\underline{Proof:}}} % This equivalent to the \begin{proof}\end{proof} block
 \newcommand{\proofforward}{\tit{\underline{Proof($\implies$):}}}
 \newcommand{\proofback}{\tit{\underline{Proof($\impliedby$):}}}
@@ -1645,6 +1646,47 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         p(z) = a_nz^n + ... + a_1z + a_0\in P_n(\complex)~~~\text{where}~a_i\in \mathbb{F}~\text{and}~a_n\neq 0
     \end{equation*}
     has $n$ roots counted with multiplicity in $\mathbb{F}$.
+
+    \settag{5.1.12}
+    \para{Theorem: Fundamental Theorem of Algebra.} The set $\complex$ is closed and it is the smallest algebraically closed field 
+    containing $\real$
+\end{enumerate}
+
+\section{(Field) Vector Spaces}
+\begin{enumerate}
+    \settag{5.2.1}
+    \para{Definition of a Vector Space Over Field}. In Chapter One, we defined what is called a 
+    real vector space, we shall extend that idea into a more general one here.
+    A vector space over a field $\field$ is a set $V$ whose elements we call vectors together with, 
+    as usual, closure properties under the two operations 
+    \begin{enumerate}
+        \item \textbf{Closure under vector addition:} an operation called vector addition, which for each pair of vectors $\mathbf{x}, \mathbf{y}\in V$ produces another vector in $V$ denoted $\mathbf{x} + \mathbf{y}$, (i.e. $\forall \mathbf{x}, \mathbf{y}\in V, \mathbf{x} + \mathbf{y} \in V$) and
+        \item \textbf{Closure under scalar multiplication:} an operation called multiplication by a scalar (a field element), which for each vector $\mathbf{x}\in V$, an each scalar $c\in \mathbb{F}$ produces another vector in $V$ denoted $c\mathbf{x}$. (i.e. $\forall \mathbf{x}\in V, \forall c \in \mathbb{F}, c \mathbf{x} \in V$)
+    \end{enumerate}
+    and the eight axioms to satisfy
+    \begin{enumerate}
+        \item $\forall \mathbf{x}, \mathbf{y}, \mathbf{z} \in V, (\mathbf{x} + \mathbf{y}) + \mathbf{z} = \mathbf{x} + (\mathbf{y} + \mathbf{z})$
+        \item $\forall \mathbf{v}, \mathbf{y} \in V, \mathbf{x} + \mathbf{y} = \mathbf{y} + \mathbf{x}$
+        \item $\exists \vzero \in V s.t. \forall \mathbf{x} \in V, \mathbf{x} + \vzero = \mathbf{x}$ (Note that this property is a.k.a existence of additive identity)
+        \item $\forall \mathbf{x} \in V, \exists (-\mathbf{x}) \in V~s.t.~\mathbf{x} + (-\mathbf{x}) = \vzero$ (Note that this property is a.k.a existence of additive inverse)
+        \item $\forall \mathbf{x}, \mathbf{y} \in V, c \in \mathbb{F}, c(\mathbf{x} + \mathbf{y}) = c\mathbf{x} + c\mathbf{y}$
+        \item $\forall \mathbf{x} \in V, c,d \in \mathbb{F}, (c + d)\mathbf{x} = c\mathbf{x} + d\mathbf{x}$
+        \item $\forall \mathbf{x} \in V, c,d \in \mathbb{F}, (cd)\mathbf{x} = c(d\mathbf{x})$
+        \item $\forall \mathbf{x} \in V, 1\mathbf{x} = \mathbf{x}$
+    \end{enumerate}
+\end{enumerate}
+
+\section{Geometry in Complex Vector Spaces}
+\begin{enumerate}
+    \settag{5.3.1}
+    \para{Definition of Hermitian Inner Product.} Let $V$ be a complex vector space. A Hermitian
+    inner product is a comlex valued function on pairs of vectors in $V$, denoted by $\langle \vu, \vv\rangle\in \complex, \forall \vv,\vu \in V$,
+    which statisfies the following properties
+    \begin{enumerate}
+        \item $\forall \vu, \vv, \vw\in V, a, b\in \complex, \langle a\vu+b\vv,\vw\rangle = a\langle \vu,\vw\rangle + b\langle \vv,\vw\rangle$
+        \item $\forall \vu, \vv\in V, \langle \vu, \vv \rangle = \overbar{\langle \vu, \vv \rangle}$
+        \item $\forall \vv\in V,\langle \vv,\vv \rangle \geq 0 \land \langle \vv,\vv\rangle =0 \implies \vv = \vzero$
+    \end{enumerate}
 \end{enumerate}
 
 \end{document}
