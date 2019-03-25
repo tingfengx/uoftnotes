@@ -1398,7 +1398,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     two sides. This is a consequence of the Cauchy-Schwarz Inequality above.\newline
     \proof \newline
     Consider the inequality presented in the proof for Cauchy-Schwarz above, and take the special
-    case of $c = -1\R$
+    case of $c = -1\in\R$
     \begin{align*}
         0 \leq \langle \vx + \vy,\vx+\vy \rangle &= \norm{\vx}^2 + 2\langle \vx,\vy\rangle + \norm{\vy}^2 \\
         \implies \norm{\vx+\vy}^2 &= \norm{\vx}^2 + 2\langle \vx,\vy\rangle + \norm{\vy}^2 \\
@@ -1433,6 +1433,30 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \para{Proposition: Orthogonal vectors are linearly independent.} If $\vx,\vy \in \R^n$ 
     are orthogonal, with $\vx \neq \vzero \neq \vy$, then $\{\vx,\vy\}$ is linearly independent.
 
+    \settag{4.3.10*}
+    \para{Extension to Proposition.}\footnote{Question 8, Exercise 4.3} If we wish, we could extend the Proposition (4.3.10) to the
+    following: Let $S = \{\vx_1,...,\vx_k\}\subseteq \R^n$ be any orthogonal set of non-zero vectors. 
+    Then, $S$ is linearly independent. To prove this, we can use a simple induction argument that
+    adding a vector that is linearly independent to already existing vectors in a set would not
+    destroy the linear independence ecosystem.
+
+    \settag{4.3.*}
+    \para{Polarization Identity.} This is question 6 in the Exercises section of 4.3. We have the
+    following statement
+    \begin{equation*}
+        \forall \vx,\vy\in \R^n, \langle \vx,\vy\rangle = (1/4)\left( \norm{\vx+\vy}^2 - \norm{\vx-\vy}^2 \right)
+    \end{equation*}
+    this shows that we can recover the inner product on $\R^n$ just by measuring lengths of vectors.\newline
+    \proof \newline
+    Let $\vx,\vy\in \R^n$, then
+    \begin{align*}
+        \frac{1}{4}\left( \norm{\vx-\vy}^2 - \norm{\vx-\vy}^2\right)
+        &= \frac{1}{4}\left(\langle \vx+\vy,\vx+\vy\rangle - \langle \vx-\vy,\vx-\vy\rangle\right)\\
+        &= \frac{1}{4}\left(4\langle \vx,\vy\rangle \right) \\
+        &= \langle \vx,\vy\rangle
+    \end{align*}
+    and this completes the proof. \qed
+
 \end{enumerate}
 
 \section{Orthogonal Projections and The Gram-Schmidt Process}
@@ -1446,6 +1470,15 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \textbf{Remark.} Notice that the $\vzero$ vector should be in any such $W^\perp$ sets, 
     since the zero vectors is orthogonal to every vector.
     
+    \settag{4.4.2}
+    \para{(Interesting) Examples.}
+    \begin{enumerate}
+        \item If we consider $W = \{\vzero\}$, then we see that every vector in $\R^n$ (including $\vzero$)
+        is in the orthogonal complement of $W$. So, $\{\vzero\}^\perp\equiv \R^n$
+        \item On the otherhand, if we consider $W = \R^n$. Then only the zero vector is in the orthogonal 
+        complement of $W$. So, $(\R^n)^\perp \equiv \{\vzero\}$
+    \end{enumerate}
+
     \settag{4.4.3}
     \para{Propositions.}
     \begin{enumerate}
