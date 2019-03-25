@@ -1361,20 +1361,51 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{enumerate}
     
     \settag{4.3.4-(1)}
-    \para{The Triangular Inequality.}
-    \begin{equation*}
-        \forall \vx, \vy \in \R^n, \norm{\vx + \vy}\leq \norm{\vx} + \norm{\vy}
-    \end{equation*}
-    This geometrically says that any side of a triangle is less than the sum of the other 
-    two sides. This is a consequence of the Cauchy-Schwarz Inequality below.
-    
-    \settag{4.3.4-(2)}
     \para{The Cauchy-Schwarz Inequality.}
     \begin{equation*}
         \left|\langle \vx, \vy \rangle\right| \leq \norm{\vx} \cdot \norm{\vy}
     \end{equation*}
     This is a historically important inequality and we shall present the proof here: \newline
-    \proof
+    \proof \newline
+    Consider the following inner product, where $\vx,\vy\in \R^n, c\in \R$. We can expand the terms
+    using bilinearity and the symmetric property of of inner product
+    \begin{align*}
+        \langle \vx - c\vy,\vx - c\vy \rangle &= \langle \vx,\vx\rangle - c\langle \vx,\vy\rangle
+        - c\langle \vy,\vx\rangle + c^2\langle \vy,\vy\rangle \\
+        &= \norm{\vx}^2 + c^2\norm{\vy}^2 - 2c\langle \vx,\vy\rangle \geq 0
+    \end{align*}
+    notice that the last ``$\geq$'' conclusion was drawen based on the positive definite property
+    of the inner product of a vector with itself. Then, we consider
+    \begin{equation*}
+        c = \frac{\langle \vx,\vy \rangle}{\norm{\vy}}\in \real
+    \end{equation*}
+    Then our former inequality gives us
+    \begin{align*}
+        0 &\leq \norm{\vx}^2 - \frac{2\langle \vx,\vy\rangle^2}{\norm{\vy}^2} + \frac{\langle \vx,\vy\rangle^2}{\norm{\vy}^2} \\
+        &= \norm{\vx}^2 - \frac{\langle \vx,\vy\rangle^2}{\norm{\vy}^2} \\
+        \implies \norm{\vx}^2 &\geq \frac{\langle \vx,\vy\rangle}{\norm{\vy}^2} \\
+        \implies \langle \vx,\vy\rangle^2 &\leq \norm{\vx}^2\norm{\vy}^2
+    \end{align*}
+    where we can take the square root on both sides, and this yields us desired 
+    $\left|\langle \vx,\vy\rangle\right| \leq \norm{\vx}\cdot \norm{\vy}$. \qed
+
+    \settag{4.3.4-(2)}
+    \para{The Triangular Inequality.}
+    \begin{equation*}
+        \forall \vx, \vy \in \R^n, \norm{\vx + \vy}\leq \norm{\vx} + \norm{\vy}
+    \end{equation*}
+    This geometrically says that any side of a triangle is less than the sum of the other 
+    two sides. This is a consequence of the Cauchy-Schwarz Inequality above.\newline
+    \proof \newline
+    Consider the inequality presented in the proof for Cauchy-Schwarz above, and take the special
+    case of $c = -1\R$
+    \begin{align*}
+        0 \leq \langle \vx + \vy,\vx+\vy \rangle &= \norm{\vx}^2 + 2\langle \vx,\vy\rangle + \norm{\vy}^2 \\
+        \implies \norm{\vx+\vy}^2 &= \norm{\vx}^2 + 2\langle \vx,\vy\rangle + \norm{\vy}^2 \\
+        &\leq \norm{\vx}^2 + 2\norm{\vx}\norm{\vy} + \norm{\vy}^2 \\
+        &= \left(\norm{\vx} +\norm{\vy}\right)^2
+    \end{align*}
+    Taking square root on both sides of the above inequality yields the trigular inequality. \qed
     
     \settag{4.3.5}
     \para{Definition of angle between vectors.} The angle between two non-zero vectors 
