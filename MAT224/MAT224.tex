@@ -6,6 +6,7 @@
 \usepackage{amsmath}
 \usepackage{url}
 \usepackage[pdfencoding=auto, psdextra]{hyperref}
+\usepackage{fancyhdr} 
 
 % customized commands
 \newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
@@ -1650,7 +1651,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{enumerate}
 \end{enumerate}
 
-\chapter{Complex Numbers and Complex Vector Spaces}
+\chapter{Complex Numbers and Complex V.S.}
 \section{Complex Numbers}
 \begin{enumerate}
     \settag{5.1.1}
@@ -1807,6 +1808,27 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{5.1.12}
     \para{Theorem: Fundamental Theorem of Algebra.} The set $\complex$ is closed and it is the smallest algebraically closed field 
     containing $\real$
+
+    \settag{5.1.*}
+    \para{Roots of Unity.} We shall demonstrate this using the following example: suppose that we want to solve $i^{1/5}$.
+    Then, by breaking this down using the Euler's Formula, we have
+    \begin{equation*}
+        i^{1/5} = \left(e^{i\frac{\pi}{2} + k2\pi}\right)^{1/5} = e^{i\frac{\pi}{10} + \frac{2\pi}{5}k}, 
+        k \in \mathbb{Z}^{\geq 0}
+    \end{equation*}
+    By stustituting appropriate values of $k$, we have
+    \begin{align*}
+        \text{when}~k&=0, \text{sol} = \cos \frac{\pi}{10} + i\sin \frac{\pi}{10} \\
+        \text{when}~k&=1, \text{sol} = \cos \frac{\pi}{2} + i\sin \frac{\pi}{2}  = i\\
+        \text{when}~k&=2, \text{sol} = \cos \frac{9\pi}{10} + i\sin \frac{9\pi}{10} \\
+        &\ldots
+    \end{align*}
+    by continuing see that the solutions cycles, since we have only 5 unique solutions. \qed\newline
+    \textbf{General result.} Now we consider the problem of solving the equality $z^n = 1$, we call this the
+    $n$-th root of unity.
+    \begin{equation*}
+        z = \left(e^{2\pi ik}\right)^\frac{1}{n} = e^{\frac{2\pi ik}{n}}, k\in \mathbb{Z}^{\geq 0}
+    \end{equation*}
 \end{enumerate}
 
 \section{(Field) Vector Spaces}
@@ -1846,7 +1868,6 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{enumerate}
 
     \settag{5.3.2}
-    \para{Piggly Wiggly}
 \end{enumerate}
 
 \end{document}
