@@ -118,21 +118,29 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{1.1.6}
     \para{Propositions for a R-v.s.} Let $V$ be a vector space. Then 
     \begin{enumerate}
-        \item The zero vector is unique. Note that it might not necessarily be actually the zero vector in $\mathbb{R}^n$ that we are somewhat used to use.\newline
+        \item The zero vector is unique. Note that it might not necessarily be actually the zero vector 
+        in $\mathbb{R}^n$ that we are somewhat used to use.\newline
         \proof \newline
-        Suppose, for the sake of contradiction, that $\mathbf{a},\mathbf{b}$ are two \tit{different} zero vectors of the vector space $V$. Then, by the definition of zero vector, we have 
+        Suppose, for the sake of contradiction, that $\mathbf{a},\mathbf{b}$ are two \tit{different} zero 
+        vectors of the vector space $V$. Then, by the definition of zero vector, we have 
         \begin{equation*}
-            \forall \mathbf{x}\in V,\mathbf{x} +\mathbf{a} = \mathbf{x} \land \mathbf{x} + \mathbf{b} = \mathbf{x}
+            \forall \mathbf{x}\in V,\mathbf{x} +\mathbf{a} = \mathbf{x} \land \mathbf{x} + \mathbf{b} = 
+            \mathbf{x}
         \end{equation*}
-        Simple algebraic manipulation yields us $\mathbf{x} + \mathbf{a} = \mathbf{a} + \mathbf{x} \implies \mathbf{a} = \mathbf{b}$ $\longrightarrow\!\longleftarrow$ Contradiction! \qed
+        Simple algebraic manipulation yields us $\mathbf{x} + \mathbf{a} = \mathbf{a} + \mathbf{x} \implies 
+        \mathbf{a} = \mathbf{b}$ $\longrightarrow\!\longleftarrow$ Contradiction! \qed
         
         \item $\forall \mathbf{x} \in V, 0\mathbf{x}=0$ \newline
         \proof \newline 
-        We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields us $\vzero = 0\vx$ as wanted. \qed
+        We have $0\vx = (0+0)\vx =0\vx +0\vx$, by axiom 6. By axiom $(d)$, I know there exists a additive 
+        inverse of $0\vx$, so I subtract on both sides of the equation such additive inverse. This yields 
+        us $\vzero = 0\vx$ as wanted. \qed
         
-        \item $\forall \mathbf{x} \in V, $ the additive inverse is unique. Note that it might not necessarily be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use. \newline
+        \item $\forall \mathbf{x} \in V, $ the additive inverse is unique. Note that it might not necessarily 
+        be actually just $(-1)$ times the vector in $\mathbb{R}^n$ that we are somewhat used to use. \newline
         \proof \newline
-        Let $\vx\in V$, and let $(-\vx),(-\vx)'$ be two additive inverse of $\vx$. Then, on one hand, by axioms 1, 4 and 3 we have 
+        Let $\vx\in V$, and let $(-\vx),(-\vx)'$ be two additive inverse of $\vx$. Then, on one hand, 
+        by axioms 1, 4 and 3 we have 
         \begin{align*}
             \vx + (-\vx) + (-\vx)'
             &= (\vx + (-\vx)) + (-\vx)' \\
@@ -165,7 +173,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Sub-spaces}
     \begin{enumerate}
         \settag{1.2.4}
-        \item \textbf{Lemma on functions in $C^0(\mathbb{R})$}. Note that by $C^n(\cdot)$ we mean the function in this set are all of $Class-n$. Let $f,g \in C^0(\mathbb{R)}, \text{let} ~c\in \mathbb{R}$. Then, 
+        \item \textbf{Lemma on functions in $C^0(\mathbb{R})$}. Note that by $C^n(\cdot)$ we mean the function 
+        in this set are all of $Class-n$. Let $f,g \in C^0(\mathbb{R)}, \text{let} ~c\in \mathbb{R}$. Then, 
         \begin{enumerate}
             \item $f+g\in C^0(\R)$, and
             \item $cf \in C^0(\R)$
@@ -173,23 +182,33 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         The proof of this lemma relies on limit theorems of calculus.\newline
         
         \settag{1.2.6}
-        \item \textbf{(Intuitive) definition of (vector) subspace.} Let $V$ be a vector space and let $W\subseteq V$ be a subset. Then $W$ is a (vector) subspace if $W$ is a vector subspace itself under the operations of vector sum and scalar multiplication from $V$.
+        \item \textbf{(Intuitive) definition of (vector) subspace.} Let $V$ be a vector space and let $W\subseteq V$
+         be a subset. Then $W$ is a (vector) subspace if $W$ is a vector subspace itself under the operations of vector
+          sum and scalar multiplication from $V$.
         
         \settag{1.2.8}
-        \item \textbf{Quick check rule for a subspace.} Let $V$ be a vector subspace, and let $W$ be a \textbf{non empty} subset of $V$. Then $W$ is a subspace of $V$ \tit{if and only if} 
+        \item \textbf{Quick check rule for a subspace.} Let $V$ be a vector subspace, and let $W$ be a \textbf{non empty} 
+        subset of $V$. Then $W$ is a subspace of $V$ \tit{if and only if} 
         \begin{equation*}
             \forall \mathbf{x}, \mathbf{y}\in W,~\forall c\in \R, \text{ we have } c\mathbf{x}+\mathbf{y}\in W
         \end{equation*}
-        Notice that the \tit{if and only if} makes this theorem extremely powerful in the sense that it will save you a lot of time to come up with a dis-proofing counter example. However, do keep in mind that there are cases that this theorem is very hard to check, for example, Exercise 1.2, Question 3(c).
+        Notice that the \tit{if and only if} makes this theorem extremely powerful in the sense that it will save you a
+         lot of time to come up with a dis-proofing counter example. However, do keep in mind that there are cases that 
+         this theorem is very hard to check, for example, Exercise 1.2, Question 3(c).
         
         \settag{1.2.9}
-        \item \textbf{Remark on the necessary condition of non-emptiness of subspace.} According to the definition of vector space that we gave in 1.1.1, a vector space must contain an additive identity element, hence it is necessary that we ensure $W\subseteq V$(from 1.2.6) is not an empty set.
+        \item \textbf{Remark on the necessary condition of non-emptiness of subspace.} According to the definition of 
+        vector space that we gave in 1.1.1, a vector space must contain an additive identity element, hence it is necessary 
+        that we ensure $W\subseteq V$(from 1.2.6) is not an empty set.
         
         \settag{1.2.13}
-        \item \textbf{Theorem: Intersection of sub-spaces is a subspace.} Let $V$ be a vector space. Then the intersection of any collection of sub-spaces of $V$ is a subspace of $V$.
+        \item \textbf{Theorem: Intersection of sub-spaces is a subspace.} Let $V$ be a vector space. Then the intersection
+         of any collection of sub-spaces of $V$ is a subspace of $V$.
         
         \settag{1.2.14}
-        \item \textbf{Corollary: Hyper planes in $\R^n$ are sub-spaces of $\R^n$.} Let $a_{ij}(1\leq i\leq m)$, let $W_i = \{(x_1, \ldots, x_n)\in \R^n|a_{i1}x_1 + \ldots + a_{in}x_n = 0,~\forall 1 \leq i \leq m\}$. Then $W$ is a subspace of $\R^n$.
+        \item \textbf{Corollary: Hyper planes in $\R^n$ are sub-spaces of $\R^n$.} Let $a_{ij}(1\leq i\leq m)$, let
+         $W_i = \{(x_1, \ldots, x_n)\in \R^n|a_{i1}x_1 + \ldots + a_{in}x_n = 0,~\forall 1 \leq i \leq m\}$. Then 
+         $W$ is a subspace of $\R^n$.
         
     \end{enumerate}
     
@@ -198,10 +217,14 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.3.1}
         \item \textbf{Definitions regarding L.C. and derived spans.} Let $S$ be a subset of a vector space $V$, that is $S\subseteq V$.
         \begin{enumerate}
-            \item a \textit{linear combination} of vectors in $S$ is any sum $a_1\mathbf{x}_1 + \ldots + a_n\mathbf{x}_n$, where the $a_i \in \R$, and the $x_i \in S$.
-            \item we define the $Span$ of a set of vectors as follows to consider the special case of $S\stackrel{?}{=}\emptyset \in V$.
-            \newline \underline{\tit{Case1: $S\neq \emptyset$:}} In this case, we define $Span(S)$ to be all possible linear combinations using vectors in $S$.\newline
-            \underline{\tit{Case2: $S= \emptyset$:}} In this case, we define $Span(S = \emptyset)=\{\vzero\}$. We call this the zero-space.
+            \item a \textit{linear combination} of vectors in $S$ is any sum $a_1\mathbf{x}_1 + \ldots + a_n\mathbf{x}_n$, 
+            where the $a_i \in \R$, and the $x_i \in S$.
+            \item we define the $Span$ of a set of vectors as follows to consider the special case of 
+            $S\stackrel{?}{=}\emptyset \in V$.
+            \newline \underline{\tit{Case1: $S\neq \emptyset$:}} In this case, we define $Span(S)$ to be all
+             possible linear combinations using vectors in $S$.\newline
+            \underline{\tit{Case2: $S= \emptyset$:}} In this case, we define $Span(S = \emptyset)=\{\vzero\}$. We call 
+            this the zero-space.
             
             \item If $W=Span(S)$, we say $S$ \textit{spans(\text{or} generates)} $W$.
         \end{enumerate}
@@ -353,21 +376,35 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{Bases and Dimension}
     \begin{enumerate}
         \settag{1.6.1}
-        \item \tbf{Definition of basis.} A subset $S$ of a vector space $V$ is called a basis if $V=Span(S)$ and the set $S$ is linearly independent.
+        \item \tbf{Definition of basis.} A subset $S$ of a vector space $V$ is called a basis if $V=Span(S)$ and
+         the set $S$ is linearly independent.
         
         \settag{1.6.3}
-        \item \tbf{Theorem. }Let $V$ be a vector space, and let $S$ be a non-empty subset of $V$. Then $S$ is a basis of $V$ if and only if $\forall \mathbf{x} \in V, \mathbf{x}$ can be written \tit{uniquely} as a linear combination of the vectors in $S$.
+        \item \tbf{Theorem. }Let $V$ be a vector space, and let $S$ be a non-empty subset of $V$. Then $S$ is a
+         basis of $V$ if and only if $\forall \mathbf{x} \in V, \mathbf{x}$ can be written \tit{uniquely} as a 
+         linear combination of the vectors in $S$.
         
         \settag{1.6.6}
-        \item \tbf{Theorem. }Let $V$ be a vector space that has a finite spanning set, and let $S$ be a linearly independent subset of $V$. Then there exists a basis $S'$ of $V$, such that $S\subseteq S'.$ Note that this theorem is can be summarized as follows: Every linearly independent set of vectors could be extended to a basis. We do so by adding yet another vector that is linearly independent to all the vectors already in the set, but notice that this process should possibly be repeated but \tit{not} infinite.
+        \item \tbf{Theorem. }Let $V$ be a vector space that has a finite spanning set, and let $S$ be a linearly
+         independent subset of $V$. Then there exists a basis $S'$ of $V$, such that $S\subseteq S'.$ Note that 
+         this theorem is can be summarized as follows: Every linearly independent set of vectors could be extended
+          to a basis. We do so by adding yet another vector that is linearly independent to all the vectors already
+           in the set, but notice that this process should possibly be repeated but \tit{not} infinite.
         
         \settag{1.6.8}
-        \item \tbf{Lemma on linear independence towards a set and a vector.} Let $S$ be a linearly independent subset of $V$ and let $\mathbf{x}\in V$, but $\mathbf{x} \notin S$. Then $S\cup \{\mathbf{x} \}$ is linearly independent if and only if $\mathbf{x} \notin Span(S)$.
+        \item \tbf{Lemma on linear independence towards a set and a vector.} Let $S$ be a linearly independent subset
+         of $V$ and let $\mathbf{x}\in V$, but $\mathbf{x} \notin S$. Then $S\cup \{\mathbf{x} \}$ is linearly 
+         independent if and only if $\mathbf{x} \notin Span(S)$.
         
         \settag{1.6.10}
-        \item \tbf{Theorem on cardinality of linearly independent set.} Let $V$ be a vector space and let $S$ be a spanning set for $V$, which has $m$ elements. Then no linearly independent set in $V$ can have more than $m$ elements.\newline
+        \item \tbf{Theorem on cardinality of linearly independent set.} Let $V$ be a vector space and let $S$ 
+        be a spanning set for $V$, which has $m$ elements. Then no linearly independent set in $V$ can have 
+        more than $m$ elements.\newline
         \proof\newline
-        To show that there are no linearly independent set in $V$ that can have more than $m$ elements in it, it suffices to show that every set in $V$ that has more than $m$ elements in it is linearly dependent. Let $S=\{y_1,\ldots,y_m\}$ and $S'=\{y_1,\ldots,y_n\}\subset V$ where $n>m$. Now we consider the following equation:
+        To show that there are no linearly independent set in $V$ that can have more than $m$ elements in it, 
+        it suffices to show that every set in $V$ that has more than $m$ elements in it is linearly dependent.
+         Let $S=\{y_1,\ldots,y_m\}$ and $S'=\{y_1,\ldots,y_n\}\subset V$ where $n>m$. Now we consider the 
+         following equation:
         \begin{equation}
             a_1\mathbf{x}_1 + \ldots + a_n\mathbf{x}_n = \vzero~~~~\text{    where }\mathbf{x}_i \in S',a_i\in \R
         \end{equation}
@@ -394,11 +431,15 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             \end{cases}
             $
         \end{center}
-        If we can find a set of $a_1, \ldots, a_n$ that are not all zero that solves the above SLE, then those scalars will give us a linear dependence among the vectors in $S'$ in (1.1). But the above SLE is a system of homogeneous linear equations in the $n$ unknowns $a_i$'s, hence since $m < n$, by Corollary (1.5.13), there exists a non-trivial solution. Then $S'$ is linearly dependent and this completes the proof. \qed
+        If we can find a set of $a_1, \ldots, a_n$ that are not all zero that solves the above SLE, then those scalars will 
+        give us a linear dependence among the vectors in $S'$ in (1.1). But the above SLE is a system of homogeneous
+         linear equations in the $n$ unknowns $a_i$'s, hence since $m < n$, by Corollary (1.5.13), there exists a 
+         non-trivial solution. Then $S'$ is linearly dependent and this completes the proof. \qed
         
         
         \settag{1.6.11}
-        \item \tbf{Bases of a vector space shall have same cardinality.} Let $V$ be a vector space and let $S$ and $S'$ be two bases of  with $m$ and $m'$ elements, respectively. Then $m=m;$. \newline
+        \item \tbf{Bases of a vector space shall have same cardinality.} Let $V$ be a vector space and let $S$ and 
+        $S'$ be two bases of  with $m$ and $m'$ elements, respectively. Then $m=m;$. \newline
         \tit{\underline{Proof: (Euclid's style)}} \newline
         Let $S$ and $S'$ with properties given as above. Since they are bases, we know: (By Theorem 1.6.10)
         \begin{enumerate}
@@ -410,33 +451,55 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \settag{1.6.12}
         \item \tbf{Definitions of (in)finite-dimension}
         \begin{enumerate}
-            \item If $V$ is a vector space with some finite basis (possibly empty), we sat $V$ is \tit{finite-dimensional}. We say the vector space is \tit{infinite-dimensional} otherwise.
-            \item Let $V$ be a \tit{finite-dimensional} vector space. The dimension of $V$, denoted as dim($V$), is the number of elements in a (hence any) basis of $V$.
-            \item If $V=\{\vzero\}$, we define dim($V$)$=0$. \tbf{Remark: }Please note that is consistent with our definition of span of a empty set. We defined the span of empty set to be $\{\vzero\}$, and hence $\{\vzero\}$ is the resulting space of all the possibly linear combination of vectors in the empty set(where there is none). Then the cardinality of the empty set(which is zero) is here defined as the dimension of the zero vector space.
+            \item If $V$ is a vector space with some finite basis (possibly empty), we sat $V$ is 
+            \tit{finite-dimensional}. We say the vector space is \tit{infinite-dimensional} otherwise.
+            \item Let $V$ be a \tit{finite-dimensional} vector space. The dimension of $V$, denoted as dim($V$), 
+            is the number of elements in a (hence any) basis of $V$.
+            \item If $V=\{\vzero\}$, we define dim($V$)$=0$. \tbf{Remark: }Please note that is consistent with
+             our definition of span of a empty set. We defined the span of empty set to be $\{\vzero\}$, and 
+             hence $\{\vzero\}$ is the resulting space of all the possibly linear combination of vectors in the 
+             empty set(where there is none). Then the cardinality of the empty set(which is zero) is here defined 
+             as the dimension of the zero vector space.
         \end{enumerate}
         
         \settag{1.6.13}
-        \item \tbf{Examples on dimensions of vector spaces. }If we have a basis of $V$, then computing dim($V$) is simply a matter of counting the number of vectors in a (hence any) basis for the vectors space. We explore this by looking at the following examples
+        \item \tbf{Examples on dimensions of vector spaces. }If we have a basis of $V$, then computing dim($V$) 
+        is simply a matter of counting the number of vectors in a (hence any) basis for the vectors space. We 
+        explore this by looking at the following examples
         \begin{enumerate}
-            \item For each $n$, dim($\R^n$) $=n$. This is a consequence of the standard basis for $\R^n$ is of the form: $\{\mathbf{e}_1, \ldots, \mathbf{e}_n\}$ has $n$ elements in it.
-            \item dim($P_n(\R)$) $=n+1$, since $|\{1, x^1, x^2, \ldots, x^n\}|=n+1$.\footnote{The absolute value marks around a set returns the cardinality of the set.}
-            \item The vector spaces $P(\R)$\footnote{Here $P(\R)$ means the vector space of all polynomials that are $\R \xrightarrow{} \R$.}$,~C^n(\R)$, where $n\in \mathbb{N}^{\geq 0}$, are not of finite dimension, and hence are called \tit{infinite dimensional}.
+            \item For each $n$, dim($\R^n$) $=n$. This is a consequence of the standard basis for $\R^n$ is of 
+            the form: $\{\mathbf{e}_1, \ldots, \mathbf{e}_n\}$ has $n$ elements in it.
+            \item dim($P_n(\R)$) $=n+1$, since $|\{1, x^1, x^2, \ldots, x^n\}|=n+1$.\footnote{The absolute value 
+            marks around a set returns the cardinality of the set.}
+            \item The vector spaces $P(\R)$\footnote{Here $P(\R)$ means the vector space of all polynomials that 
+            are $\R \xrightarrow{} \R$.}$,~C^n(\R)$, where $n\in \mathbb{N}^{\geq 0}$, are not of finite dimension,
+             and hence are called \tit{infinite dimensional}.
         \end{enumerate}
         
         \settag{1.6.14}
-        \item \tbf{Corollary. }Let $W$ be a subspace of a finite-dimensional vector space $V$. Then dim($W$) $\leq$ dim($V$). Furthermore, dim($W$) $=$ dim($V$) if and only if $W=V$.
+        \item \tbf{Corollary. }Let $W$ be a subspace of a finite-dimensional vector space $V$. Then dim($W$)
+         $\leq$ dim($V$). Furthermore, dim($W$) $=$ dim($V$) if and only if $W=V$.
         
         \settag{1.6.15}
-        \item \tbf{Corollary. }Let $W$ be a subspace of $\R^n$ defined by a system of homogeneous linear equations. The dim($W$) is equal to the number of free variables in the corresponding echelon form of the equations.\newline
-        \tbf{Generalization.} It is also worth pointing out that by setting the free variables equal to one in turn\footnote{By in turn we mean set one of them to one and all others zero, one at a time}, we can always generate a basis for the subspace. Referring to example $(1.6.16)$ in the book, we see that we have two free variables, and the two (linearly independent) vectors obtained from the method described above that form a 2-dimensional subspace of $\R^5$. 
+        \item \tbf{Corollary. }Let $W$ be a subspace of $\R^n$ defined by a system of homogeneous linear 
+        equations. The dim($W$) is equal to the number of free variables in the corresponding echelon form 
+        of the equations.\newline
+        \tbf{Generalization.} It is also worth pointing out that by setting the free variables equal to one
+         in turn\footnote{By in turn we mean set one of them to one and all others zero, one at a time}, we 
+         can always generate a basis for the subspace. Referring to example $(1.6.16)$ in the book, we see that 
+         we have two free variables, and the two (linearly independent) vectors obtained from the method described 
+         above that form a 2-dimensional subspace of $\R^5$. 
         
         
         \settag{1.6.18}
-        \item \tbf{Inclusion-Exclusion principle of dimensions.} Let $W_1$ and $W_2$ be finite dimensional sub-spaces of a vector space $V$. Then,
+        \item \tbf{Inclusion-Exclusion principle of dimensions.} Let $W_1$ and $W_2$ be finite dimensional 
+        sub-spaces of a vector space $V$. Then,
         \begin{center}
             dim($W_1+W_2$) = dim($W_1$) $+$ dim($W_2$) $-$ dim($W_1\cap W_2$)
         \end{center}
-        \tbf{Remark:} This theorem could not be generalized to higher dimensions as does the Inclusion-Exclusion Principle in set theory. (Consequence of the challenge problem of Tutorial 2), more information can be found \href{https://www.jstor.org/stable/24337937?seq=1#metadata_info_tab_contents}{\underline{here}}, on a paper of generalizing this formula. 
+        \tbf{Remark:} This theorem could not be generalized to higher dimensions as does the 
+        Inclusion-Exclusion Principle in set theory. (Consequence of the challenge problem of Tutorial 2), 
+        more information can be found \href{https://www.jstor.org/stable/24337937?seq=1#metadata_info_tab_contents}{\underline{here}}, on a paper of generalizing this formula. 
         
     \end{enumerate}
     
@@ -445,7 +508,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 
     \begin{enumerate}
         \settag{2.1.1}
-        \item \tbf{Definition of linear transformation.\footnote{Familiar from MAT223}} A function $T:V\xrightarrow{}W$ is called a \tit{linear mapping} or a \tit{linear transformation} if it satisfies:
+        \item \tbf{Definition of linear transformation.\footnote{Familiar from MAT223}} A function $T:V\xrightarrow{}W$ is called a
+         \tit{linear mapping} or a \tit{linear transformation} if it satisfies:
         \begin{enumerate}
             \item $\forall \mathbf{u},\mathbf{v}\in V,~T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{u})$
             \item $\forall \alpha \in \R, \mathbf{v} \in V,~ T(\alpha\mathbf{v}) = \alpha T(\mathbf{v})$
@@ -463,7 +527,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
             &= \alpha T(\mathbf{u}) + \beta T(\mathbf{v})~~~~\text{// by (b)}
         \end{align*}
         \tit{\underline{Proof($\impliedby$):}}\newline
-        Assuming the alternative definition, we want to show the definition given in (2.1.1). Since the quantifier is $\forall$, we can take $\alpha = \beta  =1, \text{(arbitrary)}~\mathbf{u},\mathbf{v}\in V$ in the alternative definition which directly yields us (a) of (2.1.1). Then we take $\alpha \in \R, \beta =0, \mathbf{u}, \mathbf{v}\in V$. In this case, we want to show that $T(\alpha \mathbf{u}) = \alpha T(\mathbf{u})$. We proceed as follows: 
+        Assuming the alternative definition, we want to show the definition given in (2.1.1). Since the quantifier is 
+        $\forall$, we can take $\alpha = \beta  =1, \text{(arbitrary)}~\mathbf{u},\mathbf{v}\in V$ in the alternative
+         definition which directly yields us (a) of (2.1.1). Then we take $\alpha \in \R, \beta =0, \mathbf{u}, \mathbf{v}\in V$. In this case, we want to show that $T(\alpha \mathbf{u}) = \alpha T(\mathbf{u})$. We proceed as follows: 
         \begin{align*}
             T(\alpha\mathbf{u} + \beta\mathbf{v}) &= T(\alpha\mathbf{u} + 0\mathbf{v}) = T(\alpha\mathbf{u})\\
             &= \alpha T(\mathbf{u}) + 0T(\mathbf{u}) \\
@@ -492,7 +558,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \qed
         
         \settag{2.1.9}
-        \item \tbf{Angle between two vectors.} If $\vzero\neq \mathbf{a}\in \R^2$ and $\vzero\neq \mathbf{b}\in \R^2$, then the angle $\theta$ between them must be\footnote{The angle brackets here denotes the inner product of vectors}
+        \item \tbf{Angle between two vectors.} If $\vzero\neq \mathbf{a}\in \R^2$ and $\vzero\neq\mathbf{b}\in \R^2$, then the angle $\theta$ between them must be\footnote{The angle brackets here denotes the inner product of vectors}
         \begin{equation*}
             \theta = \arccos\left( \frac{\left<\mathbf{a},\mathbf{b}\right>}{\lVert\mathbf{a}\rVert \cdot \lVert\mathbf{b}\rVert}\right)
         \end{equation*}
@@ -523,11 +589,19 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item \tbf{Proposition.} Let $T:V\xrightarrow{}W$ be a linear transformation between the finite dimensional vector spaces $V$ and $W$. If $\{\mathbf{v}_1,\ldots,\mathbf{v}_k\}$ is a basis for $V$ and $\{\mathbf{w}_1,\ldots,\mathbf{w}_l\}$ is a basis for $W$, then $T:V\xrightarrow{}W$ is uniquely determined by the $l\times k$ scalars used to express $T(\mathbf{v}_j)$, where $j\in \{1,\ldots,k\}$, in terms of $\mathbf{w}_1,\ldots,\mathbf{w}_l$.
         
         \settag{2.2.6}
-        \item \tbf{Matrix of a transformation w.r.t.$\alpha,\beta$.} Let $T:V\xrightarrow{}W$ be a linear transformation between finite-dimensional vector spaces $V$ and $W$, and let $\alpha = \{\mathbf{v}_1,\ldots,\mathbf{v}_k \}$ and $\beta = \{\mathbf{w}_1,\ldots,\mathbf{w}_l\}$, respectively, be any basis for $V$ and $W$. 
-        Let $a_{ij}$, where $1\leq i \leq l$ and $1\leq j \leq k$ be the $l\cdot k$ scalars that determined $T$ with respect to the bases $\alpha$ and $\beta$. The matrix whole entries are the scalars $a_{ij}$, given above, is called the \tit{matrix of the linear transformation $T$ with respect to the bases $\alpha$ for $V$ and $\beta$ for $W$}. We denote such matrix with following notation: $\left[T\right]^\beta_\alpha$. \newline 
-        \tbf{Notice that}, again, $\alpha$ is a basis for $V$, the domain of the transformation and $\beta$ is a basis for $W$, the co-domain of the transformation.
+        \item \tbf{Matrix of a transformation w.r.t.$\alpha,\beta$.} Let $T:V\xrightarrow{}W$ be a linear transformation
+         between finite-dimensional vector spaces $V$ and $W$, and let $\alpha = \{\mathbf{v}_1,\ldots,\mathbf{v}_k \}$ 
+         and $\beta = \{\mathbf{w}_1,\ldots,\mathbf{w}_l\}$, respectively, be any basis for $V$ and $W$. 
+        Let $a_{ij}$, where $1\leq i \leq l$ and $1\leq j \leq k$ be the $l\cdot k$ scalars that determined $T$ 
+        with respect to the bases $\alpha$ and $\beta$. The matrix whole entries are the scalars $a_{ij}$, given above,
+         is called the \tit{matrix of the linear transformation $T$ with respect to the bases $\alpha$ for $V$ and 
+         $\beta$ for $W$}. We denote such matrix with following notation: $\left[T\right]^\beta_\alpha$. \newline 
+        \tbf{Notice that}, again, $\alpha$ is a basis for $V$, the domain of the transformation and $\beta$ is a
+         basis for $W$, the co-domain of the transformation.
         \newline
-        \tbf{Remark.} This should be familiar from MAT223, where we perform transformation on each and every element in a basis for a space, and transcribe them, in terms of another basis, into a standard matrix for the transformation. In terms of standardized formulaic calculations, we have
+        \tbf{Remark.} This should be familiar from MAT223, where we perform transformation on each and every element 
+        in a basis for a space, and transcribe them, in terms of another basis, into a standard matrix for the transformation. 
+        In terms of standardized formulaic calculations, we have
         \begin{equation*}
             \left[T\right]_\alpha^\beta =
             \begin{bmatrix}
@@ -537,11 +611,16 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         where the $\alpha_i$'s denotes the $i$-th element of the $\alpha$ basis, and is itself a vector.
         
         \settag{2.2.15}
-        \item \tbf{Proposition: Linear Transformation on alternative basis.} Let $T:V\xrightarrow{} W$ be a linear transformation between vector spaces $V$ of dimension $k$ and $W$ of dimension $l$. Let $\alpha = \{\mathbf{v}_1,\ldots,\mathbf{v}_k\}$ be a basis for $V$, and let $\beta = \{\mathbf{w}_1,\ldots,\mathbf{w}_l\}$ be a basis for $W$. Then for each $\mathbf{v} \in V$, we have the following:
+        \item \tbf{Proposition: Linear Transformation on alternative basis.} Let $T:V\xrightarrow{} W$ 
+        be a linear transformation between vector spaces $V$ of dimension $k$ and $W$ of dimension $l$. 
+        Let $\alpha = \{\mathbf{v}_1,\ldots,\mathbf{v}_k\}$ be a basis for $V$, and let $\beta = \{\mathbf{w}_1,\ldots,\mathbf{w}_l\}$ be a basis for $W$. 
+        Then for each $\mathbf{v} \in V$, we have the following:
         \begin{equation*}
             \left[T(\mathbf{v})\right]_\beta = \left[T\right]^\beta_\alpha\left[\mathbf{v}\right]_\alpha
         \end{equation*}
-        One can think about this in the sense that the same transformation could have been accomplished under another basis. We just have to convert the original problem into some easy to solve basis, perform the transformation under that basis, and then convert the result back. We now present the proof for this proposition.\newline
+        One can think about this in the sense that the same transformation could have been accomplished under another basis.
+         We just have to convert the original problem into some easy to solve basis, perform the transformation under that basis, 
+         and then convert the result back. We now present the proof for this proposition.\newline
         \proof Let $\mathbf{v}=x_1\mathbf{v}_1 + \ldots + x_k\mathbf{v}_k\in V$. Then if $T(\mathbf{v}_j)=a_{1j}\mathbf{w}_1 + \ldots + a_{lj}\mathbf{w}_l$, 
         \begin{align*}
             T(\mathbf{v}) &= \sum_{j=1}^k x_j T(\mathbf{v}_j) \\
@@ -1450,7 +1529,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \proof \newline
     Let $\vx,\vy\in \R^n$, then
     \begin{align*}
-        \frac{1}{4}\left( \norm{\vx-\vy}^2 - \norm{\vx-\vy}^2\right)
+        \frac{1}{4}\left( \norm{\vx+\vy}^2 - \norm{\vx-\vy}^2\right)
         &= \frac{1}{4}\left(\langle \vx+\vy,\vx+\vy\rangle - \langle \vx-\vy,\vx-\vy\rangle\right)\\
         &= \frac{1}{4}\left(4\langle \vx,\vy\rangle \right) \\
         &= \langle \vx,\vy\rangle
@@ -1683,7 +1762,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \para{Definition of Absolute Value and Arugument.} The absolute value of the complex number $z = a + ib\in \complex$
     is the non-negative real number defined as
     \begin{equation*}
-        \mathbf{r} := |z| = \sqrt{a^2 + b^2}
+        r := |z| = \sqrt{a^2 + b^2}
     \end{equation*}
     and the argument of a the complex number is the angle between the two components, namely $a$ and $b$
     on the complex plain. Then we have the following identity
@@ -1703,6 +1782,20 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \begin{equation*}
         z^n = r^n\left(\cos(n\theta) + i\sin(n\theta)\right)
     \end{equation*}
+
+    \settag{5.1.9*}
+    \para{Relation w/ Euler's Formula.} First, we recall the Euler Formula as below
+    \begin{equation*}
+        e^{i\theta} = \cos \theta + i\sin \theta
+    \end{equation*}
+    Notice that in a special case of $\theta = \pi$, the above identity is a.k.a Euler's 
+    Identity\footnote{$e^{i\pi}+1=0$}. Considering any $z\in \complex$, to derive the above identity, we have the following
+    \begin{align*}
+        z^n &= |z|^n\left(e^{i\pi}\right)^n\\
+        &= |z|^ne^{i\pi n} \\
+        &= r^n\left(\cos n\theta + i\sin n \theta\right)
+    \end{align*}
+    notice that we can now interchange, as we please, $\cos \theta + i\sin \theta$ with $e^{i\theta}$. \qed
 
     \settag{5.1.11}
     \para{Definition of Algebraic Closure.} A field $\mathbb{F}$ is called algebraically closed if
@@ -1751,6 +1844,9 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \item $\forall \vu, \vv\in V, \langle \vu, \vv \rangle = \overbar{\langle \vu, \vv \rangle}$
         \item $\forall \vv\in V,\langle \vv,\vv \rangle \geq 0 \land \langle \vv,\vv\rangle =0 \implies \vv = \vzero$
     \end{enumerate}
+
+    \settag{5.3.2}
+    \para{Piggly Wiggly}
 \end{enumerate}
 
 \end{document}
