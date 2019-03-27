@@ -16,24 +16,5 @@ This shell script was written to ease the routine of pushing pdf and tex files t
 ## Makefile
 This Makefile contains several rules for pushing my routine updates to this repository. There is also a compiling dependency so that each time I push, it compiles a fresh pdf file if necessary.
 
-## License
-This project is licensed under GNU General Public License v3.0. Find out more here: <https://www.gnu.org/licenses/gpl-3.0.en.html>
-
-According to the license you have:
-1. Permisions
-    * Commercial use
-    * Distribution
-    * Modification
-    * Patent use
-    * Private use
-    
-2. Conditions
-    * Disclose source
-    * License and copyright notice
-    * Same license
-    * State changes
-    
-3. Limitations
-    * Liability
-    * Warranty
-
+## If you wish to use any of the contents in this repo...
+* You are free to use, modifiy any of the files in this repository, but limited to your own use, and commercial use is strictly prohibitted.
