@@ -4,6 +4,7 @@
 \usepackage[english]{babel}
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{url}
 \usepackage[pdfencoding=auto, psdextra]{hyperref}
 \usepackage{fancyhdr} 
@@ -1600,7 +1601,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
               &\cdots  \\
         \vv_k &= \vw_k - P_{span\{\vv_1,...,\vv_{k-1}\}}\vw_k
     \end{align*}
-    after which we normalize $\vv_i$ by $\hat{\vv}_i = \vv / \norm{\vv_i}$, then $\alpha = 
+    after which we normalize $\vv_i$ by $\hat{\vv}_i = \vv_i/\norm{\vv_i}$, then $\alpha = 
     \{\hat{\vv}_1,...,\hat{\vv}_k\}$ is an orthonormal basis for the real vector space $W$.
 \end{enumerate}
 
@@ -1647,8 +1648,11 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     orthogonal projection of $\R^n$ onto the eigenspace $E_{\lambda_i}$. Then
     \begin{enumerate}
         \item $T = \lambda_1P_1+...+\lambda_k P_k$, and
-        \item $I = P_1,...,P_k$
+        \item $I = P_1+...+P_k$
     \end{enumerate}
+    \textbf{Note:} Although the part (b) seems like a nothing in euclidean space, it is 
+    actually very powerful in other spaces, for example in the function space, this is 
+    the algebraic fundation for the Fourier Series.\footnote{Familiar from MAT237.}
 \end{enumerate}
 
 \chapter{Complex Numbers and Complex V.S.}
@@ -1859,15 +1863,152 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \begin{enumerate}
     \settag{5.3.1}
     \para{Definition of Hermitian Inner Product.} Let $V$ be a complex vector space. A Hermitian
-    inner product is a comlex valued function on pairs of vectors in $V$, denoted by $\langle \vu, \vv\rangle\in \complex, \forall \vv,\vu \in V$,
+    inner product is a complex valued function on pairs of vectors in $V$, denoted by $\langle \vu, \vv\rangle\in \complex, \forall \vv,\vu \in V$,
     which statisfies the following properties
     \begin{enumerate}
-        \item $\forall \vu, \vv, \vw\in V, a, b\in \complex, \langle a\vu+b\vv,\vw\rangle = a\langle \vu,\vw\rangle + b\langle \vv,\vw\rangle$
-        \item $\forall \vu, \vv\in V, \langle \vu, \vv \rangle = \overbar{\langle \vu, \vv \rangle}$
+        \item $\forall \vu, \vv, \vw\in V, a, b\in \complex, \langle a\vu+b\vv,\vw\rangle = a\langle \vu,\vw\rangle + b\langle \vv,\vw\rangle$. In naive words, the Hermitian Inner Product requires linearity in the first slot.
+        \item $\forall \vu, \vv\in V, \langle \vu, \vv \rangle = \overbar{\langle \vv, \vu \rangle}$, i.e., we need so called conjugate linear in the second slot. 
         \item $\forall \vv\in V,\langle \vv,\vv \rangle \geq 0 \land \langle \vv,\vv\rangle =0 \implies \vv = \vzero$
     \end{enumerate}
+    \paragraph{Sesquilinearity.} We have already seen that in a hermitian inner product, the second slot is conjugate linear. We shall illustrate this further.
+    Consider some complex vector space $V$, and let $\vv,\vu\in V, a\in \complex$, we have
+    \begin{equation*}
+        \langle \vu,a\vv \rangle = \overbar{\langle a\vv,\vu\rangle} = \overbar{a\langle \vv,\vu \rangle} = \overbar{a}\overbar{\langle \vv,\vu\rangle} = \overbar{a}\langle \vu,\vv\rangle
+    \end{equation*}
+    notice that in this case, we lose the bilinearity that we had in an ordinary euclidean space.
 
-    \settag{5.3.2}
+    \settag{5.3.3}
+    \para{Definitions in HIPS.} Let $V$ be a complex vector space with with a Hermitian Inner Product. We define the following
+    \begin{itemize}
+        \item The norm of $\vv\in V$ is $\norm{\vv} = \sqrt{\langle \vv,\vv \rangle}$
+        \item A set of \tit{non-zero} vectors $\{\vv_1,...,\vv_k\}\subset V$ is called orthogonal if $\langle \vv_i,\vv_j \rangle =0, \forall i\neq j$.
+        \item If a set of vectors is orthogonal, and in addition, $\langle \vv_i,\vv_i \rangle = 1, \forall i$ in the set, the set is said to be orthonormal.
+    \end{itemize}
+
+    \settag{5.3.5}
+    \para{Lemma.} If $\alpha = \{ \vv_1,...,\vv_n \}$ is an orthonormal basis for the Hermitian inner product space $V$ and \trans{T}{V}{V} is a linear mapping, then
+    \begin{equation*}
+        \left[ \map{T}{\alpha}{\alpha}\right]_{ij} = \langle T(\vv_j, \vv_i) \rangle
+    \end{equation*}
+
+    \settag{5.3.7}
+    \para{Definition of Adjoint in HIPS.} Let $V$ be a finite dimensional Hermitian Inner Product Space and let
+    $\alpha$ be an orthonormal basis for $V$. The adjoint of the linear transformation \trans{T}{V}{V} is the linear
+    transformation $T^*$ whose matrix with respect to the orthonormal basis $\alpha$ is the matrix $\left(\map{\bar{T}}{\alpha}{\alpha}\right)^t$. That is
+    \begin{equation*}
+        \map{T^*}{\alpha}{\alpha} = \left(\map{\bar{T}}{\alpha}{\alpha}\right)^t
+    \end{equation*}
+    \paragraph{Derivation of the above formula.}\footnote{Based on Example (5.3.6)} Let $V$ be fin-dim HIPS, we want to find a analogue to the
+    transpose that we had in an ordinary euclidean space. Using the Lemma (5.3.5), we want to construct the complex transpose of some \trans{T}{V}{V}.
+    Recall the definition, we want a $T^*$ such that it satisfies the eqaution $\langle T(\vv),\vw \rangle = \langle \vv,T^*(\vw) \rangle, \forall \vv,\vw \in V$.
+    It suffices to construct a matrix for $T^*$ w.r.t some basis for $V$. If $\alpha = \{\vv_1,...\vv_n\}$ is an orthonormal basis for $V$, the $ij$-th entry of
+    \trans{T^*}{\alpha}{\alpha} is the complex number $ \langle T^*(\vv_j),\vv_i\rangle $. We can then simplify the expression
+    \begin{equation*}
+        \langle T^*(\vv_j),\vv_i \rangle = \overbar{\langle \vv_i,T^*(\vv_j)\rangle} = \overbar{\langle T(\vv_i), \vv_j\rangle}
+    \end{equation*}
+    writing the above statement in terms of matrix yields us the desired formula. \qed
+
+    \settag{5.3.8}
+    \para{Definition.} Let $V$ be a finite dimensional HIPS. The adjoint of \trans{T}{V}{V} satisfies 
+    $\langle T(\vv), \vw\rangle = \langle \vv,T^*(\vw)\rangle, \forall \vv,\vw\in V$.
+
+    \settag{5.3.9}
+    \para{Definition.} \trans{T}{V}{V} is called Hermitian or self-adjoint if $\langle T(\vu, \vv)\rangle =\langle \vu,T(\vv)\rangle,\forall \vw,\vv\in V$.
+    Equivalently, $T$ is Hermitian or self-adjoint if $T = T^*$ or $\map{\bar{T}}{\alpha}{\alpha}^t = \map{T}{\alpha}{\alpha}$ for an orthonormal basis $\alpha$.
+     An $n\times n$ complex matrix is called self-adjoint if $A = A^*$
+
+    \settag{5.3.10}
+    \para{Proposition.} If $\lambda$ is an eigenvalue of the self-adjoint linear transformation $T$, then $\lambda \in \real$. 
+    In naive words, a self-adjoint transformation is similar to the ``symmetric" matrix in euclidean space, 
+    where we have ``Symmetric matrices have real eigenvalues''.
+
+    \settag{5.3.11}
+    \para{Proposition.} If $\vu, \vv$ are eigenvectors, respectively, for the distinct eigenvalyes $\lambda, \mu$ 
+    of \trans{T}{V}{V}, then $\vv, \vu$ are orthogonal, with $\langle \vv, \vu\rangle = 0$.
+
+    \settag{5.3.12}
+    \para{Theorem: Diagonalizability of HIPS.} Let \trans{T}{V}{V} be a self-adjoint transformation of a 
+    complex vector space $V$ with Hermitian Inner Product. Then there is an orthonormal basis of $V$ 
+    consisting of eigenvectors for $T$ and, in particular $T$ is diagonalizable.
+
+    \settag{5.3.13}
+    \para{Theorem: Spectral Decomposition of HIPS.} Let \trans{T}{V}{V} be self-adjoint transformation of a complex vector space 
+    $V$ with hermitian inner product. Let $\lambda_1,...,\lambda_k\in \real$ be the distinct eigenvalues of 
+    $T$, let $P_i$ be the orthogonal projections of $V$ onto the eigenspace $E_{\lambda_i}$, then
+    \begin{enumerate}
+        \item $T = \lambda_1P_1 + ... + \lambda_kP_k$, and
+        \item $I = P_1 + ... + P_k$
+    \end{enumerate}
+
 \end{enumerate}
+
+\chapter{Jordan Canonical Form}
+\section{Triangular Form}
+\begin{enumerate}
+    \settag{6.1.2}
+    \para{Definition of Invariant Subspace.} Let \trans{T}{V}{V} be a linear mappping. A subspace 
+    $W\subset V$ is said to be stable or invariant under $T$ if $T(W)\subset W$
+
+    \settag{6.1.4}
+    \para{Propostion.} Let $V$ be a vector space, let \trans{T}{V}{V} be linear mapping and let 
+    $\beta=\{\vx_1,...,\vx_n\}$ be a basis for $V$. Then \map{T}{\beta}{\beta} is upper-triangular 
+    if and only if each of the subspaces $W_i = span\{ \vx_1,...,\vx_i \}$, that is, 
+    the span of the first $i$ elements in the basis $\beta$ is invariant under $T$. One shall note that
+    we have the following increasing sequence of inclusion
+    \begin{equation*}
+        \{\vzero\} \subset W_1 \subset W_2 \subset ... \subset W_n = V
+    \end{equation*}
+
+    \settag{6.1.5}
+    \para{Definition.} We say that a linear mapping \trans{T}{V}{V} on a fin-dim vector space $V$ is triangularizable if there exists
+    a basis $\beta$ such that \map{T}{\beta}{\beta} is upper-triangular. Notice that to show a linear mapping is triangularizable
+    we need to show that there exists an incresing sequence of invariant subspaces
+    \begin{equation*}
+        \{\vzero\} \subset W_1 \subset W_2 \subset ... \subset W_n = V
+    \end{equation*}
+
+    \settag{6.1.6}
+    \para{Proposition.} Let \trans{T}{V}{V}, and let $W \subset V$ be an invariant subspace. Then the characteristic polynomial
+    of $T|_W$ divides the characteristic polynomial of $T$. \newline
+    \proof \newline
+    Let $\alpha = \{\vx_1,...,\vx_k\}$ be a basis for $W$, and extend $\alpha$ to the basis $\beta = \{ \vx_1,...,\vx_k, \vx_{k+1},...,\vx_k \}$ for V.
+    Since $W$ is invariant under $T$, for each $i \leq k$, we have
+    \begin{equation*}
+        T(\vx_i) = a_{1i}\vx_1 + ... + a_{ki}\vx_k + 0 \vx_{k+1} + ... + 0\vx_m
+    \end{equation*}
+    hence the matrix of \map{T}{\beta}{\beta} has a block form composition
+    \begin{equation*}
+        \map{T}{\beta}{\beta} = 
+        \begin{bmatrix}
+            A & B \\
+            0 & C
+        \end{bmatrix}
+    \end{equation*}
+    where $A = \map{T|_W}{\alpha}{\alpha}$ is a $k \times k$ matrix and $B$ and $C$ include the coefficients in the expensions of
+    $T(\vx_j)$, where $k+1 \leq j \leq n$. When we compute the characteristic polynomial of $T$ using this matrix, we have
+    \begin{equation*}
+        \det(T - \lambda I) = \det(A - \lambda I)\det(C - \lambda I)
+    \end{equation*}
+    where we notice that $\det(A - \lambda I)$ is just the characteristic polynomial of $T$. \qed
+
+    \settag{6.1.8}
+    \para{Theorem.} Let $V$ be a fin-dim vector space over a field $\field$, and let \trans{T}{V}{V} be alinear mapping. Then
+    $T$ is triangularizable if and only if the characteristic polynomial of $T$ has $\dim(V)$ roots (counted with multiplicties) in
+    the filed $\field$.
+
+    \settag{6.1.9}
+    \para{Important Remark: Superiority of Complex Field.} Notice that for the above theorem, the conclusion automatically holds 
+    if we choose $\field = \complex$, since we can always find such mant solutions for the characteristic polynomial. Generally speaking,
+    we have that
+    \begin{equation*}
+        \forall A \in M_{n\times n}(\complex),\,\,\text{A can be triangularized}
+    \end{equation*}
+
+    \settag{6.1.10}
+    \para{Lemma.} Let \trans{T}{V}{V} be as in the theorem, and assume that the characteristic polynomial of $T$ has $n = \dim(V)$ 
+    roots in $\field$. If $W \subsetneq V$ is an invariant subsspace under $T$, then there exists a vector $\vx \neq \vzero$ in $V$ such that 
+    $\vx \neg \in W\wedge W + span\{\vx\}$ is also invariant under $T$.
+\end{enumerate}
+
 
 \end{document}
