@@ -140,6 +140,25 @@ and our test statistic will be, in this case
     T(X) = X^2 = \sum_{i = 1}^k \frac{\left(X_i - np_i\right)^2}{np_i} \xrightarrow{D} \chi^2_{(df=k-1)}
 \end{equation*}
 
+\section{Chi-square Test of Independence}
+Suppose that we have two categorical random variables $X,Y$. Let $i = 1,...,a$ and $j=1,...,b$ 
+represent the categories of $X$ and $Y$ respectively. Let $f_{ij}$ represent the number of samples
+corresponding to the $i$-th of $X$ and $j$-th of $Y$, notice that $\sum_{ij}f_{ij} = n$. Let $F_{ij}$ represent
+the random variable corresponding to the cell at position $(i,j)$. Let $\theta_{ij} = P(X=i,Y=j)$, then we have
+To access the null hypothesis, $H_0: X\perp Y$, we have $P(X=i,Y=j) = P(X=i)P(Y=j)$, so $\theta_{ij} = \theta_{i.}\theta_{.j}\footnote{The ``.'' here is a wildcard.}$, and our statistics follows
+\begin{equation*}
+    F_{11},F_{12},...,F_{ab}\sim \text{Mult}(n, \theta_{1.}\theta_{.1},\theta_{1.}\theta_{.2},...,\theta_{a.}\theta_{.b})
+\end{equation*}
+By using the MLEs
+\begin{align*}
+    \hat{\theta}_{i.} &= \sum_{j=1}^{b}f_{ij}/n \\
+    \hat{\theta}_{.j} &= \sum_{i=1}^{a}f_{ij}/n
+\end{align*}
+we have our test statistic
+\begin{equation*}
+    T(X,Y) = X^2 = \sum_{i=1}^a\sum_{j=1}^b \frac{\left(f_{ij} - n\hat{\theta}_{.j}\hat{\theta}_{i.}\right)^2}{n\hat{\theta}_{.j}\hat{\theta}_{i.}} \xrightarrow{D} \chi^2_{df=(a-1)\times(b-1)}
+\end{equation*}
+
 \section{Discrepancy Statistic for Normal R.V.s}
 Consider $X_1,\ldots,X_n\sim N(\hat{\mu}, \sigma_0^2)$ where $\sigma_0^2$ is known. Define $R = X_i - \Bar{X}$, where $R\sim N(0, \sigma_0^2 (1 - \frac{1}{n}))$ then, the descrepancy statistic is defined as
 \begin{equation*}
