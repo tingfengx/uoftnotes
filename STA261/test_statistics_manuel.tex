@@ -158,6 +158,24 @@ we have our test statistic
 \begin{equation*}
     T(X,Y) = X^2 = \sum_{i=1}^a\sum_{j=1}^b \frac{\left(f_{ij} - n\hat{\theta}_{.j}\hat{\theta}_{i.}\right)^2}{n\hat{\theta}_{.j}\hat{\theta}_{i.}} \xrightarrow{D} \chi^2_{df=(a-1)\times(b-1)}
 \end{equation*}
+\paragraph{Note.} In performing such test, we need to calculate the expected count of each slot and there is a neat formula for this
+\begin{equation*}
+    E_{ij} = \frac{\text{i-th row total * j-th column total}}{\text{grand total of the table}}
+\end{equation*}
+
+\section{Chi-square Test of Homogeneity}
+Let $n_i$ be the marginal total of $X=i$ category, then we have $\sum_i n_i = n$. Notice that this is different
+from the test of independence above in the sense that we are fixing marginal totals of all categories of $X$ before hand.
+We wish to test the hypothesis $H_0: \theta_{j|X=1} = \theta_{j|X=2} =...= \theta_{j|X=a} = \theta_j$. Using the MLE
+\begin{equation*}
+    \hat{\theta}_j = \sum_{i=1}^a f_{ij}/n
+\end{equation*}
+we have our test statistic
+\begin{equation*}
+    T(X,Y) = X^2 = \sum_{i=1}^a\sum_{j=1}^b \frac{\left(f_{ij} - n_i\hat{\theta}_{j}\right)^2}{n_i\hat{\theta}_{j}} \xrightarrow{D} \chi^2_{df=(a-1)\times(b-1)}
+\end{equation*}
+Again, we calculate the $E_{ij}$ using the formula above. (This is a coincidence.)
+
 
 \section{Discrepancy Statistic for Normal R.V.s}
 Consider $X_1,\ldots,X_n\sim N(\hat{\mu}, \sigma_0^2)$ where $\sigma_0^2$ is known. Define $R = X_i - \Bar{X}$, where $R\sim N(0, \sigma_0^2 (1 - \frac{1}{n}))$ then, the descrepancy statistic is defined as
