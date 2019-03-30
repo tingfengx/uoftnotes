@@ -1,5 +1,5 @@
 # uoftnotes 
-https://img.shields.io/github/commit-activity/y/ELO1SA/uoftnotes.svg?style=plastic
+![](https://img.shields.io/github/commit-activity/y/ELO1SA/uoftnotes.svg?style=plastic)
 Notes for some of my courses at University of Toronto
 * The notes in this repository that are currently in edit are
    1. MAT224, Linear Algebra II.
