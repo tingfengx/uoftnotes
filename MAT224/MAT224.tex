@@ -1640,7 +1640,8 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{4.6.1}
     \para{Theorem.} Let \trans{T}{V}{V} be a symmetric linear mapping. Then there is 
     an \textit{orthonormal} basis of $\R^n$ consisting of eigenvectors of $T$. In particular, 
-    $T$ is diagonalizable.
+    $T$ is diagonalizable. In naive words, we can view this as ``Symmetric matrices are really really
+    diagonalizable, in the sense that the set of eigenvectors is orthonormal.''
     
     \settag{4.6.3}
     \para{Theorem.} Let \trans{T}{\R^n}{\R^n} be a symmetric linear mapping, and let 
@@ -1653,6 +1654,21 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \textbf{Note:} Although the part (b) seems like a nothing in euclidean space, it is 
     actually very powerful in other spaces, for example in the function space, this is 
     the algebraic fundation for the Fourier Series.\footnote{Familiar from MAT237.}
+
+    \settag{4.6.*}
+    \para{Summrization during tutoral.} There are two common versions of the spectral theorem, 
+    in which the second version is the same as the first one after choosing some basis. 
+    \paragraph{Version 1.} Let $A$ be a $n\times n$ real matrix that is symmetric, then there exits
+    a inverse of $T$, denoted $T^{-1}$ s.t. 
+    \begin{equation*}
+        TAT^{-1} = 
+        \begin{bmatrix}
+            \lambda_1 & \cdots & 0 \\
+            \vdots & \ddots & \vdots \\
+            0 & \cdots & \lambda_n
+        \end{bmatrix}
+    \end{equation*}
+    where $\lambda_i\in \real, \forall i$ are eigenvalues of $T$
 \end{enumerate}
 
 \chapter{Complex Numbers and Complex V.S.}
@@ -1775,7 +1791,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         z = |z|(\cos \theta + i\sin \theta)
     \end{equation*}
     \paragraph{Perodicity of the above identity.} Notice that if we replace $\theta$ with $\theta \pm
-    2\pi k, k\in mathbb{Z}$, we defined exactly the same cpmplex number $z$. 
+    2\pi k, k\in \mathbb{Z}$, we defined exactly the same cpmplex number $z$. 
 
     \settag{5.1.9}
     \para{Statement of De Moivre's Theorem.}\footnote{This should be familiar from FM}
