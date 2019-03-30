@@ -1,6 +1,5 @@
 # uoftnotes 
 ![Build status](https://ci.appveyor.com/api/projects/status/pjxh5g91jpbh7t84?svg=true)
-![Coveralls](https://coveralls.io/repos/github/tygerbytes/ResourceFitness/badge.svg?branch=master)
 
 ## Notes for some of my courses at University of Toronto 
 * The notes in this repository that are currently in edit are
