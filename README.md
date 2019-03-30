@@ -1,7 +1,6 @@
 # uoftnotes 
-[![Build status](https://ci.appveyor.com/api/projects/status/pjxh5g91jpbh7t84?svg=true)](https://ci.appveyor.com/project/tygerbytes/resourcefitness)
-[![Coveralls](https://coveralls.io/repos/github/tygerbytes/ResourceFitness/badge.svg?branch=master)](https://coveralls.io/github/tygerbytes/ResourceFitness?branch=master)
-[![Commit activity](https://img.shields.io/github/commit-activity/y/ELO1SA/uoftnotes.svg)]
+![Build status](https://ci.appveyor.com/api/projects/status/pjxh5g91jpbh7t84?svg=true)
+![Coveralls](https://coveralls.io/repos/github/tygerbytes/ResourceFitness/badge.svg?branch=master)
 
 ## Notes for some of my courses at University of Toronto 
 * The notes in this repository that are currently in edit are
