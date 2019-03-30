@@ -2,7 +2,8 @@
 | --- | --- |
 | **Build**** | [![Build status](https://ci.appveyor.com/api/projects/status/pjxh5g91jpbh7t84?svg=true)](https://ci.appveyor.com/project/tygerbytes/resourcefitness) |
 | **OpenCover**** | [![Coveralls](https://coveralls.io/repos/github/tygerbytes/ResourceFitness/badge.svg?branch=master)](https://coveralls.io/github/tygerbytes/ResourceFitness?branch=master) |
-| **Commits**** | ![](https://img.shields.io/github/commit-activity/y/ELO1SA/uoftnotes.svg)
+| **Commits**** | ![Commit activity](https://img.shields.io/github/commit-activity/y/ELO1SA/uoftnotes.svg)|
+
 ## Notes for some of my courses at University of Toronto 
 * The notes in this repository that are currently in edit are
    1. MAT224, Linear Algebra II.
