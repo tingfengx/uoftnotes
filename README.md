@@ -1,6 +1,5 @@
 # uoftnotes 
-![](https://img.shields.io/github/commit-activity/y/ELO1SA/uoftnotes.svg?style=plastic)
-Notes for some of my courses at University of Toronto
+Notes for some of my courses at University of Toronto ![](https://img.shields.io/github/commit-activity/y/ELO1SA/uoftnotes.svg?style=plastic)
 * The notes in this repository that are currently in edit are
    1. MAT224, Linear Algebra II.
    2. STA261, Statistics II. A manuel for common test statistics.
