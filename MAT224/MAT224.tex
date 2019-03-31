@@ -1558,17 +1558,20 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         is in the orthogonal complement of $W$. So, $\{\vzero\}^\perp\equiv \R^n$
         \item On the otherhand, if we consider $W = \R^n$. Then only the zero vector is in the orthogonal 
         complement of $W$. So, $(\R^n)^\perp \equiv \{\vzero\}$
-        \item As a more general example, if we consider $W = span\{ \begin{pmatrix}
+        \item As a more general example, if we consider 
+        $$W = span\{ \begin{bmatrix}
             1 \\ 0 \\ 3
-        \end{pmatrix}, \begin{pmatrix}
+        \end{bmatrix}, \begin{bmatrix}
             0 \\ 1 \\ -7
-        \end{pmatrix} \}\subseteq \real^3$, then 
+        \end{bmatrix} \}\subseteq \real^3$$
+        , then 
         \begin{equation*}
             W^\perp = \ker
             \begin{bmatrix}
                 1 & 0 & 3\\
                 0 & 1 & -7    
             \end{bmatrix}
+            = span\{(-3, 7, 1)\}
         \end{equation*}
         notice that the kernel of such matrix (putting the vectors in our span in each row) gives exactly what
         we want, we have the general solution such that gives zero when doing inner product with vectors in $W$. 
@@ -1585,6 +1588,11 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         we have $\R^n = W \oplus W^\perp$
     \end{enumerate}
     
+    \settag{4.4.5*}
+    \para{Orthogonal Projection Checing rules.} We say that a linear map $T$ is a projection if
+    $T^2 = T$. This is the same as saying projection only `works' once. And for a projection to be
+    orthogonal, we need $T^t = T$. More about this could be found \href{https://en.wikipedia.org/wiki/Projection_(linear_algebra)#Orthogonal_projection}{here}.
+
     \settag{4.4.5}
     \para{Propositions.}
     \begin{enumerate}
@@ -1617,6 +1625,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \end{align*}
     after which we normalize $\vv_i$ by $\hat{\vv}_i = \vv_i/\norm{\vv_i}$, then $\alpha = 
     \{\hat{\vv}_1,...,\hat{\vv}_k\}$ is an orthonormal basis for the real vector space $W$.
+    \paragraph{Projection onto multiple vectors.} Notice that during the Gram-Schmidt Process,
+    we constantly have to compute the projection onto the span of multiple vectors. This could
+    be calculated easily by computing the projection onto each basis vector and sum the result.
+    To show this, a simple induction argument would suffice. Another way to think about this is
+    to treat each individual span as a subspace, and we know that everything in a that subspace
+    could be determined by actions that we applied on the basis vectors. Indeed, we have a basis
+    for the subspace.
 \end{enumerate}
 
 \section{Symmetric Matrices}
