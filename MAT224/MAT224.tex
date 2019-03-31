@@ -1558,6 +1558,20 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         is in the orthogonal complement of $W$. So, $\{\vzero\}^\perp\equiv \R^n$
         \item On the otherhand, if we consider $W = \R^n$. Then only the zero vector is in the orthogonal 
         complement of $W$. So, $(\R^n)^\perp \equiv \{\vzero\}$
+        \item As a more general example, if we consider $W = span\{ \begin{pmatrix}
+            1 \\ 0 \\ 3
+        \end{pmatrix}, \begin{pmatrix}
+            0 \\ 1 \\ -7
+        \end{pmatrix} \}\subseteq \real^3$, then 
+        \begin{equation*}
+            W^\perp = \ker
+            \begin{bmatrix}
+                1 & 0 & 3\\
+                0 & 1 & -7    
+            \end{bmatrix}
+        \end{equation*}
+        notice that the kernel of such matrix (putting the vectors in our span in each row) gives exactly what
+        we want, we have the general solution such that gives zero when doing inner product with vectors in $W$. 
     \end{enumerate}
 
     \settag{4.4.3}
