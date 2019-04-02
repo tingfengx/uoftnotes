@@ -1667,13 +1667,13 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
 \section{The Spectral Theorem}
 \begin{enumerate}
     \settag{4.6.1}
-    \para{Theorem.} Let \trans{T}{V}{V} be a symmetric linear mapping. Then there is 
+    \para{Theorem. (Algebraic Spectral Theorem)} Let \trans{T}{V}{V} be a symmetric linear mapping. Then there is 
     an \textit{orthonormal} basis of $\R^n$ consisting of eigenvectors of $T$. In particular, 
     $T$ is diagonalizable. In naive words, we can view this as ``Symmetric matrices are really really
     diagonalizable, in the sense that the set of eigenvectors is orthonormal.''
     
     \settag{4.6.3}
-    \para{Theorem.} Let \trans{T}{\R^n}{\R^n} be a symmetric linear mapping, and let 
+    \para{Theorem. (Geometric Spectral Theorem)} Let \trans{T}{\R^n}{\R^n} be a symmetric linear mapping, and let 
     $\lambda_1,..,\lambda_k$ be the distinct eigenvalues of $T$. let $P_i$ be the 
     orthogonal projection of $\R^n$ onto the eigenspace $E_{\lambda_i}$. Then
     \begin{enumerate}
@@ -1684,26 +1684,27 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     actually very powerful in other spaces, for example in the function space, this is 
     the algebraic fundation for the Fourier Series.\footnote{Familiar from MAT237.}
 
-    \settag{4.6.*}
-    \para{Summrization during tutoral.} There are two common versions of the spectral theorem, 
-    in which the second version is the same as the first one after choosing some basis. 
-    \paragraph{Version 1.} Let $A$ be a $n\times n$ real matrix that is symmetric, then there exits
-    a inverse of $T$, denoted $T^{-1}$ s.t. 
-    \begin{equation*}
-        TAT^{-1} = 
-        \begin{bmatrix}
-            \lambda_1 & \cdots & 0 \\
-            \vdots & \ddots & \vdots \\
-            0 & \cdots & \lambda_n
-        \end{bmatrix}
-    \end{equation*}
-    where $\lambda_i\in \real, \forall i$ are eigenvalues of $T$
+    % deprecated
+    % \settag{4.6.*}
+    % \para{Summrization during tutoral.} There are two common versions of the spectral theorem, 
+    % in which the second version is the same as the first one after choosing some basis. 
+    % \paragraph{Version 1.} Let $A$ be a $n\times n$ real matrix that is symmetric, then there exits
+    % a inverse of $T$, denoted $T^{-1}$ s.t. 
+    % \begin{equation*}
+    %     TAT^{-1} = 
+    %     \begin{bmatrix}
+    %         \lambda_1 & \cdots & 0 \\
+    %         \vdots & \ddots & \vdots \\
+    %         0 & \cdots & \lambda_n
+    %     \end{bmatrix}
+    % \end{equation*}
+    % where $\lambda_i\in \real, \forall i$ are eigenvalues of $T$
 
-    \paragraph{Version 2.} For a innner product space $V$, consider \map{T}{V}{V} a symmetric linear map,
-    then $\exists \alpha = \{\ve_1,...,\ve_n\}$, where $T\ve_j = \lambda_j \ve_j \land \lambda_j \in \real$.
-    \begin{equation*}
-        \langle T\vx,\vy\rangle = \langle \vx,T^t\vy \rangle = \langle \vx,T\vy\rangle \forall \vx,\vy\in V
-    \end{equation*}
+    % \paragraph{Version 2.} For a innner product space $V$, consider \map{T}{V}{V} a symmetric linear map,
+    % then $\exists \alpha = \{\ve_1,...,\ve_n\}$, where $T\ve_j = \lambda_j \ve_j \land \lambda_j \in \real$.
+    % \begin{equation*}
+    %     \langle T\vx,\vy\rangle = \langle \vx,T^t\vy \rangle = \langle \vx,T\vy\rangle \forall \vx,\vy\in V
+    % \end{equation*}
 \end{enumerate}
 
 \chapter{Complex Numbers and Complex V.S.}
