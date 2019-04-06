@@ -1932,6 +1932,12 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
         \langle \vu,a\vv \rangle = \overbar{\langle a\vv,\vu\rangle} = \overbar{a\langle \vv,\vu \rangle} = \overbar{a}\overbar{\langle \vv,\vu\rangle} = \overbar{a}\langle \vu,\vv\rangle
     \end{equation*}
     notice that in this case, we lose the bilinearity that we had in an ordinary euclidean space.
+    \paragraph{Notes on numerical aspect.} The notation of the hermitian often finds itself confusing when dealing with
+    computation of such inner product and we shall take a look at this for a $\complex$ field. For $\vx,\vy\in \complex^n$, we have
+    \begin{equation*}
+        \langle \vx ,\vy \rangle = \sum_i \vx_i\bar{\vy}_i
+    \end{equation*}
+    where we denote the conjugate with the bar.
 
     \settag{5.3.3}
     \para{Definitions in HIPS.} Let $V$ be a complex vector space with with a Hermitian Inner Product. We define the following
