@@ -1647,7 +1647,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     
     \settag{4.5.2b}
     \para{Corollary.} Let $V$ be any subspace of $\R^n$, let \trans{T}{V}{V} be any linear 
-    transformation, and let $\alpha = \{\vx_1,...,\vx_k\}$ be any orthogonal basis for $V$. 
+    transformation, and let $\alpha = \{\vx_1,...,\vx_k\}$ be any orthonormal basis for $V$. 
     Then \map{T}{\alpha}{\alpha} is a symmetric matrix if and only if $$\langle T(\vx), 
     \vy\rangle = \langle \vx,T(\vy)\rangle, \forall \vx, \vy \in V$$
     
@@ -1944,7 +1944,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \settag{5.3.5}
     \para{Lemma.} If $\alpha = \{ \vv_1,...,\vv_n \}$ is an orthonormal basis for the Hermitian inner product space $V$ and \trans{T}{V}{V} is a linear mapping, then
     \begin{equation*}
-        \left[ \map{T}{\alpha}{\alpha}\right]_{ij} = \langle T(\vv_j, \vv_i) \rangle
+        \left[ \map{T}{\alpha}{\alpha}\right]_{ij} = \langle T(\vv_j), \vv_i \rangle
     \end{equation*}
 
     \settag{5.3.7}
@@ -2090,7 +2090,7 @@ The course website could be found here:\newline \url{http://www.math.toronto.edu
     \para{Proposition.} Let $\alpha_i = \{N^{k_i-1}(\vx_i),N^{k_i-2}(\vx_i),\ldots,\vx_i\}$ where $1\leq i\leq r$ be
     the cycles of lengths $k_i$, respectively. If the set of eigenvectors $\{N^{k_1-1}(\vx_1),...,N^{k_r-1}(\vx_r)\}$ is linearly
     independent, then so is $\alpha_1,...,\alpha_r$ is liearly independent.
-    \paragraph{Young's Tableaux} To understand this prosition better, we shall take a look at what is so called
+    \paragraph{Young's Tableaux} To understand this proposition better, we shall take a look at what is so called
     Young's Tableau. For example let's consider a 3-cycle and a 2-cycle, then we shall have
     \begin{equation*}
         \young(\alpha\gamma\omega,\beta\xi)
