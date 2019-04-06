@@ -9,4 +9,4 @@ for ((i = 1; i < 6; i++)); do electron-pdf http://www.math.toronto.edu/courses/m
 for ((i = 1; i < 9; i++)); do electron-pdf http://www.math.toronto.edu/courses/mat237y1/20189/notes/Chapter2/S2.$i.html  ~/Desktop/MAT237NOTES/Chap2/S2.$i.pdf -e; done
 for ((i = 1; i < 4; i++)); do electron-pdf http://www.math.toronto.edu/courses/mat237y1/20189/notes/Chapter3/S3.$i.html  ~/Desktop/MAT237NOTES/Chap3/S3.$i.pdf -e; done
 for ((i = 1; i < 6; i++)); do electron-pdf http://www.math.toronto.edu/courses/mat237y1/20189/notes/Chapter4/S4.$i.html  ~/Desktop/MAT237NOTES/Chap4/S4.$i.pdf -e; done
-for ((i = 1; i < 5; i++)); do electron-pdf http://www.math.toronto.edu/courses/mat237y1/20189/notes/Chapter5/S5.$i.html  ~/Desktop/MAT237NOTES/Chap5/S5.$i.pdf -e; done
+for ((i = 1; i < 8; i++)); do electron-pdf http://www.math.toronto.edu/courses/mat237y1/20189/notes/Chapter5/S5.$i.html  ~/Desktop/MAT237NOTES/Chap5/S5.$i.pdf -e; done
