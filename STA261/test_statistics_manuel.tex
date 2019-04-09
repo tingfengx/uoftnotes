@@ -131,6 +131,7 @@ where we remind ourselves that $\hat{\mu}_x = \Bar{x}$ and $\hat{\mu}_y = \Bar{y
 \end{equation*}
 
 \section{Chi-Square Test of Goodness of Fit}
+\subsection{Known categorical probabilities}
 Suppose, $X_1, X_2, \ldots, X_k$ are the observed counts of category $1, 2, \ldots, k$ respectively. Then
 \begin{equation*}
     (X_1, X_2, \ldots, X_k) \sim \text{Mult}(n, p_1, p_2, \ldots, p_k)~~~~\text{where}~E[X_i] = np_i (\geq 1), \forall i
@@ -139,15 +140,21 @@ and our test statistic will be, in this case
 \begin{equation*}
     T(X) = X^2 = \sum_{i = 1}^k \frac{\left(X_i - np_i\right)^2}{np_i} \xrightarrow{D} \chi^2_{(df=k-1)}
 \end{equation*}
+\subsection{Unknown categorical probabilities}
+In this case, we have $X_1,\ldots,X_k\sim \text{Mult}(n, p_1(\theta), \ldots,p_k(\theta))$ and the test statistic will then be
+\begin{equation*}
+    T(X) = X^2 = \sum_{i = 1}^k \frac{\left(X_i - np_i(\hat{\theta})\right)^2}{np_i(\hat{\theta})} \xrightarrow{D} \chi^2_{(df=k-1-\dim \Omega)}
+\end{equation*}
+where $\dim\Omega$ is the number of params that need to be estimated to calculate $p_1,\ldots,p_k$.
 
 \section{Chi-square Test of Independence}
-Suppose that we have two categorical random variables $X,Y$. Let $i = 1,...,a$ and $j=1,...,b$ 
+Suppose that we have two categorical random variables $X,Y$. Let $i = 1,\ldots,a$ and $j=1,\ldots,b$ 
 represent the categories of $X$ and $Y$ respectively. Let $f_{ij}$ represent the number of samples
 corresponding to the $i$-th of $X$ and $j$-th of $Y$, notice that $\sum_{ij}f_{ij} = n$. Let $F_{ij}$ represent
 the random variable corresponding to the cell at position $(i,j)$. Let $\theta_{ij} = P(X=i,Y=j)$, then we have
 To access the null hypothesis, $H_0: X\perp Y$, we have $P(X=i,Y=j) = P(X=i)P(Y=j)$, so $\theta_{ij} = \theta_{i.}\theta_{.j}\footnote{The ``.'' here is a wildcard.}$, and our statistics follows
 \begin{equation*}
-    F_{11},F_{12},...,F_{ab}\sim \text{Mult}(n, \theta_{1.}\theta_{.1},\theta_{1.}\theta_{.2},...,\theta_{a.}\theta_{.b})
+    F_{11},F_{12},\ldots,F_{ab}\sim \text{Mult}(n, \theta_{1.}\theta_{.1},\theta_{1.}\theta_{.2},\ldots,\theta_{a.}\theta_{.b})
 \end{equation*}
 By using the MLEs
 \begin{align*}
@@ -160,13 +167,13 @@ we have our test statistic
 \end{equation*}
 \paragraph{Note.} In performing such test, we need to calculate the expected count of each slot and there is a neat formula for this
 \begin{equation*}
-    E_{ij} = \frac{\text{i-th row total * j-th column total}}{\text{grand total of the table}}
+    E_{ij} = \frac{i\text{-th row total * $j$-th column total}}{\text{grand total of the table}}
 \end{equation*}
 
 \section{Chi-square Test of Homogeneity}
 Let $n_i$ be the marginal total of $X=i$ category, then we have $\sum_i n_i = n$. Notice that this is different
 from the test of independence above in the sense that we are fixing marginal totals of all categories of $X$ before hand.
-We wish to test the hypothesis $H_0: \theta_{j|X=1} = \theta_{j|X=2} =...= \theta_{j|X=a} = \theta_j$. Using the MLE
+We wish to test the hypothesis $H_0: \theta_{j|X=1} = \theta_{j|X=2} =\ldots= \theta_{j|X=a} = \theta_j$. Using the MLE
 \begin{equation*}
     \hat{\theta}_j = \sum_{i=1}^a f_{ij}/n
 \end{equation*}
