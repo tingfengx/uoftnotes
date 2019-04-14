@@ -1,0 +1,369 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{fancyhdr} 
+\usepackage{youngtab}
+
+% customized commands
+\newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\field}{\mathbb{F}}
+\newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
+\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\proof}{\tit{\underline{Proof:}}} % This equivalent to the \begin{proof}\end{proof} block
+\newcommand{\proofforward}{\tit{\underline{Proof($\implies$):}}}
+\newcommand{\proofback}{\tit{\underline{Proof($\impliedby$):}}}
+\newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
+\newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
+\newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
+\newcommand{\map}[3]{\text{$\left[#1\right]_{#2}^{#3}$}}
+\newcommand{\dime}[1]{\text{dim}(#1)}
+\newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
+\newcommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
+\newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
+\newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+% Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
+\newcommand{\va}{\mathbf{a}}
+\newcommand{\vb}{\mathbf{b}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\vu}{\mathbf{u}}
+\newcommand{\vw}{\mathbf{w}}
+\newcommand{\vx}{\mathbf{x}}
+\newcommand{\ve}{\mathbf{e}}
+\newcommand{\vy}{\mathbf{y}}
+\newcommand{\vz}{\mathbf{z}}
+\newcommand{\vc}{\mathbf{c}}
+\newcommand{\vm}{\mathbf{m}}
+\newcommand{\vh}{\mathbf{h}}
+\newcommand{\vzero}{\mathbf{0}}
+% For convenience, I am setting both of these to refer to the same thing.
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\boldf}{\mathbf{f}}
+\newcommand{\bg}{\mathbf{g}}
+\newcommand{\bm}{\mathbf{m}}
+
+\title{MAT237 Final Review Notes}
+\author{Tingfeng Xia}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Set Theory, Limit and Continuity}
+\subsection{Limits and Continuity}
+Notice that major portion of this part of note is available in a separate file\footnote{see first\_two.pdf available in the same folder}, typeset-ted using one-Note prior to the existence of these notes. There is one final (important) result in the limits part to be stated in this section.
+\paragraph{Theorem: (Limit Existence, HW1.1).} Consider the limit of the following flavour
+\begin{equation*}
+    \lim_{(x,y)\rightarrow{}(0,0)} \frac{|x|^{r_1}|y|^{r_2}}{|x|^{s_1} + |y|^{s_2}}
+\end{equation*}
+where $r_1,r_2,s_1,s_2\in \real^{>0}$. Then the limit exists, and is equal to zero if $\frac{r_1}{s_1} + \frac{r_2}{s_2} > 1$.
+\paragraph{Definition: Continuity} If $S\subseteq \real^n$, then a function $\mathbf{f}: {S}\rightarrow{}{\real^k}$ is continuous at $\ba\in S$ if
+\begin{equation*}
+    \forall \varepsilon > 0, \exists \delta >0 s.t. \vx\in S \land |\vx-\va|< \delta \implies |\boldf(\vx) - \boldf(\va)|<\varepsilon
+\end{equation*}
+also, we say that $\boldf$ is continuous if $\boldf$ is continuous at every point in $S$. There is an alternative way of defining the continuity, which is as follows: if $\va$ is a point where it makes sense to talk about $\lim_{\vx\rightarrow{}\va}\boldf(\vx)$, then
+\begin{equation*}
+    \boldf:S\rightarrow{}\real^k~\text{is CTS at}~\va\in S\iff \lim_{\vx\rightarrow{}\va,\vx\in S} \boldf(\vx) = \boldf(\va)
+\end{equation*}
+\paragraph{Theorem: (Properties of Continuity)} Consider $S\subseteq \real^n, \va\in S$
+\begin{enumerate}
+    \item A vector valued function $\boldf:S\rightarrow{} \real^k$ is CTS at $\va$ if and only if all of its component real valued functions are CTS at $\va$. 
+    \item If two vector valued functions each are CTS at $\va$, then so is their sum.
+    \item If two real valued functions $f,g$ each are CTS at $\va$, then so is their product. In addition if $g(\va) \neq 0$, then $f/g$ is also CTS at $\va$
+    \item If the vectors valued functions $\boldf$ is CTS at $\va$, and $\bg$ is CTS at $\boldf(\va)$, then so is their composition $\bg\circ\boldf$. Notice that here we are implicitly assuming the two functions are compatible to each other in composition.
+    \item Elementary functions, such as trigonometric functions, trigonometric inverses, polynomials, exponentials and logarithm are all continuous on their domains.
+\end{enumerate}
+
+\paragraph{Theorem: (Sets w/ Continuity)} Assume that $\boldf$ is a function $\real^n \rightarrow{} \real^k$. Then, the following are equivalent
+\begin{itemize}
+    \item $\boldf$ is continuous
+    \item For every open set $U\subseteq \real^k$, the set $\{ \vx\in \real^n:\boldf(\vx)\in U \}$ is open
+    \item For every open set $K\subseteq \real^k$, the set $\{ \vx\in \real^n:\boldf(\vx)\in K \}$ is closed
+\end{itemize}
+There is a big family of question that is based on this equivalence relationship. Consider $S = \{ \vx\in \real^3: f(\vx)\in T \}, T\subseteq \text{domain of $f$}$. Then, using the fact that $f$ is CTS function, we can know that the set $S$ is closed/open iff the pre-image $T$ is closed/open. 
+
+\paragraph{Recognizing Sets} The general principle is: if any set is defined using continuous functions (possibly more than one of them) and strict inequalities (i.e., $<$ or $>$) then we instantly recognize it as open. And if any set is defined using continuous functions and non-strict inequalities (i.e., $\leq$ or $\geq$) or equality, then we instantly recognize it as closed.
+
+\subsection{Sequences and Completeness}
+\paragraph{Theorem: (Bounded Sequence Theorem)} Every bounded sequence in $\real^n$ has a subsequence that converges to a limit. 
+\paragraph{Theorem.} Let $\{\va_j\}_j\subseteq \real^n$ be sequence, let $\mathbf{L} = (L_1,...,L_n)\in \real^n$, then
+\begin{equation*}
+    \lim_{j\to \infty}\ba_j = {\bf L} \iff \lim_{j\to \infty}a_{jk} =  L_k \mbox{ for all }k=1,\ldots, n
+\end{equation*}
+
+\paragraph{Theorem: (Completeness Axiom)} Every bounded non-empty set of real number has a least upper bound
+
+\paragraph{Definitions: Upper Bound, Supremum}
+\begin{enumerate}
+    \item A number $a$ is an upper bound for a set $S\subseteq \real$ if $a\geq x,\forall x\in S$
+    \item A number $a$ is the least upper bound(supremum) for $S$ if $a$ is an upper bound for $S$, and for every upper bound $b$ for $S$, $a\leq b$. We usually denote the least upper bound with $\sup S$.
+    \item We have the same thing for $\inf S$.
+\end{enumerate}
+
+\paragraph{Theorem: (Monotone Sequence Theorem)} Every bounded non-decreasing sequence of real numbers converges to a limit.
+
+\paragraph{Definition: Subsequence} A subsequence of a sequence $\{\va_j\}_{j\geq j_0}\subseteq \real^n$ is a new sequence denoted $\{ \va_{k_j} \}_j$ where $\{k_j\}$ is an increasing sequence of integers such that $k_j \geq j_0, \forall j$. Intuitively, we can think of this as ``following a pattern, we copy down only part of the original sequence to form a new one''.
+
+\paragraph{Theorem: (Convergence of Subsequence)} If $\{\va_j\}_j\subseteq \real^n$ is a sequence that is convergent, then any subsequence of $\{ \va_j \}_j$ converges to the same limit. Notice that a catch here is that not any subset qualifies for a subsequence, as stated above, their indices in the original sequence has to follow some pattern, i.e. they themselves have to form a sequence.
+
+\subsection{Compactness and Applications}
+\paragraph{Definition: Compactness} A set $S\subseteq \real^n$ is said to be compact if every sequence is $S$ has a subsequence that converges to a limit in $S$.
+\paragraph{Theorem: (Bolzano-Weierstrass)} Let $S$ be a subset of the $n$ dimensional Euclidean space $\real^n$, then $S$ is compact if and only if $S$ is closed and bounded. \textbf{Remark:} In fact, compactness was a generalization of closed and bounded in spaces other than $\real^n$.
+
+\paragraph{Proposition.} If $\{ \vx_j \}_j$ is a convergent sequence in a closed set $S\subseteq \real^n$, then the limit of the sequence must belong to $S$. 
+
+\paragraph{Theorem: (EVT)} Assume that $K$ is a compact subset of $\real^n$, and that $f:K\rightarrow{}\real$ is continuous. Then
+\begin{equation*}
+    \text{the set}~\{f(\vx): \vx\in K\}~\text{is compact}
+\end{equation*}
+and there exists $\vx^*$ and $\vx_*$ in $K$ such that
+\begin{equation*}
+    f(\bx^*) = \sup \{ f(\bx) : \bx \in K \}\wedge f(\bx_*) = \inf \{ f(\bx) : \bx \in K \}
+\end{equation*}
+When we have $\vx^*$ as above, we say that $f$ attains its supremum, and when there exists $\vx_*$, we that $f$ attains its infimum. This theorem is of crucial importance in circumstances of optimization problems, since we usually have to know that some solution exists in order to have our calculations make sense.
+
+\paragraph{Definition: Uniform Continuity} A function $\boldf: S \subseteq \real^n \rightarrow{} \real^k$ is uniformly continuous if 
+\begin{equation*}
+    \forall \epsilon >0, \exists \delta>0 \mbox{ such that } \ \ 
+    \left. 
+    \begin{array}{r} \bx, \by\in S\mbox{ and } \\ |\bx - \by|< \delta
+    \end{array}
+    \right\} 
+    \implies |\boldf(\bx) - \boldf(\by)|<\epsilon.
+\end{equation*}
+Notice that this is different from the definition of the normal continuity. In naive words, if a function is continuous, then at every value it can take, there would be some box (whose measures could depend on the value) that captures the function in the sense that the function doesn't escape. However, here we lost the dependence of the input, so there has to be some ``box'' that works everywhere.
+
+\paragraph{Checking Uniform Continuity} The epsilon-delta definition, although is rigorous, could be sometimes tedious to check, we develop the following rule: Let $f$ be a function that is continuous on a closed interval $[a,b]\subseteq \real$ and differentiable on the open interval $(a,b)$. If there exists some number $M>0$ such that $|f'(x)|\leq M, \forall x\in (a,b)$, then $f$ is continuous on $[a,b]$.
+
+\paragraph{Theorem: (Uniform CTS w/ Compactness)} If $K$ is a compact subset of $\real^n$ and $f:K\rightarrow{} \real^k$ is CTS, then $f$ is uniformly CTS on $K$.
+
+\subsection{The Intermediate Value Theorem}
+\paragraph{Definition: Path-Connected} A set $S\subseteq \real^n$ is path-connected if, for every pair of $\vx,\vy \in S$,
+\begin{equation*}
+    \exists~CTS~\gamma:[0,1]\rightarrow{}S, s.t. \gamma(0) = \vx \land \gamma(1)=\vy
+\end{equation*}
+such that $\gamma(s)\in S,\forall s\in [0,1]$
+
+\paragraph{Theorem: (IVT)} Assume that $S$ is path-connected subset of $\real^n$ and that $f:S\rightarrow{} \real$ is CTS. If $\va,\vb$ are points in $S$, and either $f(\va) < t < f(\vb)$, or $f(\vb) < t < f(\va)$, then there exists a point $\vc \in S$, s.t. $f(\vc) = t$.
+
+\section{Differential Calculus}
+\subsection{Differentiation of Real-Fcns}
+\paragraph{Definition: 1-Var Diff-able}  The following are equivalent definitions:
+\begin{align}
+    &\lim_{h\to 0} \frac{f(x+h) - f(x)}{h}  = m\nonumber  \\
+    &\qquad \iff \qquad 
+    \lim_{h\to 0} \frac{ f(x+h) - f(x)-mh}{h}  = 0
+    \nonumber \\
+    &\qquad \iff \qquad 
+    E(h) := f(x+h) - f(x)-mh  \quad \mbox{ satisfies } \lim_{h\to 0}\frac{E(h)}{h}=0
+    \nonumber \\
+    &\qquad \iff \qquad 
+    f(x+h)=f(x)+mh+E(h)~~\text{and}~\lim_{h \to 0}\frac{E(h)}{h} = 0\nonumber 
+\end{align}
+
+\paragraph{Definition: Mult-Var Diff-able} Assume that $f:S\subseteq \real^n \to \real$, where $S$ is an open subset. We say that $f$ is differentiable at $\vx\in S$ if there exists $\vm\in \real^n$ such that
+\begin{equation*}
+    \lim_{\vh \to \vzero}\frac{f(\vx + \vh) - f(\vx) - \vm\vh}{|\vh|} = 0
+\end{equation*}
+and when this holds, we define $\nabla f(\vx) = \vm$. \textbf{Alternatively}, we sat that $f$ is differentiable at $\vx$ if there exists $\vm$ such that
+\begin{equation*}
+    f(\vx+\vh)=f(\vx)+\vm\cdot\vh+E(\vh),~~\text{where}~\lim_{\vh\to\vzero}\frac{E(\vh}{|\vh|} = 0
+\end{equation*}
+when this holds, we also define $\nabla f(\vx) = \vm$.
+
+\paragraph{Theorem: (Diff-able Implies CTS)} Assume that $f:S\to \real$, where $S$ is an open subset of $\real^n$, and that $\vx\in S$. If $f$ is differentiable at $\vx$, then $f$ is continuous at $\vx$. 
+
+\paragraph{Definition: Partial Derivative} Recall that we have defined $\ve_j$ to be the unit vector in $\real^n$ in the $j$-th coordinate direction. If $f$ is a function defined on an open subset $S\subseteq \real^n$, then at a point $\vx\in S$, we define 
+\begin{equation*}
+    \frac{\partial f}{\partial x_j}(\vx):= \lim_{h\to 0}\frac{f(\vx + h\ve_j) - f(\vx)}{h}
+\end{equation*}
+Computationally, this could be done by treating other variables as constants and proceed as in first year calculus.
+
+\paragraph{Theorem: (Diff-able Implies Partials Exist)} Let $f$ be a function $S\to \real$, where $S$ is an open subset of $\real^n$. If $f$ is differentiable at a point $\vx\in S$, then $\frac{\partial f}{\partial x_j}(\vx)$ exists $\forall j = 1,...,n$, and in addition,
+\begin{equation*}
+    \nabla f(\vx) = \left( \frac{\partial f}{\partial x_1},...,\frac{\partial f}{\partial x_n} \right)(\vx)
+\end{equation*}
+However, do notice that the converse is \textbf{\textit{not}} true. It could certainly be the case that all partials exist at some point at where the function itself is dis-continuous.
+
+\paragraph{Theorem: (CTS Partials Implies Diff-able)} Assume $f$ is a function $S\to \real$ for some open $S\subseteq \real^n$. If all partial derivatives of $f$ exists and are CTS at every point of $S$, then $f$ is differentiable at every point of $S$.
+
+\paragraph{Definition: Diff Class} A function $f:S\to \real$ is said to be of class $\mathcal{C}^1$ if all partial derivatives of $f$ exist and are continuous at every point of $S$. (Notice that this is stronger than $\mathcal{C}^0$, which is just being continuous itself.)
+
+\paragraph{Theorem: (Directional Derivatives)} If $f$ is differentiable at a point $\vx$, then $\partial_\vu f(\vx)$ exists for every \textit{unit} vector $\vu\in \real^n$, and moreover
+\begin{equation*}
+    \partial_\vu f(\vx) = \vu\cdot \nabla f(\vx)
+\end{equation*}
+
+\paragraph{Theorem: (Fastest Increase, Fundamental Principle)} Assume that $S$ is an open subset of $\real^n$ and that $f:S\to \real$ is differentiable. At any point $\vx\in S$, the direction of most rapid increase $\vu^*$ is the vector such that 
+\begin{equation*}
+    \partial_{\vu^*}f(\vx) = \max\{ \partial_\vu f(\vx): \vu~\text{is some unit vec} \}
+\end{equation*}
+To save ourselves the time to check these conditions we develop the following formulas:
+\begin{enumerate}
+    \item If $\nabla f(\vx) = 0$, then $\partial \vu f(\vx)= 0, \forall \vu$, so every unit vector maximizes and minimizes $\partial_\vu f(\vx)$
+    \item If $\nabla f(\vx) \neq 0$, then the directional derivative is maximized at
+    \begin{equation*}
+        \vu^* = \frac{\nabla f(\vx)}{|\nabla f(\vx)|}
+    \end{equation*}
+\end{enumerate}
+
+\subsection{Differentiation of Vec-Fcns}
+\paragraph{Definition: Jacobian Derivative} Assume that $S$ is an open subset of $\real^n$. Given a function $\boldf : S\to \real^m$ we say that $\boldf$ is differentiable at a point $\va\in S$ if these exists a $m \times n$ matrix $M$ such that the familiar definition holds:
+\begin{equation*}
+    \boldf(\va+\vh)=\boldf(\va)+M\vh+\mathbf{E}(\vh),~~~\text{where}~\lim_{\vh \to \vzero} \frac{\mathbf{E}(\vh)}{|\vh|} = \vzero \in \real^m
+\end{equation*}
+when this holds, we say that $M$ is the derivative of $\boldf$ at $\va$, and we write $M=D\boldf(\va)$.
+
+\paragraph{Theorem: (Jacobian Matrix)} Suppose that $S$ is an open subset of $\real^n$. Then a function $\boldf:S\to\real^m$ is differentiable at a point $\va\in S$ if and only if the component functions $f_j$ are differentiable at $\va$ for every $j = 1,...,m$. Moreover, the Jacobian Matrix could be calculated by
+\begin{equation*}
+    D\boldf(\ba) = 
+    \left(\begin{array}{ccc} 
+    \partial_1 f_1& \cdots &\partial_n f_1\\
+    \partial_1 f_2& \cdots &\partial_n f_2\\
+    \vdots&\ddots&\vdots\\
+    \partial_1 f_m& \cdots &\partial_n f_m
+    \end{array}
+    \right)
+\end{equation*}
+Furthermore, if all partial derivatives $\partial_i f_j(i=1,...,n\wedge j=1,...,m)$ exist and are CTS in $S$, then $\boldf$ is differentiable in $S$.
+
+\paragraph{Definition: Differential} Given a differentiable function $f:S\to \real$, where $S$ is an open subset of $\real^n$, at a point $\va\in S$ we define the differential linear map $\real^n\to\real$ by
+\begin{equation*}
+    df|_\va(\vh) = \nabla f(\va)\cdot \vh
+\end{equation*}
+The most common notation for differential would be
+\begin{equation*}
+    df = \frac{\partial f}{\partial x_1}dx_1 + ... + \frac{\partial f}{\partial x_n}dx_n
+\end{equation*}
+\newline
+\textbf{Linear approximation using the differentials:} The definition of the differential implies that if $f$ is differentiable at $\va$, then
+\begin{equation*}
+    f(\va + \vh) \sim= f(\va) + df|_\va(\vh)~\text{for}~\vh~\text{small}
+\end{equation*}
+
+\subsection{The Chain Rule}
+\paragraph{Theorem: (Chain Rule)} Assume that $S$ and $T$ are open subsets of $\real^n$ and $\real^m$, and that we are giving functions $\mathbf{g}:S\to \real^m$ and $\boldf: T\to \real^l$. Assume also that $\va\in S$ is a point such that $\mathbf{g}(\va)\in T$; thus $\boldf\circ \mathbf{g}(\vx)$ is well-defined for $\vx$ close to $\va$. If $\mathbf{g}$ is differentiable at $\va$ and $\boldf$ is differentiable at $\mathbf{g}(\va)$, the composite function $\boldf\circ\mathbf{g}$ is differentiable at $\va$, and
+\begin{equation*}
+    \boxed{ D(\boldf\circ\mathbf{g})(\ba) = D\boldf(\mathbf{g}(\ba)) \ D\bg(\ba)}
+\end{equation*}
+Notice that although there are infinitely many cases that some people like to remember, using matrix multiplication will always work. So we will save ourselves that time.
+
+\paragraph{Tangent Plane to Level Set} Suppose $S$ is an open subset of $\real^3$ and that $f:S\to \real$ is a function that is differentiable at a point $\va\in S$. Assume also that $\nabla f(\va) \neq 0$. Consider $C$ to be the level set of $f$ that passes through $\va$. Define
+\begin{equation*}
+    \text{The tangent plane to $C$ at $\va$}:=\{ \vx\in \real^3:(\vx - \va)\cdot \nabla f(\va) = 0 \}
+\end{equation*}
+This may seem a bit abstract to apply, so we shall see this in action through an example. Question: ``Find the tangent plane to the surface $C = \{\vx\in \real^3: x^2 - 2xy + 4yz - z^2 = 2\}, \,@\va = (1,1,1)\in \real^3$''. Notice that $C$ is the level set of $F(x,y,z)=x^2-2xy+4z-z^2$ at $2$. So applying the formula above yields us that the tangent plane is defined by $\{ (x,y,z)\in\real^3:y+z=2\}$
+
+\subsection{The Mean Value Theorem}
+\paragraph{Theorem: (MVT)} Assume that $f$ is real-valued function of class $\mathcal{C}^1$ defined on an open set $S\subseteq \real^n$. For two points $\va,\vb\in S$, let $L_{\va,\vb}$ denote the line segment that connects them. if $L_{\va,\vb}\subseteq S$, then there exists $\vc\in L_{\va,\vb}$ such that
+\begin{equation*}
+    f(\vb)-f(\va)=(\vb-\va)\cdot\nabla f(\vc)
+\end{equation*}
+
+\paragraph{Definition: Convex} A set $S\subseteq \real^n$ is said to be convex if $\forall \va,\vb\in S, L_{\va,\vb}\subseteq S$. That is, formally
+\begin{equation*}
+    \forall \va,\vb\in S, \forall S\in [0,1], s\vb + (1-s)\va\in S
+\end{equation*}
+We like sets with this property in this context since we want the geometric assumption of MVT to be satisfied. Indeed, convex-ness guarantees ``straight line connected-ness''.\newline
+\textbf{Some Important Results}:
+\begin{enumerate}
+    \item The intersection of convex sets is convex, while the union of convex sets need not be convex. 
+    \item If a set in $\real^n$ qualifies for a subspace, then it is convex. In particular, the Kernel and Image are convex.
+    \item If $L: \real^n \to \real^m$ is a function of the form $L(\vx) = A\vx + \vb$, where $A$ is an $m\times n$ matrix and $\vb \in \real^m$ and if $S$ is convex subset of $\real^n$, then
+    \begin{equation*}
+        L(S):= \{ L(\vx):\vx\in S \}~~\text{is convex}
+    \end{equation*}
+    this means that the $Im(L|_S)$ is convex.
+\end{enumerate}
+
+\paragraph{Theorem: (MVT w/ Cauchy)} Assume that $S$ is an open, convex subset of $\real^n$ and that $f:\real^n\to \real$ is a function that is differentiable in $S$, and moreover that there exists $M\geq 0$ such that $|\nabla f(\vx)|\leq M, \forall \vx\in S$. Then for every $\va,\vb \in S$,
+\begin{equation*}
+    |f(\vb) - f(\va)|\leq M|\vb - \va|
+\end{equation*}
+notice that this is a standard consequence of Cauchy Inequality with application to the MVT.
+
+\paragraph{Theorem: (Everywhere Diminishing Gradient Implies Constant Fcn)} Assume that $S$ is open, convex subset of $\real^n$ and that $f:\real^n \to \real$ is a function that is differentiable in $S$. If $\nabla f(\vx) = \vzero, \forall \vx\in S$, then $f$ is constant on $S$.
+
+\paragraph{Theorem: (Stronger Version Of Above)} Assume that $S$ is open, \textbf{path-connected} subset of $\real^n$ and that $f:\real^n \to \real$ is a function that is differentiable in $S$. If $\nabla f(\vx) = \vzero, \forall \vx\in S$, then $f$ is constant on $S$.
+
+\subsection{Higher Order Derivatives}
+\paragraph{Definition: Fcns Of Class $\mathcal{C}^k$} We say that $f$ is of class $\mathcal{C}^k$ if all the $k$-th order partial derivatives exist and are CTS everywhere in $S$, where $f$ is defined.
+
+\paragraph{Theorem: (Clairaut, Second Derivative)} Assume that $S$ is an open subset of $\real^n$. If $f:S\to \real$ is $\mathcal{C}^2$(Important!), then
+\begin{equation*}
+    \frac{\partial^2f}{\partial x_i \partial x_j} = \frac{\partial^2f}{\partial x_j \partial x_i}, \forall i, j \in \{ 1,...,n \}~\text{everywhere in $S$}
+\end{equation*}
+
+\paragraph{Theorem: (Clairaut, General)} Assume that $S$ is an open subset of $\real^n$ and that $f:S\to \real$ is of class $\mathcal{C}^k$. For any integers $i_1,...,i_k$ between 1 and $n$, if $j_1,...,j_k$ is a reordering of the $i$'s, then
+\begin{equation*}
+    \frac{\partial}{\partial x_{i_k} }\cdots\frac{\partial}{\partial x_{i_1} }f= \frac{\partial}{\partial x_{j_k} }\cdots\frac{\partial}{\partial x_{j_1} }f
+\end{equation*}
+everywhere in $S$.
+
+\subsection{Taylor's Theorem}
+\paragraph{Definition: Hessian Matrix} The Hessian Matrix of a real valued function $f$ at $\va$, denoted $H(\va)$, is the (square) box of second derivatives of $f$ whose $(i,j)$-th entry is $\partial_i\partial_j f(\va)$.
+
+\paragraph{Proposition: Quadratic Taylor Expansion} We have
+\begin{equation*}
+    P_{\va,2}(\vh) = f(\va) + \nabla f(\va)\cdot \vh + \frac{1}{2}(H(\va)\vh)\cdot \vh
+\end{equation*}
+where we remember if we wish our result to be in terms of $\vx$ rather than $\vh$, we substitute in $\vh = \vx - \va$.
+
+\paragraph{Theorem: Quadratic Taylor's Theorem} Assume that $S\subseteq \real^n$ is an open set and that $f:S\to \real$ is a function of class $\mathcal{C}^2$ on $S$. Then for $\va\in S, \vh \in \real^n$ such that the line segment connecting $\va$ and $\va = \vh$ is contained in $S$, there exists $\theta\in (0,1)$ such that
+\begin{equation*}
+    f(\va + \vh) = f(\va)+\nabla f(\va)\cdot \vh + \frac{1}{2}(H(\va + \theta \vh)\vh)\cdot \vh
+\end{equation*}
+holds, then as a result
+\begin{equation*}
+    \lim_{\vh\to \vzero}\frac{R_{\va,2}(\vh)}{|\vh|^2} = 0\,\,\,\,\text{where}\,R_{\va,2}(\vh) = f(\va+\vh) - P_{\va,2}(\vh)
+\end{equation*}
+
+\subsection{Critical Points}
+\paragraph{Procedure: Classify Critical Points}
+In solving a question of $f:\real^2 \rightarrow{} \real$ we could use the following ``quick check" approach:
+\begin{enumerate}
+    \item Calculate the gradient of $F$, equating it to zero to find the critical points
+    \item Calculate the Hessian of $F$, find the corresponding matrices for each critical points, where the Hessian is defined as
+    \begin{equation*} H(f) = 
+        \begin{bmatrix}
+             \partial_{xx}f & \partial_{xy}f = \partial_{yx}f \\
+             \partial_{xy}f = \partial_{yx}f & \partial_{yy}f
+        \end{bmatrix}
+    \end{equation*}
+    \item Calculate the determinant of the hessian, and there are the following cases to consider
+    \begin{enumerate}
+        \item det$H<0$, then $sig(H) = (1,1)$ and the point is a saddle point
+        \item det$H>0$, then
+            \begin{enumerate}
+                \item $tr(H)<0 \implies sig(H) = (2,0)$ and the point is a local minimum
+                \item $tr(H)>0 \implies sig(H) = (0,2)$ and the point is a local maximum
+            \end{enumerate}
+        \item det$H=0$, then the test is inconclusive. We have to do this case by starring at it. (This is a degenerate point, defined below)
+    \end{enumerate}
+\end{enumerate}
+
+\paragraph{(Non)-Degenerateness} If $f$ is a $\mathcal{C}^2$ function and $\va$ is a critical point of $f$, we say that a critical point is \textbf{degenerate} if $\det H(\va) = 0$, and \textbf{non-degenerate} otherwise.
+\end{document}
