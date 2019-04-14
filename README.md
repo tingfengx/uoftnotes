@@ -5,6 +5,7 @@
 * The notes in this repository that are currently in edit are
    1. MAT224, Linear Algebra II.
    2. STA261, Statistics II. A manuel for common test statistics.
+   3. MAT237, Advanced Calculus. A Collection of Theorems, with focus on fall 2018 term which was not present in the notes that I typesetted together with @yuchenWYC.
 * Other notes that I participated in typesetting:
    1. MAT237, Advanced Calculus, a short guide to theorems, lemmas and propositions. This particular set of notes was made together with @yuchenWYC. @AndyTQ also made some useful comments for the improvment of the .tex file. They are available here:  https://github.com/yuchenWYC/MAT237
    
