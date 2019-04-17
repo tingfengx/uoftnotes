@@ -190,5 +190,20 @@ Consider $X_1,\ldots,X_n\sim N(\hat{\mu}, \sigma_0^2)$ where $\sigma_0^2$ is kno
     D(R) = \frac{1}{\sigma_0^2}\sum_{i = 1}^n R_i^2 =  \frac{1}{\sigma_0^2}\sum_{i=1}^n(X_i - \Bar{X})^2 \sim \chi^2_{n-1}
 \end{equation*}
 
+\section{Simple Linear Regression}
+Consider the set $\{ (x_1,y_1),\ldots,(x_n,y_n) \}\subseteq \real^2$ and we want to find the line that
+fits the best for our set of data. Let the hypothetical line be $y = b_1 + b_2 x$, then we define
+\begin{equation*}
+    res_i = (y_i - b_1-b_2x_i)\,\,\text{is the deviation of $y_i$ from the line}
+\end{equation*}
+and to minimize $\sum_{i=1}^nres_i^2$ we need
+\begin{equation*}
+    b_1 = \overline{y} - b_2\overline{x}
+\end{equation*}
+\begin{equation*}
+    b_2 = \frac{\sum_{i=1}^n(x_i - \overline{x}(y_i-\overbar{y}))}{\sum_{i=1}^n\left(x_i-\overbar{x}\right)^2}
+\end{equation*}
+
+
 \end{document}
 
