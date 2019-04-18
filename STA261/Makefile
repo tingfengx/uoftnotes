@@ -1,14 +1,10 @@
 SHELL = /bin/bash
 .PHONY: update push
 
-update:
-	git add .
-	git commit -m"Routine update (with Make)"
+all:
+        make test_statistic_manuel.pdf
 
 %.pdf: %.tex
-	pdflatex $<
-	pdflatex $<
-	rm -f *.aux *.log *.out *.toc
-
-push: update
-	git push
+        pdflatex $<
+        pdflatex $<
+        rm -f *.aux *.log *.out *.toc
