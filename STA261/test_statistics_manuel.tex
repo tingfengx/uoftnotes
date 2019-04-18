@@ -9,7 +9,6 @@
 \begin{document}
 \maketitle
 \tableofcontents
-\newpage
 \section{Test for $\mu = \mu_0$, w/$\sigma^2$ known}
 Assume that $X_i\sim N(\mu, \sigma^2)$ are i.i.d, then the test 
 statistic is
@@ -191,7 +190,7 @@ Consider $X_1,\ldots,X_n\sim N(\hat{\mu}, \sigma_0^2)$ where $\sigma_0^2$ is kno
 \end{equation*}
 
 \section{Simple Linear Regression}
-Consider the set $\{ (x_1,y_1),\ldots,(x_n,y_n) \}\subseteq \real^2$ and we want to find the line that
+Consider the data set $\{ (x_1,y_1),\ldots,(x_n,y_n) \}$ and we want to find the line that
 fits the best for our set of data. Let the hypothetical line be $y = b_1 + b_2 x$, then we define
 \begin{equation*}
     res_i = (y_i - b_1-b_2x_i)\,\,\text{is the deviation of $y_i$ from the line}
@@ -201,7 +200,28 @@ and to minimize $\sum_{i=1}^nres_i^2$ we need
     b_1 = \overline{y} - b_2\overline{x}
 \end{equation*}
 \begin{equation*}
-    b_2 = \frac{\sum_{i=1}^n(x_i - \overline{x}(y_i-\overbar{y}))}{\sum_{i=1}^n\left(x_i-\overbar{x}\right)^2}
+    b_2 = \frac{\sum_{i=1}^n(x_i - \overline{x})(y_i-\overline{y})}{\sum_{i=1}^n\left(x_i-\overline{x}\right)^2}
+\end{equation*}
+
+\section{Likelihood Method of Simple Linear Regression under Normal Distribution}
+First, there are several assumptions:
+\begin{itemize}
+    \item The conditional distribution of $Y$ is assumed to be Normal, $(Y|X=x)\sim N(\beta_1 + \beta_2x, \sigma^2)$
+    \item The mean of $Y$ is a linear function of $X$, $E[Y_i|X_1=x_i] = \beta_1 + \beta_2 x_i$
+    \item The variance $\sigma^2$ is a constant, $var[Y_i|X_i=x_i] = \sigma^2$
+    \item Let $(x_1,...,x_n)$ and $(y_1,...,y_n)$ be observed data of $X,Y$ respectively
+    \item Assume also that $y_i's$ are independent
+\end{itemize}
+then the likelihood function is
+\begin{equation*}
+    L(\beta_1,\beta_2,\sigma^2|data) = (2\pi \sigma^2)^{-n/2} e^{-\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i - \beta_1 - \beta_2x_i)^2}
+\end{equation*}
+which is maximized at
+\begin{equation*}
+    \hat{\beta}_1 = b_1 = \overline{y} - b_2\overline{x}
+\end{equation*}
+\begin{equation*}
+    \hat{\beta}_2 = b_2 = \frac{\sum_{i=1}^n(x_i - \overline{x})(y_i-\overline{y})}{\sum_{i=1}^n\left(x_i-\overline{x}\right)^2}
 \end{equation*}
 
 
