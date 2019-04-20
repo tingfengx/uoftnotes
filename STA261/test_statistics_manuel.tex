@@ -98,11 +98,11 @@ We set the $H_0: \mu_x - \mu_y = 0$, define $D = X-Y$, then $\mu_d = \mu_x - \mu
     T(D) = \frac{\Bar{D}}{s_d/\sqrt{n}} \sim t_{n-1}
 \end{equation*}
 
-\section{Restricted Likelihood Ratio Test}
+\section{Likelihood Ratio Test}
 Define
 \begin{equation*}
     \Lambda := \frac{max_{\theta \in 
-\Omega_0}[L(\theta)]}{L(\Hat{\theta})}
+\Omega_0}[L(\theta)]}{L(\Hat{\theta})} = \frac{\text{Restricted Likelihood}}{\text{Unrestricted Likelihood}}
 \end{equation*}
 Denoting $p = \dim\Omega =$ number of free var in the whole space, and 
 $d = \dim\Omega_0 =$ number of free var under our null hypothesis, we 
@@ -111,7 +111,7 @@ have
     T(X) = -2\ln{\Lambda} \xrightarrow{D} \chi^2_{df = p-d}
 \end{equation*}
 
-\section{Unrestricted Likelihood Ratio Test for Equality of $\mu_x = \mu_y$ for Normally Distributed Random Variables}
+\section{Likelihood Ratio Test for Equality of $\mu_x = \mu_y$ for Normally Distributed Random Variables}
 Consider i.i.d $X_1,\ldots,X_n \sim N(\mu_x, \sigma_x^2)$ and i.i.d $Y_1,\ldots,Y_m \sim N(\mu_y, \sigma_y^2)$. Notice that we have $p-d = 2 - 1 = 1$ in this case, and the likelihood is
 \begin{equation*}
     L(\mu_x, \mu_y) = \left\{\left(2\pi \sigma_x^2\right)^{-\frac{n}{2}}e^{-\frac{1}{2\sigma_x^2}\sum_i{\left(X_i - \mu_x\right)^2}}\right\} \left\{\left(2\pi \sigma_y^2\right)^{-\frac{m}{2}}e^{-\frac{1}{2\sigma_y^2}\sum_i{\left(Y_i - \mu_y\right)^2}}\right\} \\
