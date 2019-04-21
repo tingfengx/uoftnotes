@@ -130,7 +130,7 @@ where we remind ourselves that $\hat{\mu}_x = \Bar{x}$ and $\hat{\mu}_y = \Bar{y
 \end{equation*}
 
 \section{Chi-Square Test of Goodness of Fit}
-\subsection{Known categorical probabilities}
+\subsection{Known categorical probabilities}\footnote{This is usually used to test parameters.}
 Suppose, $X_1, X_2, \ldots, X_k$ are the observed counts of category $1, 2, \ldots, k$ respectively. Then
 \begin{equation*}
     (X_1, X_2, \ldots, X_k) \sim \text{Mult}(n, p_1, p_2, \ldots, p_k)~~~~\text{where}~E[X_i] = np_i (\geq 1), \forall i
@@ -139,7 +139,7 @@ and our test statistic will be, in this case
 \begin{equation*}
     T(X) = X^2 = \sum_{i = 1}^k \frac{\left(X_i - np_i\right)^2}{np_i} \xrightarrow{D} \chi^2_{(df=k-1)}
 \end{equation*}
-\subsection{Unknown categorical probabilities}
+\subsection{Unknown categorical probabilities}\footnote{This is usually used to test the fitting of a model. For example we wish to test if the out come of a dice(with unknown probabilities) is binomial, we can estimate, using MLE, the probabilities and the proceed as the previous case.}
 In this case, we have $X_1,\ldots,X_k\sim \text{Mult}(n, p_1(\theta), \ldots,p_k(\theta))$ and the test statistic will then be
 \begin{equation*}
     T(X) = X^2 = \sum_{i = 1}^k \frac{\left(X_i - np_i(\hat{\theta})\right)^2}{np_i(\hat{\theta})} \xrightarrow{D} \chi^2_{(df=k-1-\dim \Omega)}
