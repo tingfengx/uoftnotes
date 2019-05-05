@@ -2,9 +2,9 @@ SHELL = /bin/bash
 .PHONY: update push
 
 all:
-        make test_statistic_manuel.pdf
+	make test_statistics_manuel.pdf
 
 %.pdf: %.tex
-        pdflatex $<
-        pdflatex $<
-        rm -f *.aux *.log *.out *.toc
+	pdflatex $<
+	pdflatex $<
+	rm -f *.aux *.log *.out *.toc
