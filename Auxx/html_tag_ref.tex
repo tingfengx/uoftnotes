@@ -1,0 +1,127 @@
+% Meta data
+\documentclass[oneside, 12pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage[pdfencoding=auto, psdextra]{hyperref}
+\usepackage{fancyhdr} 
+\usepackage{youngtab}
+
+% customized commands
+\newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\field}{\mathbb{F}}
+\newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
+\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\proof}{\tit{\underline{Proof:}}} % This equivalent to the \begin{proof}\end{proof} block
+\newcommand{\proofforward}{\tit{\underline{Proof($\itemmmplies$):}}}
+\newcommand{\proofback}{\tit{\underline{Proof($\itemmmpliedby$):}}}
+\newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
+\newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
+\newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
+\newcommand{\map}[3]{\text{$\left[#1\right]_{#2}^{#3}$}}
+\newcommand{\dime}[1]{\text{dim}(#1)}
+\newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
+\newcommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
+\newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
+\newcommand{\itemmnductive}{\textsc{\underline{Inductive Step:}} }
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+% Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
+\newcommand{\para}[1]{\item \tbf{#1}}
+\newcommand{\va}{\mathbf{a}}
+\newcommand{\vb}{\mathbf{b}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\vu}{\mathbf{u}}
+\newcommand{\vw}{\mathbf{w}}
+\newcommand{\vx}{\mathbf{x}}
+\newcommand{\ve}{\mathbf{e}}
+\newcommand{\vy}{\mathbf{y}}
+\newcommand{\vz}{\mathbf{z}}
+\newcommand{\vzero}{\mathbf{0}}
+% For convenience, I am setting both of these to refer to the same thing.
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\itemm}[1]{\item \texttt{#1}}
+
+
+\pdfinfo{
+   /Author (Tingfeng Xia)
+   /Title  (HTML tag manuel)
+   /CreationDate (D:20190531)
+   /Subject (Web Development)
+}
+
+\title{%
+  \textbf{Web Development}\\
+  \large Guidance to attributes}
+\author{Tingfeng Xia}
+\date{2019.05}
+
+\begin{document}
+
+
+\maketitle
+\newpage % make a new page for actual contents, possibly a content table
+\mbox{}
+\vfill
+\noindent by Tingfeng Xia \\
+
+
+\noindent HyperText Markup Language, commonly referred to as HTML, 
+is the standard markup language used to create web pages. Although this langugage itself
+is not hard to learn, the huge amount of tags that where involved in the language usually make
+new learners feel overwhelmed at first contact. This manuel serves the pure purpose as a 
+look up manuel for all the tags. We will proceed alphabetically.
+\newpage
+
+\begin{itemize}
+	\itemm{<!-- ... -->} is the comment tag, the \texttt{...} inside is the comment
+	message. Notice that this supports multiline comments.
+	\itemm{<!DOCTYPE>} Ususally we put \texttt{<!DOCTYPE html>} as the first line in a html file
+	to tell the browser to use html 5 as the language. Do notice that browsers are indifferent
+	to the capitalization, but we do this to follow the convention.
+	\itemm{<a>} is the syntax for a hyper-reference, for example we can write 
+	\texttt{<a href="/path/to/something">go to something</a>} and this will generate a hyper-linked
+	text ``go to something'' which will take you to that something. Similiar to the way it is
+	in a Microsoft Office, the hyper-link has color to different its status: blue for not-clicked
+	and purple for already accessed. 
+	\itemm{<abbr>} defines an abbreviation. You can write, for example, 
+	\texttt{<abbr title="university of Toronto">UofT</abbr>}, which will display ``UofT'' on the
+	outside and when you hover your mouse over the word, the full name will appear.
+	\itemm{<address>} defines contact information. The typical uses (by convention) of the address tag are:
+		\begin{enumerate}
+			\item If the \texttt{<address>} tag is inside the body element, then it provides the info
+			for contacting the owner/writer of the entire document.
+			\item If the \texttt{<address>} tag is inside a article element, then it provides the info
+			for contacting the owner/writer of that particular article section.
+			\item Otherwise, the \texttt{<address>} tag is usually in the ``other'' part of footer 
+			section of the page.
+		\end{enumerate}
+		notice that by very string conventin we never use address tag directly for an address, unless 
+		the address is one part of a bigger family of information.
+	\itemm{<area>} defines area inside a click-able image, which means area is always inside a map tag.
+	We can use area for hyperlinks, for example \texttt{<area shape="rect/circle" coords="???" alt="??" href="?.htm">}, 
+	which will direct us to the \texttt{?.htm} refered upon clicked inside the coords for that paticular shape
+	\itemm{<article>} defines an area for article. This is paticularly useful for posts in a BBS, articles
+	in a blog, news or storys and comments that users leave on a certain site.
+
+\end{itemize}
+
+
+\end{document}
