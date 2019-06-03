@@ -35,6 +35,8 @@
 \newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
 \newcommand{\itemmnductive}{\textsc{\underline{Inductive Step:}} }
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+% tags that start w/ type setter fonts
+\newcommand{\itemm}[1]{\item \texttt{#1}}
 % Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
 \newcommand{\para}[1]{\item \tbf{#1}}
 \newcommand{\va}{\mathbf{a}}
@@ -57,7 +59,6 @@
 \newcommand{\be}{\mathbf{e}}
 \newcommand{\by}{\mathbf{y}}
 \newcommand{\bzero}{\mathbf{0}}
-\newcommand{\itemm}[1]{\item \texttt{#1}}
 
 
 \pdfinfo{
@@ -68,8 +69,8 @@
 }
 
 \title{%
-  \textbf{Web Development}\\
-  \large Guidance to attributes}
+  \textbf{Web Development - HTML language}\\
+  \large tags maunel}
 \author{Tingfeng Xia}
 \date{2019.05}
 
@@ -98,11 +99,11 @@ look up manuel for all the tags. We will proceed alphabetically.
 	to the capitalization, but we do this to follow the convention.
 	\itemm{<a>} is the syntax for a hyper-reference, for example we can write 
 	\texttt{<a href="/path/to/something">go to something</a>} and this will generate a hyper-linked
-	text ``go to something'' which will take you to that something. Similiar to the way it is
+	text ``go to something'' which will take you to that something. Similar to the way it is
 	in a Microsoft Office, the hyper-link has color to different its status: blue for not-clicked
 	and purple for already accessed. 
 	\itemm{<abbr>} defines an abbreviation. You can write, for example, 
-	\texttt{<abbr title="university of Toronto">UofT</abbr>}, which will display ``UofT'' on the
+	\texttt{<abbr title="university of Toronto">UofT</abbr>}, which will display \, ``UofT'' on the
 	outside and when you hover your mouse over the word, the full name will appear.
 	\itemm{<address>} defines contact information. The typical uses (by convention) of the address tag are:
 		\begin{enumerate}
@@ -113,14 +114,54 @@ look up manuel for all the tags. We will proceed alphabetically.
 			\item Otherwise, the \texttt{<address>} tag is usually in the ``other'' part of footer 
 			section of the page.
 		\end{enumerate}
-		notice that by very string conventin we never use address tag directly for an address, unless 
+		notice that by very strong convention we never use address tag directly for an address, unless 
 		the address is one part of a bigger family of information.
 	\itemm{<area>} defines area inside a click-able image, which means area is always inside a map tag.
 	We can use area for hyperlinks, for example \texttt{<area shape="rect/circle" coords="???" alt="??" href="?.htm">}, 
-	which will direct us to the \texttt{?.htm} refered upon clicked inside the coords for that paticular shape
-	\itemm{<article>} defines an area for article. This is paticularly useful for posts in a BBS, articles
-	in a blog, news or storys and comments that users leave on a certain site.
-
+	which will direct us to the \texttt{?.htm} refer-ed upon clicked inside the cords for that particular shape
+	\itemm{<article>} defines an area for article. This is particularly useful for posts in a BBS, articles
+	in a blog, news or stories and comments that users leave on a certain site.
+	\itemm{<aside>} defines a supplementary section for the article section (defined above). And
+	by very strong convention, the stuff inside the aside tag has to have connection with the near-by
+	article. In day to day use, this could be used as the side column (for annotations, comments, etc).
+	\itemm{<audio>} is for audio. The audio element supports MP3, Wav and Ogg. Notice that not every browser
+	supports such tag, so may wish put text inside this tag and those text will be displayed in cases that
+	the browser doesn't support the audio tag.
+	\itemm{<b>} stands for bold, one of the most commonly used tags if not the most common tag used.
+	\itemm{base} specifies, for thee page, the default absolute home path that will be used and the
+	default method that a new tab/page window will open upon clicking a hyper-refed link. For example,
+	as mentioned before, setting \texttt{target=\_blank} will tell the browser to open a new tab for
+	newly opened page. We shall put this inside the head section at the first line (and can only be
+	used once), so that the rest of the head section could benefit from this default setting.
+	\itemm{<bdi>} is called bi-directional isolation. This allows text inside this tag to be different
+	direction than the parent section. This may sound silly at first, but do remember that not all language
+	writes from left to right, for example Hebrew writes from right to left. But if that is the case,
+	your left and right is swapped inside these characters while they are still what used to be outside, and
+	this could confuse the compiler a lot. A typical use case would be a comment area that is designed
+	for multi-nation access where you have absolutely no control over what the users will post where it
+	would be a good idea to isolate each comment and allow their natural writing orientation. 
+	\itemm{<bdo>} is called bi-directional override. It has one required attribute \texttt{dir} which
+	we shall set to either \texttt{ltr} (left to right) or \texttt{rtl} (right to left) to specify the
+	direction that we want the text to appear in. 
+	\itemm{<big>} is for a bigger text size.
+	\itemm{<blockquote>} quotes a section of text which the browser typically indents a bit. You can
+	also set the \texttt{cite} attribute to mark the source of the information, but that will not be
+	displayed. 
+	\itemm{<body>} is one of the required tags for a html document, it specifies the body section of
+	the page, which is usually where the interesting stuff happens on a page lives.
+	\itemm{<br>} is an empty tag (meaning that it has no closing tag) that stands for break (for a new line).
+	\itemm{<button>} marks a button on a page.
+	\itemm{<canvas>} is a container section, meaning itself has no meaning while it relies on JavaScript
+	to ``draw'' on this canvas. Of course, you can still set the size of the canvas using attribute, 
+	not necessarily entirely rely on Scripts.
+	\itemm{<caption>} is the title for a table and oddly has to come after the table section. You can have
+	one (or none) caption per tableau. 
+	\itemm{<center>} is a deprecated, but yet somehow quite useful tag that forces the text to be
+	centred in a line (or as a section). 
+	\itemm{<cite>} defines the title for, for example, books, songs, albums, televisions and sculptures, etc.
+	Do notice that name for the creator is not considered as an element of the title.
+	\itemm{<code>} is a code block, similar to the texttt command in \LaTeX.
+	\itemm{<col>} 
 \end{itemize}
 
 
