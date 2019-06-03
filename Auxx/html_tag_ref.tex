@@ -161,7 +161,47 @@ look up manuel for all the tags. We will proceed alphabetically.
 	\itemm{<cite>} defines the title for, for example, books, songs, albums, televisions and sculptures, etc.
 	Do notice that name for the creator is not considered as an element of the title.
 	\itemm{<code>} is a code block, similar to the texttt command in \LaTeX.
-	\itemm{<col>} 
+	\itemm{<col>} in cooporation with \texttt{<colgroup>} sets attributes (layout aspect) for a entire
+	colgroup. This means that we can save ourselves from setting the layout for each cell seperately. 
+	\itemm{<colgroup>} is, as mentioned above, a grouping mechanism that allows coder to set attribute
+	for multiple cells as a group.
+	\itemm{<datalist>} specifies what stuff will show up inside an \texttt{<input>} tag, which acts as
+	an ``auto-fill'' mechanism that allows users to see a down drop table (and the options inside are
+	defined as a datalist object).
+	\itemm{<dd>} specifies an explainatory section and is often used together with tags \texttt{<dl>, <dt>}.
+	You don't have any particular restrictions inside a dd tag, you can still put paragraphs, links and tables, etc.
+	\itemm{<del>} marks that a section of text is deleted, and is usually represented in a browser as 
+	the text with a strok crossing it right in the middle. On the contrary, the \texttt{<ins>} tag 
+	represents newly added text and is usually underlined to stress the addtion.
+	\itemm{<details>} \underline{deprecated, only in chrome and safari 6}.
+	\itemm{<dfn>} stands definition. The font is extremely similar to oblique/italic so not recommended.
+	If you wish to make the visual effect more stunning, you can try CSS.
+	\itemm{<dialog>} defines a textbox, confirmation box or a new view-window. 
+	\itemm{<div>} defines a division, where you can have different default color settings and et-cetera. 
+	Although they are designed for formatting with HTML directly, it is often useful that we can group
+	items together and format them with CSS instead.
+	\itemm{<dl>} specifies a descriptive table. Mentioed before, it is used with \ldots
+	\itemm{<dt>} specifies a item's name  inside a descriptive table, it is used with \ldots
+	\itemm{<em>} stands for emphasize which basically looks like italic.
+	\itemm{<embed>} defines a container that allows ither applications to run. Most commonly used as
+	a container for flush animations. Use the src to specify where the external application is, for example
+	\texttt{<embed src="hah.swf">}
+	\itemm{<fieldset>} can divide a form upto similar/related elements. It will also create a box that
+	surrounds, to indicate an entity of fieldset. This is particularly useful for forms that have many
+	aspects. You can have fieldsets basic info, hobbies, education, et-cetera so that the form looks
+	organized -- each section contains and only contains that they should contain, nothing more and 
+	nothing less than that.
+	\itemm{<figcaption>} defines captions for \texttt{<figure>} tags. In naive words, this defines
+	what comes below a figure, usually an explainatory paragraph of what is the content of the picture.
+	\itemm{<figure>} is for the insertion of an image.
+	\itemm{<font>} defines a font section, in which all text inside have to obey the rules set inside
+	the font tag.
+	\itemm{<footer>} too common, omited
+	\itemm{<form>} is a section that interacts with the user, you can add text boxes, buttons in this 
+	section, more on this later
+	\itemm{<frame>} allows for display of multiple htm/html pages together side to side. Use \texttt{frameset}
+	to configure the layout of the page. (see below)
+	\itemm{<frameset>} 
 \end{itemize}
 
 
