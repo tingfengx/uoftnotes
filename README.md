@@ -10,8 +10,16 @@
    1. MAT237, Advanced Calculus, a short guide to theorems, lemmas and propositions. This particular set of notes was made together with @yuchenWYC. @AndyTQ also made some useful comments for the improvment of the .tex file. They are available here:  https://github.com/yuchenWYC/MAT237
    
 
-## Typesetting in $\LaTeX{}$
-There were a few macros that were created and used during the type-setting process to speed up the entire process, check them out in the .tex source files! I write my Q.E.D for proofs with characters QED in math caligraphy followed by a sword to say "I win!".
+## Typesetting in \LaTeX{}
+- Compiled using ```pdflatex```:
+   - On WSL Ubuntu:
+      ``````
+      ~$ pdflatex -v
+      pdfTeX 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian)
+      kpathsea version 6.2.3
+      Copyright 2017 Han The Thanh (pdfTeX) et al.
+      ``````
+- There were a few macros that were created and used during the type-setting process to speed up the entire process, check them out in the .tex source files! I write my Q.E.D for proofs with characters QED in math caligraphy followed by a sword to say "I win!".
 
 ## Makefile
 This Makefile contains several rules for pushing my routine updates to this repository. There is also a compiling dependency so that each time I push, it compiles a fresh pdf file if necessary.
