@@ -12,12 +12,13 @@
 
 ## Typesetting in \LaTeX{}
 - Compiled using ```pdflatex```:
-   ``````
-   ~$ pdflatex -v
-   pdfTeX 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian)
-   kpathsea version 6.2.3
-   Copyright 2017 Han The Thanh (pdfTeX) et al.
-   ``````
+   - On WSL Ubuntu:
+      ``````
+      ~$ pdflatex -v
+      pdfTeX 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian)
+      kpathsea version 6.2.3
+      Copyright 2017 Han The Thanh (pdfTeX) et al.
+      ``````
 - There were a few macros that were created and used during the type-setting process to speed up the entire process, check them out in the .tex source files! I write my Q.E.D for proofs with characters QED in math caligraphy followed by a sword to say "I win!".
 
 ## Makefile
