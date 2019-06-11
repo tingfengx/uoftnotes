@@ -1,5 +1,5 @@
 # uoftnotes 
-![Build status](https://ci.appveyor.com/api/projects/status/pjxh5g91jpbh7t84?svg=true)
+[![Build status](https://ci.appveyor.com/api/projects/status/pjxh5g91jpbh7t84?svg=true)](https://github.com/tingfengx/uoftnotes)
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ## Notes for some of my courses at University of Toronto 
