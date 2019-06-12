@@ -3,6 +3,8 @@
 [![made-with-latex](https://img.shields.io/badge/Made%20with-LaTeX-1f425f.svg)](https://www.latex-project.org/)
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![HitCount](http://hits.dwyl.io/tingfengx/uoftnotes.svg)](http://hits.dwyl.io/tingfengx/uoftnotes)
+
 
 ## Notes for some of my courses at University of Toronto 
 * The notes in this repository that are currently in edit are
@@ -25,7 +27,7 @@
 - There were a few macros that were created and used during the type-setting process to speed up the entire process, check them out in the .tex source files! I write my Q.E.D for proofs with characters QED in math caligraphy followed by a sword to say "I win!".
 
 ## Makefile
-This Makefile contains several rules for pushing my routine updates to this repository. There is also a compiling dependency so that each time I push, it compiles a fresh pdf file if necessary.
+ [Make](https://www.gnu.org/software/make/) is a build automation tool that automatically builds executable programs and libraries from source code by reading files called Makefiles which specify how to derive the target program. In the project, we are using it to automate the compilation of the pdf documents from the LaTeX source codes using ```pdflatex``` as well as clean up all the not needed auxilary log files. 
 
 ## License 
 [![licensebuttons by-nc-sa](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0)    
@@ -45,6 +47,8 @@ Note:
 - You do not have to comply with the license for elements of the material in the public domain or where your use is permitted by an applicable [exception or limitation](https://creativecommons.org/faq/#Do_Creative_Commons_licenses_affect_exceptions_and_limitations_to_copyright.2C_such_as_fair_dealing_and_fair_use.3F). I.e., The rights of users under exceptions and limitations, such as fair use and fair dealing, are not affected by the CC Licenses.
 - No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as [publicity, privacy, or moral rights](https://wiki.creativecommons.org/wiki/Considerations_for_licensors_and_licensees) may limit how you use the material.
 
-## Credits
+## Credits 
 - The markdown version of the license is from https://github.com/idleberg/Creative-Commons-Markdown by @idleberg
-- The Github License badges are from https://gist.github.com/lukas-h/40df8fcbac877be380591787e4af996c by @lukas-h
+- CC License badges are from https://gist.github.com/lukas-h/40df8fcbac877be380591787e4af996c by @lukas-h
+- Open Source badge from https://github.com/ellerbrock/open-source-badges/ by @ellerbrock
+- View count badge from https://github.com/dwyl/repo-badges by @dwyl
