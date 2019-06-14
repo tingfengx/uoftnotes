@@ -126,3 +126,4 @@
 \usepackage[pdfencoding=auto, psdextra]{hyperref}
 \usepackage{fancyhdr} 
 \usepackage{youngtab}
+\usepackage{ccicon} % This is not needed if just w't use the \ccLogo
