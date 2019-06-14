@@ -4,7 +4,7 @@
 [![made-with-bash](https://img.shields.io/badge/Made%20with-Bash-1f425f.svg)](https://www.gnu.org/software/bash/)
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
-[![HitCount](http://hits.dwyl.io/tingfengx/uoftnotes.svg)](http://hits.dwyl.io/tingfengx/uoftnotes)
+<!-- [![HitCount](http://hits.dwyl.io/tingfengx/uoftnotes.svg)](http://hits.dwyl.io/tingfengx/uoftnotes) -->
 
 
 
@@ -17,19 +17,18 @@
    1. MAT237, Advanced Calculus, a short guide to theorems, lemmas and propositions. This particular set of notes was made together with @yuchenWYC. @AndyTQ also made some useful comments for the improvment of the .tex file. They are available here:  https://github.com/yuchenWYC/MAT237
    
 
-## Typesetting in \LaTeX{}
+## Typesetting in \LaTeX
 - Compiled using ```pdflatex```:
-   - On WSL Ubuntu:
-      ``````
-      ~$ pdflatex -v
-      pdfTeX 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian)
-      kpathsea version 6.2.3
-      Copyright 2017 Han The Thanh (pdfTeX) et al.
-      ``````
+   ``````
+   $ pdflatex -v
+   pdfTeX 3.14159265-2.6-1.40.18 (TeX Live 2017)
+   kpathsea version 6.2.3
+   Copyright 2017 Han The Thanh (pdfTeX) et al.
+   ``````
 - There were a few macros that were created and used during the type-setting process to speed up the entire process, check them out in the .tex source files! I write my Q.E.D for proofs with characters QED in math caligraphy followed by a sword to say "I win!".
 
 ## Makefile
- [Make](https://www.gnu.org/software/make/) is a build automation tool that automatically builds executable programs and libraries from source code by reading files called Makefiles which specify how to derive the target program. In the project, we are using it to automate the compilation of the pdf documents from the LaTeX source codes using ```pdflatex``` as well as clean up all the not needed auxilary log files. 
+[Make](https://www.gnu.org/software/make/) is a build automation tool that automatically builds executable programs and libraries from source code by reading files called Makefiles which specify how to derive the target program. In the project, we are using it to automate the compilation of the pdf documents from the LaTeX source codes using ```pdflatex``` as well as clean up all the not needed auxilary log files. 
 
 ## License 
 [![licensebuttons by-nc-sa](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0)    
