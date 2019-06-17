@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[FIX PENDING]"
 labels: ''
-assignees: ELO1SA
+assignees: tingfengx
 
 ---
 
