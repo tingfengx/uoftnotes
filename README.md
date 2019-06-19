@@ -20,11 +20,17 @@
 ## Typesetting in \LaTeX
 - Compiled using ```pdflatex```:
    ``````
-   $ pdflatex -v
+   $ pdflatex --version
    pdfTeX 3.14159265-2.6-1.40.18 (TeX Live 2017)
    kpathsea version 6.2.3
    Copyright 2017 Han The Thanh (pdfTeX) et al.
    ``````
+- Compilation automated with ```latexmk```:
+   ``````
+   $ latexmk --version
+   Latexmk, John Collins, 21 May 2019. Version 4.64a
+   ``````
+   This is particularly useful to automate the multiple runs of ```pdflatex``` needed for some documents.
 - There were a few macros that were created and used during the type-setting process to speed up the entire process, check them out in the .tex source files! I write my Q.E.D for proofs with characters QED in math caligraphy followed by a sword to say "I win!".
 
 ## Makefile
