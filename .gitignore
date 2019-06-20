@@ -1,3 +1,4 @@
 .DS_Store
 STA261/.Rhistory
 .vscode/settings.json
+*.synctex.gz
