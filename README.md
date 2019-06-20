@@ -21,13 +21,13 @@
 - Compiled using ```pdflatex```:
    ``````
    $ pdflatex --version
-   pdfTeX 3.14159265-2.6-1.40.18 (TeX Live 2017)
-   kpathsea version 6.2.3
-   Copyright 2017 Han The Thanh (pdfTeX) et al.
+   pdfTeX 3.14159265-2.6-1.40.20 (TeX Live 2019)
+   kpathsea version 6.3.1
+   Copyright 2019 Han The Thanh (pdfTeX) et al.   
    ``````
 - Compilation automated with ```latexmk```:
    ``````
-   $ latexmk --version
+   $ latexmk -version
    Latexmk, John Collins, 21 May 2019. Version 4.64a
    ``````
    This is particularly useful to automate the multiple runs of ```pdflatex``` needed for some documents.
