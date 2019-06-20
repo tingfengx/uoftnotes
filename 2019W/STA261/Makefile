@@ -1,10 +1,11 @@
 SHELL = /bin/bash
-.PHONY: update push
+.PHONY: clean all
 
-all:
-	make test_statistics_manuel.pdf
+all: *.tex
+	latexmk -pdf
 
-%.pdf: %.tex
-	pdflatex $<
-	pdflatex $<
-	rm -f *.aux *.log *.out *.toc
+write:
+	latexmk -pdf -pvc
+
+clean:
+	latexmk -c
