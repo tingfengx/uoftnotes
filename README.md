@@ -10,7 +10,7 @@
 
 ## :book: Notes for some of my courses at University of Toronto 
 <!-- * The notes in this repository that are currently in edit are -->
-* Notes that has ready finished typesetting:
+* Notes that have already finished typesetting:
    - 2019 Winter
       1. MAT224, Linear Algebra II. Collection of (nearly) all the theorems presented in the book/mentioned during lecture. 
       2. STA261, Statistics II. A manuel for common test statistics.
