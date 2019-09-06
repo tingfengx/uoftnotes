@@ -79,4 +79,24 @@
 \tableofcontents
 \newpage
 
+\section{Truth Tables}
+\subsection{Summary} First we remark that we are here talking about binary operators, 
+so they will have and only have two operands. We have the following to consider:
+\begin{itemize}
+    \item \textbf{Logical OR ($\vee$)} is true when either one of the operands is true. 
+        It evaluates to false otherwise.
+    \item \textbf{Logical AND ($\land$)} is true when both of the operands are true and false otherwise.
+    \item \textbf{Implication ($\implies$)} is true in two cases. The first case is when the
+        first operand is false and second case is when both operands are true.
+    \item \textbf{Double implication, Iff ($\iff$)} is true when either both operands are true 
+        or when both operands are false.
+\end{itemize}
+
+\subsection{Full truth tables}
+Example: \footnote{This example was adapted from Scharer 4.4 EG3.}
+evaluate $(P\land \neg Q)\vee R. ~~\neg R\vee Q. ~~\therefore \neg P\implies Q$. Notice that this is equivalent to evaluating
+\begin{equation*}
+    \left(\left(\left(P\land \neg Q\right)\vee R \right) \land \left(\neg R\vee Q\right)\right) \implies \neg P\implies Q
+\end{equation*}
+and by staring at it we see this statement is valid and only valid when $(P,Q,R)\in \{(T,T,T),(T,F,F),(F,T,T)\}$, which has a non-null set of solution. Hence the statement is consistent.
 \end{document}
