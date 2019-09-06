@@ -7,7 +7,7 @@
 \usepackage{amssymb}
 \usepackage{url}
 \usepackage{hyperref}
-\usepackage{fancyhdr} 
+\usepackage{fancyhdr}
 \usepackage{youngtab}
 \usepackage[
     type={CC},
@@ -96,7 +96,7 @@ also, we say that $\boldf$ is continuous if $\boldf$ is continuous at every poin
 \end{equation*}
 \paragraph{Theorem: (Properties of Continuity)} Consider $S\subseteq \real^n, \va\in S$
 \begin{enumerate}
-    \item A vector valued function $\boldf:S\rightarrow{} \real^k$ is CTS at $\va$ if and only if all of its component real valued functions are CTS at $\va$. 
+    \item A vector valued function $\boldf:S\rightarrow{} \real^k$ is CTS at $\va$ if and only if all of its component real valued functions are CTS at $\va$.
     \item If two vector valued functions each are CTS at $\va$, then so is their sum.
     \item If two real valued functions $f,g$ each are CTS at $\va$, then so is their product. In addition if $g(\va) \neq 0$, then $f/g$ is also CTS at $\va$
     \item If the vectors valued functions $\boldf$ is CTS at $\va$, and $\bg$ is CTS at $\boldf(\va)$, then so is their composition $\bg\circ\boldf$. Notice that here we are implicitly assuming the two functions are compatible to each other in composition.
@@ -109,12 +109,12 @@ also, we say that $\boldf$ is continuous if $\boldf$ is continuous at every poin
     \item For every open set $U\subseteq \real^k$, the set $\{ \vx\in \real^n:\boldf(\vx)\in U \}$ is open
     \item For every open set $K\subseteq \real^k$, the set $\{ \vx\in \real^n:\boldf(\vx)\in K \}$ is closed
 \end{itemize}
-There is a big family of question that is based on this equivalence relationship. Consider $S = \{ \vx\in \real^3: f(\vx)\in T \}, T\subseteq \text{domain of $f$}$. Then, using the fact that $f$ is CTS function, we can know that the set $S$ is closed/open iff the pre-image $T$ is closed/open. 
+There is a big family of question that is based on this equivalence relationship. Consider $S = \{ \vx\in \real^3: f(\vx)\in T \}, T\subseteq \text{domain of $f$}$. Then, using the fact that $f$ is CTS function, we can know that the set $S$ is closed/open iff the pre-image $T$ is closed/open.
 
 \paragraph{Recognizing Sets} The general principle is: if any set is defined using continuous functions (possibly more than one of them) and strict inequalities (i.e., $<$ or $>$) then we instantly recognize it as open. And if any set is defined using continuous functions and non-strict inequalities (i.e., $\leq$ or $\geq$) or equality, then we instantly recognize it as closed.
 
 \subsection{Sequences and Completeness}
-\paragraph{Theorem: (Bounded Sequence Theorem)} Every bounded sequence in $\real^n$ has a subsequence that converges to a limit. 
+\paragraph{Theorem: (Bounded Sequence Theorem)} Every bounded sequence in $\real^n$ has a subsequence that converges to a limit.
 \paragraph{Theorem.} Let $\{\va_j\}_j\subseteq \real^n$ be sequence, let $\mathbf{L} = (L_1,...,L_n)\in \real^n$, then
 \begin{equation*}
     \lim_{j\to \infty}\ba_j = {\bf L} \iff \lim_{j\to \infty}a_{jk} =  L_k \mbox{ for all }k=1,\ldots, n
@@ -139,7 +139,7 @@ There is a big family of question that is based on this equivalence relationship
 \paragraph{Definition: Compactness} A set $S\subseteq \real^n$ is said to be compact if every sequence is $S$ has a subsequence that converges to a limit in $S$.
 \paragraph{Theorem: (Bolzano-Weierstrass)} Let $S$ be a subset of the $n$ dimensional Euclidean space $\real^n$, then $S$ is compact if and only if $S$ is closed and bounded. \textbf{Remark:} In fact, compactness was a generalization of closed and bounded in spaces other than $\real^n$.
 
-\paragraph{Proposition.} If $\{ \vx_j \}_j$ is a convergent sequence in a closed set $S\subseteq \real^n$, then the limit of the sequence must belong to $S$. 
+\paragraph{Proposition.} If $\{ \vx_j \}_j$ is a convergent sequence in a closed set $S\subseteq \real^n$, then the limit of the sequence must belong to $S$.
 
 \paragraph{Theorem: (EVT)} Assume that $K$ is a compact subset of $\real^n$, and that $f:K\rightarrow{}\real$ is continuous. Then
 \begin{equation*}
@@ -151,13 +151,13 @@ and there exists $\vx^*$ and $\vx_*$ in $K$ such that
 \end{equation*}
 When we have $\vx^*$ as above, we say that $f$ attains its supremum, and when there exists $\vx_*$, we that $f$ attains its infimum. This theorem is of crucial importance in circumstances of optimization problems, since we usually have to know that some solution exists in order to have our calculations make sense.
 
-\paragraph{Definition: Uniform Continuity} A function $\boldf: S \subseteq \real^n \rightarrow{} \real^k$ is uniformly continuous if 
+\paragraph{Definition: Uniform Continuity} A function $\boldf: S \subseteq \real^n \rightarrow{} \real^k$ is uniformly continuous if
 \begin{equation*}
-    \forall \epsilon >0, \exists \delta>0 \mbox{ such that } \ \ 
-    \left. 
+    \forall \epsilon >0, \exists \delta>0 \mbox{ such that } \ \
+    \left.
     \begin{array}{r} \bx, \by\in S\mbox{ and } \\ |\bx - \by|< \delta
     \end{array}
-    \right\} 
+    \right\}
     \implies |\boldf(\bx) - \boldf(\by)|<\epsilon.
 \end{equation*}
 Notice that this is different from the definition of the normal continuity. In naive words, if a function is continuous, then at every value it can take, there would be some box (whose measures could depend on the value) that captures the function in the sense that the function doesn't escape. However, here we lost the dependence of the input, so there has to be some ``box'' that works everywhere.
@@ -180,14 +180,14 @@ such that $\gamma(s)\in S,\forall s\in [0,1]$
 \paragraph{Definition: 1-Var Diff-able}  The following are equivalent definitions:
 \begin{align}
     &\lim_{h\to 0} \frac{f(x+h) - f(x)}{h}  = m\nonumber  \\
-    &\qquad \iff \qquad 
+    &\qquad \iff \qquad
     \lim_{h\to 0} \frac{ f(x+h) - f(x)-mh}{h}  = 0
     \nonumber \\
-    &\qquad \iff \qquad 
+    &\qquad \iff \qquad
     E(h) := f(x+h) - f(x)-mh  \quad \mbox{ satisfies } \lim_{h\to 0}\frac{E(h)}{h}=0
     \nonumber \\
-    &\qquad \iff \qquad 
-    f(x+h)=f(x)+mh+E(h)~~\text{and}~\lim_{h \to 0}\frac{E(h)}{h} = 0\nonumber 
+    &\qquad \iff \qquad
+    f(x+h)=f(x)+mh+E(h)~~\text{and}~\lim_{h \to 0}\frac{E(h)}{h} = 0\nonumber
 \end{align}
 
 \paragraph{Definition: Mult-Var Diff-able} Assume that $f:S\subseteq \real^n \to \real$, where $S$ is an open subset. We say that $f$ is differentiable at $\vx\in S$ if there exists $\vm\in \real^n$ such that
@@ -200,9 +200,9 @@ and when this holds, we define $\nabla f(\vx) = \vm$. \textbf{Alternatively}, we
 \end{equation*}
 when this holds, we also define $\nabla f(\vx) = \vm$.
 
-\paragraph{Theorem: (Diff-able Implies CTS)} Assume that $f:S\to \real$, where $S$ is an open subset of $\real^n$, and that $\vx\in S$. If $f$ is differentiable at $\vx$, then $f$ is continuous at $\vx$. 
+\paragraph{Theorem: (Diff-able Implies CTS)} Assume that $f:S\to \real$, where $S$ is an open subset of $\real^n$, and that $\vx\in S$. If $f$ is differentiable at $\vx$, then $f$ is continuous at $\vx$.
 
-\paragraph{Definition: Partial Derivative} Recall that we have defined $\ve_j$ to be the unit vector in $\real^n$ in the $j$-th coordinate direction. If $f$ is a function defined on an open subset $S\subseteq \real^n$, then at a point $\vx\in S$, we define 
+\paragraph{Definition: Partial Derivative} Recall that we have defined $\ve_j$ to be the unit vector in $\real^n$ in the $j$-th coordinate direction. If $f$ is a function defined on an open subset $S\subseteq \real^n$, then at a point $\vx\in S$, we define
 \begin{equation*}
     \frac{\partial f}{\partial x_j}(\vx):= \lim_{h\to 0}\frac{f(\vx + h\ve_j) - f(\vx)}{h}
 \end{equation*}
@@ -223,7 +223,7 @@ However, do notice that the converse is \textbf{\textit{not}} true. It could cer
     \partial_\vu f(\vx) = \vu\cdot \nabla f(\vx)
 \end{equation*}
 
-\paragraph{Theorem: (Fastest Increase, Fundamental Principle)} Assume that $S$ is an open subset of $\real^n$ and that $f:S\to \real$ is differentiable. At any point $\vx\in S$, the direction of most rapid increase $\vu^*$ is the vector such that 
+\paragraph{Theorem: (Fastest Increase, Fundamental Principle)} Assume that $S$ is an open subset of $\real^n$ and that $f:S\to \real$ is differentiable. At any point $\vx\in S$, the direction of most rapid increase $\vu^*$ is the vector such that
 \begin{equation*}
     \partial_{\vu^*}f(\vx) = \max\{ \partial_\vu f(\vx): \vu~\text{is some unit vec} \}
 \end{equation*}
@@ -245,8 +245,8 @@ when this holds, we say that $M$ is the derivative of $\boldf$ at $\va$, and we 
 
 \paragraph{Theorem: (Jacobian Matrix)} Suppose that $S$ is an open subset of $\real^n$. Then a function $\boldf:S\to\real^m$ is differentiable at a point $\va\in S$ if and only if the component functions $f_j$ are differentiable at $\va$ for every $j = 1,...,m$. Moreover, the Jacobian Matrix could be calculated by
 \begin{equation*}
-    D\boldf(\ba) = 
-    \left(\begin{array}{ccc} 
+    D\boldf(\ba) =
+    \left(\begin{array}{ccc}
     \partial_1 f_1& \cdots &\partial_n f_1\\
     \partial_1 f_2& \cdots &\partial_n f_2\\
     \vdots&\ddots&\vdots\\
@@ -296,7 +296,7 @@ This may seem a bit abstract to apply, so we shall see this in action through an
 We like sets with this property in this context since we want the geometric assumption of MVT to be satisfied. Indeed, convex-ness guarantees ``straight line connected-ness''.\newline
 \textbf{Some Important Results}:
 \begin{enumerate}
-    \item The intersection of convex sets is convex, while the union of convex sets need not be convex. 
+    \item The intersection of convex sets is convex, while the union of convex sets need not be convex.
     \item If a set in $\real^n$ qualifies for a subspace, then it is convex. In particular, the Kernel and Image are convex.
     \item If $L: \real^n \to \real^m$ is a function of the form $L(\vx) = A\vx + \vb$, where $A$ is an $m\times n$ matrix and $\vb \in \real^m$ and if $S$ is convex subset of $\real^n$, then
     \begin{equation*}
@@ -353,7 +353,7 @@ In solving a question of $f:\real^2 \rightarrow{} \real$ we could use the follow
 \begin{enumerate}
     \item Calculate the gradient of $F$, equating it to zero to find the critical points
     \item Calculate the Hessian of $F$, find the corresponding matrices for each critical points, where the Hessian is defined as
-    \begin{equation*} H(f) = 
+    \begin{equation*} H(f) =
         \begin{bmatrix}
              \partial_{xx}f & \partial_{xy}f = \partial_{yx}f \\
              \partial_{xy}f = \partial_{yx}f & \partial_{yy}f
@@ -372,4 +372,6 @@ In solving a question of $f:\real^2 \rightarrow{} \real$ we could use the follow
 \end{enumerate}
 
 \paragraph{(Non)-Degenerateness} If $f$ is a $\mathcal{C}^2$ function and $\va$ is a critical point of $f$, we say that a critical point is \textbf{degenerate} if $\det H(\va) = 0$, and \textbf{non-degenerate} otherwise.
+
+stuff here
 \end{document}
