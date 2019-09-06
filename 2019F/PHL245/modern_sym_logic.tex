@@ -90,13 +90,19 @@ so they will have and only have two operands. We have the following to consider:
         first operand is false and second case is when both operands are true.
     \item \textbf{Double implication, Iff ($\iff$)} is true when either both operands are true 
         or when both operands are false.
+    \item \textbf{Negation ($\neg$\footnote{Or in this course, we may see $\sim$})} is true when the operand
+        is false and false otherwise.
 \end{itemize}
 
 \subsection{Full truth tables}
 Example: \footnote{This example was adapted from Scharer 4.4 EG3.}
-evaluate $(P\land \neg Q)\vee R. ~~\neg R\vee Q. ~~\therefore \neg P\implies Q$. Notice that this is equivalent to evaluating
+evaluate $(P\land \neg Q)\vee R. ~~\neg R\vee Q. ~~\therefore \neg P\implies Q$. 
+Notice that this is equivalent to evaluating
 \begin{equation*}
-    \left(\left(\left(P\land \neg Q\right)\vee R \right) \land \left(\neg R\vee Q\right)\right) \implies \neg P\implies Q
+    \left(\left(\left(P\land \neg Q\right)\vee R \right) \land 
+    \left(\neg R\vee Q\right)\right) \implies \neg P\implies Q
 \end{equation*}
-and by staring at it we see this statement is valid and only valid when $(P,Q,R)\in \{(T,T,T),(T,F,F),(F,T,T)\}$, which has a non-null set of solution. Hence the statement is consistent.
+and by staring at it we see this statement is valid and only valid
+ when $(P,Q,R)\in \{(T,T,T),(T,F,F),(F,T,T)\}$, which has a non-null 
+ set of solution. Hence the statement is consistent.
 \end{document}
