@@ -79,6 +79,36 @@
 \tableofcontents
 \newpage
 
+\section{Arguments}
+\subsection{Validity}
+We say a deductive argument is valid iff it is not invalid. This means that we can
+find out if a argument is valid or not by assessing the possiblity of the case where 
+the premise is true and conclusion is false.
+\subsection{Soundness}
+We say a deductive argument is sound iff it is 
+\begin{itemize}
+    \item It is valid
+    \item All the premises are TRUE
+\end{itemize}
+
+\section{Semantics in Sentential Logic}
+\subsection{Syntax}
+\paragraph{Sentential Logic(SL)} Complex (compound) statements are all built up by joining statements together using LOGICAL CONNECTIONS.
+we have $\wedge, \vee, \rightarrow, \leftarrow, \sim$. Where $\sim$ is the only unitary connector and others are binary.
+
+\paragraph{Atomic vs Molecular} A \textbf{statement} is Atomic if it has no logical connector and is molecular otherwise. We use \textbf{P-Z letters} to represent \textbf{atomic statments}
+Here is an example: You can have fries or salad. $\equiv P \vee Q.$ Then, $P$ is ``You can have fires'' and $Q$ is ``You can have salad''. Notice that we are folowing the definition that $P$ and $Q$ are \textbf{statments}.
+
+\paragraph{Informal Notation Hierachy}\footnote{We use this Informal notation because the formal one is cumbersome. But in order to use the informal one, we have some conventions to follow.} 
+We shall see this through some examples:
+\begin{itemize}
+    \item In official notation, we need $(P\vee Q)$ while it is safe to drop the parenthesis.
+\end{itemize}
+We can check if a statment is official or informal if it has the same number of brackets as binary connectors in the statement. If you see a bracket around a unitary connector, the sentence is not well-formed.
+\textbf{Right Most Rule} We say the rightmost connector in a sentence with connectors of the same level the main connector.
+
+
+
 \section{Truth Tables}
 \subsection{Summary} First we remark that we are here talking about binary operators, 
 so they will have and only have two operands. We have the following to consider:
