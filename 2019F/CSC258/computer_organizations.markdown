@@ -1,12 +1,12 @@
 # CSC258 Computer Organizations, Fall Term, 2019
 [![licensebuttons by-nc-sa](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0)   
-##### Bulletpoint notes by [Tingfeng Xia](https://tingfengx.github.io/). Work licensed under a creative commons non-comercial share-alike 4.0 license. This is not meant to be a set of comprehensive notes, rather it is a bullet list of material from the course that I personally find not exactly straightforward.
+##### Bulletpoint notes by [Tingfeng Xia](https://tingfengx.github.io/). Work licensed under a creative commons non-comercial share-alike 4.0 license. This is not meant to be a set of comprehensive notes, rather it is my pick of bullet list of material from the course.
+
 
 ### Table of Contents
 <!-- #### 1. [Digital Logic](#digital_logic) -->
 #### 1. [Transistors](#transistors)  
 #### 2. [Circuits](#circuits)  
-<br>
 
 <!-- ## Digital_Logic -->
 ## Transistors
@@ -49,3 +49,73 @@ The nMOS is formed by a npn combination of deoped semi-conductors. There is a me
 The pMOS transistor is formed by a pnp combination of doped semi-conductors. Generally the same as the above case. <b>Note:</b> logic zero is differect from not applying voltage!!! Only zero voltage applied will cause the positive charges to gather at the top and allow a p-type channel hence allowing conducting electrocity.
 
 ## Circuits
+### Minterms & Maxterms
+[This](https://qr.ae/TWKlkb) quora answer explained these two concepts well and I hereby ackowledge that I quoted this answer in my explaination.
+#### Standard Truth Table (Format)
+A standard truth table is a truth table such that the first column of input has first half equal to zero and second half equal to to one; the sencond column is divided into two parts the upper half and the lower one and in each half: the top half is zero and lower half is filled with one; and on and on and so on... The verbal description may be hard to understand, we shall see this through a example. Say we have three inputs A, B and C with one output Y.
+| A 	| B 	| C 	| Y 	|
+|---	|---	|---	|---	|
+| 0 	| 0 	| 0 	|   	|
+| 0 	| 0 	| 1 	|   	|
+| 0 	| 1 	| 0 	|   	|
+| 0 	| 1 	| 1 	|   	|
+| 1 	| 0 	| 0 	|   	|
+| 1 	| 0 	| 1 	|   	|
+| 1 	| 1 	| 0 	|   	|
+| 1 	| 1 	| 1 	|   	|
+
+#### Minterms
+Minterms are rows in a standard truth table that has a one as output. They are labled with index, starting from the first row as index zero. A minterm is a product (AND) of all variables in the function, in direct or complemented form. (Intuition hehind naming:) A minterm has the property that it is equal to 1 on exactly one row of the truth table.
+
+<b>Formal: </b>an AND expression *with every input present* in true or complemented form. So for example given inputs A, B, C and D, valid minterms could look like $A\cdot \bar{B}\cdot C \cdot D$ or $\bar{A}\cdot B \cdot \bar{C}\cdot D$ et cetra, et cetra. 
+
+#### Maxterms
+Maxterms are rows in a standard truth table that has zero as output. A maxterm is a sum (OR) of all the variables in the function, in direct or complemented form. A maxterm has the property that it is equal to 0 on exactly one row of the truth table.
+
+**Formal:** an OR expression *with every input present* in true or a complemented form. 
+
+#### Memorizing Min&Max 0's and 1's
+    min 0\bar{1}
+In case of min term, if it is with bar, then it is one. W/o bar means zero. Min has first syllable `m` so 0和1中的min‘没’有bar  
+
+    max \bar{0}1
+In case of max term, if it is with bar, then it is zero. W/o bar means one. Max has first syllable `M` so 0和1中的Max‘没’有bar
+
+#### Sum-of-Minterms & Product-of-Maxterms
+Sum of Minterm is a way of expressing which inputs cause the output to go high under the assumption that the index is the index of the row in a standard truth table. This method gives us a more compact way to display the entire truth table. Sum of Minterms are useful in calses with very few input combinations that produce high output. While Product of Maxterms is useful when expressing truth tables that have very few low output cases.
+
+An interesting property is that $m_x = \bar{M}_x$, Minterm x is the complement of Maxterm x. For example: $m_0 = \bar{A}\cdot \bar{B}\implies M_0 = A + B$. We can also convert min/max term back and forth. For example a 2-input XOR gate has SOM form $F = m_1 + m_3$ and this is equivalent to the POM form $F = M_0 \cdot M_3 (=(A+B)(\bar{A} + \bar{B}))$ which indeed the XOR gate.
+
+### Reducing Circuits
+#### Boolean Algebra
+##### Axioms
+1. $0\cdot 0 = 0$
+2. $0\cdot 1 = 1\cdot 0 = 0$
+3. $1\cdot 1 = 1$
+4. $x=1 \implies \bar{x} = 0$
+##### Consequence of Axioms
+1. $x\cdot 0 = 0$
+2. $x\cdot 1 = x$
+3. $x\cdot x = x$
+4. $x\cdot \bar{x} = 0$
+5. $\bar{\bar{x}} = x$
+6. $x+1= 1$
+7. $x+0 = x$
+8. $x+x=x$
+9. $x+\bar{x} = x$
+10. $x+\bar{x} = 1$
+##### Commutative Law
+$x\cdot y = y \cdot x$ and $x+y = y+x$
+##### Associative Law
+$x\cdot(y\cdot z) = (x\cdot y) \cdot z$ and $x+(y+ z) = (x+ y) + z$
+##### Distributive Law
+$x\cdot (y+z) = x\cdot y + x\cdot z$ and $x+(y\cdot z) = (x+y)\cdot (x+z)$
+##### Consensus Law ?
+$x\cdot y + \bar{x}\cdot z + y\cdot z = x\cdot y + \bar{x}\cdot z$
+##### Absorption Law
+$x\cdot(x+y) = x$ and $x+(x\cdot y) = x$
+##### DeMorgan's Law
+$\bar{x}\cdot \bar{y} = \overline{x+y}$ and $\bar{x} + \bar{y} = \overline{x\cdot y}$
+
+#### Karnaugh Maps
+
