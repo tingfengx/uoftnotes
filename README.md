@@ -10,6 +10,10 @@
 
 ## :book: Notes for some of my courses at University of Toronto 
 <!-- * The notes in this repository that are currently in edit are -->
+* Notes in progress:
+   - 2019 Fall
+      1. CSC258, Computer Organizations.
+      2. PHL245, Modern Symbolic Logic.
 * Notes that have already finished typesetting:
    - 2019 Winter
       1. MAT224, Linear Algebra II. Collection of (nearly) all the theorems presented in the book/mentioned during lecture. 
