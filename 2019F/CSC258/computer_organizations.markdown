@@ -41,9 +41,11 @@ Hence the application of voltage decreased the depletion layer and made the pn-j
 In this case the p-type end, which is originaly more negative, gets negative, which means gaining more electron so it further increases the width of the depletion layer. (Similar for the n-type end) So all in all, the depletion layer increases and hence the pn-junction becomes insulating. 
 
 ### MOSFET
-Metal Oxide Semiconductor Field Effect Transistor; There are two types of nMOS and pMOS; 
+Metal Oxide Semiconductor Field Effect Transistor; There are two types of nMOS and pMOS; Notice that in both nMOS and pMOS, if we don't apply any voltage to them, the transistor acts as a two way insulator since at least one way the depletion layer will increase. 
 #### nMOS (n-type channel formed; voltage apply -> conduct)
-The nMOS is formed by a npn combination of deoped semi-conductors. 
+The nMOS is formed by a npn combination of deoped semi-conductors. There is a metal connection (The M in MOSFET) called gate at the top of the p-type substrat. When a 5V voltage is applied to the gate, electrons will gather at the top of the p-type substrat and then the two n-type substrats are connected through this n-type channel.
 
+#### pMOS (p-type channel formed; logic zero -> conduct; w/ circ)
+The pMOS transistor is formed by a pnp combination of doped semi-conductors. Generally the same as the above case. <b>Note:</b> logic zero is differect from not applying voltage!!! Only zero voltage applied will cause the positive charges to gather at the top and allow a p-type channel hence allowing conducting electrocity.
 
 ## Circuits
