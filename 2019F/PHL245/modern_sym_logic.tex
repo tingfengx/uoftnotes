@@ -124,6 +124,18 @@ so they will have and only have two operands. We have the following to consider:
         is false and false otherwise.
 \end{itemize}
 
+\subsection{Sementic Properties in Truth Tables}
+\begin{itemize}
+    \item Tautology if always true
+    \item Contradiction if always false 
+    \item Contangent if mixed
+    \item Consistent if there exists a row where the conclusion is all true
+    \item Inconsistent if all rows are not all true, negation of the consistent
+    \item Logically equivalent if two sentences have the same truth table
+\end{itemize}
+
+
+
 \subsection{Full truth tables}
 Example: \footnote{This example was adapted from Scharer 4.4 EG3.}
 evaluate $(P\land \neg Q)\vee R. ~~\neg R\vee Q. ~~\therefore \neg P\implies Q$. 
@@ -132,7 +144,7 @@ Notice that this is equivalent to evaluating
     \left(\left(\left(P\land \neg Q\right)\vee R \right) \land 
     \left(\neg R\vee Q\right)\right) \implies \neg P\implies Q
 \end{equation*}
-and by staring at it we see this statement is valid and only valid
- when $(P,Q,R)\in \{(T,T,T),(T,F,F),(F,T,T)\}$, which has a non-null 
- set of solution. Hence the statement is consistent.
+% and by staring at it we see this statement is valid and only valid
+%  when $(P,Q,R)\in \{(T,T,T),(T,F,F),(F,T,T)\}$, which has a non-null 
+%  set of solution. Hence the statement is consistent.
 \end{document}
