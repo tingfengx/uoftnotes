@@ -117,5 +117,15 @@ $x\cdot(x+y) = x$ and $x+(x\cdot y) = x$
 ##### DeMorgan's Law
 $\bar{x}\cdot \bar{y} = \overline{x+y}$ and $\bar{x} + \bar{y} = \overline{x\cdot y}$
 
-#### Karnaugh Maps
+#### Karnaugh (K-)Maps
+K-maps are 2 dimensional grid of minterms, where adjacent minterm locations in the grid differ by a single literal and the values in each grid is the output for that *combined* minterm.
+##### Using K-Map
+Once a K-map is created, draw boxes over groups of high output values subject to the following constraints:
+- Boxes must be rectangular and aligned with the map.
+- Number of values contained within each box be a power of 2.
+- Boxes **may** overlap with each other.
+- Boxes amy wrap across edges of the map.
+**Reading the result:** We use a sum of minterms to get the overall output equation.
+
+
 
