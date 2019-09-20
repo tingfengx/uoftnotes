@@ -12,7 +12,7 @@
 <!-- * The notes in this repository that are currently in edit are -->
 * Notes in progress:
    - 2019 Fall
-      1. [CSC258](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html), Computer Organizations.
+      1. [CSC258](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. Or, if you prefer, the html version os available [here](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html).
       2. [PHL245](https://tingfengx.github.io/uoftnotes/2019F/PHL245/modern_sym_logic.pdf), Modern Symbolic Logic.
 * Notes that have already finished typesetting:
    - 2019 Winter
