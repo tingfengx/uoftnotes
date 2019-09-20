@@ -12,13 +12,13 @@
 <!-- * The notes in this repository that are currently in edit are -->
 * Notes in progress:
    - 2019 Fall
-      1. CSC258, Computer Organizations.
-      2. PHL245, Modern Symbolic Logic.
+      1. [CSC258](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html), Computer Organizations.
+      2. [PHL245](https://tingfengx.github.io/uoftnotes/2019F/PHL245/modern_sym_logic), Modern Symbolic Logic.
 * Notes that have already finished typesetting:
    - 2019 Winter
-      1. MAT224, Linear Algebra II. Collection of (nearly) all the theorems presented in the book/mentioned during lecture. 
-      2. STA261, Statistics II. A manuel for common test statistics.
-      3. MAT237, Advanced Calculus. A Collection of Theorems, with focus on fall 2018 term which was not present in the notes that I typesetted together with [@yuchenWYC](https://github.com/yuchenWYC).
+      1. [MAT224](https://tingfengx.github.io/uoftnotes/2019W/MAT224/MAT224.pdf), Linear Algebra II. Collection of (nearly) all the theorems presented in the book/mentioned during lecture. 
+      2. [STA261](https://tingfengx.github.io/uoftnotes/2019W/STA261/test_statistics_manuel.pdf), Statistics II. A manuel for common test statistics.
+      3. [MAT237](https://tingfengx.github.io/uoftnotes/2019W/MAT237/advanced_calc_review.pdf), Advanced Calculus. A Collection of Theorems, with focus on fall 2018 term which was not present in the notes that I typesetted together with [@yuchenWYC](https://github.com/yuchenWYC).
 * Other notes that I participated in typesetting:
    1. MAT237, Advanced Calculus, a short guide to theorems, lemmas and propositions. This particular set of notes was made together with [@yuchenWYC](https://github.com/yuchenWYC). [@AndyTQ](https://github.com/AndyTQ) et al. also made some useful comments for the improvment of the .tex file. They are available here:  https://github.com/yuchenWYC/MAT237
    
