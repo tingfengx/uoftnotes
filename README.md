@@ -13,7 +13,7 @@
 * Notes in progress:
    - 2019 Fall
       1. [CSC258](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html), Computer Organizations.
-      2. [PHL245](https://tingfengx.github.io/uoftnotes/2019F/PHL245/modern_sym_logic), Modern Symbolic Logic.
+      2. [PHL245](https://tingfengx.github.io/uoftnotes/2019F/PHL245/modern_sym_logic.pdf), Modern Symbolic Logic.
 * Notes that have already finished typesetting:
    - 2019 Winter
       1. [MAT224](https://tingfengx.github.io/uoftnotes/2019W/MAT224/MAT224.pdf), Linear Algebra II. Collection of (nearly) all the theorems presented in the book/mentioned during lecture. 
