@@ -127,5 +127,8 @@ Once a K-map is created, draw boxes over groups of high output values subject to
 - Boxes amy wrap across edges of the map.
 **Reading the result:** We use a sum of minterms to get the overall output equation.
 
+### Logic Devices
+#### Multiplexers
+#### Adders
 
 
