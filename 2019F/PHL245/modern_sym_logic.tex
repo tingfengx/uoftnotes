@@ -1,5 +1,5 @@
-\documentclass[11pt]{article}
-
+\documentclass[10pt]{article}
+\usepackage[margin=3.5cm]{geometry}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsfonts}
@@ -10,6 +10,8 @@
 \usepackage{hyperref}
 \usepackage{fancyhdr} 
 \usepackage{youngtab}
+\usepackage{logicproof}
+\usepackage[normalem]{ulem}
 \usepackage[
     type={CC},
     modifier={by-nc-sa},
@@ -68,6 +70,7 @@
 \newcommand{\boldf}{\mathbf{f}}
 \newcommand{\bg}{\mathbf{g}}
 \newcommand{\bm}{\mathbf{m}}
+\renewcommand{\iff}{\leftrightarrow}
 
 \title{PHL245 Modern Symbolic Logic}
 \author{\ccLogo \,\,Tingfeng Xia}
@@ -147,4 +150,196 @@ Notice that this is equivalent to evaluating
 % and by staring at it we see this statement is valid and only valid
 %  when $(P,Q,R)\in \{(T,T,T),(T,F,F),(F,T,T)\}$, which has a non-null 
 %  set of solution. Hence the statement is consistent.
+
+
+
+\section{Derivations in Sentential Logic}
+\subsection{Basic Derivations}
+Full truth tables are impratical when we have a long sentence to check validity 
+and it turns out that derivation is a nice and simple way to achieve such goal.
+% \subsubsection{Derivation Rules}
+\subsubsection{Modus Ponens (MP)} $\phi \rightarrow \psi$, if we know $\phi$, then it is reasonable to say $\psi$
+\subsubsection{Modus Tollens (MT)} $\phi \rightarrow \psi$ then $\sim\psi \rightarrow \sim\phi$, aka contrapositive
+\subsubsection{Fallacys} If we deny the antecedent or affirm the consequent, that \textit{doesn't} tell us anything!
+\subsubsection{Double Negation (DN)} $\sim\sim\phi \equiv \phi$. Negating a statement two times is the same as the statement itself.
+\subsubsection{Repetition (R)} $\phi \rightarrow \phi$ If you know $\phi$ then you know $\phi$
+\subsubsection{Examples of rules above}
+Let's see the Modus Tollens in action
+\begin{equation*}
+    \sim (S\vee P) \rightarrow \sim R.~ R. ~\text{so}~ S\vee P
+\end{equation*}
+THIS IS INCOORECT! We have to take the rules ``as is'', since we are constructing a
+contrapositive, we will have $\sim\sim (S\vee P)$ as our conclusion. Here is an example of a 
+correct usage of Modus Tollens
+\begin{equation*}
+    \sim P \rightarrow \sim (S\rightarrow Z). ~ \sim\sim (S\rightarrow Z) ~ so ~ \sim\sim P
+\end{equation*}
+\textbf{Take away:} We can only apply rules ``as they are'' so the double negation, for example,
+only works for statements that are of the form $\sim\sim(\text{complicated stuff})$ \textit{we can't 
+jump over any step, we have to write down all the steps.}
+
+\subsubsection{Justification Types}
+There are three things that we can do here: 1.Restate any of the given premises. 
+2. Use any of the aforementioned rules (write down the lines that we used the rules on and 
+the abbreviation of the rule that we used) 3. Direct Derivation: usually an 
+indicator of arriving at the final conclusion.
+
+\subsubsection{Example (S3.3 E2a)}
+Consider the problem $P\rightarrow Q. ~ R\rightarrow\sim Q.~ \sim S \rightarrow R.~ P.~ \text{so}~ S.$
+\begin{logicproof}{1}
+    \text{\sout{show}}~ S \\
+    \begin{subproof}
+        P\rightarrow Q & Pr1 \\
+        P & Pr4 \\
+        Q & 2,3,MP \\
+        R \rightarrow \sim Q & Pr2 \\
+        \sim\sim Q & 4,DN \\
+        \sim R & 5,6,MT \\
+        \sim S\rightarrow R & Pr3 \\
+        \sim\sim S & 7,8,MT \\
+        S & 9,DN \\
+        & 10,DD 
+    \end{subproof}
+    <neglect~this~line>
+\end{logicproof}
+
+\subsubsection{Example (S3.3 E2b)}
+Consider the problem $Y. ~ X\rightarrow(Y\rightarrow Z).~ \sim X\rightarrow \sim W. ~ W. ~\text{so}~ \sim\sim Z$
+\begin{logicproof}{1}
+    \text{\sout{show}}~ \sim\sim Z  & \text{show conclusion}\\
+    \begin{subproof}
+        \sim\sim W & Pr4, DN \\
+        \sim X \rightarrow \sim W & Pr3\\
+        \sim\sim X & 2,3,MT \\
+        X & 4, DN \\
+        Y \rightarrow Z & 5, Pr2, MP \\
+        Y & Pr1 \\
+        Z & 6,7,MP \\
+        \sim\sim Z & 8,DN \\
+        & 9,DD
+    \end{subproof}
+    <neglect~this~line>
+\end{logicproof}
+
+\subsubsection{Available Lines}
+In doing a proof, we want to keep track of what is available for us to use:
+\begin{itemize}
+    \item Premises, we can always use the premises
+    \item Unboxed lines that is not a show line
+    \item N.B. A crossed unboxed show line is available (something that we have already shown)
+\end{itemize}
+
+\subsubsection{Completeness of a Derivation}
+\begin{itemize}
+    \item Every show line is crossed off (goals complete)
+    \item All lines that are not show lines are boxed off (subproof complete)
+    \item Every line except show lines is properly justified (state the reasons for derivations of each step)
+\end{itemize}
+
+\subsubsection{Abbreviations}
+\begin{itemize}
+    \item Donnot restate the premises
+    \item Do multiple moves in one line
+\end{itemize}
+Here is an example of using the abbrevaitions in action. Consider the exmaple
+$(P\rightarrow \sim Q) \rightarrow(\sim R \rightarrow S). \sim S. \sim(P\rightarrow \sim Q)\rightarrow T. T\rightarrow S ~\text{so}~R$
+\begin{logicproof}{1}
+    \text{\sout{show}}~ \sim\sim Z  & \text{show conclusion} \\
+    \begin{subproof}
+        \sim T & P2, P4, MT \\
+        P \rightarrow \sim Q & 2, P3, MT, DN \\
+        \sim R \rightarrow S & 3, P1, MP \\
+        R & 4, P2, MT, DN, DD
+    \end{subproof}
+    <neglect~this~line>
+\end{logicproof}
+
+\subsubsection{Conditional Derivation (Hypothetical Reasoning)}
+We have seen above are all direct derivations, there are two more types of derivations
+common. They are Conditional Derivation and Indirect Derivation. Lets take a look at conditional
+derivation here. The general format of this type of proofs is $\phi\rightarrow\psi$. To prove 
+a conditional, we assume $\phi$ and then prve that $\psi$ follows.
+
+\paragraph{Example} Consider the problem $T\rightarrow S. \sim T \rightarrow \sim R. \text{so}~ R\rightarrow S$
+\begin{logicproof}{2}
+    \text{\sout{show}}~ R\rightarrow S\\
+    \begin{subproof}
+        R & ACD (\text{Assume antecedent}) \\
+        \text{\sout{show}}~ S  & \text{show consequence}\\
+        \begin{subproof}
+            \sim\sim R & 2, DN \\
+            T & 4, P2, MT, DN \\
+            S & P1, 5, MP, DD
+        \end{subproof}
+        & 3, CD(Conditional Derivation)
+    \end{subproof}
+    <neglect~this~line>
+\end{logicproof}
+\paragraph{Caveat:} It is not required to write the derivation
+ as a subproof, we can also
+carry the moves in just one layer and state on which line we 
+achived a conditional derivation
+
+\subsubsection{Indirect Derivation (Reductio ad Absurdum)}
+The question takes the following form ``Show $\phi$''. If we assume 
+$\sim \phi$ and derive a contradiction, then our assumption must be false.
+\paragraph{Example} Consider the problem $P\rightarrow \sim Q. 
+R\rightarrow Q. \sim R \rightarrow \sim P. ~\text{so}~ P$
+\begin{logicproof}{1}
+    \text{\sout{show}} \sim P \\
+    \begin{subproof}
+        P & AID(Assume ID) \\
+        \sim Q & 2, P1, MP \\
+        \sim R & P2, 3, MT \\
+        \sim P & 4, P3, MP \\
+        & 2, 5, ID (Indirect Derivation / Reductio ad Absurdum)
+    \end{subproof}
+    <neglect~this~line>
+\end{logicproof}
+
+\subsubsection{Breaking down show lines}
+\begin{itemize}
+    \item Look at your most recent show line
+    \item If it's of the form $\phi\rightarrow \psi$, start a CD 
+    \item If it's any other form, start an ID
+\end{itemize}
+This works because our system allows mixed derivations!
+
+\subsection{Ten Basic Rules}
+\paragraph{Types of Rules}
+\begin{itemize}
+    \item \textbf{Elimination Rule} remove the connective (Elimination
+     Rules are Automatic Moves)
+    \item \textbf{Introduction} introduce the connective
+\end{itemize}
+
+\subsubsection{Conjunction}
+\paragraph{Simplification (S or SL/SR)} If I know $\phi\land \psi$ then
+ I know $\phi$ and I know $\psi$
+\paragraph{Adjunction (ADJ)} If know $\phi$ and I know $\psi$ then I
+ know $\phi\land\psi$
+
+\subsubsection{Disjunction}
+\paragraph{Modus Tollendo Ponens (MTP)} If I know $\phi \vee \psi$ and 
+I know $\phi$ then I know $\psi$. WLOG the other way around is also coorect.
+\paragraph{Addition (ADD)} If I know $\phi$ then  I know $\phi \vee \psi$.
+ WLOG the other way around is also true.
+
+\subsubsection{Biconditional}
+\paragraph{Biconditional-Conditional} If I know $\phi \iff \psi$ then I 
+know that $\phi \rightarrow \psi$ and $\psi \rightarrow \phi$
+\paragraph{Conditional-Biconditional} If I knwo $\phi \rightarrow \psi$ 
+and $\psi \rightarrow \phi$, then (by definition) I know  $\phi \iff \psi$
+
+% \subsubsection{Contradiction Generators}
+
+
+\subsection{Theorems}
+\textit{Definition:} A Theorem is a tautology. And being a tautology 
+means it could be derived from any set of premises, even including
+ $\emptyset$ as the premise set.
+
+
+
+
 \end{document}
