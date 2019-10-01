@@ -53,6 +53,7 @@ The pMOS transistor is formed by a pnp combination of doped semi-conductors. Gen
 [This](https://qr.ae/TWKlkb) quora answer explained these two concepts well and I hereby ackowledge that I quoted this answer in my explaination.
 #### Standard Truth Table (Format)
 A standard truth table is a truth table such that the first column of input has first half equal to zero and second half equal to to one; the sencond column is divided into two parts the upper half and the lower one and in each half: the top half is zero and lower half is filled with one; and on and on and so on... The verbal description may be hard to understand, we shall see this through a example. Say we have three inputs A, B and C with one output Y.
+
 | A 	| B 	| C 	| Y 	|
 |---	|---	|---	|---	|
 | 0 	| 0 	| 0 	|   	|
@@ -130,5 +131,30 @@ Once a K-map is created, draw boxes over groups of high output values subject to
 ### Logic Devices
 #### Multiplexers
 #### Adders
+There are two types of adders, the hald adder and the full adder respectively. We will take a look at them respectively below.
+##### Half Adders
+Half adders are cheaper to implement. They have two bits for the to input bits that are to be added and and two bits for ouput, one for carry out and one for the added bit output. (adds to bits to produce a two bit sum). One might find that the logic circuit is overwhelming in terms of memorizing, but it falls apart if we look at the logic expression:
+    $C = X\cdot Y$ and $S = X\oplus Y = X\cdot \bar{Y} + \bar{X}\cdot Y$
+where we remember that $C$ represents the carry bit and $S$ is the main output bit.
+
+##### Full Adders
+Full adders are slightly more complicated then half adders since they have an additional bit of input that takes care of the carry input. Same as above, we can use the logic expression to remember the logic circuit level design, which is as follows
+    $C = X\cdot Y + (X\oplus Y)\cdot Z$ and $S = X\oplus Y \oplus Z$
+where we remember that $S,C$ represents the output and carry respectively.
+
+##### Subtractors
+Subtractors are an extension of adders. Basically we perform addition on a negative number. Befpre we do subtraction, we need to understand how negative numbers work in binary settings.
+1. Unsigned = a seperate bit exists for the sign and the data bits store the positive version of the number
+2. 2. Signed = all its are used to store a 2'complement negative number
+    ###### Two's Complement
+    Two's complement of a number produces the 'negative version' of that number. We can get the 2's complement of a number using two steps. The first step is to get the 1's complement where we bitwisely negate the original binary number. And the second step is to simply add one wo the 1's complement result and this procedure yields us the 2's complement.
+The signed subtration can be perfomed by usinbg the binary adder circuit with negative numbers.
+    ###### Rules about Signed Binary Numbers
+    - The largest positive binary number is zero followed by all ones
+    - The binary value for -1 has one in all the digits ```(000001 -> 111110->111111)``` 
+    - The most negative binary numbre is one followed by all zeros.
+    - There are $2^n$ possible values that can be stored in an $n$-digit binary number, in which $2^{n-1}$ are negative, $2^{n-1}-1$ are positive and we have zero.
+
+##### 
 
 
