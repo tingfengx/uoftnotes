@@ -151,10 +151,14 @@ Subtractors are an extension of adders. Basically we perform addition on a negat
 The signed subtration can be perfomed by usinbg the binary adder circuit with negative numbers.
     ###### Rules about Signed Binary Numbers
     - The largest positive binary number is zero followed by all ones
-    - The binary value for -1 has one in all the digits ```(000001 -> 111110->111111)``` 
+    - The binary value for -1 has one in all the digits ```(000001 -> 111110 -> 111111)``` 
     - The most negative binary numbre is one followed by all zeros.
     - There are $2^n$ possible values that can be stored in an $n$-digit binary number, in which $2^{n-1}$ are negative, $2^{n-1}-1$ are positive and we have zero.
 
-##### 
+##### Subtraction Circuits
+Since we perform subtraction in the form of adding a negative (2's complement) number, we can create a subtraction curcuit based on this. To do so, we will rely on the same set up that we had in the case of ripple adder. We will add a negation gate to each of the bits from the number to be subtracted (1's complement) and input a 1 at the carry bit for the first full adder (2's complement). 
+
+##### Addition/Subtraction Circuit
+This is rather hard to explain in plain english, so I borrowed Prof. Steve Engels' [slide](./figures/addition_subtraction_circuit.png)
 
 
