@@ -366,10 +366,43 @@ R\rightarrow Q. \sim R \rightarrow \sim P. ~\text{so}~ P$
 This works because our system allows mixed derivations!
 
 
-\subsection{Theorems}
+\subsection*{Theorems}
 \textit{Definition:} A Theorem is a tautology. And being a tautology 
 means it could be derived from any set of premises, even including
  $\emptyset$ as the premise set.
+
+\subsection{Derived Rules}
+There are two types dericed rules: negation of blah rules (NC, NB, and DM) and situational rules.
+
+\subsubsection{Negation of Condition (NC)} If have a negation of a conditional 
+statement, then $$\sim (\phi \implies \psi) \equiv \phi \land \sim \psi$$ This is
+essentially a `proof by conterexample'
+\subsubsection{Negation of Biconditional (NB)}
+\begin{equation*}
+    \sim (\phi\iff \psi) \equiv (\phi \iff \sim \psi) \equiv (\sim \phi \iff \psi)
+\end{equation*}
+\subsubsection{De Morgan's Laws (DM)}
+\begin{align*}
+    &\sim (\phi \vee \psi) \equiv \sim \phi \land \sim \psi \\
+    &\sim (\phi \land \psi) \equiv \sim \phi \vee \sim \psi
+\end{align*}
+
+\subsubsection{Seperation of Cases (SC)}
+If I know $\phi \vee \psi$, $\phi \implies \chi$, and $\psi \implies \chi$, then
+it must be the case that $\chi$. \textbf{Special Case of SC:} Since in the generic
+SC, we didn't specify what our $\phi$ and $\psi$ need to be, so it we can take $\phi = \xi$
+and $\psi = \sim \xi$. In this case, $\psi \vee \phi \equiv \xi \vee \sim \xi$ is
+trivially true, and hence it must be the case that $\chi$.
+
+\subsubsection{Conditional as Disjunction (CDJ)}
+We have already seen this when symbolizing `unless', but for completeness, I shall
+present them here.
+\begin{align*}
+    &\phi \implies \psi \equiv \sim \phi \vee \psi \\
+    &\phi \vee \psi \equiv \sim \phi \implies \psi
+\end{align*}
+
+
 
 
 
