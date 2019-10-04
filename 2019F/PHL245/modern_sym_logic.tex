@@ -71,6 +71,7 @@
 \newcommand{\bg}{\mathbf{g}}
 \newcommand{\bm}{\mathbf{m}}
 \renewcommand{\iff}{\leftrightarrow}
+\renewcommand{\implies}{\rightarrow}
 
 \title{PHL245 Modern Symbolic Logic}
 \author{\ccLogo \,\,Tingfeng Xia}
@@ -152,17 +153,76 @@ Notice that this is equivalent to evaluating
 %  set of solution. Hence the statement is consistent.
 
 
+\section{Addressing Ambiguity in Symboliazation}
+\subsection{Restrictive and Non-Restrictive Clauses}
+We shall see this through an example
+\begin{itemize}
+    \item \textbf{Cats that scratch terrifies me} `Cats \textit{that} scratch' 
+    is a restricted subject compared to just `cats'.
+    \item \textbf{Cats, which scratch, terrifies me} `Cats, \textit{which} scratch'
+    is a non-restricted claim about cats, so essentially we are saying two sentences:
+    the first one is that `Cats terrify me' and `Cats scratch'. (The which part 
+    is an inserted clause describing the subject before it.)
+\end{itemize}
+\subsubsection{Symbolization of Non-Restricive Clauses} In symbolization of
+non-restricive sentences, we simply treat the clause and the main sentence 
+as two seperate sentences and use logical and to connect them. (Two concurrent
+event)
+\subsubsection{Symbolization of Restrictive Clauses} We have to introduce a 
+premise (conditional statement) to address the descriptive part.
+
+\subsubsection{Example}
+Consider the sentence ``Haveing gaaoline, which is smelly, is a necessary 
+condition for my car to run, and in that case I'm going to Vegas.'' and we
+define the following: W: Gasoline is smelly. X: I have gasoline. Y: My car runs.
+Z: I'm going to Vegas. \textbf{Solution:} We first extract the which clause out
+from the sentence since as we mentioned before this is just another concurrent 
+sentence (use logical and to connect). The necessary condition part is easy ($Y\rightarrow X$).
+The last `in that case' part is a little bit tricky and we have rule for it (stated below), 
+the correct interpretation is $(Y\rightarrow Z)$. Summarizing what we did, the
+entire sentence could be symbolized as $W\land ((Y\rightarrow X)\land (Y\rightarrow Z))$
+
+\subsubsection{``In that case'' treatment}
+In english language, when we say `bar foo, and in that case baz' the `case' always refer
+to the thing mentioned immediately before. So in our example `foo' would be reason for `baz'.
 
 \section{Derivations in Sentential Logic}
-\subsection{Basic Derivations}
 Full truth tables are impratical when we have a long sentence to check validity 
 and it turns out that derivation is a nice and simple way to achieve such goal.
-% \subsubsection{Derivation Rules}
+
+\subsection{Ten Basic Rules}
+\paragraph{Types of Rules}
+\begin{itemize}
+    \item \textbf{Elimination Rule} remove the connective (Elimination
+     Rules are Automatic Moves)
+    \item \textbf{Introduction} introduce the connective
+\end{itemize}
+
 \subsubsection{Modus Ponens (MP)} $\phi \rightarrow \psi$, if we know $\phi$, then it is reasonable to say $\psi$
 \subsubsection{Modus Tollens (MT)} $\phi \rightarrow \psi$ then $\sim\psi \rightarrow \sim\phi$, aka contrapositive
-\subsubsection{Fallacys} If we deny the antecedent or affirm the consequent, that \textit{doesn't} tell us anything!
+\subsubsection*{Fallacys} If we deny the antecedent or affirm the consequent, that \textit{doesn't} tell us anything!
 \subsubsection{Double Negation (DN)} $\sim\sim\phi \equiv \phi$. Negating a statement two times is the same as the statement itself.
 \subsubsection{Repetition (R)} $\phi \rightarrow \phi$ If you know $\phi$ then you know $\phi$
+
+\subsubsection{Conjunction}
+\paragraph{Simplification (S or SL/SR)} If I know $\phi\land \psi$ then
+ I know $\phi$ and I know $\psi$
+\paragraph{Adjunction (ADJ)} If know $\phi$ and I know $\psi$ then I
+ know $\phi\land\psi$
+
+\subsubsection{Disjunction}
+\paragraph{Modus Tollendo Ponens (MTP)} If I know $\phi \vee \psi$ and 
+I know $\sim\phi$ then I know $\psi$. WLOG the other way around is also coorect.
+\paragraph{Addition (ADD)} If I know $\phi$ then  I know $\phi \vee \psi$.
+ WLOG the other way around is also true.
+
+\subsubsection{Biconditional}
+\paragraph{Biconditional-Conditional (BC)} If I know $\phi \iff \psi$ then I 
+know that $\phi \rightarrow \psi$ and $\psi \rightarrow \phi$
+\paragraph{Conditional-Biconditional (CB)} If I knwo $\phi \rightarrow \psi$ 
+and $\psi \rightarrow \phi$, then (by definition) I know  $\phi \iff \psi$
+
+\subsection{Basic Derivations}
 \subsubsection{Examples of rules above}
 Let's see the Modus Tollens in action
 \begin{equation*}
@@ -304,34 +364,6 @@ R\rightarrow Q. \sim R \rightarrow \sim P. ~\text{so}~ P$
     \item If it's any other form, start an ID
 \end{itemize}
 This works because our system allows mixed derivations!
-
-\subsection{Ten Basic Rules}
-\paragraph{Types of Rules}
-\begin{itemize}
-    \item \textbf{Elimination Rule} remove the connective (Elimination
-     Rules are Automatic Moves)
-    \item \textbf{Introduction} introduce the connective
-\end{itemize}
-
-\subsubsection{Conjunction}
-\paragraph{Simplification (S or SL/SR)} If I know $\phi\land \psi$ then
- I know $\phi$ and I know $\psi$
-\paragraph{Adjunction (ADJ)} If know $\phi$ and I know $\psi$ then I
- know $\phi\land\psi$
-
-\subsubsection{Disjunction}
-\paragraph{Modus Tollendo Ponens (MTP)} If I know $\phi \vee \psi$ and 
-I know $\sim\phi$ then I know $\psi$. WLOG the other way around is also coorect.
-\paragraph{Addition (ADD)} If I know $\phi$ then  I know $\phi \vee \psi$.
- WLOG the other way around is also true.
-
-\subsubsection{Biconditional}
-\paragraph{Biconditional-Conditional} If I know $\phi \iff \psi$ then I 
-know that $\phi \rightarrow \psi$ and $\psi \rightarrow \phi$
-\paragraph{Conditional-Biconditional} If I knwo $\phi \rightarrow \psi$ 
-and $\psi \rightarrow \phi$, then (by definition) I know  $\phi \iff \psi$
-
-% \subsubsection{Contradiction Generators}
 
 
 \subsection{Theorems}
