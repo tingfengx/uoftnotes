@@ -161,4 +161,27 @@ Since we perform subtraction in the form of adding a negative (2's complement) n
 ##### Addition/Subtraction Circuit
 This is rather hard to explain in plain english, so I borrowed Prof. Steve Engels' [slide](https://tingfengx.github.io/uoftnotes/2019F/CSC258/figures/addition_subtraction_circuit.png)
 
+##### Unsigned Subtraction
+- **Word on naming**: May be not obvious from the naming, this the problem of wanting to have a unsigned result, i.e. not a result in 2's complement form.
+- The general algorithm
+  - Get the 2's complement of the subtrahend (the term being subtracted)
+  - Add that value to the minuend (the term being subtracted from)
+  - If there is an end carry ($C_{out}$ is high), the final result is positive and does not change
+  - If there is no end carry ($C_{out}$ is low), get the 2's complement of the result and add a negative sign to it (or set the sign bit high)
+- Special case for signed subtraction
+  - sign and magnitude representation (using a sign bit)
+    - The sign part: one bit is designed as the sign
+      - 0 for positive number
+      - and 1 for negative ones
+    - The magnitude part: remaining bits to store a *subsigned* version of the number
+    - Sign-magnitude computation is more complicated.
+      - 2's complement is what today's systems use!
+  
+##### Comparators
+def: A circuit that takes in two input vectors, and determines if the 
+first is greater than, less than or equal to the second.
 
+The most basic arithmetic comparator would probably be the one for two bits. The circuit for the two inputs A and B would be
+- $A==B: A\cdot B + \bar{A}\cdot \bar{B}$
+- $A>B: A\cdot \bar{B} $
+- $A<B: \bar{A}\cdot B$
