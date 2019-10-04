@@ -159,6 +159,6 @@ The signed subtration can be perfomed by usinbg the binary adder circuit with ne
 Since we perform subtraction in the form of adding a negative (2's complement) number, we can create a subtraction curcuit based on this. To do so, we will rely on the same set up that we had in the case of ripple adder. We will add a negation gate to each of the bits from the number to be subtracted (1's complement) and input a 1 at the carry bit for the first full adder (2's complement). 
 
 ##### Addition/Subtraction Circuit
-This is rather hard to explain in plain english, so I borrowed Prof. Steve Engels' [slide](./figures/addition_subtraction_circuit.png)
+This is rather hard to explain in plain english, so I borrowed Prof. Steve Engels' [slide](https://tingfengx.github.io/uoftnotes/2019F/CSC258/figures/addition_subtraction_circuit.png)
 
 
