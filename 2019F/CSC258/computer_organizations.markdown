@@ -6,7 +6,9 @@
 ### Table of Contents
 <!-- #### 1. [Digital Logic](#digital_logic) -->
 #### 1. [Transistors](#transistors)  
-#### 2. [Circuits](#circuits)  
+#### 2. [Combinational Circuits](#circuits)  
+#### 3. [Devices](#logic-devices)
+#### 4. [Sequential Circuits](#sequential-circuits)
 
 <!-- ## Digital_Logic -->
 ## Transistors
@@ -128,8 +130,8 @@ Once a K-map is created, draw boxes over groups of high output values subject to
 - Boxes amy wrap across edges of the map.
 **Reading the result:** We use a sum of minterms to get the overall output equation.
 
-### Logic Devices
-#### Multiplexers
+## Logic Devices
+### Multiplexers
 #### Adders
 There are two types of adders, the hald adder and the full adder respectively. We will take a look at them respectively below.
 ##### Half Adders
@@ -193,43 +195,68 @@ Anyhow, the general comparator's could be cumbersome to write down, since you wi
   
 As number of digits that we need to compare gets larger and larger, the comparator circuit gets more complex. At a certian level, it can be easier sometimes just process the result of a subtraction operation instead. (This is easier to implement, just it is not any faster).
 
-### Sequential Circuits
+## Sequential Circuits
 So far, we have looked at combinational circuits: circuits where the output values are entirely dependent and predictable from current inputs. Another type of circuits is sequential circuits which are circuits that also depend on both the current inputs and the precvious state of the circuit.
 
-#### Creating Sequential Circuits
+### Creating Sequential Circuits
 Essentially, sequencial circuits are a result of having feedback in the circuit. We want to feed the output of a circuit back into itself as a new input and this accomplished thanks to **Gate Delay**. 
     **Gate Delay:** (aka Propagation Delay) Even in combinational circuits, outputs don't change instantaneously. The delay is defined as 'The length of time it takes for an input change to result in the corresponding output change'
 
-##### What constitutes to a useful feedback circuit?
+#### What constitutes to a useful feedback circuit?
 We will begin by looking at some examples that fails to be useful.
-##### AND Feedback Circuit
+#### AND Feedback Circuit
 In this case we feed the output of the and gate back to itself as a new input. At any stage, regardless of what we feed into the circuit (into the one input left) the output will always be logic low. So this circuit is stucked at zero and cannot change. 
-##### OR Feedback Circuit
+#### OR Feedback Circuit
 In this case, if we ever give the input a logic high, then the output will be locked as logic high and regardless of input, the output won't change. So, again a dead state, not really useful.
 
-##### NAND Feedback Circuit
+#### NAND Feedback Circuit
 Let's call the input $A$, and the fed back wire $Q$; Assuming that we set $A$ to be 0, then the output $Q$ will be 1 (we want this). If we set $A=1$, the the $Q$ would alternate its value between zero and one (we don't want this/ unsteady state, can't store $0$ for a long time).
 
-##### NOR Feedback Circuit
+#### NOR Feedback Circuit
 Let's call the input $A$ and the fed back wire $Q$; Assuming that we set $A$ to be 1, then the output $Q$ will be zero (we want this). If we flip $A$, then the output $Q$ will alternate between 0 and 1 (don't want this).
 
-#### Latches
+### Latches
 If multiple gates with feed backs are combinaed we can get more steady behavior! And these circuits are called latches. 
 
 **Word on naming:** The S and R in the name corresponds to Set and Reset. As a convention, in circuits we call $0\rightarrow 1$ setting and $1\rightarrow 0$ reseting.
 
 It is rather hard to describe the circuit in words so shall describe it's behavior here as a memory cue.
 
-##### $\bar{S}\bar{R}$ Latch (NAND)
+#### $\bar{S}\bar{R}$ Latch (NAND)
 In this case, the inputs are $\bar{S}$ and $\bar{R}$. Notice that the bar identifies these two ports as active low, which means zero is active. In this acse, if we have the input $\bar{S}\bar{R} = 01$ the $\bar{S}$ is zero, which means it is 'triggered' and the output $Q$ is 'Set'. The other way around holds for the case where $\bar{S}\bar{R} = 10$ where the 0 triggers 'reset'($Q\rightarrow 0$). For a $\bar{S}\bar{R}$ latch to lock the value, we need to set $\bar{S}\bar{R} = 11$. There is a handy way of remembering this. Since here we are having active low on our inputs, and $\bar{S}\bar{R} = 00$ (forbidden state) makes the output $Q$ set and reset at the same time, which makes absolutely no sense. $11$ would be not doing anything, and hence holding the state.
 
-##### $SR$ Latch (NOR)
+#### $SR$ Latch (NOR)
 In this case, the inputs are $S$ and $R$. Notice that in this case there is no bar, so they are active high, which is the normal case. If we have input $SR = 10$ then the $S=1$ sets, and $SR = 01$ resets. Simmilar to the case above, there is one forbidden state -- we can't set and reset at the same time ($SR = 11$ forbidden) and neither resetting nor setting ($SR = 00$) holds the state.
 
-##### More on instability
+#### More on instability
 In the two sections directly above, we have defined the forbidden states for each sort of latche. Notice that they are forbidden because **they can cause unpreditable behavior** since in actual circuits lags are real things and we can't tell in a flip from $00\rightarrow 11$ or $11 \rightarrow 00$ which one of the two bits will actually flip first!
 
-#### The Clock
+### The Clock
+Now we have circuit units that can store high or low values. How can we read from them? (Interesting question: if we receive a logic high, how do we tell if it was meant to be a single high value or it's two high values in a row?) This is where clock signals come into play. **Definition:** Clocks are a regular pulse signal, where the high value indicates when to update the output of the latch. 
+
+#### Signal Restrictions
+The limit to how fast the latch circuit can be sampled is determined by
+- latency time of transistors: (Setup and hold time)
+- Setup time for clock signal: (Jitter and Gibbs phenomenon)
+And the **Frequency** (yes this is the thing that you hear about your cpu) is how many pulses occur per second, measured in Hertz (or Hz).
+
+### Clocked Latches
+#### Clocked SR Latch (NAND!)
+Adding another layer of NAND gates to the $\bar{S}\bar{R}$ latches yields us the $SR$ clocked latch. The new layer has a 'controller' called $C$ or sometimes a $G$ gate. Here, when the gate receives logic high, the latch's value could be changed/updated and when the gate takes zero, the entire component is essentially locked (no change allowed).  
+
+#### D-latch (Gated D-latch)
+This latch is formed by adding another layer to the clocked SR latch: we use a single source $D$ for purpose of setting and resetting. The single control $D$ is connected to $S$ and $~D$ (using a negator) is connected to R. This way, the latch won't ever run into the forbidden states. This design is overall good but it still have problems, for example, timing issues.
+
+##### D-latch is 'transparent'
+Transparent means that any change to its inputs are visible to the output when control signal (Clock) is 1. **The take away:** The output of a latch should not be applied directly or through combinational logic to the input of the same or another latch when they all have the same control (clock) signal.
+
+### Flip-Flop
+#### SR Master-Slave Flip-Flop
+A flip-flop is a latched circuit whose output is triggered with the rising edge or falling edge of a clock pulse. 
+
+#### Edge-triggered D Flip-Flop
+The above SR flip flop still have issues of unstable behavior. We can solve this by using a D flip-flop. 
+
 
 
 
