@@ -202,30 +202,41 @@ Essentially, sequencial circuits are a result of having feedback in the circuit.
 
 ##### What constitutes to a useful feedback circuit?
 We will begin by looking at some examples that fails to be useful.
-###### AND Feedback Circuit
+##### AND Feedback Circuit
 In this case we feed the output of the and gate back to itself as a new input. At any stage, regardless of what we feed into the circuit (into the one input left) the output will always be logic low. So this circuit is stucked at zero and cannot change. 
-###### OR Feedback Circuit
+##### OR Feedback Circuit
 In this case, if we ever give the input a logic high, then the output will be locked as logic high and regardless of input, the output won't change. So, again a dead state, not really useful.
 
-###### NAND Feedback Circuit
+##### NAND Feedback Circuit
 Let's call the input $A$, and the fed back wire $Q$; Assuming that we set $A$ to be 0, then the output $Q$ will be 1 (we want this). If we set $A=1$, the the $Q$ would alternate its value between zero and one (we don't want this/ unsteady state, can't store $0$ for a long time).
 
-###### NOR Feedback Circuit
+##### NOR Feedback Circuit
 Let's call the input $A$ and the fed back wire $Q$; Assuming that we set $A$ to be 1, then the output $Q$ will be zero (we want this). If we flip $A$, then the output $Q$ will alternate between 0 and 1 (don't want this).
 
-##### Latches
+#### Latches
 If multiple gates with feed backs are combinaed we can get more steady behavior! And these circuits are called latches. 
 
 **Word on naming:** The S and R in the name corresponds to Set and Reset. As a convention, in circuits we call $0\rightarrow 1$ setting and $1\rightarrow 0$ reseting.
 
 It is rather hard to describe the circuit in words so shall describe it's behavior here as a memory cue.
 
-###### $\bar{S}\bar{R}$ Latch (NAND)
+##### $\bar{S}\bar{R}$ Latch (NAND)
 In this case, the inputs are $\bar{S}$ and $\bar{R}$. Notice that the bar identifies these two ports as active low, which means zero is active. In this acse, if we have the input $\bar{S}\bar{R} = 01$ the $\bar{S}$ is zero, which means it is 'triggered' and the output $Q$ is 'Set'. The other way around holds for the case where $\bar{S}\bar{R} = 10$ where the 0 triggers 'reset'($Q\rightarrow 0$). For a $\bar{S}\bar{R}$ latch to lock the value, we need to set $\bar{S}\bar{R} = 11$. There is a handy way of remembering this. Since here we are having active low on our inputs, and $\bar{S}\bar{R} = 00$ (forbidden state) makes the output $Q$ set and reset at the same time, which makes absolutely no sense. $11$ would be not doing anything, and hence holding the state.
 
-###### $SR$ Latch (NOR)
+##### $SR$ Latch (NOR)
 In this case, the inputs are $S$ and $R$. Notice that in this case there is no bar, so they are active high, which is the normal case. If we have input $SR = 10$ then the $S=1$ sets, and $SR = 01$ resets. Simmilar to the case above, there is one forbidden state -- we can't set and reset at the same time ($SR = 11$ forbidden) and neither resetting nor setting ($SR = 00$) holds the state.
 
-###### More on instability
+##### More on instability
+In the two sections directly above, we have defined the forbidden states for each sort of latche. Notice that they are forbidden because **they can cause unpreditable behavior** since in actual circuits lags are real things and we can't tell in a flip from $00\rightarrow 11$ or $11 \rightarrow 00$ which one of the two bits will actually flip first!
+
+#### The Clock
+
+
+
+
+
+
+
+
 
 
