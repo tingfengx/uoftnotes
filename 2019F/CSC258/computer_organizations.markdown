@@ -185,3 +185,47 @@ The most basic arithmetic comparator would probably be the one for two bits. The
 - $A==B: A\cdot B + \bar{A}\cdot \bar{B}$
 - $A>B: A\cdot \bar{B} $
 - $A<B: \bar{A}\cdot B$
+
+Anyhow, the general comparator's could be cumbersome to write down, since you will still need to define an equation for each case. 
+- $A==B$: If inputs A and B are equal, then all bits must be the same. We define $X_i = A_i\cdot B_i + \bar{A}_i \cdot \bar{B}_i$ which essentially is the equality for the $i$-th input. The the equality is given by $A==B: X_0\cdot X_1 \cdot \ldots \cdot X_n$. 
+- $A>B$: The first non-matching bits occur at bit $i$, where $A_i = 1 \land B_i = 0$, (all previous higher bits match). Using the definition for $X_i$ from before, we write $A>B: A_n\cdot \bar{B}_n + X_n\cdot A_{n-1} \cdot \bar{B}_{n-1} + \ldots + A_0 \cdot \bar{B}_0 \cdot \prod_{k=1}^n X_k$.
+- $A<B$: The first non-matching bits occur at bit $i$, where $A_i = 0 \land B_i = 1$, (all previous higher bits match). Using the definition for $X_i$, we write $A>B: \bar{A_n}\cdot B_n + X_n\cdot \bar{A}_{n-1} \cdot B_{n-1} + \ldots + \bar{A}_0 \cdot B_0 \cdot \prod_{k=1}^n X_k$.
+  
+As number of digits that we need to compare gets larger and larger, the comparator circuit gets more complex. At a certian level, it can be easier sometimes just process the result of a subtraction operation instead. (This is easier to implement, just it is not any faster).
+
+### Sequential Circuits
+So far, we have looked at combinational circuits: circuits where the output values are entirely dependent and predictable from current inputs. Another type of circuits is sequential circuits which are circuits that also depend on both the current inputs and the precvious state of the circuit.
+
+#### Creating Sequential Circuits
+Essentially, sequencial circuits are a result of having feedback in the circuit. We want to feed the output of a circuit back into itself as a new input and this accomplished thanks to **Gate Delay**. 
+    **Gate Delay:** (aka Propagation Delay) Even in combinational circuits, outputs don't change instantaneously. The delay is defined as 'The length of time it takes for an input change to result in the corresponding output change'
+
+##### What constitutes to a useful feedback circuit?
+We will begin by looking at some examples that fails to be useful.
+###### AND Feedback Circuit
+In this case we feed the output of the and gate back to itself as a new input. At any stage, regardless of what we feed into the circuit (into the one input left) the output will always be logic low. So this circuit is stucked at zero and cannot change. 
+###### OR Feedback Circuit
+In this case, if we ever give the input a logic high, then the output will be locked as logic high and regardless of input, the output won't change. So, again a dead state, not really useful.
+
+###### NAND Feedback Circuit
+Let's call the input $A$, and the fed back wire $Q$; Assuming that we set $A$ to be 0, then the output $Q$ will be 1 (we want this). If we set $A=1$, the the $Q$ would alternate its value between zero and one (we don't want this/ unsteady state, can't store $0$ for a long time).
+
+###### NOR Feedback Circuit
+Let's call the input $A$ and the fed back wire $Q$; Assuming that we set $A$ to be 1, then the output $Q$ will be zero (we want this). If we flip $A$, then the output $Q$ will alternate between 0 and 1 (don't want this).
+
+##### Latches
+If multiple gates with feed backs are combinaed we can get more steady behavior! And these circuits are called latches. 
+
+**Word on naming:** The S and R in the name corresponds to Set and Reset. As a convention, in circuits we call $0\rightarrow 1$ setting and $1\rightarrow 0$ reseting.
+
+It is rather hard to describe the circuit in words so shall describe it's behavior here as a memory cue.
+
+###### $\bar{S}\bar{R}$ Latch (NAND)
+In this case, the inputs are $\bar{S}$ and $\bar{R}$. Notice that the bar identifies these two ports as active low, which means zero is active. In this acse, if we have the input $\bar{S}\bar{R} = 01$ the $\bar{S}$ is zero, which means it is 'triggered' and the output $Q$ is 'Set'. The other way around holds for the case where $\bar{S}\bar{R} = 10$ where the 0 triggers 'reset'($Q\rightarrow 0$). For a $\bar{S}\bar{R}$ latch to lock the value, we need to set $\bar{S}\bar{R} = 11$. There is a handy way of remembering this. Since here we are having active low on our inputs, and $\bar{S}\bar{R} = 00$ (forbidden state) makes the output $Q$ set and reset at the same time, which makes absolutely no sense. $11$ would be not doing anything, and hence holding the state.
+
+###### $SR$ Latch (NOR)
+In this case, the inputs are $S$ and $R$. Notice that in this case there is no bar, so they are active high, which is the normal case. If we have input $SR = 10$ then the $S=1$ sets, and $SR = 01$ resets. Simmilar to the case above, there is one forbidden state -- we can't set and reset at the same time ($SR = 11$ forbidden) and neither resetting nor setting ($SR = 00$) holds the state.
+
+###### More on instability
+
+
