@@ -34,9 +34,14 @@
 - Compilation automated with ```latexmk```:
    ``````
    $ latexmk -version
-   Latexmk, John Collins, 21 May 2019. Version 4.64a
+   Latexmk, John Collins, 18 June 2019. Version 4.65
    ``````
    This is particularly useful to automate the multiple runs of ```pdflatex``` needed for some documents.
+- Please note that some of these notes used the LaTeX package `minted`. To compile the documents containing `minted` using ```latexmk```, you need to use the shell escape flag. Please (create if not exist) add the following to your `~/.latexmkrc`.
+   ``````
+   $latex = 'latex -interaction=nonstopmode -shell-escape';
+   $pdflatex = 'pdflatex -interaction=nonstopmode -shell-escape';
+   ``````
 - There were a few macros that were created and used during the type-setting process to speed up the entire process, check them out in the .tex source files! I write my Q.E.D for proofs with characters QED in math caligraphy followed by a sword to say "I win!".
 
 ## Makefile
