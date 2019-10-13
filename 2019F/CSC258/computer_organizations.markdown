@@ -257,6 +257,17 @@ A flip-flop is a latched circuit whose output is triggered with the rising edge 
 #### Edge-triggered D Flip-Flop
 The above SR flip flop still have issues of unstable behavior. We can solve this by using a D flip-flop. 
 
+#### T Flip Flops
+This acts like a dff, except it flips rather than sets meaning that toggles to the opposite value whenever the input to T is high. 
+
+#### JK Flip Flop
+The all in one flip flop with two inputs J and K.
+- If J and K are 0, then the output is maintained, ie locked
+- If J = 0 and K=1, reset the output to zero
+- If J = 1 and K = 0, set the output to one
+- If J = K = 1, toggle the output.
+
+
 
 
 

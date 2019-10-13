@@ -1,7 +1,7 @@
 <!DOCTYPE html>
     <html>
     <head>
-        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <meta charset="UTF-8">
         <title>CSC258 Computer Organizations, Fall Term, 2019</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
@@ -20,7 +20,7 @@
         
         <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
     </head>
-    <body>
+    <body class="vscode-light">
         <h1 id="csc258-computer-organizations-fall-term-2019">CSC258 Computer Organizations, Fall Term, 2019</h1>
 <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0"><img src="https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png" alt="licensebuttons by-nc-sa"></a></p>
 <h5 id="bulletpoint-notes-by-tingfeng-xia-work-licensed-under-a-creative-commons-non-comercial-share-alike-40-license-this-is-not-meant-to-be-a-set-of-comprehensive-notes-rather-it-is-my-pick-of-bullet-list-of-material-from-the-course">Bulletpoint notes by <a href="https://tingfengx.github.io/">Tingfeng Xia</a>. Work licensed under a creative commons non-comercial share-alike 4.0 license. This is not meant to be a set of comprehensive notes, rather it is my pick of bullet list of material from the course.</h5>
@@ -320,6 +320,16 @@ And the <strong>Frequency</strong> (yes this is the thing that you hear about yo
 <p>A flip-flop is a latched circuit whose output is triggered with the rising edge or falling edge of a clock pulse.</p>
 <h4 id="edge-triggered-d-flip-flop">Edge-triggered D Flip-Flop</h4>
 <p>The above SR flip flop still have issues of unstable behavior. We can solve this by using a D flip-flop.</p>
+<h4 id="t-flip-flops">T Flip Flops</h4>
+<p>This acts like a dff, except it flips rather than sets meaning that toggles to the opposite value whenever the input to T is high.</p>
+<h4 id="jk-flip-flop">JK Flip Flop</h4>
+<p>The all in one flip flop with two inputs J and K.</p>
+<ul>
+<li>If J and K are 0, then the output is maintained, ie locked</li>
+<li>If J = 0 and K=1, reset the output to zero</li>
+<li>If J = 1 and K = 0, set the output to one</li>
+<li>If J = K = 1, toggle the output.</li>
+</ul>
 
     </body>
     </html>
