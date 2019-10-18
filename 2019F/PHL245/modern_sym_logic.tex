@@ -402,8 +402,84 @@ present them here.
     &\phi \vee \psi \equiv \sim \phi \implies \psi
 \end{align*}
 
+\section{Predicate Logic}
+Although our system of sentential logic is great and powerful, it is not quite strong enough since it doesn't allow assesment of logic within the sentence itself. What we need is the predicate logic, as an extension to the sentential system. 
 
+\subsection{Sub-Sentential Logic} The discussion of subjects and predicates: subjects specify what we want to talk about (as its name indicates) and predicates allows to describe the subject in some certain way. 
+\subsubsection{Subjects}
+\begin{itemize}
+    \item \textbf{Singular Terms} Proper names (Joe, Steve), definite descriptors (the person in the front of the class), pronouns (he/she)
+    \item \textbf{General Terms} Universally quantifies terms and Existentially quantified terms
+\end{itemize}
+\subsubsection{Predicates}
+DIfferent types of predicates are related to number of subjects that the predicate is related to. 
+\begin{itemize}
+    \item \textbf{Single Place} Only one subject, description of the one and only subject. For example `Raina is evil. Raina is a student of Plato'
+    \item \textbf{Two-Place} Usually describes the relationship between two subjects. For example `Joe likes Marry'
+    \item \textbf{Three-Place} Common in mathematics
+    \item so on\dots
+\end{itemize}
 
+\subsection{Four Types of Statements}
+\begin{itemize}
+    \item \textbf{Universal Affirmative (A)} All X are Y
+    \item \textbf{Existential Affirmative (I)} There exists X that is Y
+    \item \textbf{Universal Negative (E)} No X is ever Y
+    \item \textbf{Existential Negative (O)} There exists X that is not Y
+\end{itemize}
+
+\subsection{Deciding Universal vs Existential}
+\subsubsection{Case where both makes sense}
+There is generally no right or wrong answer to this question. For example, the sentence `Not all teachers dislike marking' could be the negation of a universally quantified sentence while we can also phrase it as there exists some teacher who likes marking. These two formulation of the sentence are both correct and in fact equivalent. 
+\subsubsection{Case where only one way to interpret} 
+Consider the sentence `Some animals are dogs'. The only way that we can formulatethis is `there exists some animal, who is a dog'. This case is rather rare.
+
+\subsection{Single-Place Predicate Logic Symbolization}
+\subsubsection{Quantifier Symbols}
+Two symbols for the universal quantifier is $\forall$ while existential quantifier uses the symbol $\exists$. 
+\subsubsection{Subject Symbols}
+\begin{itemize}
+    \item Inividual constants or names are marks using lower case lettes $a-h$
+    \item Variable are written as lower case lettes $i-z$. Notice that this is different from the previous case. For example, when I don't want to specify any name for the subject (i want to pick a generic one) I will need a variable.
+    \item Operation Letters is also $a-h$, but possibly with number places as superscript.
+\end{itemize}
+
+\subsubsection{Predicate Sumbols}
+\begin{itemize}
+    \item Predicates are marked with upper case letters $A-O$ (may have number places as superscript in case of non-single place predicates)
+    \item The identity sign ($=$) is rather special. More on this latter.
+\end{itemize}
+
+\subsubsection{Examples} We use lower case letters or brackets (like \texttt{format} statements) to indicate the position of insertion of the subject. Consider the sentence `Tina Fey is amazing' and define $b:=$ Tina Fey and $A:\{1\}$ is amazing. Then the original sentence can be symbolized as $Ab$.
+
+\subsubsection{Canonical Form of the Universally Quantified Sentence} 
+The sentence all $\Phi$'s are $\Psi$'s can be represented in the following canonical form:
+\begin{equation*}
+    \forall \alpha (\Phi \alpha \implies \Psi \alpha)
+\end{equation*}
+\begin{equation*}
+    \forall \alpha (\text{Group}~\alpha \implies \text{Property}~\alpha)
+\end{equation*}
+
+\subsubsection{Formulation of Restricted Clause}
+Consider the sentence `All Dogs with cube heads are cute', and define the following $D^1$: \{1\} is a dog. $C^1$: \{1\} is cute. $F^1$:\{1\} has a cube head. There are two way of symnbolizing it, the first one is rather straight forward
+\begin{equation*}
+    \forall y(Dy \wedge Fy \implies Cy)
+\end{equation*}
+However, we can also address this using two layers restrictions, like the follow
+\begin{equation*}
+    \forall y(Dy \implies (Fy \implies Cy))
+\end{equation*}
+
+\subsubsection{Canonical Form of the Existentially Quantified Sentence} 
+Ways to say `Some $\Phi$'s are $\Psi$'s' OR `At least one of $\Phi$ is $\Psi$' OR `There is a $\Phi$ that is a $\Psi$'. It could be formulated as follows
+\begin{equation*}
+    \exists \alpha (\Phi \alpha \wedge \Psi \alpha)
+\end{equation*}
+i.e., 
+\begin{equation*}
+    \exists \alpha (\text{Group}~ \alpha \wedge \text{Property}~\alpha)
+\end{equation*}
 
 
 
