@@ -270,7 +270,7 @@ The all in one flip flop with two inputs J and K.
 
 
 
-
+In the FSM settings, a machine is safe if it doesn't cause a glitch to happen. For example in a FSM with states 00, 01, 11 if I can transit from 11 to 00 directly, then I don't know which bit of state F will flip first. This is problematic, we want safe machine assignments!
 
 
 

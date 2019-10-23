@@ -330,6 +330,7 @@ And the <strong>Frequency</strong> (yes this is the thing that you hear about yo
 <li>If J = 1 and K = 0, set the output to one</li>
 <li>If J = K = 1, toggle the output.</li>
 </ul>
+<p>In the FSM settings, a machine is safe if it doesn't cause a glitch to happen. For example in a FSM with states 00, 01, 11 if I can transit from 11 to 00 directly, then I don't know which bit of state F will flip first. This is problematic, we want safe machine assignments!</p>
 
     </body>
     </html>
