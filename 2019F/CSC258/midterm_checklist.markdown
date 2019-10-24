@@ -59,4 +59,11 @@
     2.  JK = 01 Kills, sets zero
     3.  JK = 10 Sets, sets one
     4.  JK = 00 holds
-
+18. Consider a 6 to 1 mux. The complete truth table would require **512** rows. This is because since we have 3 bits for selection, and for each case, we have to enumerate all the possible input combinations of the 6 inputs (each assumed to be 1 bit wide). The total is then 2 to the power of 6 + 3.
+19. The followinbg error message is caused by **combinational @(*) block with missing cases in case block or missing else in if-else**.
+    ``````
+    Warning (10240): Verilog HDL Always Construct warning at mux.v(..): inferring latch(es) for variable .., which holds its previous value in one or more paths through the always construct...
+    ``````
+20. In creating a comparator, remember to use the already computed eq result to help determine greater/less than etc. 
+21. A machine that has output dependent on both the prev state and the current input is **mealy machine** while a machine that outputs solely the state is a **moore machine**  
+22. 
