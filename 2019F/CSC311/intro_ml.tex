@@ -8,6 +8,7 @@
 \usepackage{url}
 \usepackage{bookmark}
 \usepackage{hyperref}
+\usepackage{blindtext}
 \usepackage{fancyhdr} 
 \usepackage{youngtab}
 \usepackage[
@@ -80,6 +81,11 @@
 % \newpage
 
 \paragraph{KNN} Find $k$ examples $\left\{ \bx^{(i)}, t^{(i)} \right\}$ closest to the test instance $\bx$ and then output majority $\arg \max_{t^{z}} \sum_{r = 1}^k \delta (t^{(z)}, t^{(r)})$. Define $\delta (a, b) = 1$ if $a = b$, $0$ otw. \textbf{Choice of $k$:} Rule is $k < \sqrt{n}$, small $k$ may overfit, while large may underfit. \textbf{Curse of Dim:} In high dimensions, ``most'' points are approximately the same distance. \textbf{Computation Cost:} 0 (minimal) at trianing/ no learning involved. Query time find $N$ distances in $D$ dimension $\mathcal{O}(ND)$ and $\mathcal{O}(N \log N)$ sorting time.
-% \paragraph{Information Gain}
+% \paragraph{Accuracy Gain} $L(R)-\frac{\left|R_{1}\right| L\left(R_{1}\right)+\left|R_{2}\right| L\left(R_{2}\right)}{\left|R_{1}\right|+\left|R_{2}\right|}$ 
+\paragraph{Entropy} $H(X)=-\mathbb{E}_{X \sim p}\left[\log _{2} p(X)\right]=-\sum_{x \in X} p(x) \log _{2} p(x)$ \textbf{ Multi-class: } $H(X, Y)=-\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} p(x, y)$ \textbf{ Properties: } $H$ is non-negative, $H(Y|X) \leq H(Y)$, $X\perp Y \implies H(Y|X) = H(Y)$, $H(Y|Y) = 0$, and $H(X,Y) = H(X|Y) + H(Y) = H(Y|X) + H(X)$
+\paragraph{Expected Conditional Entropy} $ H(Y | X) =\mathbb{E}_{X \sim p(x)}[H(Y | X)] =\sum_{x \in X} p(x) H(Y | X=x) =-\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} p(y | x) =-\mathbb{E}_{(X, Y) \sim p(x, y)}\left[\log _{2} p(Y | X)\right]$
+\paragraph{Information Gain} $IG(Y | X)=H(Y)-H(Y | X)$ 
+\paragraph{Bias Variance Decomposition} Using the square error loss $L(y, t)=\frac{1}{2}(y-t)^{2}$, \textbf{Bias ($\uparrow \implies$ underfitting):} How close is our classifier to true target. \textbf{Variance ($\uparrow \implies$ overfitting):} How widely dispersed are out predictions as we generate new datasets 
+$$\begin{aligned} \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-t\right)^{2}\right]=& \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]+\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}\right] \\=& \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)^{2}+\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}+ 2\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)\right] \\=& \underbrace{\mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)^{2}\right]}_{\text {variance }}+\underbrace{\mathbb{E}_{\mathbf{x}}\left[\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}\right]}_{\text {bias }} \end{aligned} $$ 
 
 \end{document}
