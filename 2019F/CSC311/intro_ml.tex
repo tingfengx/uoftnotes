@@ -1,5 +1,5 @@
-\documentclass[11pt]{article}
-
+\documentclass[10pt]{article}
+\usepackage[margin=0.3cm]{geometry}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsfonts}
@@ -69,14 +69,17 @@
 \newcommand{\bg}{\mathbf{g}}
 \newcommand{\bm}{\mathbf{m}}
 
-\title{CSC311 Introduction to Machine Learning}
-\author{\ccLogo \,\,Tingfeng Xia}
-\date{Fall 2019, modified on \today}
+% \title{CSC311 Introduction to Machine Learning}
+% \author{\ccLogo \,\,Tingfeng Xia}
+% \date{Fall 2019, modified on \today}
 
 \begin{document}
-\maketitle
-\doclicenseThis
-\tableofcontents
-\newpage
+% \maketitle
+% \doclicenseThis
+% \tableofcontents
+% \newpage
+
+\paragraph{KNN} Find $k$ examples $\left\{ \bx^{(i)}, t^{(i)} \right\}$ closest to the test instance $\bx$ and then output majority $\arg \max_{t^{z}} \sum_{r = 1}^k \delta (t^{(z)}, t^{(r)})$. Define $\delta (a, b) = 1$ if $a = b$, $0$ otw. \textbf{Choice of $k$:} Rule is $k < \sqrt{n}$, small $k$ may overfit, while large may underfit. \textbf{Curse of Dim:} In high dimensions, ``most'' points are approximately the same distance. \textbf{Computation Cost:} 0 (minimal) at trianing/ no learning involved. Query time find $N$ distances in $D$ dimension $\mathcal{O}(ND)$ and $\mathcal{O}(N \log N)$ sorting time.
+% \paragraph{Information Gain}
 
 \end{document}
