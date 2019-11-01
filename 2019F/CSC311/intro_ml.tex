@@ -11,6 +11,9 @@
 \usepackage{blindtext}
 \usepackage{fancyhdr} 
 \usepackage{youngtab}
+\setlength{\parskip}{-0.9em}
+% \setlength{\itemsep}{-1em}
+
 \usepackage[
     type={CC},
     modifier={by-nc-sa},
@@ -69,7 +72,8 @@
 \newcommand{\boldf}{\mathbf{f}}
 \newcommand{\bg}{\mathbf{g}}
 \newcommand{\bm}{\mathbf{m}}
-
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bW}{\mathbf{W}}
 % \title{CSC311 Introduction to Machine Learning}
 % \author{\ccLogo \,\,Tingfeng Xia}
 % \date{Fall 2019, modified on \today}
@@ -83,8 +87,7 @@
 \paragraph{KNN} Find $k$ examples $\left\{ \bx^{(i)}, t^{(i)} \right\}$ closest to the test instance $\bx$ and then output majority $\arg \max_{t^{z}} \sum_{r = 1}^k \delta (t^{(z)}, t^{(r)})$. Define $\delta (a, b) = 1$ if $a = b$, $0$ otw. \textbf{Choice of $k$:} Rule is $k < \sqrt{n}$, small $k$ may overfit, while large may underfit. \textbf{Curse of Dim:} In high dimensions, ``most'' points are approximately the same distance. \textbf{Computation Cost:} 0 (minimal) at trianing/ no learning involved. Query time find $N$ distances in $D$ dimension $\mathcal{O}(ND)$ and $\mathcal{O}(N \log N)$ sorting time.
 % \paragraph{Accuracy Gain} $L(R)-\frac{\left|R_{1}\right| L\left(R_{1}\right)+\left|R_{2}\right| L\left(R_{2}\right)}{\left|R_{1}\right|+\left|R_{2}\right|}$ 
 \paragraph{Entropy} $H(X)=-\mathbb{E}_{X \sim p}\left[\log _{2} p(X)\right]=-\sum_{x \in X} p(x) \log _{2} p(x)$ \textbf{ Multi-class: } $H(X, Y)=-\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} p(x, y)$ \textbf{ Properties: } $H$ is non-negative, $H(Y|X) \leq H(Y)$, $X\perp Y \implies H(Y|X) = H(Y)$, $H(Y|Y) = 0$, and $H(X,Y) = H(X|Y) + H(Y) = H(Y|X) + H(X)$
-\paragraph{Expected Conditional Entropy} $ H(Y | X) =\mathbb{E}_{X \sim p(x)}[H(Y | X)] =\sum_{x \in X} p(x) H(Y | X=x) =-\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} p(y | x) =-\mathbb{E}_{(X, Y) \sim p(x, y)}\left[\log _{2} p(Y | X)\right]$
-\paragraph{Information Gain} $IG(Y | X)=H(Y)-H(Y | X)$ 
+\paragraph{Expected Conditional Entropy} $ H(Y | X) =\mathbb{E}_{X \sim p(x)}[H(Y | X)] =\sum_{x \in X} p(x) H(Y | X=x) =-\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} p(y | x) =-\mathbb{E}_{(X, Y) \sim p(x, y)}\left[\log _{2} p(Y | X)\right]$ \textbf{Information Gain} $IG(Y | X)=H(Y)-H(Y | X)$ 
 \paragraph{Bias Variance Decomposition} Using the square error loss $L(y, t)=\frac{1}{2}(y-t)^{2}$, \textbf{Bias ($\uparrow \implies$ underfitting):} How close is our classifier to true target. \textbf{Variance ($\uparrow \implies$ overfitting):} How widely dispersed are out predictions as we generate new datasets 
 $$\begin{aligned} \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-t\right)^{2}\right]=& \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]+\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}\right] \\=& \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)^{2}+\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}+ 2\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)\right] \\=& \underbrace{\mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)^{2}\right]}_{\text {variance }}+\underbrace{\mathbb{E}_{\mathbf{x}}\left[\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}\right]}_{\text {bias }} \end{aligned} $$ 
 
@@ -98,16 +101,51 @@ $$\begin{aligned} \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}
 
 \paragraph{Bayes Optimality} $\mathbb{E}_{\mathbf{x}, \mathcal{D}, t | \mathbf{x}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-t\right)^{2}\right]=  \underbrace{\mathbb{E}_{\mathbf{x}}\left[\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-y_{*}(\mathbf{x})\right)^{2}\right]}_{\text {bias }}+\underbrace{\mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)^{2}\right]}_{\text {variance }}+\underbrace{\mathbb{E}_{\mathbf{x}}[\operatorname{Var}[t | \mathbf{x}]]}_{\text {Bayes }} $
 
-\paragraph{Vectorized Cost} $\mathbf{y}=\mathbf{X} \mathbf{w}+b \mathbf{1}$ and $\mathcal{J}=\frac{1}{2}\|\mathbf{y}-\mathbf{t}\|^{2}$ 
+% \paragraph{Vectorized Cost} $\mathbf{y}=\mathbf{X} \mathbf{w}+b \mathbf{1}$ and $\mathcal{J}=\frac{1}{2}\|\mathbf{y}-\mathbf{t}\|^{2}$ 
 
 % \paragraph{Regression OLS Direct Solution} 
 
 \paragraph{Feature Mapping} Some time we want fit a polynomial curve, we can do this using a feature map $y=\mathbf{w}^{\top} \boldsymbol{\psi}(x)$ where $\boldsymbol{\psi}(x)=\left[1, x, x^{2}, \ldots\right]^{\top}$. In general the feature map could be anything. 
 
-\paragraph{Ridge Regression} $\mathbf{w}_{\lambda}^{R i d g e}=\underset{\mathbf{w}}{\operatorname{argmin}} \mathcal{J}_{\mathrm{reg}}(\mathbf{w})=\underset{\mathbf{w}}{\operatorname{argmin}} \frac{1}{2}\|\mathbf{X} \mathbf{w}-\mathbf{t}\|_{2}^{2}+\frac{\lambda}{2}\|\mathbf{w}\|_{2}^{2} =\left(\mathbf{X}^{T} \mathbf{X}+\lambda \mathbf{I}\right)^{-1} \mathbf{X}^{T} \mathbf{t} $ Notice that when $\lambda = 0$ this is just OLS solution.
+\paragraph{Ridge Regression} $\mathbf{w}_{\lambda}^{R i d g e}=\underset{\mathbf{w}}{\operatorname{argmin}} \mathcal{J}_{\mathrm{reg}}(\mathbf{w})=\underset{\mathbf{w}}{\operatorname{argmin}} \frac{1}{2}\|\mathbf{X} \mathbf{w}-\mathbf{t}\|_{2}^{2}+\frac{\lambda}{2}\|\mathbf{w}\|_{2}^{2} =\left(\mathbf{X}^{T} \mathbf{X}+\lambda \mathbf{I}\right)^{-1} \mathbf{X}^{T} \mathbf{t} $ When $\lambda = 0$ this is just OLS.
 
-\paragraph{Gradient Descent} Consider the some cost function $\mathcal{J}$ and we want to optimize it. \textbf{GD:} $\mathbf{w} \leftarrow \mathbf{w}-\alpha \frac{\partial \mathcal{J}}{\partial \mathbf{w}}$ \textbf{GD w/ Reg} $\mathbf{w} \leftarrow \mathbf{w}-\alpha\left(\frac{\partial \mathcal{J}}{\partial \mathbf{w}}+\lambda \frac{\partial \mathcal{R}}{\partial \mathbf{w}}\right) =(1-\alpha \lambda) \mathbf{w}-\alpha \frac{\partial \mathcal{J}}{\partial \mathbf{w}}$ \textbf{mSGD:} \textbf{SGD:}
+\paragraph{Gradient Descent} Consider the some cost function $\mathcal{J}$ and we want to optimize it. 
+\begin{itemize}
+    \setlength\itemsep{-0.45em}
 
-\paragraph{a}
+    \item \textbf{GD:} $\mathbf{w} \leftarrow \mathbf{w}-\alpha \frac{\partial \mathcal{J}}{\partial \mathbf{w}}$; \textbf{GD w/ Reg} $\mathbf{w} \leftarrow \mathbf{w}-\alpha\left(\frac{\partial \mathcal{J}}{\partial \mathbf{w}}+\lambda \frac{\partial \mathcal{R}}{\partial \mathbf{w}}\right) =(1-\alpha \lambda) \mathbf{w}-\alpha \frac{\partial \mathcal{J}}{\partial \mathbf{w}}$ 
+
+    \item \textbf{mSGD:} Choose mini batch $\mathcal{M}\subset \{1,...,N\}$ and update $\bw \gets \bw - \frac{\alpha}{|\mathcal{M}|}\sum_{i = 1}^{\mathcal{|M|}} \frac{\partial \mathcal{L}^{(i)}}{\partial \bw}$ \textbf{Reasonable size} would be $\mathcal{|M|} \approx 100$
+    
+    \item \textbf{SGD:} Choose $i$ at uniform; $\bw \gets \bw - \alpha \frac{\partial \mathcal{L}^{(i)}}{\partial \bw}$; \textbf{Pro//Cons:} Progress w/o seeing all data//High Variance \& Not efficiently vectorized
+\end{itemize}
+
+
+\paragraph{Cross Entropy Loss} $\mathcal{L}_{CE} = -t \log y - (1-t) \log (1-y)$ \textbf{Logistic CE} $\mathcal{L}_{LCE}(z,t) = \mathcal{L}_{CE}(\sigma (z), t) = t\log (1+e^{-z}) + (1-t) \log (1+e^z)$
+
+\paragraph{Multiclass Classification}
+\begin{itemize}
+    \setlength\itemsep{-0.45em}
+    \item \textbf{Softmax Function} Natural generalization of logistic func: $y_{k}=\operatorname{softmax}\left(z_{1}, \ldots, z_{K}\right)_{k}=\frac{e^{z_{k}}}{\sum_{k^{\prime}} e^{z_{k^{\prime}}}}$; iuputs $z_k$ are called logits. 
+    \item \textbf{CE Loss, Vectorized} $\mathcal{L}_{\mathrm{CE}}(\mathbf{y}, \mathbf{t})=-\sum_{k=1}^{K} t_{k} \log y_{k} =-\mathbf{t}^{\top}(\log \mathbf{y})$ where the $\log $ is applied elementwise.
+    \item \textbf{Softmax Regression} $\bz = \mathbf{W}\bx + \bb$, $\by = \operatorname{softmax}(\bz)$, and $\mathcal{L}_{CE} = -\mathbf{t}^{\top}(\log \mathbf{y})$; GD Updates is $\mathbf{w}_{k} \leftarrow \mathbf{w}_{k}-\alpha \frac{1}{N} \sum_{i=1}^{N}\left(y_{k}^{(i)}-t_{k}^{(i)}\right) \mathbf{x}^{(i)}$ where $\bw_k$ means the $k$-th row of $\mathbf{W}$
+\end{itemize}
+
+\paragraph{Activation Functions} \textbf{Identity} $y = z$ \textbf{ReLU} $y = \max (0, z)$ \textbf{Soft ReLU} $y = \log(1+e^z)$ \textbf{Thresholding} $y = 1$ if $z> 0$ else $0$. \textbf{Logistic} $y=\frac{1}{1+e^{-z}}$ \textbf{tanh} $y=\frac{e^{z}-e^{-z}}{e^{z}+e^{-z}}$
+
+\paragraph{Multilayer Perceptron} 
+\begin{itemize}
+    \setlength\itemsep{-0.45em}
+    \item \textbf{Modularity of Layers} $\mathbf{h}^{(1)}=f^{(1)}(\mathbf{x})=\phi\left(\mathbf{W}^{(1)} \mathbf{x}+\mathbf{b}^{(1)}\right)$, $\mathbf{h}^{(2)}=f^{(2)}\left(\mathbf{h}^{(1)}\right)=\phi\left(\mathbf{W}^{(2)} \mathbf{h}^{(1)}+\mathbf{b}^{(2)}\right)$, \dots, $\mathbf{y}=f^{(L)}\left(\mathbf{h}^{(L-1)}\right) = f^{(L)} \circ \cdots \circ f^{(1)}(\mathbf{x})$
+    \item \textbf{Choice of Last Layer Activation Func} Regression: $\mathbf{y}=f^{(L)}\left(\mathbf{h}^{(L-1)}\right)=\left(\mathbf{w}^{(L)}\right)^{T} \mathbf{h}^{(L-1)}+b^{(L)}$; Binary Classification: $\mathbf{y}=f^{(L)}\left(\mathbf{h}^{(L-1)}\right)=\sigma\left(\left(\mathbf{w}^{(L)}\right)^{T} \mathbf{h}^{(L-1)}+b^{(L)}\right)$
+    \item \textbf{Back Propagation} Suppose $\mathcal{L}$ what I want to optimize, then for some variable $\bw$ that we want to optimize w.r.t., $\frac{\partial \mathcal{L}}{\partial \bw} =: \overbar{\bw}$
+    \item \textbf{Back Prop Cost} Forward: one add-multiplicity operation per weight; Backward: two add-multiplicity operations per weight $\implies$ the Backward pass is about as expensive as two Forward passes. (cost is linear in \# of layers, quadratic in \# of units per layer)
+    %     Forward:  $\mathbf{z} =\mathbf{W}^{(1)} \mathbf{x}+\mathbf{b}^{(1)} ; \mathbf{h} =\sigma(\mathbf{z}) ; \mathbf{y} =\mathbf{W}^{(2)} \mathbf{h}+\mathbf{b}^{(2)} ; \mathcal{L} =\frac{1}{2}\|\mathbf{t}-\mathbf{y}\|^{2}$
+
+    % $
+    %     \begin{aligned} \overline{\mathcal{L}} &=1 \\ \overline{\mathbf{y}} &=\overline{\mathcal{L}}(\mathbf{y}-\mathbf{t}) \\ \overline{\mathbf{W}^{(2)}} &=\overline{\mathbf{y}} \mathbf{h}^{\top} \\ \overline{\mathbf{h}^{(2)}} &=\overline{\mathbf{y}} \\ \overline{\mathbf{h}} &=\mathbf{W}^{(2) \top} \overline{\mathbf{y}} \\ \overline{\mathbf{z}} &=\overline{\mathbf{h}} \circ \sigma^{\prime}(\mathbf{z}) \\ \overline{\mathbf{W}^{(1)}} &=\overline{\mathbf{z}} \mathbf{x}^{\top} \\ \overline{\mathbf{b}^{(1)}} &=\overline{\mathbf{z}} \end{aligned}$
+\end{itemize}
+
+
 
 \end{document}
