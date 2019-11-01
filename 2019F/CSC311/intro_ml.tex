@@ -88,4 +88,26 @@
 \paragraph{Bias Variance Decomposition} Using the square error loss $L(y, t)=\frac{1}{2}(y-t)^{2}$, \textbf{Bias ($\uparrow \implies$ underfitting):} How close is our classifier to true target. \textbf{Variance ($\uparrow \implies$ overfitting):} How widely dispersed are out predictions as we generate new datasets 
 $$\begin{aligned} \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-t\right)^{2}\right]=& \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]+\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}\right] \\=& \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)^{2}+\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}+ 2\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)\right] \\=& \underbrace{\mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)^{2}\right]}_{\text {variance }}+\underbrace{\mathbb{E}_{\mathbf{x}}\left[\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}\right]}_{\text {bias }} \end{aligned} $$ 
 
+\paragraph{Bagging with Generating Distribution} Suppose we could sample $m$
+ independent trianing sets $\left\{ \mathcal{D}_i\right\}_{i=1}^m$ from $p_{dataset}$. Learn $h_i := h_{\mathcal{D}_i}$ and out final predictor is $h = 1/m \sum_{i=1}^m h_i$. \textbf{Bias Unchanged:} 
+ $\mathbb{E}_{\mathcal{D}_{1}, \ldots, \mathcal{D}_{m} \stackrel{i i d}{\sim} p_{\text {dataset }}}[h(\mathbf{x})]=\frac{1}{m} \sum_{i=1}^{m} \mathbb{E}_{\mathcal{D}_{i} \sim p_{\text {dataset }}}\left[h_{i}(\mathbf{x})\right]=\mathbb{E}_{\mathcal{D} \sim p_{\text {dataset }}}\left[h_{\mathcal{D}}(\mathbf{x})\right]$ \textbf{Variance Reduced:} $\operatorname{Var}_{\mathcal{D}_{1}, \ldots, \mathcal{D}_{m}}[h(\mathbf{x})]=\frac{1}{m^{2}} \sum_{i=1}^{m} \operatorname{Var}\left[h_{i}(\mathbf{x})\right]=\frac{1}{m} \operatorname{Var}\left[h_{\mathcal{D}}(\mathbf{x})\right]$
+
+\paragraph{Bootstrap Aggregation} Take a single dataset $\mathcal{D}$ with $n$ sample and generate $m$ new datasets, each by sampling $n$ training examples from $\mathcal{D}$, with replacement. We then the average the predictions. We have the reduction in variance to be $\operatorname{Var}\left(\frac{1}{m} \sum_{i=1}^{m} h_{i}(\mathbf{x})\right)=\frac{1}{m}(1-\rho) \sigma^{2}+\rho \sigma^{2}$ 
+
+\paragraph{Random Forest} Upon bootstrap aggregation, for each bag we choose a random set of features to make the trees grow on (decorrelates predictions, lower $\rho$). 
+
+\paragraph{Bayes Optimality} $\mathbb{E}_{\mathbf{x}, \mathcal{D}, t | \mathbf{x}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-t\right)^{2}\right]=  \underbrace{\mathbb{E}_{\mathbf{x}}\left[\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-y_{*}(\mathbf{x})\right)^{2}\right]}_{\text {bias }}+\underbrace{\mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)^{2}\right]}_{\text {variance }}+\underbrace{\mathbb{E}_{\mathbf{x}}[\operatorname{Var}[t | \mathbf{x}]]}_{\text {Bayes }} $
+
+\paragraph{Vectorized Cost} $\mathbf{y}=\mathbf{X} \mathbf{w}+b \mathbf{1}$ and $\mathcal{J}=\frac{1}{2}\|\mathbf{y}-\mathbf{t}\|^{2}$ 
+
+% \paragraph{Regression OLS Direct Solution} 
+
+\paragraph{Feature Mapping} Some time we want fit a polynomial curve, we can do this using a feature map $y=\mathbf{w}^{\top} \boldsymbol{\psi}(x)$ where $\boldsymbol{\psi}(x)=\left[1, x, x^{2}, \ldots\right]^{\top}$. In general the feature map could be anything. 
+
+\paragraph{Ridge Regression} $\mathbf{w}_{\lambda}^{R i d g e}=\underset{\mathbf{w}}{\operatorname{argmin}} \mathcal{J}_{\mathrm{reg}}(\mathbf{w})=\underset{\mathbf{w}}{\operatorname{argmin}} \frac{1}{2}\|\mathbf{X} \mathbf{w}-\mathbf{t}\|_{2}^{2}+\frac{\lambda}{2}\|\mathbf{w}\|_{2}^{2} =\left(\mathbf{X}^{T} \mathbf{X}+\lambda \mathbf{I}\right)^{-1} \mathbf{X}^{T} \mathbf{t} $ Notice that when $\lambda = 0$ this is just OLS solution.
+
+\paragraph{Gradient Descent} Consider the some cost function $\mathcal{J}$ and we want to optimize it. \textbf{GD:} $\mathbf{w} \leftarrow \mathbf{w}-\alpha \frac{\partial \mathcal{J}}{\partial \mathbf{w}}$ \textbf{GD w/ Reg} $\mathbf{w} \leftarrow \mathbf{w}-\alpha\left(\frac{\partial \mathcal{J}}{\partial \mathbf{w}}+\lambda \frac{\partial \mathcal{R}}{\partial \mathbf{w}}\right) =(1-\alpha \lambda) \mathbf{w}-\alpha \frac{\partial \mathcal{J}}{\partial \mathbf{w}}$ \textbf{mSGD:} \textbf{SGD:}
+
+\paragraph{a}
+
 \end{document}
