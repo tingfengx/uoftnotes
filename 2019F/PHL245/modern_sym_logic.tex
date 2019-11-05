@@ -72,6 +72,7 @@
 \newcommand{\bm}{\mathbf{m}}
 \renewcommand{\iff}{\leftrightarrow}
 \renewcommand{\implies}{\rightarrow}
+\renewcommand{\neg}{\sim}
 
 \title{PHL245 Modern Symbolic Logic}
 \author{\ccLogo \,\,Tingfeng Xia}
@@ -481,6 +482,88 @@ i.e.,
     \exists \alpha (\text{Group}~ \alpha \wedge \text{Property}~\alpha)
 \end{equation*}
 
+\subsection{Single Place Derivations}
+\subsubsection{Substitution}
+Replace a bound variable to a free one. This transforms a synmbolic sentence to a sumbolic formula. Notice that \textbf{All instances of $\alpha$ are replaced wuth a singular term $\beta$} in the following puppy example
+\begin{align*}
+    \forall \alpha \phi \alpha &\implies \phi \beta \\
+    \exists \alpha \phi \alpha &\implies \phi \beta
+\end{align*}
+
+\subsubsection{Universal Instantiation (UI)} This rule describes the subtitution of $\forall \alpha \phi \alpha$ to $ \phi \beta$. This could also be described as the $\forall$ elimination rule. There is a restriction that comes with this rule which is ``\textbf{Restriction:} $\beta$ could not be a bound variable within $\phi \alpha$''. In naive words, this means we can't substitute in a variable that is already quantified in the inner scope. 
+
+\paragraph{Example of Proof using UI}
+Suppose I want to show that $\forall x (Fx\implies Gx). Fa. \text{so} Ga.$. The general format is still the same as proofs in sentential logic. We will do
+\begin{enumerate}
+    \item show $Ga$
+    \item \quad $Fa\implies Ga$, Pr1, UI
+    \item \quad $Ga$ Pr2, 2, MP
+    \item \quad 3, DD
+\end{enumerate}
+
+\subsubsection{Existential Instantiation (EI)} If we have a $\exists \alpha \phi \alpha$, we can replace it with $\phi \beta$. The rule comes with a \textbf{Restriction:} $\beta$ must be a \textit{arbitrary} term\footnote{Arbitrary Term: Weak condition is `A term that is not free in an unboxed line', while the strong condition is `A term that does not appear in any previous line or premise'} ($i$ through $z$) that does not occyr in ANY previous line or premise. This will also be refered to ass the $\exists elimination rule$.  
+
+\subsubsection{Golden Rule} EI first, UI to MATCH. Always match UI to something useful. There is one exception to this rule, which is the case of Buried Existential.  
+
+\subsubsection{Example}
+Consider the quesiton
+\begin{equation*}
+    \exists x(Fx \vee \sim Gx). \forall y (Fy \implies Ay). \forall z Gz. \text{~~~So~} \sim \forall x \sim Ax
+\end{equation*}
+\begin{logicproof}{1}
+    \text{\sout{show}} \sim \forall x \sim Ax \\
+    \begin{subproof}
+        \forall x \sim x & AID \\
+        Fi \vee \sim Gi & P1, EI \\
+        Gi & P2, UI \\
+        Fi & 4, DN, 3, MTP \\
+        Fi \implies Ai & P2 UI/i \\
+        Ai & 5, 6, MP \\
+        \sim Ai & 2, UI \\
+        & 7, 8, ID
+    \end{subproof}
+    <neglect~this~line>
+\end{logicproof}
+
+\subsubsection{Existential Generalization (EG)}
+If I know $\phi \beta$ then I can conclude $\exists \alpha \phi \alpha$. This rule does come with two restrictions
+\begin{itemize}
+    \item \textbf{Restriction 1:} $\alpha$ cannot be a bound variable within $\phi \beta$
+    \item \textbf{Restriction 2:} If $\alpha $ is different from $\beta$, then $\alpha$ cannot be free within $\phi \beta$
+\end{itemize}
+This rule is also refered to as the $\exists$ Introduction Rule. I puppy example would be to say `Steven enjoys the notability app', then for sure `there exists something, something is a person and something enjoys the notability app'. There are certain difference between generalization rules and Instantiation rules, we shall take a look at some examples on genralizing `$Fa\wedge Ga$'
+\begin{itemize}
+    \item $\exists x(Fx \wedge Gx)$ generalizing both $a$'s to $x$
+    \item $\exists y(Fy \wedge Gy)$ generalziing both $a$'s to $y$
+    \item $\exists x(Fx \wedge Ga)$ generalizing the first $a$ to $x$. Notice that this definately incorrect in the Instantiation settings, but in fact this is valid here in generalization. 
+    \item $\exists z(Fa \wedge Gz)$ genralizing the second $a$ to $z$
+    \item $\exists x (Fa \wedge Ga)$ generalziing to $x$. This is a wierd one.
+\end{itemize}
+
+\subsubsection{Universal Derivation (UD)} This is a technique rather than a rule which allows the introduction of the universal quantifier. To add a universal quantifier, we can simply do a `show' of the statement, with no premise whatsoever. The general format will be
+\begin{itemize}
+    \item Show $\forall \alpha \phi \alpha$
+    \item \quad Show $\phi \alpha$
+    \item \quad CD/ID/DD 
+    \item $\forall \alpha\phi \alpha$, UD
+\end{itemize}
+The restriction of this technique is `$\alpha$ cannot appear unbound in any previous available line, or in a premise used in an available line'. This adds to our list of derivation skills: DD, ID, CD. Now we have the fourth way UD. 
+
+\paragraph{Example on UD (Double)}
+This is considered to be a double UD example because we have to do UD twice. The exmaple is
+\begin{equation*}
+    Ha.~\exists w \exists z (Hz \land \neg Gw) \implies \forall x Ax.~\exists i \neg Ai \text{~~So~} \forall x \forall y (Fx \implies Gy)
+\end{equation*}
+
+
+\subsection{Quantifier Negation (QN)}
+A quantifier or a negation of quantifier must be the main operator.
+\begin{itemize}
+    \item $\neg \forall \alpha \phi \equiv \exists \alpha \neg \phi$
+    \item $\neg \exists \alpha \phi \equiv \forall \alpha \neg \phi$
+\end{itemize}
+
+ 
 
 
 \end{document}
