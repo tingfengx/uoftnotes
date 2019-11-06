@@ -384,7 +384,7 @@ We will need the following three gadgets, namely the variable gadget, the garbag
 \begin{itemize}
     \item View numbers in base $b = 1 + \max_i n_{n_i}$, a large enough base. The max part is the total number of colliding ones and we are setting our base to be one larger than that so that there will never be carries. 
     \item Triple $(x_i, x_j, x_k)$ will be converted into \texttt{0000100001001000$_b$} where the $1$'s are at the $i,j,k$-th position in the number.
-    \item The goal is to add up to sum number $t = 1111111111 = \sum_i' b_{i'}$
+    \item The goal is to add up to some number $1111111111 = \sum_{i'} b^{i}$
 \end{itemize}
 \textbf{How does this reduction work?} Notice that my goal now in base $b$ is a bunch of ones, and I am trying to add up to this number from numbers in base $b$ composed of three 1's and 0's on the rest positions. So, I need to gurantee that there is no collision meaning no two occurences of 1 on the same position will be accepted. Then, the problem is essentially choosing non-overlapping subsets that can add up to the target number which is exactly what 3DM solves. \qed
 
@@ -394,23 +394,23 @@ We will need the following three gadgets, namely the variable gadget, the garbag
 \paragraph{Problem Statement} Given $A = \{a_1,...,a_n\}$ integers, is there a subset $S\subseteq A$ such that  $\sum S = \sum S\setminus A$, i.e. the set is partitioned into two parts that adds up to the same numeber.
 \paragraph{Reducing From Subset Sum}
 \begin{itemize}
+    \item Let $t$ denote the arbitrary target of my Subset Sum instance
     \item Let $\sigma = \sum A$
     \item Add $a_{n+1} = \sigma + t$ and $a_{n+2} = 2\sigma - t$
-    \item After the two terms described above, we first note that they can't be on the same side in the partition, because if they do then one side would have sum at least $\sigma + t + 2\sigma - t = 3 \sigma$ which is way larger than $\sigma$, the total sum of all numbers. 
+    \item After adding the two terms described above, we first note that they can't be on the same side in the partition, because if they do then one side would have sum at least $\sigma + t + 2\sigma - t = 3 \sigma$ which is way larger than $\sigma$, the total sum of all numbers. 
     \item Now we know that these two numbers have to be on two sides of the partition, we notice that if we add $\sigma - t$ to the side that has $a_{n+1} = \sigma + t$ and add $t$ to the other side, then both sides will have sum $2\sigma$, which is what we want. 
     \item Starring at the above step, we notice that $\sigma - t + t = \sigma$ is the total sum of elements that we want to add to two sides of the partition, which is exactly equal to the total sum of all the original $n$ elements! 
-    \item Then, it suffices to find partitions that sums to $t$\footnote{$t$ here is some arbitray given value, so we can call the Subset Sum algo using this.} where we can use the Subset Sum algorithm. \qed
+    \item Then, if this partition problem could be solved, my subset sum of arbitrary target $t$ can be solved and this shows Subset Sum could be $p$-reduced to Partition. 
 \end{itemize}
 
 
-% \subsection{My Thorughts}
-% \begin{itemize}
-%     \item In doing reduction, try to show that some special case of the current problem could be solved by a known hard problem's solution in polynomial time. 
-% \end{itemize}
+\subsection{My Thorughts}
+\paragraph{P-Reducibility} $A \leq_p B$ means $A$ is $p$-reducible to $B$. To show this is true, we have to take an arbitrary input of $A$, and find a polynomial time conversion such that this input is now a appropriate input for $B$. Then we will let $B$ solve this problem for us, and we will need a polynomial time conversion back from $B$'s solution to the required $A$'s. 
 
+\paragraph{Mario Reduced From 3 SAT} We tried to show that 3 SAT $\leq_p$ Mario, i.e. 3 SAT is $p$-reducible to Mario. Given any instance of 3 SAT problem\footnote{By instance of a problem, we mean that the input of the problem, which will be translated to the input of some other problem and from where the solution yielded will be converted back and thus act as the solution to `the instance of a problem'.}, we can build a respective level for Mario and whether Mario dies or not will tell us if 3 SAT should return YES or NO. 
 
-
-
+\paragraph{Partition Reduced From Subset Sum} (Subset Sum $\leq_p$ Partition) Given a Subset Sum problem, we add two elements into the set and give this as the input to the Partition solver. If the partition solver was able to return a YES solution, then we know that the elements in the partitions which 
+contains the $2\sigma - t$ element (exclude the $2\sigma - t$ element) has subset sum equal to $t$ which means the Subset Sum could be solved by using Partition as a black box. 
 
 
 
