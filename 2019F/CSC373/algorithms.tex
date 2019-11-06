@@ -18,7 +18,7 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\lfoot{\href{https://tingfengx.github.io}{https://tingfengx.github.io}}
+\lfoot{\small \url{https://tingfengx.github.io/uoftnotes/}}
 \lhead{\leftmark}
 \rfoot{Page \thepage}
 
@@ -332,6 +332,7 @@ This might be counter-intuitive but is mathematically valid. We are here limitin
 
 \subsection{Definitions}
 \begin{itemize}
+    \item \textbf{NP} Given any instance $I$ of problem $P$ and witness $W$, if there exists a verifier $V$ so that given the ordered pair $(I, W)$ as input, $V$ returns ``yes'' in polynomial time if the witness proves that the answer is ``yes'' and ``no'' in polynomial time otherwise, then $P$ is in NP. \textbf{Important:} Notice that to show that a problem is in NP, we have to consider all possible certificates ($\forall$ quantified) and for each certificate there should exist some verfier (which could certainly be different each time). 
     \item \textbf{NP-Completeness} A problem X is NP-Complete if X$\in$NP and X$\in $NP-Hard
     \item \textbf{NP-Hard} X is NP-Hard if every problem Y$\in$NP reduces to X.
     \item \textbf{Redution} from problem A to a problem B = poly-time algorithm converting A inputs to some equivalent B inputs.\footnote{Two important observations here: 1. if B in P then A in P; 2. if B in NP then A in NP}
@@ -369,7 +370,51 @@ We will need the following three gadgets, namely the variable gadget, the garbag
     \includegraphics[scale=0.22]{img/3dm_garbage.jpg}
     \includegraphics[scale=0.22]{img/3dm_clause.jpg}
 \end{center}
-% Note the following in 
+\begin{itemize}
+    \item In the variable gadget, the dots on the inner circle exists in only that gadget, and there is a variable gadget for each and every variable.
+    \item The reason that we have $2n_{x_i}$ sized\footnote{Notice that here $n_{x_i}$ counts all occurences of the variable $x_i$, including the $\overbar{x_i}$'s} variable gadgets is that here in the wheel we are only allowed to choose all the T's or all the F's but not mixed. This way, we have twice the number of needed variable connectors and then we choose half of them which is exactly what we need for the gadget to work. 
+    \item The clause gadget has the two dots on the lower level local and the top three are connected to the outer T/F dots on the variable gadgets. Notice that we are only allowed to choose one of the three triangles in the gadget drawn. Importantly, the one choice gurantees the bottom two nodes are chosen, meaning the clause is satisfied. 
+    \item Doing the above is not enough since then not all T/F nodes\footnote{That is, all the top three nodes in all the clause gadgets and all the nodes in the outer ring in the variable gadgets} will be used which is problematic. To solve this, we add a garbage collection gadget.
+    \item The Garbage Collection Gadget has all the T/F nodes on its lower row, and the gadget itself is repeated $\sum_x n_x - \#Clause$ times. This will help to connect all the unconnected nodes left from the previous steps.  
+\end{itemize}
+
+\subsection{Subset Sum}
+\paragraph{Problem Statement} Given $n$ integers $A = \{a_1, ..., a_n\}$ and target sum $t$. Does there exist a subset sum $S\subseteq A$ such that $\sum S = \sum_{a_i \in S} a_i = t$, i.e. adds up to a given sum.
+\paragraph{Reducing From 3DM}
+\begin{itemize}
+    \item View numbers in base $b = 1 + \max_i n_{n_i}$, a large enough base. The max part is the total number of colliding ones and we are setting our base to be one larger than that so that there will never be carries. 
+    \item Triple $(x_i, x_j, x_k)$ will be converted into \texttt{0000100001001000$_b$} where the $1$'s are at the $i,j,k$-th position in the number.
+    \item The goal is to add up to sum number $t = 1111111111 = \sum_i' b_{i'}$
+\end{itemize}
+\textbf{How does this reduction work?} Notice that my goal now in base $b$ is a bunch of ones, and I am trying to add up to this number from numbers in base $b$ composed of three 1's and 0's on the rest positions. So, I need to gurantee that there is no collision meaning no two occurences of 1 on the same position will be accepted. Then, the problem is essentially choosing non-overlapping subsets that can add up to the target number which is exactly what 3DM solves. \qed
+
+\paragraph{Weakly NP-Hardness} The numbers in the above reduction are giant. The number of digits in the target number in base $b$ have order $\mathcal{O}(n)$ digits. But, the actual values of the numbers are exponential, and this is not allowed in a Strong NP-Hardness setting. 
+
+\subsection{Partition}
+\paragraph{Problem Statement} Given $A = \{a_1,...,a_n\}$ integers, is there a subset $S\subseteq A$ such that  $\sum S = \sum S\setminus A$, i.e. the set is partitioned into two parts that adds up to the same numeber.
+\paragraph{Reducing From Subset Sum}
+\begin{itemize}
+    \item Let $\sigma = \sum A$
+    \item Add $a_{n+1} = \sigma + t$ and $a_{n+2} = 2\sigma - t$
+    \item After the two terms described above, we first note that they can't be on the same side in the partition, because if they do then one side would have sum at least $\sigma + t + 2\sigma - t = 3 \sigma$ which is way larger than $\sigma$, the total sum of all numbers. 
+    \item Now we know that these two numbers have to be on two sides of the partition, we notice that if we add $\sigma - t$ to the side that has $a_{n+1} = \sigma + t$ and add $t$ to the other side, then both sides will have sum $2\sigma$, which is what we want. 
+    \item Starring at the above step, we notice that $\sigma - t + t = \sigma$ is the total sum of elements that we want to add to two sides of the partition, which is exactly equal to the total sum of all the original $n$ elements! 
+    \item Then, it suffices to find partitions that sums to $t$\footnote{$t$ here is some arbitray given value, so we can call the Subset Sum algo using this.} where we can use the Subset Sum algorithm. \qed
+\end{itemize}
+
+
+% \subsection{My Thorughts}
+% \begin{itemize}
+%     \item In doing reduction, try to show that some special case of the current problem could be solved by a known hard problem's solution in polynomial time. 
+% \end{itemize}
+
+
+
+
+
+
+
+
 
 
 
