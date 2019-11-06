@@ -16,6 +16,12 @@
     version={4.0},
 ]{doclicense}
 
+\pagestyle{fancy}
+\fancyhf{}
+\lfoot{\href{https://tingfengx.github.io}{https://tingfengx.github.io}}
+\lhead{\leftmark}
+\rfoot{Page \thepage}
+
 % customized commands
 \newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
 \newcommand{\R}{\mathbb{R}}
@@ -72,7 +78,7 @@
   {\left.\begin{aligned}}
   {\end{aligned}\right\rbrace}
 
-\title{CSC373 Algorithm Design, Analysis and Complexity}
+\title{Miscellaneous notes in Algorithm Design, Analysis and Complexity}
 \author{\ccLogo \,\,Tingfeng Xia}
 \date{Fall 2019, modified on \today}
 
@@ -291,8 +297,88 @@ It is worth mentioning that now the non-negativity constriant becomes $\real^6 \
     \item Repeat the above procesure. In this case, 2 more iterations is required. We will know it is the time to stop when the objective function is some constant followed by negative copies of non-basic variables (which are non-negative) in which case the objective fucntion cannot be increased anymore. We call this the convergence of the Simplex Algorithm.
 \end{itemize}
   
-\newpage
-\section{6.006 Complexity: P, NP, NP-Completeness, Reductions}
+\section{6.006 Computational Complexity}
+\subsection{Complexity Classes}
+\begin{itemize}
+    \item \textbf{P} Set of all problems that can be solved in less than or equal to polynomial time.
+    \item \textbf{NP} Decision problems that can be solved in polynomial time via a lucky algorithm.
+    \item \textbf{NP-Hard} As hard as every problem in NP.
+    \item \textbf{NP-Complete} NP $\cap$ NP-Hard.
+    \item \textbf{EXP} Set of all problems that can be solved in less than or equal to exponential time.
+    \item \textbf{R} Set of all problems that can be computed/solved in finite time
+\end{itemize}
+
+\subsubsection{Theorem: Alomost All Decision Problems are not in R}
+This might be counter-intuitive but is mathematically valid. We are here limiting our scope to decision problems only, which is defined as `problems that outputs yes/no (some binary outcome)'. We will now prove this result, \textit{Proof:}
+\begin{itemize}
+    \item First, note that a program, what we write on a computer, is just a bianry string in some sense. But if it could be represented in a binary number (which might be a very big one), it is just a natural number in base 2. This is our space of programs.
+    \item Next, a decision problem is a funtion that is $f: \text{input} \rightarrow \{\text{YES}, \text{NO}\}$. But for sure the input for a program is some string which could be converted into binary which is again some natural number. Hence, our $f$ is one such that $f:\mathbb{N} \rightarrow \{\text{YES}, \text{NO}\}$. 
+    \item Above, we have argued that a program is a finite string of bits, while a decision problem is a infinite string of bits\footnote{For different inputs, the output may or may not be the same but importantly is never stops, i.e. there always exists the next problem.}.
+    \item Hence, decision problems $\in \real$ while programs is $\in \mathbb{N}$. But $|\mathbb{R}| \gg |\mathbb{N}|$! So there is not enough program to solve all the decision problems. 
+\end{itemize}
+\hfill $\blacksquare$
+
+\subsection{The Big Conjecture}
+\begin{equation*}
+    P\neq NP \approx \text{``You can't engineer luck''}
+\end{equation*}
+
+\subsection{Reductions}
+\paragraph{The idea} is to convert some problem A into a problem B. When we can reduce A to B, we say B is as hard as A. 
+\paragraph{Example I} To solve unweighted shortest paths, we can use a BFS. But for sure we can also solve this using Dijkstra by setting all the weights to one. This would be an example of a reduction. 
+\paragraph{Example II} Suppose we want to, again, solve the shortest path (weighted) problem but we are only given the tool of `min-product path'\footnote{That is, minimize the product of the weights along the path}. You can do this by taking logs, after which products become sum!
+
+\section{6.046J Complexity: P, NP, NP-Completeness, Reductions}
+
+\subsection{Definitions}
+\begin{itemize}
+    \item \textbf{NP-Completeness} A problem X is NP-Complete if X$\in$NP and X$\in $NP-Hard
+    \item \textbf{NP-Hard} X is NP-Hard if every problem Y$\in$NP reduces to X.
+    \item \textbf{Redution} from problem A to a problem B = poly-time algorithm converting A inputs to some equivalent B inputs.\footnote{Two important observations here: 1. if B in P then A in P; 2. if B in NP then A in NP}
+\end{itemize}
+
+\subsection{Class Relationships}
+\begin{center}
+    \includegraphics[scale=0.16]{img/compare_complexities.jpg}
+\end{center}
+
+\subsection{Proving NP-Completeness}
+From a algorithm perspective, the question is `How to prove X is NP-Complete?'
+\begin{enumerate}
+    \item Show that X in NP. (Give a non-detrministeic algorithm OR give a certificate and verify.)
+    \item Reduce from some known NP-Complete problem Y to your problem X. \textbf{Important:} Always reduce from the thing that you know is hard to the thing that you want to show is hard. This direction matters. 
+\end{enumerate}
+
+\subsection{3 SAT} Given a boolean formula, which is an AND of triplet ORs. A clause is one of the triplet ORs and a literal is one element in a triplet OR. The question is does there exist a assignment of variables such that the final result (the entire boolean formula) evaluates to true. 
+\paragraph{Intuition behind the Proof of NP-Completeness of 3 SAT}
+\begin{itemize}
+    \item Software $\approx$ Hardware, you can build a circuit for a software/algorithm using logic gates
+    \item If I have a circuit, than I can convert that into a boolean formula.
+    \item (Fun Fact; Less obvious) If I have formula, then I can convert it into the form 3 SAT problem requires. 
+    \item Then the `witness/oracle' is described by the literals in the formula
+    \item Then deciding whether there's some way to set the literals to make the formula true is the same thing as saying `Is there some certificate where the verifier says yes', which is the same thing as saying that the problem has answer yes.
+\end{itemize}
+
+\subsection{3-Dimensional Matching (3DM)}
+\paragraph{Problem Statement} You are given disjoint sets $X, Y$ and $Z$, each of size $n$. You are also given triples $T\subseteq X\times Y \times Z$. The goal is to choose subset $S\subseteq T$ such that every element $\in X \cup Y \cup Z$ is in exactly one $s\in S$. 
+
+\paragraph{Reducing From 3 SAT} 
+We will need the following three gadgets, namely the variable gadget, the garbage collection gadget, and the clause gadget. 
+\begin{center}
+    \includegraphics[scale=0.22]{img/3dm_variable.jpg}
+    \includegraphics[scale=0.22]{img/3dm_garbage.jpg}
+    \includegraphics[scale=0.22]{img/3dm_clause.jpg}
+\end{center}
+% Note the following in 
+
+
+
+
+
+
+
+
+
 
 
 
