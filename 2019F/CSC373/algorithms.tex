@@ -19,7 +19,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \lfoot{\small \url{https://tingfengx.github.io/uoftnotes/}}
-\lhead{\leftmark}
+\lhead{\small \leftmark}
 \rfoot{Page \thepage}
 
 % customized commands
@@ -404,7 +404,7 @@ We will need the following three gadgets, namely the variable gadget, the garbag
 \end{itemize}
 
 
-\subsection{My Thorughts}
+\subsection{My Thoughts}
 \paragraph{P-Reducibility} $A \leq_p B$ means $A$ is $p$-reducible to $B$. To show this is true, we have to take an arbitrary input of $A$, and find a polynomial time conversion such that this input is now a appropriate input for $B$. Then we will let $B$ solve this problem for us, and we will need a polynomial time conversion back from $B$'s solution to the required $A$'s. 
 
 \paragraph{Mario Reduced From 3 SAT} We tried to show that 3 SAT $\leq_p$ Mario, i.e. 3 SAT is $p$-reducible to Mario. Given any instance of 3 SAT problem\footnote{By instance of a problem, we mean that the input of the problem, which will be translated to the input of some other problem and from where the solution yielded will be converted back and thus act as the solution to `the instance of a problem'.}, we can build a respective level for Mario and whether Mario dies or not will tell us if 3 SAT should return YES or NO. 
