@@ -2,6 +2,7 @@
 \usepackage[margin=3cm]{geometry}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -10,7 +11,6 @@
 \usepackage{hyperref}
 \usepackage{fancyhdr} 
 \usepackage{youngtab}
-\usepackage{xcolor}
 \usepackage[
     type={CC},
     modifier={by-nc-sa},
@@ -220,7 +220,7 @@ So,
 \end{equation*}
 and
 \begin{equation*}
-    \color{red}{\operatorname{Var}\left(\hat{y}_{i}\right)}=\operatorname{Var}\left(\sum_{j=1}^{n} h_{i j} y_{j}\right)=\sum_{j \neq i} h_{i j}^{2} \operatorname{Var}\left(y_{j}\right)=\sigma^{2} \sum_{j} h_{i j}^{2}=\color{red}{\sigma^{2} h_{i i}}
+    \color{Thistle}{\operatorname{Var}\left(\hat{y}_{i}\right)} \color{Black}=\operatorname{Var}\left(\sum_{j=1}^{n} h_{i j} y_{j}\right)=\sum_{j \neq i} h_{i j}^{2} \operatorname{Var}\left(y_{j}\right)=\sigma^{2} \sum_{j} h_{i j}^{2}=\color{Thistle}{\sigma^{2} h_{i i}}
 \end{equation*}
 
 \paragraph{Overcome with Standardization} The above problem of each $\hat{e}_i$ having different variances could be overcame by standardizing the residuals. The $i$-th standardized residual is defined as (notice that the $s = \hat{\sigma}$ is the estimated variance in the SLR settings)
@@ -262,7 +262,63 @@ We have discussed multiple ways of assessing outliers and talked about the way t
 \subsubsection{Influence of Certain Cases}
 It can sometimes be the case that certain data points in a data set are drastically controlling the entire regression model (the model has payed too much attention to them). We now decelop methods where we measure the ``importance'' of a data point.
 
-% \paragraph{Cook's Distance} Denote 
+\paragraph{Cook's Distance} First, define (recall if already defined) the following notation
+\begin{itemize}
+    \item $\hat{{y}}_{j(i)}$ means the the fitted value of the $j$-th data point on the regression line obtained by removing the $i$-th case. 
+    \item $S^2 = \frac{1}{n-2} \sum_{j=1}^n \hat{e}_j^2$ is the variance (Original MSE) of the \color{Thistle}{total regression model}. \color{black}
+    \item $r_{i}=\frac{\hat{e}_{i}}{s \sqrt{1-h_{i i}}}\quad \text{where}~ s=\sqrt{\frac{1}{n-2} \sum_{j=1}^{n} \hat{e}_{j}^{2}}$
+\end{itemize}
+Then, the Cook's Distance of the $i$-th datapoint is given by
+\begin{equation*}
+    \color{OliveGreen}
+    D_{i}=\frac{\sum_{j=1}^{n}\left(\hat{y}_{j(i)}-\hat{y}_{j}\right)^{2}}{2 S^{2}} = \frac{r_{i}^{2}}{2} \frac{h_{i i}}{1-h_{i i}}
+\end{equation*}
+where we should note that $D_i$ may be large due to large $r_i$, or large $h_{ii}$ or both.
+
+\paragraph{Rule: Cook's Distance} 
+\begin{itemize}
+    \item A point is noteworthy if
+        \begin{equation*}
+            D_i > \frac{4}{n-2}
+        \end{equation*}
+    \item In practice, look for gaps in the values of Cook's Distance and not just whether one value exceeds tyhe suggested cut off.
+\end{itemize}
+
+\subsubsection{Normality of the Errors}
+The assumption of normal errors is (especially) needed in small samples for the validity of $t$-dist based tests and inferences. This assumption is generally checked by looking at the distribution of the residuals or standardized residuals. Recall that the $i$-th least squares residuals is given by $\hat{e}_{i}=y_{i}-\hat{y}_{i}$. We will now show $\hat{e}_{i}=e_{i}-\sum_{j=1}^{n} h_{i j} e_{j}$. First, in the derivation we will need these two facts
+\begin{equation*}
+    \sum_{i=1}^{n} h_{i j}=1
+\end{equation*}
+and 
+\begin{equation*}
+    \sum_{j=1}^{n} x_{j} h_{i j}=\sum_{j=1}^{n}\left[\frac{x_{j}}{n}+\frac{\left(x_{i}-\bar{x}\right)\left(x_{j}-\bar{x}\right) x_{j}}{S X X}\right]=\bar{x}+\frac{\left(x_{i}-\bar{x}\right) S X X}{S X X}=x_{i}
+\end{equation*}
+We then proceed as follows
+\begin{align*} 
+    \hat{e}_{i} &=y_{i}-\hat{y}_{i} =y_{i}-h_{i i} y_{i}-\sum_{j \neq i} h_{i j} y_{j} \\ 
+    &=y_{i}-\sum_{j=1}^{n} h_{i j} y_{j} \\ 
+    &=\beta_{0}+\beta_{1} x_{i}+e_{i}-\sum_{j=1}^{n} h_{i j}\left(\beta_{0}+\beta_{1} x_{j}+e_{j}\right) \\ 
+    &=\beta_{0}+\beta_{1} x_{i}+e_{i}-\beta_{0}-\beta_{1} x_{i}-\sum_{j=1}^{n} h_{i j} e_{j} \\ 
+    &\color{Thistle}{=e_{i}-\sum_{j=1}^{n} h_{i j} e_{j}}
+\end{align*}
+\hfill $\blacksquare$ \newline
+The above result showed that the $i$-th least squares residual is equal to $e_i$ minus a weighted sum of all the $e$'s. There are two cases to consider,
+\begin{itemize}
+    \item In small to moderate samples, the second term could dominate the first and first and the residuals can look like they come from a normal distribution even if the errors do not. 
+    \item When $n$ is large, the second term in the derived result (thistle colored) has a much smaller variance than that of the first term and as such the first term dominates the last equation. 
+\end{itemize}
+\textbf{Conclusion:} For large samples, the residuals can be used to assess normality of the errors.
+
+\paragraph{Assessment Using Normal Q-Q}
+A normal probability plot of the standardized residuals is obtained by plotting the ordered standardized residuals on the vertical axis against the expected order statistics from a standard normal distribution on the horizontal axes. If the resulting plot produces points ``close'' to a straight line then the data are said to be consistent with that from a normal distribution. On the other hand, departures from linearity provide evidence of non-normality. 
+\begin{center}
+    \includegraphics[scale=0.27]{img/qq_left.png}
+    \includegraphics[scale=0.27]{img/qq_right.png}
+    \includegraphics[scale=0.26]{img/qq_over.png}
+    \includegraphics[scale=0.26]{img/qq_under.png}
+\end{center}
+
+\subsubsection{Constant Variance}
 
 
 
@@ -274,16 +330,7 @@ It can sometimes be the case that certain data points in a data set are drastica
 
 
 
-
-
-
-
-
-
-
-
-
-
+% TODO: CTD FROM HERE
 
 \section{Weighted Least Square Regression}
 \subsection{Motivation and Set-Up}
