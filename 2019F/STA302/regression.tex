@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-
+\usepackage[margin=3cm]{geometry}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsfonts}
@@ -10,6 +10,7 @@
 \usepackage{hyperref}
 \usepackage{fancyhdr} 
 \usepackage{youngtab}
+\usepackage{xcolor}
 \usepackage[
     type={CC},
     modifier={by-nc-sa},
@@ -41,6 +42,7 @@
 \newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
 \newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\independent}{\perp \!\!\! \perp}
 % Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
 \newcommand{\va}{\mathbf{a}}
 \newcommand{\vb}{\mathbf{b}}
@@ -81,6 +83,208 @@ Notes for STA302H1F fall offering, 2019 with Prof. Shivon Sue-Chee. These notes 
 \tableofcontents
 \newpage
 
+\section{Diagnostics and Transformations for SLR}
+\subsection{Valid and Invalid Data}
+\subsubsection{Residuals}
+One tool that we can use to validate a regression model is one or more plots of residuals (or standardized residuals). These plots will enable us to assess visually whether an appropriate model has been fit to the data no matter how many predictor variables are used. 
+
+\paragraph{Expected Behavior} We expect that the residual graph to have no discernable pattern and centered at some value (0 in the case of standardized residual). Patterns such as curves, skewness et cetra indicates non-normal residuals. More on this in the below section.
+
+\subsubsection{Reading Residual Plots}
+\paragraph{Criterion} One way of checking whether a valid simple linear regression model has been fit is to plot residuals versus $x$ and look for patterns. If no pattern is found then this indicates that the model provides an adequate summary of the data, i.e., is a valid model. If a pattern is found then the shape of the pattern provides information on the function of $x$ that is missing from the model.  
+
+\paragraph{Rationale} Suppose that the true model is a straight line (which we never know) defined as
+\begin{equation}
+    Y_{i}=\mathrm{E}\left(Y_{\mathrm{i}} | X_{i}=x_{i}\right)+e_{i}=\beta_{0}+\beta_{1} x_{i}+e_{i} \quad 
+\end{equation}
+where
+\begin{equation*}
+    e_i = \text{Random error on}~Y_i\quad \text{and} ~E(e_i) = 0
+\end{equation*}
+and we fit a regression line
+\begin{equation*}
+    \hat{y}_{i}=\hat{\beta}_{0}+\hat{\beta}_{1} x_{i}
+\end{equation*}
+Under the assumption that our regression line is very close to the true model, i.e. $\beta_0 \approx b_0$ and $\beta_1 \approx b_1$), we see
+\begin{align*}
+    \hat{e}_{i} 
+    &= y_{i}-\hat{y}_{i} \\
+    &= \beta_{0}+\beta_{1} x_{i} + e_i - \hat{\beta}_{0} - \hat{\beta}_{1} x_{i} \\
+    &= \left(\beta_{0}-\hat{\beta}_{0}\right)+\left(\beta_{1}-\hat{\beta}_{1}\right) x_{i}+e_{i} \\
+    &\approx e_i
+\end{align*}
+which means that our residuals resembles the random error! 
+
+\subsection{Regression Diagnostics}
+\paragraph{Catagorization}
+\begin{itemize}
+    \item \textbf{X-Direction Outlier, i.e. Leverage Point}: Away from the bulk of data in the $x$-direction. 
+    \begin{itemize}
+        \item \textbf{Good:} Not much chaneg after removing the data point, i.e. the data point originally was quite close to the regression line although away from the bulk of data in the $x$ direction. \textit{``A good leverage point is a leverage point which is NOT also an outlier.''}
+        \item \textbf{Bad, Influential Point:} If its $Y$-value does not follow the pattern set by the other data points, i.e. a bad leverage point is a leverage point which is also an outlier. 
+    \end{itemize}
+    \item \textbf{Y-Direction Outlier} Trait: large residuals
+\end{itemize}
+
+\subsubsection{Leverage Point}
+\paragraph{Defining The Hat}
+The hat came from yet another representation of the $\hat{y}_i$. Recall that $\hat{y}_{i}=\hat{\beta}_{0}+\hat{\beta}_{1} x_{i}$, where $\hat{\beta}_{0}=\bar{y}-\hat{\beta}_{1} \bar{x}$, $\hat{\beta}_{1}=\sum_{j=1}^{n} c_{j} y_{j}$ and $c_{j}=\frac{x_{j}-\bar{x}}{S X X}$.
+Then we have
+\begin{align*}
+    \hat{y}_{i}
+    &=\bar{y}-\hat{\beta}_{1} \bar{x}+\hat{\beta}_{1} x_{i} 
+    =\bar{y}+\hat{\beta}_{1}\left(x_{i}-\bar{x}\right) \\
+    &=\frac{1}{n} \sum_{j=1}^{n} y_{j}+\sum_{j=1}^{n} \frac{\left(x_{j}-\bar{x}\right)}{S X X} y_{j}\left(x_{i}-\bar{x}\right) \\
+    &=\sum_{j=1}^{n}\left[\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)\left(x_{j}-\bar{x}\right)}{S X X}\right] y_{j} 
+    =\sum_{j=1}^{n} h_{i j} y_{j}
+\end{align*}
+where we define
+\begin{equation*}
+    h_{i j}=\left[\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)\left(x_{j}-\bar{x}\right)}{S X X}\right]
+\end{equation*}
+\paragraph{Property of The Hat}
+Recall that $\sum_{j=1}^{n}\left[x_{j}-\bar{x}\right]=n\bar{x} - n\bar{x}=0$, then
+\begin{equation*}
+    \sum_{j=1}^{n} h_{i j}=\sum_{j=1}^{n}\left[\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)\left(x_{j}-\bar{x}\right)}{S X X}\right]=\frac{n}{n}+\frac{\left(x_{i}-\bar{x}\right)}{S X X} \sum_{j=1}^{n}\left[x_{j}-\bar{x}\right]=1
+\end{equation*}
+Thus,
+\begin{equation*}
+    \hat{y}_{i}=h_{i i} y_{i}+\sum_{j \neq i} h_{i j} y_{j} \quad \text{where}~h_{i i}=\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)^{2}}{\sum_{j=1}^{n}\left(x_{j}-\bar{x}\right)^{2}}
+\end{equation*}
+\paragraph{Defining Leverage} 
+The term $h_{i i}=\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)^{2}}{\sum_{j=1}^{n}\left(x_{j}-\bar{x}\right)^{2}}$ above is commonly known as the leverage of the $i$th data point. Notice the following in the definition of the leverage $h_{ii}$
+\begin{itemize}
+    \item The second term measures the proportion, in terms of squared deviation in $x$-direction over sum of square of total devaition in $x$-direction, of the $i$-th data point's deviation. When the second term tends to 1, meaning that $i$-th data point is some extreme outlier in the $x$-direction, then $h_{ii}$ would close to one, signifiying the `leverage'-ness. 
+    \item Recall that $\sum_{j=1}^{n} h_{i j}=1$, then when $h_{i i} \cong 1$, $h_{ij}\rightarrow 0$ and
+        \begin{equation*}
+            \hat{y}_{i}=1 \times y_{i}+\text { other terms } \cong y_{i}
+        \end{equation*}
+    which means $\hat{y}_{i}$  will be very close to $y_i$, regardless of the rest dataset. 
+    \item A point of high leverage (or a leverage point) can be found by looking at just the values of the $x$’s and not at the values of the $y$’s
+\end{itemize}
+
+\paragraph{Average of Leverage} For simple linear regression, 
+\begin{equation*}
+    \operatorname{average}\left(h_{i i}\right) = \frac{1}{n}\sum_{i = 1}^n h_{ii} =\frac{2}{n}
+\end{equation*}
+
+\paragraph{Identifying Leverage} Rule: $x_i$ is a high leverage (i.e., a leverage point) in a SLR model if 
+\begin{equation*}
+    h_{i i}>2 \times \operatorname{average}\left(h_{i i}\right)=2 \times 2 / n=4 / n
+\end{equation*}
+
+\paragraph{Dealing with `Bad' Leverage}
+\begin{itemize}
+    \item \textbf{Remove invalid data points;} Question the validity of the data points corresponding to bad leverage points, that is: Are these data points unusual or different in some way from the rest of the data? If so, consider removing these points and refitting the model without them. 
+    \item \textbf{Fit a different regression model;} Question the validity of the regression model that has been fitted, that is: Has an incorrect model been fitted to the data? If so, consider trying a different model by including extra predictor variables (e.g., polynomial terms) or by transforming Y and/or x (which is considered later in this chapter).
+\end{itemize}
+
+\subsubsection{Standardized Residuals}
+\paragraph{Problem of Non-constant Variance} Recall that 
+\begin{equation*}
+    h_{i j}=\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)\left(x_{j}-\bar{x}\right)}{\sum_{j=1}^{n}\left(x_{j}-\bar{x}\right)^{2}}=\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)\left(x_{j}-\bar{x}\right)}{S X X}
+\end{equation*}
+and (we will show this later)
+\begin{equation*}
+    \operatorname{Var}\left(\hat{e}_{i}\right)=\sigma^{2}\left[1-h_{i i}\right]
+\end{equation*}
+which is indeed non-constant for different data points. When  $h_{ii} \cong 1$ ($h_{ii}$ is very close to 1), the $i$-th data point is a leverage point and 
+\begin{equation*}
+    \operatorname{Var}(\hat{e}_i) = \sigma^{2}\left[1-h_{i i}\right] \approx 0 \quad \text{and} \quad \hat{y}_{i} \cong y_{i}
+\end{equation*}
+The above results intuitively makes sense: When $i$-th data point is a leverage, $\hat{e}_i$ will be small and it does not vary much (data point close to the estimated regression line). 
+
+\paragraph{Derivation of Residual Variance (Not Important)}
+Recall that
+\begin{equation*}
+    \hat{y}_{i}=h_{i i} y_{i}+\sum_{j \neq i} h_{i j} y_{j} \quad \text{where}~h_{i j}=\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)\left(x_{j}-\bar{x}\right)}{\sum_{j=1}^{n}\left(x_{j}-\bar{x}\right)^{2}}=\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)\left(x_{j}-\bar{x}\right)}{S X X}
+\end{equation*}
+Then,
+\begin{equation*}
+    \hat{e}_{i}=y_{i}-\hat{y}_{i}=y_{i}-h_{i i} y_{i}-\sum_{j \neq i} h_{i j} y_{j}=\left(1-h_{i i}\right) y_{i}-\sum_{j \neq i} h_{i j} y_{j}
+\end{equation*}
+Hence,
+\begin{align*}
+    \operatorname{Var}\left(\hat{e}_{i}\right) &= \operatorname{Var}\left(\left(1-h_{i i}\right) y_{i}-\sum_{j \neq i} h_{i j} y_{j}\right) \\
+    &= \left(1-h_{i i}\right)^{2} \sigma^{2}+\sum_{j \neq i} h_{i j}^{2} \sigma^{2} \\
+    &= \sigma^{2}\left[1-2 h_{i i}+h_{i i}^{2}+\sum_{j \neq i} h_{i j}^{2}\right] \\
+    &=\sigma^{2}\left[1-2 h_{i i}+\sum_{j} h_{i j}^{2}\right]
+\end{align*}
+Notice that 
+\begin{align*} 
+    \sum_{j=1}^{n} h_{i j}^{2} &=\sum_{j=1}^{n}\left[\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)\left(x_{j}-\bar{x}\right)}{S X X}\right]^{2} \\ &=\frac{1}{n}+2 \sum_{j=1}^{n} \frac{1}{n} \times \frac{\left(x_{i}-\bar{x}\right)\left(x_{j}-\bar{x}\right)}{S X X}+\sum_{j=1}^{n} \frac{\left(x_{i}-\bar{x}\right)^{2}\left(x_{j}-\bar{x}\right)^{2}}{S X X^{2}} \\ &=\frac{1}{n}+0+\frac{\left(x_{i}-\bar{x}\right)^{2}}{S X X} \\ &=h_{i i} 
+\end{align*}
+So,
+\begin{equation*}
+    \operatorname{Var}\left(\hat{e}_{i}\right)=\sigma^{2}\left[1-2 h_{i i}+h_{i i}\right]=\sigma^{2}\left[1-h_{i i}\right]
+\end{equation*}
+and
+\begin{equation*}
+    \color{red}{\operatorname{Var}\left(\hat{y}_{i}\right)}=\operatorname{Var}\left(\sum_{j=1}^{n} h_{i j} y_{j}\right)=\sum_{j \neq i} h_{i j}^{2} \operatorname{Var}\left(y_{j}\right)=\sigma^{2} \sum_{j} h_{i j}^{2}=\color{red}{\sigma^{2} h_{i i}}
+\end{equation*}
+
+\paragraph{Overcome with Standardization} The above problem of each $\hat{e}_i$ having different variances could be overcame by standardizing the residuals. The $i$-th standardized residual is defined as (notice that the $s = \hat{\sigma}$ is the estimated variance in the SLR settings)
+\begin{equation*}
+    r_{i}=\frac{\hat{e}_{i}}{s \sqrt{1-h_{i i}}}\quad \text{where}~ s=\sqrt{\frac{1}{n-2} \sum_{j=1}^{n} \hat{e}_{j}^{2}}
+\end{equation*}
+
+\paragraph{Advantages of Standardization} 
+\begin{itemize}
+    \item When points of high leverage exist, instead of looking at residual plots, it is generally more informative to look at plots of standardized residuals since plots of the residuals will have nonconstant variance even if the errors have constant variance.
+    \item When points of high leverage do not exist, there is gener- ally little difference in the patterns seen in plots of residuals when compared with those in plots of standardized residuals.
+    \item The other advantage of standardized residuals is that they immediately tell us how many estimated stand- ard deviations any point is away from the fitted regression model. 
+\end{itemize}
+
+\paragraph{Recognizing Outliers Using Standardized Residuals} 
+\begin{itemize}
+    \item An \textbf{outlier} is a point whose standardized residual falls outside the interval from -2 to 2, i.e. $|r_i| > 2$
+    \item A \textbf{Bad Leverage Point} is a leverage point whose standardized residual falls outside the interval from -2 to 2, i.e. $|r_i| > 2 \wedge h_{ii} > \frac{4}{n}$
+    \item A \textbf{Good Leverage Point} is a leverage point whose standardized residual falls inside the interval from -2 to 2, i.e. $|r_i| \leq 2 \wedge h_{ii} > \frac{4}{n}$
+    \item \textbf{Dealing with large datasets:} In this case, we should change the above criterion to $r_i| > 4$ and $r_i| \leq 4$ respectively. This is to give allowance for more occurence of rare events in a large data set.
+\end{itemize}
+
+\paragraph{Correlation Between Residuals} Even if the errors are independent (homogeneous), i.e. $e_i \independent e_j~(i \neq j)$, the residuals are still correlated. It can be shown that the covariance and the correlation is given by
+\begin{equation*}
+    \operatorname{Cov}\left(\hat{e}_{i}, \hat{e}_{j}\right)=-h_{i j} \sigma^{2}(i \neq j)
+\end{equation*}
+\begin{equation*}
+    \operatorname{Corr}\left(\hat{e}_{i}, \hat{e}_{j}\right)=\frac{-h_{i j}}{\sqrt{\left(1-h_{i i}\right)\left(1-h_{i j}\right)}}(i \neq j)
+\end{equation*}
+Such correlation could be safely ignored in practice. They are usualy given raise by inherent correlation such as data collected over time.
+
+\subsubsection{Recommendations for Handling Outliers \& Leverage}
+We have discussed multiple ways of assessing outliers and talked about the way to deal with them by removing them. However, it is not always a good idea to delete them for the following reasons:
+\begin{itemize}
+    \item Points should not be routinely deleted from an analysis just because they do not fit the model. Outliers and bad leverage points are signals, flagging potential problems with the model.
+    \item Outliers often point out an important feature of the problem not considered before. They may point to an alternative model in which the points are not an outlier. In this case it is then worth considering fitting an alternative model. 
+\end{itemize}
+
+\subsubsection{Influence of Certain Cases}
+It can sometimes be the case that certain data points in a data set are drastically controlling the entire regression model (the model has payed too much attention to them). We now decelop methods where we measure the ``importance'' of a data point.
+
+% \paragraph{Cook's Distance} Denote 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Weighted Least Square Regression}
 \subsection{Motivation and Set-Up}
 Consider the straight line (simple) linear regression model
@@ -109,14 +313,14 @@ and the estimators $\bb = [b_0, b_1]^T$ are derived using MLE.
 \begin{equation}
     \frac{\partial \mathrm{WRSS}}{\partial b_{1}}=-2 \sum_{i=1}^{n} w_{i} x_{i}\left(y_{i}-b_{0}-b_{1} x_{i}\right)=0
 \end{equation}
-\paragraph{Normal Equations} Obtained from rearranging the above equations,
+\paragraph{Normal Equations} Obtained from rearranging the above equations, we will call them Normal Eq1 and Normal Eq2 respectively for later reference.
 \begin{equation}
     \sum_{i=1}^{n} w_{i} y_{i}=b_{0} \sum_{i=1}^{n} w_{i}+b_{1} \sum_{i=1}^{n} w_{i} x_{i}
 \end{equation}
 \begin{equation}
     \sum_{i=1}^{n} w_{i} x_{i} y_{i}=b_{0} \sum_{i=1}^{n} w_{i} x_{i}+b_{1} \sum_{i=1}^{n} w_{i} x_{i}^{2}
 \end{equation}
-\paragraph{Rearranging} Use $(3) \sum_{i=1}^{n} w_{i} x_{i}$ and $(4) \sum_{i=1}^{n} w_{i}$
+\paragraph{Rearranging} Use $\text{Normal Eq1} \times\sum_{i=1}^{n} w_{i} x_{i}$ and $\text{Normal Eq2}\times\sum_{i=1}^{n} w_{i}$
 \begin{equation}
     \sum_{i=1}^{n} w_{i} x_{i} \sum_{i=1}^{n} w_{i} y_{i}=b_{0} \sum_{i=1}^{n} w_{i} \sum_{i=1}^{n} w_{i} x_{i}+b_{1}\left(\sum_{i=1}^{n} w_{i} x_{i}\right)^{2}
 \end{equation}
@@ -133,6 +337,7 @@ and the estimators $\bb = [b_0, b_1]^T$ are derived using MLE.
     \hat{\beta}_{0 W}=\frac{\sum_{i=1}^{n} w_{i} y_{i}}{\sum_{i=1}^{n} w_{i}}-\hat{\beta}_{1 W} \frac{\sum_{i=1}^{n} w_{i} x_{i}}{\sum_{i=1}^{n} w_{i}} = \bar{y}_{w}-\hat{\beta}_{1 W} \bar{x}_{W}
 \end{equation}
 
+\section{Multiple Linear Regression}
 
 
 
