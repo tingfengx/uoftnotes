@@ -1,0 +1,140 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{bookmark}
+\usepackage{hyperref}
+\usepackage{fancyhdr} 
+\usepackage{youngtab}
+\usepackage[
+    type={CC},
+    modifier={by-nc-sa},
+    version={4.0},
+]{doclicense}
+
+% customized commands
+\newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\field}{\mathbb{F}}
+\newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
+\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\proof}{\tit{\underline{Proof:}}} % This equivalent to the \begin{proof}\end{proof} block
+\newcommand{\proofforward}{\tit{\underline{Proof($\implies$):}}}
+\newcommand{\proofback}{\tit{\underline{Proof($\impliedby$):}}}
+\newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
+\newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
+\newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
+\newcommand{\map}[3]{\text{$\left[#1\right]_{#2}^{#3}$}}
+\newcommand{\dime}[1]{\text{dim}(#1)}
+\newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
+\newcommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
+\newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
+\newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+% Call settag{\ldots} first to initialize, and then \para{} for a new paragraph
+\newcommand{\va}{\mathbf{a}}
+\newcommand{\vb}{\mathbf{b}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\vu}{\mathbf{u}}
+\newcommand{\vw}{\mathbf{w}}
+\newcommand{\vx}{\mathbf{x}}
+\newcommand{\ve}{\mathbf{e}}
+\newcommand{\vy}{\mathbf{y}}
+\newcommand{\vz}{\mathbf{z}}
+\newcommand{\vc}{\mathbf{c}}
+\newcommand{\vm}{\mathbf{m}}
+\newcommand{\vh}{\mathbf{h}}
+\newcommand{\vzero}{\mathbf{0}}
+% For convenience, I am setting both of these to refer to the same thing.
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\boldf}{\mathbf{f}}
+\newcommand{\bg}{\mathbf{g}}
+\newcommand{\bm}{\mathbf{m}}
+
+\title{\LARGE{Miscellaneous Notes on Regression}\\ \normalsize{Based on SJS and KNN}}
+\author{\ccLogo \,\,Tingfeng Xia}
+\date{Fall 2019, modified on \today}
+
+\begin{document}
+\maketitle
+\section*{Preface}
+Notes for STA302H1F fall offering, 2019 with Prof. Shivon Sue-Chee. These notes are based on the KNN and SJS text, in an aim for better understanding of the course material.
+\doclicenseThis
+\tableofcontents
+\newpage
+
+\section{Weighted Least Square Regression}
+\subsection{Motivation and Set-Up}
+Consider the straight line (simple) linear regression model
+\begin{equation*}
+    Y_{i}=\beta_{0}+\beta_{1} x_{i}+e_{i} \quad \text{where}~~ e_i \sim N (0, \frac{\sigma^2}{w_i})
+\end{equation*}
+For the weight $w_i$, we should note the following
+\begin{itemize}
+    \item $w_i \rightarrow \infty \implies Var(e_i) \rightarrow 0$. In this case, the estimates of the regression parameters $\beta_0, \beta_1$ should be such that the fitted line at $x_i$ should be very close to $y_i$. (Small variance means more strict in terms of deviation from the regressin line, corresponding to a larger emphasis on the $i$-th data point.)
+    \item If $w_i$ is some small value, then the variance of the $i$-th data point would be quite large. In this case, we have a loose restriction of the deviation of the $i$-th data point from the regression line meaning that litte emphasis is taken for this data point.
+    \item $w_i \rightarrow 0 \implies Var(e_i) \rightarrow \infty$. In this case, we have the variance tending to infinity. Meaning that there is absolutely no restriction/emphasis on the $i$-th data point and it could be simply removed from the set.
+\end{itemize}
+We define the cost function, WRSS as
+\begin{equation*}
+    \mathrm{WRSS}=\sum_{i=1}^{n} w_{i}\left(y_{i}-\hat{y}_{W_i}\right)^{2}=\sum_{i=1}^{n} w_{i}\left(y_{i}-b_{0}-b_{1} x_{i}\right)^{2}
+\end{equation*}
+and the estimators $\bb = [b_0, b_1]^T$ are derived using MLE. 
+
+\paragraph{Intuition behind WRSS} This cost function may seem wierd at first glance, but it intuitively makes sense. Notice that when $w_i$ is large, the $i$-th lost term $w_{i}\left(y_{i}-\hat{y}_{W_i}\right)^{2}$ is payed more emphasis on. On the contrary, when $w_0 \rightarrow 0$, the term $\rightarrow 0$. (Indeed, when Variance of the term $\rightarrow \infty$ we just neglect it.)
+
+\subsection{Deriving ML Estimators}
+\paragraph{Derivatives}
+\begin{equation}
+    \frac{\partial \mathrm{WRSS}}{\partial b_{0}}=-2 \sum_{i=1}^{n} w_{i}\left(y_{i}-b_{0}-b_{1} x_{i}\right)=0
+\end{equation}
+\begin{equation}
+    \frac{\partial \mathrm{WRSS}}{\partial b_{1}}=-2 \sum_{i=1}^{n} w_{i} x_{i}\left(y_{i}-b_{0}-b_{1} x_{i}\right)=0
+\end{equation}
+\paragraph{Normal Equations} Obtained from rearranging the above equations,
+\begin{equation}
+    \sum_{i=1}^{n} w_{i} y_{i}=b_{0} \sum_{i=1}^{n} w_{i}+b_{1} \sum_{i=1}^{n} w_{i} x_{i}
+\end{equation}
+\begin{equation}
+    \sum_{i=1}^{n} w_{i} x_{i} y_{i}=b_{0} \sum_{i=1}^{n} w_{i} x_{i}+b_{1} \sum_{i=1}^{n} w_{i} x_{i}^{2}
+\end{equation}
+\paragraph{Rearranging} Use $(3) \sum_{i=1}^{n} w_{i} x_{i}$ and $(4) \sum_{i=1}^{n} w_{i}$
+\begin{equation}
+    \sum_{i=1}^{n} w_{i} x_{i} \sum_{i=1}^{n} w_{i} y_{i}=b_{0} \sum_{i=1}^{n} w_{i} \sum_{i=1}^{n} w_{i} x_{i}+b_{1}\left(\sum_{i=1}^{n} w_{i} x_{i}\right)^{2}
+\end{equation}
+\begin{equation}
+    \sum_{i=1}^{n} w_{i} \sum_{i=1}^{n} w_{i} x_{i} y_{i}=b_{0} \sum_{i=1}^{n} w_{i} \sum_{i=1}^{n} w_{i} x_{i}+b_{1} \sum_{i=1}^{n} w_{i} \sum_{i=1}^{n} w_{i} x_{i}^{2}
+\end{equation}
+\paragraph{WLS Slope Estimator} \footnote{Note that $\bar{x}_{W}=\sum_{i=1}^{n} w_{i} x_{i} / \sum_{i=1}^{n} w_{i}$ and $\bar{y}_{W}=\sum_{i=1}^{n} w_{i} y_{i} / \sum_{i=1}^{n} w_{i}$}
+\begin{align}
+    \hat{\beta}_{1W} &= \frac{\sum_{i=1}^{n} w_{i} \sum_{i=1}^{n} w_{i} x_{i} y_{i}-\sum_{i=1}^{n} w_{i} x_{i} \sum_{i=1}^{n} w_{i} y_{i}}{\sum_{i=1}^{n} \sum_{i=1}^{n} w_{i} x_{i}^{2}-\left(\sum_{i=1}^{n} w_{i} x_{i}\right)^{2}} \\
+    &= \frac{\sum_{i=11}^{n} x_{i}\left(x_{i}-\bar{x}_{W}\right)\left(y_{i}-\bar{y}_{W}\right)}{\sum_{i=1}^{n} w_{i}\left(x_{i}-\bar{x}_{W}\right)^{2}}
+\end{align}
+\paragraph{WLS Intercept Estimator}
+\begin{equation}
+    \hat{\beta}_{0 W}=\frac{\sum_{i=1}^{n} w_{i} y_{i}}{\sum_{i=1}^{n} w_{i}}-\hat{\beta}_{1 W} \frac{\sum_{i=1}^{n} w_{i} x_{i}}{\sum_{i=1}^{n} w_{i}} = \bar{y}_{w}-\hat{\beta}_{1 W} \bar{x}_{W}
+\end{equation}
+
+
+
+
+
+\end{document}
