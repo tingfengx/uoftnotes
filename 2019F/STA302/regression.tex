@@ -164,6 +164,7 @@ The following assumptions need to be made in order to preform inference
     \item Homoscedasticity, $\text{Var}(e_i) = \sigma^2, \forall i$
     \item Normal Error: $e | X \sim N\left(0, \sigma^{2}\right)$
 \end{itemize}
+
 \subsubsection{Inference of Slope}
 \paragraph{Distribution}
 \begin{equation*}
@@ -184,7 +185,31 @@ The $100(1- \alpha)\%$ CI is
     CI \gets \hat{\beta}_1 \pm t^\ast_{()\alpha/2, df=n-2)} \times SE(\hat{\beta}_1) \equiv \hat{\beta}_1 \pm t^\ast_{(\alpha/2, df=n-2)} \frac{S}{\sqrt{S X X}}
 \end{equation*}
 \paragraph{Distribution Proof}
-% TODO: add proof for distribution
+Recall OLS regressor for $\beta_1$ is
+\begin{equation*}
+    \hat{beta}_1 = \sum_{i = 1}^n c_iy_i \quad \text{where}~~ c_i = \frac{x_i \overbar{x}}{SXX}
+\end{equation*}
+The expectation could be derived as\footnote{using the fact that $\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)=0$ and $\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right) x_{i}=\sum_{i=1}^{n} x_{i}^{2}-n \bar{x}^{2}=S X X$}
+\begin{align*}
+    \mathrm{E}\left(\hat{\beta}_{1} | X\right) &=\mathrm{E}\left[\sum_{i=1}^{n} c_{i} y_{i} | X=x_{i}\right] \\ &=\sum_{i=1}^{n} c_{i} E\left[y_{i} | X=x_{i}\right] \\ &=\sum_{i=1}^{n} c_{i}\left(\beta_{0}+\beta_{1} x_{i}\right) \\ &=\beta_{0} \sum_{i=1}^{n} c_{i}+\beta_{1} \sum_{i=1}^{n} c_{i} x_{i} \\ &=\beta_{0} \sum_{i=1}^{n}\left\{\frac{x_{i}-\bar{x}}{S X X}\right\}+\beta_{1} \sum_{i=1}^{n}\left\{\frac{x_{i}-\bar{x}}{S X X}\right\} x_{i} \\ &=\beta_{1} 
+\end{align*}
+and the variance
+\begin{align*}
+    \operatorname{Var}\left(\hat{\beta}_{1} | X\right) &=\operatorname{Var}\left[\sum_{i=1}^{n} c_{i} y_{i} | X=x_{i}\right] \\ &=\sum_{i=1}^{n} c_{i}^{2} \operatorname{Var}\left(y_{i} | X=x_{i}\right) \\ &=\sigma^{2} \sum_{i=1}^{n} c_{i}^{2} \\ &=\sigma^{2} \sum_{i=1}^{n}\left\{\frac{x_{i}-\bar{x}}{S X X}\right\}^{2} \\ &=\frac{\sigma^{2}}{S X X}
+\end{align*}
+Then, since $e_i |X$ are normally distributed, then $y_i = \beta_{0}+\beta_{1} x_{i}+e_{i}, Y_{i} | X$ is normally distributed. Since $\hat{\beta}_{1} | X$ is a linear combination of $y_i$'s , $\hat{\beta}_1 | X$ is normally distributed. \qed
+
+
+\paragraph{\color{Thistle} \textit{t}-test using PMCC on Bivariate Normal \color{Black}}
+
+Recall that 
+\begin{equation*}
+    \hat{\rho}_{MLE} = r=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)}{\sqrt{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2} \sum_{i=1}^{n}\left(y_{i}-\bar{y}\right)^{2}}}
+\end{equation*}
+Use the null hypothesis that $H_0: \rho_{XY} = 0$ and alternative $H_1: \rho_{XY} \neq 0$, then
+\begin{equation*}
+    T=\frac{r \sqrt{n-2}}{\sqrt{1-r^{2}}}=\frac{b_{1}}{\sqrt{\frac{S^{2}}{S X X}}} \sim t_{(df = n-2)}
+\end{equation*}
 
 
 \subsubsection{Inference of Intercept}
@@ -205,7 +230,38 @@ The $100(1- \alpha)\%$ CI is
     CI \gets \hat{\beta}_0 \pm t^\ast_{()\alpha/2, df=n-2)} \times SE(\hat{\beta}_0) \equiv \hat{\beta}_0 \pm t^\ast_{(\alpha/2, df=n-2)} S\sqrt{\frac{1}{n}+\frac{\bar{x}^{2}}{S X X}}
 \end{equation*}
 \paragraph{Distribution Proof}
-% TODO: add proof for distribution
+Recall that the OLS regressor of $\beta_0$ is given by
+\begin{equation*}
+    \hat{\beta}_{0}=\bar{y}-\hat{\beta}_{1} \bar{x}
+\end{equation*}
+The expectation,
+\begin{align*}
+    \mathrm{E}\left(\hat{\beta}_{0} | X\right)
+    &= \mathrm{E}(\bar{y} | X)-\mathrm{E}\left(\hat{\beta}_{1} | X\right) \bar{x} \\
+    &= \frac{1}{n} \sum_{i=1}^{n} \mathrm{E}\left(y_{i} | X=x_{i}\right) - \beta_{1} \bar{x} \\
+    &= \frac{1}{n} \sum_{i=1}^{n} \mathrm{E}\left(\beta_{0}+\beta_{1} x_{i}+e_{i}\right) - \beta_{1} \bar{x} \\
+    &= \beta_{0}+\beta_{1} \frac{1}{n} \sum_{i=1}^{n} x_{i} - \beta_{1} \bar{x} \\
+    &= \beta_{0}+\beta_{1} \bar{x} - \beta_{1} \bar{x} = \beta_0
+\end{align*}
+and the variance,
+\begin{align*}
+    \operatorname{Var}\left(\hat{\beta}_{0} | X\right) &=\operatorname{Var}\left(\bar{y}-\hat{\beta}_{1} \bar{x} | X\right) \\ &=\operatorname{Var}(\bar{y} | X)+\bar{x}^{2} \operatorname{Var}\left(\hat{\beta}_{1} | X\right)-2 \bar{x} \operatorname{Cov}\left(\bar{y}, \hat{\beta}_{1} | X\right)
+\end{align*}
+where
+\begin{equation*}
+    \operatorname{Var}(\bar{y} | X)=\operatorname{Var}\left(\frac{1}{n} \sum_{i=1}^{n} y_{i} | X=x_{i}\right)=\frac{n \sigma^{2}}{n^{2}}=\frac{\sigma^{2}}{n}
+\end{equation*}
+\begin{equation*}
+    \operatorname{Var}\left(\hat{\beta}_{1} | X\right)=\frac{\sigma^{2}}{S X X}
+\end{equation*}
+\begin{equation*}
+    \operatorname{Cov}\left(\bar{y}, \hat{\beta}_{1} | X\right)=\operatorname{Cov}\left(\frac{1}{n} \sum_{i=1}^{n} y_{i}, \sum_{i=1}^{n} c_{i} y_{i}\right)=\frac{1}{n} \sum_{i=1}^{n} c_{i} \operatorname{Cov}\left(y_{i}, y_{i}\right)=\frac{\sigma^{2}}{n} \sum_{i=1}^{n} c_{i}=0
+\end{equation*}
+Thus,
+\begin{equation*}
+    \operatorname{Var}\left(\hat{\beta}_{0} | X\right)=\sigma^{2}\left(\frac{1}{n}+\frac{\bar{x}^{2}}{S X X}\right)
+\end{equation*}
+\qed
 
 \subsection{CI for \textit{Unknown} Population Regression Line}
 Goal: Find a confidence interval for a unkown population regression line at $X = x^\ast$. The population regression line is given by
@@ -290,9 +346,62 @@ and
     \operatorname{Var}\left(Y^{*}-\hat{y}^{*}\right)=\operatorname{Var}\left(Y-\hat{y} | X=x^{*}\right)=\sigma^{2}\left[1+\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right]
 \end{equation*}
 
+\paragraph{Prediction Interval}
+A $100 (1 - \alpha)\%$ prediction interval for $Y^*$ (the value of $Y$  at $X = x^*$ is given by)
+\begin{align*}
+    PI &\gets \hat{y}^{*} \pm t_{(\alpha / 2, df = n-2)} S \sqrt{\left(1+\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)} \\
+    &\equiv \hat{\beta}_{0}+\hat{\beta}_{1} x^{*} \pm t_{(\alpha / 2, df = n-2)} S \sqrt{\left(1+\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)}
+\end{align*}
 
+\subsection{Analysis of Variance (ANOVA)}
+\subsubsection{Sum of Squares Decomposition}
+Define \color{Thistle} Total Sample Variablility \color{Black}
+\begin{equation*}
+    \mathrm{SST}=S Y Y=\sum_{i}^{n}\left(y_{i}-\bar{y}\right)^{2}
+\end{equation*}
+and recall the familiar residual squared sum \color{Thistle} (Unexplained (or error) variability) \color{Black}
+\begin{equation*}
+    \mathrm{RSS}=\sum_{i}^{n}\left(y_{i}-\hat{y}_{i}\right)^{2}
+\end{equation*}
+and we define \color{Thistle}(Sum of Squares explained by the regression model) \color{Black}
+\begin{equation*}
+    \text { SSreg }=\sum_{i}^{n}\left(\hat{y}_{i}-\bar{y}\right)^{2}
+\end{equation*}
+Then, the decomposition is
+\begin{equation*}
+    \text{SST} = \mathrm{RSS} + \text {SSreg}
+\end{equation*}
 
+\subsubsection{Test for Zero Slope}
+\paragraph{\textit{t}-test} Note that for SLR, this is equivalent to the F-test ourlined below. Consider the null $H_0: \beta_1 = 0$ against alternative $H_1: \beta_1 \neq 0$, then
+\begin{equation*}
+    T=\frac{\hat{\beta}_{1}-0}{\operatorname{se}\left(\hat{\beta}_{1}\right)} = \frac{\hat{\beta}_{1}- 0}{S / \sqrt{S X X}} \overset{H_0}{\sim} t_{(df = n-2)} 
+\end{equation*}
+This is just a specific application of the genral $t$-test that we mentioned earlier, not very interesting. 
 
+\paragraph{\textit{F}-test}
+Assume that $e_i\independent e_j, \forall i\neq j \land e_i\sim N(0, \sigma^2), \forall i$. Consider the null $H_0: \beta_1 = 0$ against alternative $H_1: \beta_1 \neq 0$, then
+\begin{equation*}
+    F=\frac{\operatorname{SSreg} / 1}{\operatorname{RSS} /(n-2)} \overset{H_0}{\sim} F_{1, n-2}
+\end{equation*}
+
+\subsubsection{Coefficient of Determination}
+The Coefficient of Determination ($R^2$) of a regression line is defined as the proportion of the total sample variability in the $Y$'s explained by the regression model, that is
+\begin{equation*}
+    R^{2}=\frac{\text { SSreg }}{\mathrm{SST}}=1-\frac{\mathrm{RSS}}{\mathrm{SST}}
+\end{equation*}
+
+\subsubsection{The ANOVA Table}
+The above $F$-test, as well as the sum of squares decomposition, could be summarized using the following handy table. 
+\begin{center}
+    \begin{tabular}{|c||c|c|c|c|}
+        \hline
+        Source of Variation & $df$    & SS    & MS = SS/$df$& $F$                                      \\ \hline \hline
+        Regression          & 1     & SSreg & SSreg/1     & $F = \frac{SSreg/1}{\text{RSS}/(n-2)}$ \\ \hline
+        Residual            & $n-2$ & RSS   & RSS/$(n-2)$ &                                        \\ \hline
+        Total               & $n-1$ & SST   &             &                                        \\ \hline
+    \end{tabular}
+\end{center}
 
 
 
@@ -651,7 +760,41 @@ and the estimators $\bb = [b_0, b_1]^T$ are derived using MLE.
 
 \section{Multiple Linear Regression (Under Construction)}
 
+\section{Selected Properties and Formulae}
+This section contains various properties mentioned in the slides/book. They may or may not have appeared in precious sections. 
+\subsection{Properties of Fitted Regression Line}
+\begin{itemize}
+    \item $\sum_{i = 1}^n \hat{e}_i = 0$
+    \item $RSS = \sum_{i = 1}^n \hat{e}_i^2 \neq 0$, generally. Except for when we have perfect fit.
+    \item $\sum_{i= 1}^n \hat{e}_i x_i = 0$
+    \item $\sum_{i= 1}^n \hat{e}_i \hat{y}_i = 0$
+    \item $\sum_{i = 1}^n \hat{y}_i = \sum_{i= 1}^n y_i$
+\end{itemize}
 
+\subsection{Rules of Expectation}
+\begin{itemize}
+    \item $E(a) = a, \forall a \in \real)$
+    \item $E(aY) = aE(Y)$
+    \item $E(X \pm Y) = E(X) \pm E(Y)$
+    \item $X\independent Y \implies E(X) E(Y)$
+    \item Tower Rule: $E(Y) = E(E(Y|X))$
+\end{itemize}
+
+\subsection{Variance and Covariance}
+\begin{itemize}
+    \item $V(a) = 0, \forall a \in real$
+    \item $V(aY) = a^2V(Y)$
+    \item $\operatorname{Cov}(X, Y)= \mathrm{E}\{(X-\mathrm{E}(X))(Y-\mathrm{E}(Y))\}=\mathrm{E}(X Y)-\mathrm{E}(X) \mathrm{E}(Y)$
+    \item $\operatorname{Cov}(Y, Y)=V(Y)$
+    \item $\mathrm{V}(Y)=\mathrm{V}[\mathrm{E}(Y | X)]+\mathrm{E}[\mathrm{V}(Y | X)]$
+    \item $\mathrm{V}(X \pm Y)=\mathrm{V}(X)+\mathrm{V}(Y) \pm 2 \operatorname{Cov}(X, Y)$
+    \item $\operatorname{Cov}(X, Y)=0, \text { if } X \text { and } Y \text { are independent }$
+    \item $\operatorname{Cov}(a X+b Y, c U+d W)=a c \operatorname{Cov}(X, U)+a d \operatorname{Cov}(X, W)+b c \operatorname{Cov}(Y, U)+b d \operatorname{Cov}(Y, W)$
+    \item $\text { Correlation: } \rho=\frac{\operatorname{Cov}(X, Y)}{\sqrt{\mathrm{V}(X) \mathrm{V}(Y)}}$
+\end{itemize}
+\paragraph{Note} 
+
+\subsection{}
 
 
 \end{document}
