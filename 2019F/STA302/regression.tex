@@ -135,7 +135,7 @@ We will now derive the OLS estimators as follows.
 \begin{equation}
     \sum_{i=1}^{n} x_{i} y_{i}=b_{0} \sum_{i=1}^{n} x_{i}+b_{1} \sum_{i=1}^{n} x_{i}^{2}
 \end{equation}
-\paragraph{OLS Estimator}
+\paragraph{OLS Regressor}
 \begin{equation*}
     \hat{\beta}_{0}=\bar{y}-\hat{\beta}_{1} \bar{x}
 \end{equation*}
@@ -144,14 +144,157 @@ We will now derive the OLS estimators as follows.
 \end{equation*}
 \paragraph{Estimating Variance of Residuals}
 \begin{equation*}
-    \hat{\sigma}^2 = S^{2}=\frac{\mathrm{RSS}}{n-2}=\frac{1}{n-2} \sum_{i=1}^{n} \hat{e}_{i}^{2}
+    \hat{\sigma}^2 = S^{2}=\frac{\mathrm{RSS}}{n-2}=\frac{1}{n-2} \sum_{i=1}^{n} \hat{e}_{i}^{2} \quad \text{Unbiased Estimator}
 \end{equation*}
-
+\paragraph{Notes}
+\begin{itemize}
+    \item $\bar{\hat{e}}=0$, since $\sum \hat{e}_i = 0$ as the least square estimates minimizes RSS. (This is like a minimization goal where derivatives are taken w.r.t $\hat{e}_i$.)
+    \item $S^2$ has $n-2$ degrees of freedom since we have estimated two parameters, namely $\beta_0$ and $\beta_1$.
+\end{itemize}
 
 \subsection{Inferences on Slope and Intercept}
 \subsubsection{Inference Assumptions}
+The following assumptions need to be made in order to preform inference
+\begin{itemize}
+    \item $Y$ is explained by $x$ through a simple linear regression model
+        \begin{equation*}
+            Y_{i}=\beta_{0}+\beta_{1} x_{i}+e_{i}(i=1, \ldots, n), \text { i.e., } \mathrm{E}\left(Y | X=x_{i}\right)=\beta_{0}+\beta_{1} x_{i}
+        \end{equation*}
+    \item Independent Errors, $e_i \independent e_j, \forall i \neq j$
+    \item Homoscedasticity, $\text{Var}(e_i) = \sigma^2, \forall i$
+    \item Normal Error: $e | X \sim N\left(0, \sigma^{2}\right)$
+\end{itemize}
 \subsubsection{Inference of Slope}
+\paragraph{Distribution}
+\begin{equation*}
+    \hat{\beta}_{1} | X \sim N\left(\beta_{1}, \frac{\sigma^{2}}{S X X}\right)
+\end{equation*}
+\paragraph{Standardized Test Statistic (Var Known)}
+\begin{equation*}
+    Z=\frac{\hat{\beta}_{1}-\beta_{1}}{\sigma / \sqrt{S X X}} \sim N(0,1)
+\end{equation*}
+\paragraph{Test Statistic (Var Unknown)}
+Recall that degress of freedom = sample size - number of mean parameters estimated. Then,
+\begin{equation*}
+    T=\frac{\hat{\beta}_{1}-\beta_{1}}{S / \sqrt{S X X}}=\frac{\hat{\beta}_{1}-\beta_{1}}{\operatorname{SE}\left(\hat{\beta}_{1}\right)} \sim t_{(df=n-2)} \quad \text{where}~~ S^2 = \frac{\sum_i \hat{e}_i^2}{n-2} 
+\end{equation*}
+\paragraph{Confidence Interval (Var Unknown)}
+The $100(1- \alpha)\%$ CI is
+\begin{equation*}
+    CI \gets \hat{\beta}_1 \pm t^\ast_{()\alpha/2, df=n-2)} \times SE(\hat{\beta}_1) \equiv \hat{\beta}_1 \pm t^\ast_{(\alpha/2, df=n-2)} \frac{S}{\sqrt{S X X}}
+\end{equation*}
+\paragraph{Distribution Proof}
+% TODO: add proof for distribution
+
+
 \subsubsection{Inference of Intercept}
+\paragraph{Distribution}
+\begin{equation*}
+    \hat{\beta}_{0} | X \sim N\left(\beta_{0}, \sigma^{2}\left(\frac{1}{n}+\frac{\bar{x}^{2}}{S X X}\right)\right)
+\end{equation*}
+\paragraph{Standardized Test Statistic (Var Known)}
+\begin{equation*}
+    Z=\frac{\hat{\beta}_{0}-\beta_{0}}{\sigma \sqrt{\frac{1}{n}+\frac{\bar{x}^{2}}{S X X}}} \sim N(0,1)
+\end{equation*}
+\paragraph{Test Statistic (Var Unknown)}
+\begin{equation*}
+    Z=\frac{\hat{\beta}_{0}-\beta_{0}}{S \sqrt{\frac{1}{n}+\frac{\bar{x}^{2}}{S X X}}} = \frac{\hat{\beta}_{0}-\beta_{0}}{\operatorname{SE}\left(\hat{\beta}_{0}\right)} \sim t_{(df=n-2)} \quad \text{where}~~ S^2 = \frac{\sum_i \hat{e}_i^2}{n-2} 
+\end{equation*}
+\paragraph{Confidence Interval (Var Unknown)}
+\begin{equation*}
+    CI \gets \hat{\beta}_0 \pm t^\ast_{()\alpha/2, df=n-2)} \times SE(\hat{\beta}_0) \equiv \hat{\beta}_0 \pm t^\ast_{(\alpha/2, df=n-2)} S\sqrt{\frac{1}{n}+\frac{\bar{x}^{2}}{S X X}}
+\end{equation*}
+\paragraph{Distribution Proof}
+% TODO: add proof for distribution
+
+\subsection{CI for \textit{Unknown} Population Regression Line}
+Goal: Find a confidence interval for a unkown population regression line at $X = x^\ast$. The population regression line is given by
+\begin{equation*}
+    \mathrm{E}\left(Y | X=x^{*}\right)=\beta_{0}+\beta_{1} x^{*}
+\end{equation*}
+\paragraph{Distribution}
+To get an estimate of the y value at $X = x^*$, we can use the regression output (evaluate the estimated regression line at $X = x^*$)
+\begin{equation*}
+    \hat{y}^{*}=\hat{\beta}_{0}+\hat{\beta}_{1} x^{*}
+\end{equation*}
+where we claim it follows the distribution
+\begin{equation*}
+    \hat{y}^{*}=\hat{y} | X=x^{*} \sim N\left(\beta_{0}+\beta_{1} x^{*}, \sigma^{2}\left(\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)\right)
+\end{equation*}
+\paragraph{Proof of Distribution}
+The expectation follows directly from definition, and we will now show that the variance has the claimed value. Notice that $\text{Var}(\hat{\beta}_0|X) = \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{SXX}\right)$, $\text{Var}(\hat{\beta}_1|X) = \frac{\sigma^2}{SXX}$ and $\text{Cov}(\hat{\beta}_0, \hat{\beta}_1 | X) = \frac{-\bar{x}\sigma^2}{SXX}$, then
+\begin{align*}
+    \text{Var}(\hat{y}|X = x^*)
+    &= \text{Var}( \hat{\beta}_0 + \hat{\beta}_1 x^* |X = x^* ) \\
+    &= \text{Var}(\hat{\beta}_0 | X = x^*) + \text{Var}(\hat{\beta}_1 x^* |X = x^*) + 2\text{Cov}(\hat{\beta}_1, \hat{\beta}_1 x^* | X = x^*) \\
+    &= \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{SXX}\right) + (x^*)^2 \frac{\sigma^2}{SXX} + 2x^* \left(\frac{-\bar{x}\sigma^2}{SXX}\right) \\
+    &= \sigma^{2}\left(\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)
+\end{align*}
+\hfill \qed
+\paragraph{Standardized Test Statistic (Var Known)}
+\begin{equation*}
+    Z=\frac{\hat{y}^{*}-\left(\beta_{0}+\beta_{1} x^{*}\right)}{\sigma \sqrt{\left(\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)}} \sim N(0,1)
+\end{equation*}
+
+\paragraph{Test Statistic (Var Knwon)}
+\begin{equation*}
+    T=\frac{\hat{y}^*-\left(\beta_{0}+\beta_{1} x^{*}\right)}{S \sqrt{\left(\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)}} \sim t_{(df=n-2)} \quad \text{where}~~S^2 = \frac{\sum_i \hat{e}_i^2}{n-2} 
+\end{equation*}
+
+\paragraph{Confidence Interval} A $100 (1 - \alpha) \%$ CI for $\mathrm{E}\left(Y | X=x^{*}\right)=\beta_{0}+\beta_{1} x^{*}$ is given by
+\begin{align*}
+    CI &\gets \hat{y}^{*} \pm t^\ast_{(\alpha / 2, df = n-2)} S \sqrt{\left(\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)} \\
+    &\equiv \hat{\beta}_{0}+\hat{\beta}_{1} x^{*} \pm t^\ast_{(\alpha / 2, df =n-2)} S \sqrt{\left(\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)}
+\end{align*}
+\color{Thistle} 
+Do note that this is only valid for $x^\ast$ values in the range of the original data values of $X$. Avoid extrapolation.
+\color{Black}
+
+\subsection{Prediction Intervals for Actual Value of Y}
+\paragraph{Goal} Find a prediction interval for the actual value of Y at $x^*$, a given value of $X$.
+
+\paragraph{Important Notes}
+\begin{itemize}
+    \item $E(Y | X = x^*)$, the expected value or average value of $Y$ for a given value $x^*$ of $X$, is what one would expect $Y$ to be in the long run when $X = x^*$. $E(Y | X = x^*)$ is therefore a fixed but unknown quantity whereas $Y$ can take a number of values when $X = x^*$.
+    \item $E(Y | X = x^*)$, the value of the regression line at $X = x^*$, is entirely different from $Y^*$, a single value of $Y$ when $X = x^*$. In particular, $Y^*$ need not lie on the population regression line.
+    \item A confidence interval is always reported for a parameter (e.g., $E(Y | X = x^*) = b_0 + b_1x^*$) and a prediction interval is reported for the value of a random variable (e.g., $Y^*$).
+\end{itemize}
+
+\paragraph{Difference Between CI and PI (My Thoughts)} The intrinsic difference is that: The CI we found above for $E(Y | X = x^*)$ is a CI for a fixed value. We are trying to find, in the long run where can we expect the regression line to lie given infinite samples. However, PI is trying to report for a specific value, possibly a not-already-observed new value, what is the range that it may appear in. PI captures more variablity. 
+
+\paragraph{Distribution}
+\begin{equation*}
+    Y^{*}-\hat{y}^{*} \sim N\left(0, \sigma^{2}\left[1+\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right]\right)
+\end{equation*}
+
+\paragraph{Test Statistic (Var Unknown)}
+\begin{equation*}
+    T=\frac{Y^*-\hat{y}^*}{S \sqrt{\left(1+\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)}} \sim t_{(df = n-2)}
+\end{equation*}
+
+\paragraph{Derivation of Distribution}
+We base our prediction of $Y$ at $X = x^*$ (which is $Y^*$) on
+\begin{equation*}
+    \hat{y}^{*}=\hat{\beta}_{0}+\hat{\beta}_{1} x^{*}
+\end{equation*}
+The error (deviation, to be precise) of our prediction is 
+\begin{equation*}
+    Y^{*}-\hat{y}^{*}=\beta_{0}+\beta_{1} x^{*}+e^{*}-\hat{y}^{*}= \left(\mathrm{E}\left(Y | X=x^{*}\right)- \hat{y}^{*} \right) + e^{*}
+\end{equation*}
+that is, the deviation between $E(Y | X = x^*)$ and $y^*$ plus the random fluctuation $e^*$ (which represents the deviation of $Y^*$ from $E(Y|X = x^*)$). Thus the variability in the error for predicting a single value of $Y$ will exceed the variability for estimating the expected value of Y (because of the random error $e^*$). We have
+\begin{equation*}
+    \mathrm{E}\left(Y^{*}-\hat{y}^{*}\right)=\mathrm{E}\left(Y-\hat{y} | X=x^{*}\right)=0
+\end{equation*}
+and
+\begin{equation*}
+    \operatorname{Var}\left(Y^{*}-\hat{y}^{*}\right)=\operatorname{Var}\left(Y-\hat{y} | X=x^{*}\right)=\sigma^{2}\left[1+\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right]
+\end{equation*}
+
+
+
+
+
+
 
 
 
@@ -334,7 +477,7 @@ We have discussed multiple ways of assessing outliers and talked about the way t
 \end{itemize}
 
 \subsubsection{Influence of Certain Cases}
-It can sometimes be the case that certain data points in a data set are drastically controlling the entire regression model (the model has payed too much attention to them). We now decelop methods where we measure the ``importance'' of a data point.
+It can sometimes be the case that certain data points in a data set are drastically controlling the entire regression model (the model has payed too much attention to them). We now develop methods where we measure the ``importance'' of a data point.
 
 \paragraph{Cook's Distance} First, define (recall if already defined) the following notation
 \begin{itemize}
@@ -375,7 +518,7 @@ We then proceed as follows
     &=\beta_{0}+\beta_{1} x_{i}+e_{i}-\beta_{0}-\beta_{1} x_{i}-\sum_{j=1}^{n} h_{i j} e_{j} \\ 
     &\color{Thistle}{=e_{i}-\sum_{j=1}^{n} h_{i j} e_{j}}
 \end{align*}
-\hfill $\blacksquare$ \newline
+\hfill \qed \newline
 The above result showed that the $i$-th least squares residual is equal to $e_i$ minus a weighted sum of all the $e$'s. There are two cases to consider,
 \begin{itemize}
     \item In small to moderate samples, the second term could dominate the first and first and the residuals can look like they come from a normal distribution even if the errors do not. 
@@ -394,7 +537,7 @@ A normal probability plot of the standardized residuals is obtained by plotting 
 The above four are figures that I borrowed from \url{http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html} which illustrates how to interpret QQ plots with non-normal behavior.
 
 \subsubsection{Constant Variance (Homoscedasticity)}
-A crucial assumption in any regression analusis is that errors have constant variance. \color{BurntOrange} Notice the difference between error and residual, we have demonstrated in \textbf{(Section Standardized Residuals)} that residuals are not of constant variance. \color{Black} There are two general methods that we can adopt to overcome this issue, namely (noth of which will be discussed later)
+A crucial assumption in any regression analusis is that errors have constant variance. \color{BurntOrange} Notice the difference between error and residual, we have demonstrated in \textbf{(3.2.2 Standardized Residuals)} that residuals are not of constant variance. \color{Black} There are two general methods that we can adopt to overcome this issue, namely (noth of which will be discussed later)
 \begin{itemize}
     \item Transformations
     \item Weighted Least Squares
