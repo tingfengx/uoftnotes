@@ -83,6 +83,80 @@ Notes for STA302H1F fall offering, 2019 with Prof. Shivon Sue-Chee. These notes 
 \tableofcontents
 \newpage
 
+\section{Preliminaries}
+\subsection{Distribution Theories}
+\begin{itemize}
+    \item Suppose $Y_1, Y_2 ,\dots, Y_n \overset{iid}{\sim} N(\mu, \sigma^2)$, and consider $s^{2}=\frac{1}{n-1} \sum_{i=1}^{n}\left(Y_{i}-\bar{Y}\right)^{2}$. Then,
+        \begin{equation*}
+            \frac{(n-1) s^{2}}{\sigma^{2}} \sim \chi^{2}_{(d f=n-1)}
+        \end{equation*}
+    \item Under the Normal Error SLR model, where $e_{i} \overset{iid}{\sim} N\left(0, \sigma^{2}\right)$, and $S^{2}=\frac{1}{n-2} \sum_{i=1}^{n} \hat{\mathrm{e}}_{i}^{2}=\frac{1}{n-2} \sum_{i=1}^{n}\left(Y_{i}-\hat{Y}_{i}\right)^{2}$ (Different from above!). Then,
+        \begin{equation*}
+            \frac{(n-2) S^{2}}{\sigma^{2}}=\frac{(n-2) S^{2} / S X X}{\sigma^{2} / S X X}=\sum_{i=1}^{n}\left(\frac{Y_{i}-\hat{Y}_{i}}{\sigma}\right)^{2} \sim \chi^{2}_{(d f=n-2)}
+        \end{equation*}
+    \item Let $Z\sim N(0,1)$, and $V\sim \chi^2_{(df=v)}$. Assume further that $Z\independent V$, then
+        \begin{equation*}
+            \frac{Z}{\sqrt{V / v}} \sim t_{(df=v)}
+        \end{equation*}
+    \item Under the Normal Error SLR model,
+        \begin{equation*}
+            \frac{\hat{\beta}_{1}-\beta_{1}}{\sqrt{\frac{S^{2}}{S X X}}} \sim t_{(n-2)}
+        \end{equation*}
+    \item Suppose $V \sim \chi_{(df=v)}^{2}$, $W \sim \chi_{(df=w)}^2$ and $V\independent W$. Then,
+        \begin{equation*}
+            \frac{V / v}{W / w} \sim F(v, w)
+        \end{equation*}
+    \item Suppose $Q\sim t_{(df=v)}$, then
+        \begin{equation*}
+            Q^2 \sim F(1,v)
+        \end{equation*}
+\end{itemize}
+
+% TODO: CTD FROM
+\section{Simple Linear Regression (Under Construction)}
+\subsection{Ordinary Least Square}
+\subsubsection{Simple Linear Regression Models}
+The cost function to use in this case is the RSS, defined as
+\begin{equation*}
+    \mathrm{RSS}=\sum_{i=1}^{n} \hat{e}_{i}^{2}=\sum_{i=1}^{n}\left(y_{i}-\hat{y}_{i}\right)^{2}=\sum_{i=1}^{n}\left(y_{i}-b_{0}-b_{1} x_{i}\right)^{2}
+\end{equation*}
+We will now derive the OLS estimators as follows. 
+\paragraph{Derivatives}
+\begin{equation*}
+    \frac{\partial \mathrm{RSS}}{\partial b_{0}}=-2 \sum_{i=1}^{n}\left(y_{i}-b_{0}-b_{1} x_{i}\right)=0
+\end{equation*}
+\begin{equation*}
+    \frac{\partial \operatorname{RSS}}{\partial b_{1}}=-2 \sum_{i=1}^{n} x_{i}\left(y_{i}-b_{0}-b_{1} x_{i}\right)=0
+\end{equation*}
+\paragraph{Normal Equations} are obtained by rearranging
+\begin{equation}
+    \sum_{i=1}^{n} y_{i}=b_{0} n+b_{1} \sum_{i=1}^{n} x_{i}
+\end{equation}
+\begin{equation}
+    \sum_{i=1}^{n} x_{i} y_{i}=b_{0} \sum_{i=1}^{n} x_{i}+b_{1} \sum_{i=1}^{n} x_{i}^{2}
+\end{equation}
+\paragraph{OLS Estimator}
+\begin{equation*}
+    \hat{\beta}_{0}=\bar{y}-\hat{\beta}_{1} \bar{x}
+\end{equation*}
+\begin{equation*}
+    \hat{\beta}_{1}=\frac{\sum_{i=1}^{n} x_{i} y_{i}-n \overline{x y}}{\sum_{i=1}^{n} x_{i}^{2}-n \bar{x}^{2}}=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)}{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}}=\frac{S X Y}{S X X}
+\end{equation*}
+\paragraph{Estimating Variance of Residuals}
+\begin{equation*}
+    \hat{\sigma}^2 = S^{2}=\frac{\mathrm{RSS}}{n-2}=\frac{1}{n-2} \sum_{i=1}^{n} \hat{e}_{i}^{2}
+\end{equation*}
+
+
+\subsection{Inferences on Slope and Intercept}
+\subsubsection{Inference Assumptions}
+\subsubsection{Inference of Slope}
+\subsubsection{Inference of Intercept}
+
+
+
+% FIXME: HERE!
+
 \section{Diagnostics and Transformations for SLR}
 \subsection{Valid and Invalid Data}
 \subsubsection{Residuals}
@@ -317,26 +391,74 @@ A normal probability plot of the standardized residuals is obtained by plotting 
     \includegraphics[scale=0.26]{img/qq_over.png}
     \includegraphics[scale=0.26]{img/qq_under.png}
 \end{center}
+The above four are figures that I borrowed from \url{http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html} which illustrates how to interpret QQ plots with non-normal behavior.
 
-\subsubsection{Constant Variance}
+\subsubsection{Constant Variance (Homoscedasticity)}
+A crucial assumption in any regression analusis is that errors have constant variance. \color{BurntOrange} Notice the difference between error and residual, we have demonstrated in \textbf{(Section Standardized Residuals)} that residuals are not of constant variance. \color{Black} There are two general methods that we can adopt to overcome this issue, namely (noth of which will be discussed later)
+\begin{itemize}
+    \item Transformations
+    \item Weighted Least Squares
+\end{itemize}
+\color{Red}
+\textit{\textbf{Important:} Ignoring nonconstant variance when it exists invalidates all inferential tools, including p-values, CI, PI, et cetra!}
+\color{Black}
 
+\paragraph{Behavior of Non-Homoscedasticity} For example, on the plot explanatory var against standardized residuals, we might see that as $x$ increases, the residuals are more spread out, indicating an increasing trend in the variance. 
 
+\paragraph{Checking for Constant Variance} To check this, check the plot of
+\begin{equation*}
+    |\text{ Residuals }|^{0.5} \text { against } x \quad \text{or} \quad |\text { Standardized Residuals }|^{0.5} \text { against } x
+\end{equation*}
+The power of $0.5$ here is used to reduce skewness in the absolute values. In the above mentioned example where the residuals become more spread out as $x$ increases, the plot $|\text { Standardized Residuals }|^{0.5} \text { against } x$ will have an overall increasing trend! \color{BurntOrange} This is essentially mirroring all the points to the positive side (and de-skew) to observe a general trend. \color{Black}
 
+\subsection{Transformation}
+\subsubsection{Variance Stablizing Transformations}
+\paragraph{Goal} When non-constant cariance exists, it is often possible to transform one or both of the regression variables to preduce a model in which the error variance is constant. 
 
+\paragraph{Delta Method, Poisson} Suppose that $Y\sim \operatorname{Poi}(\mu = \lambda)$ and we want to find the appropriate transformation of $Y$ for stablizing variance. \color{Thistle}{In this case, square root is the appropriate transformation to apply.} \color{Black} We will now justify this choice. Consider the McLauren Series expension
+\begin{equation*}
+    f(Y)=f(\mathrm{E}(Y))+f^{\prime}(\mathrm{E}(Y))(Y-\mathrm{E}(Y))+\ldots
+\end{equation*}
+According to the delte rule, the first order variance term is obtained by taking variance on both sides of the above equation, which yields
+\begin{equation*}
+    \operatorname{Var}(f(Y)) \simeq\left[f^{\prime}(\mathrm{E}(Y))\right]^{2} \operatorname{Var}(Y)
+\end{equation*}
+Using the proposed transformation $f(Y)=Y^{0.5}$ and recall from properties of Poisson Random Variable that $\operatorname{Var}(Y)=\lambda=\mathrm{E}(Y)$, then
+\begin{equation*}
+    \operatorname{Var}\left(Y^{0.5}\right) \simeq\left[0.5(\mathrm{E}(Y))^{-0.5}\right]^{2} \operatorname{Var}(Y)=\left[0.5 \lambda^{-0.5}\right]^{2} \lambda=\mathrm{constant}
+\end{equation*}
+\color{Thistle} \textbf{Rule of Thumb:} When both $Y$ and $X$ are measured in the same units then it is often natural to consider the same transformation for both $X$ and $Y$ \color{Black} \newline \newline
+Hence in this case our regression model would be
+\begin{equation*}
+    Y=\beta_{0}+\beta_{1} x+e
+\end{equation*}
+where
+\begin{equation*}
+    Y \gets \sqrt{Y} \quad \text{and} \quad x \gets \sqrt{x}
+\end{equation*}
 
+\subsubsection{Logarithms to Estimate Percentage Effects}
+Consider the regression model
+\begin{equation*}
+    \log (Y)=\beta_{0}+\beta_{1} \log (x)+e
+\end{equation*}
+The slope,\footnote{Notice that the first step is possible since here we are considering the regression straight line}
+\begin{align*}
+    \beta_{1} &=\frac{\Delta \log (Y)}{\Delta \log (x)} =\frac{\log \left(Y_{2}\right)-\log \left(Y_{1}\right)}{\log \left(x_{2}\right)-\log \left(x_{1}\right)}
+    =\frac{\log \left(Y_{2} / Y_{1}\right)}{\log \left(x_{2} / x_{1}\right)} \\
+    &\cong \frac{Y_{2} / Y_{1}-1}{x_{2} / x_{1}-1}\left(\text { using } \log (1+z) \cong z \text { and assuming } \beta_{1} \text { is small }\right) \\
+    &=\frac{100\left(Y_{2} / Y_{1}-1\right)}{100\left(x_{2} / x_{1}-1\right)} =\frac{\% \Delta Y}{\% \Delta x}
+\end{align*}
 
+\paragraph{Interpretation} We showed above that $\% \Delta Y \simeq \beta_{1} \times \% \Delta x$. Thus for every \(1 \%\) increase in \(x,\) the model predicts a \(\beta_{1} \%\) increase in \(Y\) (provided
+\(\beta_{1}\) is small).
 
-
-
-
-
-% TODO: CTD FROM HERE
 
 \section{Weighted Least Square Regression}
 \subsection{Motivation and Set-Up}
 Consider the straight line (simple) linear regression model
 \begin{equation*}
-    Y_{i}=\beta_{0}+\beta_{1} x_{i}+e_{i} \quad \text{where}~~ e_i \sim N (0, \frac{\sigma^2}{w_i})
+    Y_{i}=\beta_{0}+\beta_{1} x_{i}+e_{i} \quad \text{where}~~ e_i \sim N \left(0, \frac{\sigma^2}{w_i}\right)
 \end{equation*}
 For the weight $w_i$, we should note the following
 \begin{itemize}
@@ -384,7 +506,7 @@ and the estimators $\bb = [b_0, b_1]^T$ are derived using MLE.
     \hat{\beta}_{0 W}=\frac{\sum_{i=1}^{n} w_{i} y_{i}}{\sum_{i=1}^{n} w_{i}}-\hat{\beta}_{1 W} \frac{\sum_{i=1}^{n} w_{i} x_{i}}{\sum_{i=1}^{n} w_{i}} = \bar{y}_{w}-\hat{\beta}_{1 W} \bar{x}_{W}
 \end{equation}
 
-\section{Multiple Linear Regression}
+\section{Multiple Linear Regression (Under Construction)}
 
 
 
