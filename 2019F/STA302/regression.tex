@@ -100,19 +100,18 @@ Notes for STA302H1F fall offering, 2019 with Prof. Shivon Sue-Chee. These notes 
         \end{equation*}
     \item Under the Normal Error SLR model,
         \begin{equation*}
-            \frac{\hat{\beta}_{1}-\beta_{1}}{\sqrt{\frac{S^{2}}{S X X}}} \sim t_{(n-2)}
+            \frac{\hat{\beta}_{1}-\beta_{1}}{\sqrt{\frac{S^{2}}{S X X}}} \sim t_{(df = n-2)}
         \end{equation*}
     \item Suppose $V \sim \chi_{(df=v)}^{2}$, $W \sim \chi_{(df=w)}^2$ and $V\independent W$. Then,
         \begin{equation*}
-            \frac{V / v}{W / w} \sim F(v, w)
+            \frac{V / v}{W / w} \sim F_{(v, w)}
         \end{equation*}
     \item Suppose $Q\sim t_{(df=v)}$, then
         \begin{equation*}
-            Q^2 \sim F(1,v)
+            Q^2 \sim F_{(1,v)}
         \end{equation*}
 \end{itemize}
 
-% TODO: CTD FROM
 \section{Simple Linear Regression (Under Construction)}
 \subsection{Ordinary Least Square}
 \subsubsection{Simple Linear Regression Models}
@@ -123,7 +122,7 @@ The cost function to use in this case is the RSS, defined as
 We will now derive the OLS estimators as follows. 
 \paragraph{Derivatives}
 \begin{equation*}
-    \frac{\partial \mathrm{RSS}}{\partial b_{0}}=-2 \sum_{i=1}^{n}\left(y_{i}-b_{0}-b_{1} x_{i}\right)=0
+    \frac{\partial \operatorname{RSS}}{\partial b_{0}}=-2 \sum_{i=1}^{n}\left(y_{i}-b_{0}-b_{1} x_{i}\right)=0
 \end{equation*}
 \begin{equation*}
     \frac{\partial \operatorname{RSS}}{\partial b_{1}}=-2 \sum_{i=1}^{n} x_{i}\left(y_{i}-b_{0}-b_{1} x_{i}\right)=0
@@ -144,7 +143,7 @@ We will now derive the OLS estimators as follows.
 \end{equation*}
 \paragraph{Estimating Variance of Residuals}
 \begin{equation*}
-    \hat{\sigma}^2 = S^{2}=\frac{\mathrm{RSS}}{n-2}=\frac{1}{n-2} \sum_{i=1}^{n} \hat{e}_{i}^{2} \quad \text{Unbiased Estimator}
+    \text{Unbiased Estimator} \quad \hat{\sigma}^2 = S^{2}=\frac{\mathrm{RSS}}{n-2}=\frac{1}{n-2} \sum_{i=1}^{n} \hat{e}_{i}^{2}
 \end{equation*}
 \paragraph{Notes}
 \begin{itemize}
@@ -175,7 +174,7 @@ The following assumptions need to be made in order to preform inference
     Z=\frac{\hat{\beta}_{1}-\beta_{1}}{\sigma / \sqrt{S X X}} \sim N(0,1)
 \end{equation*}
 \paragraph{Test Statistic (Var Unknown)}
-Recall that degress of freedom = sample size - number of mean parameters estimated. Then,
+Recall that degrees of freedom = sample size - number of mean parameters estimated. Then,
 \begin{equation*}
     T=\frac{\hat{\beta}_{1}-\beta_{1}}{S / \sqrt{S X X}}=\frac{\hat{\beta}_{1}-\beta_{1}}{\operatorname{SE}\left(\hat{\beta}_{1}\right)} \sim t_{(df=n-2)} \quad \text{where}~~ S^2 = \frac{\sum_i \hat{e}_i^2}{n-2} 
 \end{equation*}
@@ -200,7 +199,7 @@ and the variance
 Then, since $e_i |X$ are normally distributed, then $y_i = \beta_{0}+\beta_{1} x_{i}+e_{i}, Y_{i} | X$ is normally distributed. Since $\hat{\beta}_{1} | X$ is a linear combination of $y_i$'s , $\hat{\beta}_1 | X$ is normally distributed. \qed
 
 
-\paragraph{\color{Thistle} \textit{t}-test using PMCC on Bivariate Normal \color{Black}}
+\paragraph{\color{Thistle} \textit{t}-test using PMCC on Bi-variate Normal \color{Black}}
 
 Recall that 
 \begin{equation*}
@@ -316,7 +315,7 @@ Do note that this is only valid for $x^\ast$ values in the range of the original
     \item A confidence interval is always reported for a parameter (e.g., $E(Y | X = x^*) = b_0 + b_1x^*$) and a prediction interval is reported for the value of a random variable (e.g., $Y^*$).
 \end{itemize}
 
-\paragraph{Difference Between CI and PI (My Thoughts)} The intrinsic difference is that: The CI we found above for $E(Y | X = x^*)$ is a CI for a fixed value. We are trying to find, in the long run where can we expect the regression line to lie given infinite samples. However, PI is trying to report for a specific value, possibly a not-already-observed new value, what is the range that it may appear in. PI captures more variablity. 
+\paragraph{Difference Between CI and PI (My Thoughts)} The intrinsic difference is that: The CI we found above for $E(Y | X = x^*)$ is a CI for a fixed value. We are trying to find, in the long run where can we expect the regression line to lie given infinite samples. However, PI is trying to report for a specific value, possibly a not-already-observed new value, what is the range that it may appear in. PI captures more variability. 
 
 \paragraph{Distribution}
 \begin{equation*}
@@ -355,7 +354,7 @@ A $100 (1 - \alpha)\%$ prediction interval for $Y^*$ (the value of $Y$  at $X = 
 
 \subsection{Analysis of Variance (ANOVA)}
 \subsubsection{Sum of Squares Decomposition}
-Define \color{Thistle} Total Sample Variablility \color{Black}
+Define \color{Thistle} Total Sample Variability \color{Black}
 \begin{equation*}
     \mathrm{SST}=S Y Y=\sum_{i}^{n}\left(y_{i}-\bar{y}\right)^{2}
 \end{equation*}
@@ -373,11 +372,11 @@ Then, the decomposition is
 \end{equation*}
 
 \subsubsection{Test for Zero Slope}
-\paragraph{\textit{t}-test} Note that for SLR, this is equivalent to the F-test ourlined below. Consider the null $H_0: \beta_1 = 0$ against alternative $H_1: \beta_1 \neq 0$, then
+\paragraph{\textit{t}-test} Note that for SLR, this is equivalent to the F-test outlined below. Consider the null $H_0: \beta_1 = 0$ against alternative $H_1: \beta_1 \neq 0$, then
 \begin{equation*}
     T=\frac{\hat{\beta}_{1}-0}{\operatorname{se}\left(\hat{\beta}_{1}\right)} = \frac{\hat{\beta}_{1}- 0}{S / \sqrt{S X X}} \overset{H_0}{\sim} t_{(df = n-2)} 
 \end{equation*}
-This is just a specific application of the genral $t$-test that we mentioned earlier, not very interesting. 
+This is just a specific application of the general $t$-test that we mentioned earlier, not very interesting. 
 
 \paragraph{\textit{F}-test}
 Assume that $e_i\independent e_j, \forall i\neq j \land e_i\sim N(0, \sigma^2), \forall i$. Consider the null $H_0: \beta_1 = 0$ against alternative $H_1: \beta_1 \neq 0$, then
@@ -414,7 +413,7 @@ The above $F$-test, as well as the sum of squares decomposition, could be summar
 \subsubsection{Residuals}
 One tool that we can use to validate a regression model is one or more plots of residuals (or standardized residuals). These plots will enable us to assess visually whether an appropriate model has been fit to the data no matter how many predictor variables are used. 
 
-\paragraph{Expected Behavior} We expect that the residual graph to have no discernable pattern and centered at some value (0 in the case of standardized residual). Patterns such as curves, skewness et cetra indicates non-normal residuals. More on this in the below section.
+\paragraph{Expected Behavior} We expect that the residual graph to have no discern-able pattern and centered at some value (0 in the case of standardized residual). Patterns such as curves, skewness et cetra indicates non-normal residuals. More on this in the below section.
 
 \subsubsection{Reading Residual Plots}
 \paragraph{Criterion} One way of checking whether a valid simple linear regression model has been fit is to plot residuals versus $x$ and look for patterns. If no pattern is found then this indicates that the model provides an adequate summary of the data, i.e., is a valid model. If a pattern is found then the shape of the pattern provides information on the function of $x$ that is missing from the model.  
@@ -442,11 +441,11 @@ Under the assumption that our regression line is very close to the true model, i
 which means that our residuals resembles the random error! 
 
 \subsection{Regression Diagnostics}
-\paragraph{Catagorization}
+\paragraph{Categorization}
 \begin{itemize}
     \item \textbf{X-Direction Outlier, i.e. Leverage Point}: Away from the bulk of data in the $x$-direction. 
     \begin{itemize}
-        \item \textbf{Good:} Not much chaneg after removing the data point, i.e. the data point originally was quite close to the regression line although away from the bulk of data in the $x$ direction. \textit{``A good leverage point is a leverage point which is NOT also an outlier.''}
+        \item \textbf{Good:} Not much change after removing the data point, i.e. the data point originally was quite close to the regression line although away from the bulk of data in the $x$ direction. \textit{``A good leverage point is a leverage point which is NOT also an outlier.''}
         \item \textbf{Bad, Influential Point:} If its $Y$-value does not follow the pattern set by the other data points, i.e. a bad leverage point is a leverage point which is also an outlier. 
     \end{itemize}
     \item \textbf{Y-Direction Outlier} Trait: large residuals
@@ -480,7 +479,7 @@ Thus,
 \paragraph{Defining Leverage} 
 The term $h_{i i}=\frac{1}{n}+\frac{\left(x_{i}-\bar{x}\right)^{2}}{\sum_{j=1}^{n}\left(x_{j}-\bar{x}\right)^{2}}$ above is commonly known as the leverage of the $i$th data point. Notice the following in the definition of the leverage $h_{ii}$
 \begin{itemize}
-    \item The second term measures the proportion, in terms of squared deviation in $x$-direction over sum of square of total devaition in $x$-direction, of the $i$-th data point's deviation. When the second term tends to 1, meaning that $i$-th data point is some extreme outlier in the $x$-direction, then $h_{ii}$ would close to one, signifiying the `leverage'-ness. 
+    \item The second term measures the proportion, in terms of squared deviation in $x$-direction over sum of square of total deviation in $x$-direction, of the $i$-th data point's deviation. When the second term tends to 1, meaning that $i$-th data point is some extreme outlier in the $x$-direction, then $h_{ii}$ would close to one, signifying the `leverage'-ness. 
     \item Recall that $\sum_{j=1}^{n} h_{i j}=1$, then when $h_{i i} \cong 1$, $h_{ij}\rightarrow 0$ and
         \begin{equation*}
             \hat{y}_{i}=1 \times y_{i}+\text { other terms } \cong y_{i}
@@ -556,9 +555,9 @@ and
 
 \paragraph{Advantages of Standardization} 
 \begin{itemize}
-    \item When points of high leverage exist, instead of looking at residual plots, it is generally more informative to look at plots of standardized residuals since plots of the residuals will have nonconstant variance even if the errors have constant variance.
-    \item When points of high leverage do not exist, there is gener- ally little difference in the patterns seen in plots of residuals when compared with those in plots of standardized residuals.
-    \item The other advantage of standardized residuals is that they immediately tell us how many estimated stand- ard deviations any point is away from the fitted regression model. 
+    \item When points of high leverage exist, instead of looking at residual plots, it is generally more informative to look at plots of standardized residuals since plots of the residuals will have non-constant variance even if the errors have constant variance.
+    \item When points of high leverage do not exist, there is generally little difference in the patterns seen in plots of residuals when compared with those in plots of standardized residuals.
+    \item The other advantage of standardized residuals is that they immediately tell us how many estimated standard deviations any point is away from the fitted regression model. 
 \end{itemize}
 
 \paragraph{Recognizing Outliers Using Standardized Residuals} 
@@ -566,7 +565,7 @@ and
     \item An \textbf{outlier} is a point whose standardized residual falls outside the interval from -2 to 2, i.e. $|r_i| > 2$
     \item A \textbf{Bad Leverage Point} is a leverage point whose standardized residual falls outside the interval from -2 to 2, i.e. $|r_i| > 2 \wedge h_{ii} > \frac{4}{n}$
     \item A \textbf{Good Leverage Point} is a leverage point whose standardized residual falls inside the interval from -2 to 2, i.e. $|r_i| \leq 2 \wedge h_{ii} > \frac{4}{n}$
-    \item \textbf{Dealing with large datasets:} In this case, we should change the above criterion to $r_i| > 4$ and $r_i| \leq 4$ respectively. This is to give allowance for more occurence of rare events in a large data set.
+    \item \textbf{Dealing with large datasets:} In this case, we should change the above criterion to $r_i| > 4$ and $r_i| \leq 4$ respectively. This is to give allowance for more occurrence of rare events in a large data set.
 \end{itemize}
 
 \paragraph{Correlation Between Residuals} Even if the errors are independent (homogeneous), i.e. $e_i \independent e_j~(i \neq j)$, the residuals are still correlated. It can be shown that the covariance and the correlation is given by
@@ -576,7 +575,7 @@ and
 \begin{equation*}
     \operatorname{Corr}\left(\hat{e}_{i}, \hat{e}_{j}\right)=\frac{-h_{i j}}{\sqrt{\left(1-h_{i i}\right)\left(1-h_{i j}\right)}}(i \neq j)
 \end{equation*}
-Such correlation could be safely ignored in practice. They are usualy given raise by inherent correlation such as data collected over time.
+Such correlation could be safely ignored in practice. They are usually given raise by inherent correlation such as data collected over time.
 
 \subsubsection{Recommendations for Handling Outliers \& Leverage}
 We have discussed multiple ways of assessing outliers and talked about the way to deal with them by removing them. However, it is not always a good idea to delete them for the following reasons:
@@ -594,7 +593,7 @@ It can sometimes be the case that certain data points in a data set are drastica
     \item $S^2 = \frac{1}{n-2} \sum_{j=1}^n \hat{e}_j^2$ is the variance (Original MSE) of the \color{Thistle}{total regression model}. \color{black}
     \item $r_{i}=\frac{\hat{e}_{i}}{s \sqrt{1-h_{i i}}}\quad \text{where}~ s=\sqrt{\frac{1}{n-2} \sum_{j=1}^{n} \hat{e}_{j}^{2}}$
 \end{itemize}
-Then, the Cook's Distance of the $i$-th datapoint is given by
+Then, the Cook's Distance of the $i$-th data point is given by
 \begin{equation*}
     \color{OliveGreen}
     D_{i}=\frac{\sum_{j=1}^{n}\left(\hat{y}_{j(i)}-\hat{y}_{j}\right)^{2}}{2 S^{2}} = \frac{r_{i}^{2}}{2} \frac{h_{i i}}{1-h_{i i}}
@@ -646,13 +645,13 @@ A normal probability plot of the standardized residuals is obtained by plotting 
 The above four are figures that I borrowed from \url{http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html} which illustrates how to interpret QQ plots with non-normal behavior.
 
 \subsubsection{Constant Variance (Homoscedasticity)}
-A crucial assumption in any regression analusis is that errors have constant variance. \color{BurntOrange} Notice the difference between error and residual, we have demonstrated in \textbf{(3.2.2 Standardized Residuals)} that residuals are not of constant variance. \color{Black} There are two general methods that we can adopt to overcome this issue, namely (noth of which will be discussed later)
+A crucial assumption in any regression analysis is that errors have constant variance. \color{BurntOrange} Notice the difference between error and residual, we have demonstrated in \textbf{(3.2.2 Standardized Residuals)} that residuals are not of constant variance. \color{Black} There are two general methods that we can adopt to overcome this issue, namely (both of which will be discussed later)
 \begin{itemize}
     \item Transformations
     \item Weighted Least Squares
 \end{itemize}
 \color{Red}
-\textit{\textbf{Important:} Ignoring nonconstant variance when it exists invalidates all inferential tools, including p-values, CI, PI, et cetra!}
+\textit{\textbf{Important:} Ignoring non-constant variance when it exists invalidates all inferential tools, including p-values, CI, PI, et cetra!}
 \color{Black}
 
 \paragraph{Behavior of Non-Homoscedasticity} For example, on the plot explanatory var against standardized residuals, we might see that as $x$ increases, the residuals are more spread out, indicating an increasing trend in the variance. 
@@ -664,14 +663,14 @@ A crucial assumption in any regression analusis is that errors have constant var
 The power of $0.5$ here is used to reduce skewness in the absolute values. In the above mentioned example where the residuals become more spread out as $x$ increases, the plot $|\text { Standardized Residuals }|^{0.5} \text { against } x$ will have an overall increasing trend! \color{BurntOrange} This is essentially mirroring all the points to the positive side (and de-skew) to observe a general trend. \color{Black}
 
 \subsection{Transformation}
-\subsubsection{Variance Stablizing Transformations}
-\paragraph{Goal} When non-constant cariance exists, it is often possible to transform one or both of the regression variables to preduce a model in which the error variance is constant. 
+\subsubsection{Variance Stabilizing Transformations}
+\paragraph{Goal} When non-constant variance exists, it is often possible to transform one or both of the regression variables to produce a model in which the error variance is constant. 
 
-\paragraph{Delta Method, Poisson} Suppose that $Y\sim \operatorname{Poi}(\mu = \lambda)$ and we want to find the appropriate transformation of $Y$ for stablizing variance. \color{Thistle}{In this case, square root is the appropriate transformation to apply.} \color{Black} We will now justify this choice. Consider the McLauren Series expension
+\paragraph{Delta Method, Poisson} Suppose that $Y\sim \operatorname{Poi}(\mu = \lambda)$ and we want to find the appropriate transformation of $Y$ for stabilizing variance. \color{Thistle}{In this case, square root is the appropriate transformation to apply.} \color{Black} We will now justify this choice. Consider the McLauren Series expansion
 \begin{equation*}
     f(Y)=f(\mathrm{E}(Y))+f^{\prime}(\mathrm{E}(Y))(Y-\mathrm{E}(Y))+\ldots
 \end{equation*}
-According to the delte rule, the first order variance term is obtained by taking variance on both sides of the above equation, which yields
+According to the delta rule, the first order variance term is obtained by taking variance on both sides of the above equation, which yields
 \begin{equation*}
     \operatorname{Var}(f(Y)) \simeq\left[f^{\prime}(\mathrm{E}(Y))\right]^{2} \operatorname{Var}(Y)
 \end{equation*}
@@ -715,7 +714,7 @@ Consider the straight line (simple) linear regression model
 For the weight $w_i$, we should note the following
 \begin{itemize}
     \item $w_i \rightarrow \infty \implies Var(e_i) \rightarrow 0$. In this case, the estimates of the regression parameters $\beta_0, \beta_1$ should be such that the fitted line at $x_i$ should be very close to $y_i$. (Small variance means more strict in terms of deviation from the regressin line, corresponding to a larger emphasis on the $i$-th data point.)
-    \item If $w_i$ is some small value, then the variance of the $i$-th data point would be quite large. In this case, we have a loose restriction of the deviation of the $i$-th data point from the regression line meaning that litte emphasis is taken for this data point.
+    \item If $w_i$ is some small value, then the variance of the $i$-th data point would be quite large. In this case, we have a loose restriction of the deviation of the $i$-th data point from the regression line meaning that little emphasis is taken for this data point.
     \item $w_i \rightarrow 0 \implies Var(e_i) \rightarrow \infty$. In this case, we have the variance tending to infinity. Meaning that there is absolutely no restriction/emphasis on the $i$-th data point and it could be simply removed from the set.
 \end{itemize}
 We define the cost function, WRSS as
@@ -726,7 +725,7 @@ and the estimators $\bb = [b_0, b_1]^T$ are derived using MLE.
 
 \paragraph{Intuition behind WRSS} This cost function may seem wierd at first glance, but it intuitively makes sense. Notice that when $w_i$ is large, the $i$-th lost term $w_{i}\left(y_{i}-\hat{y}_{W_i}\right)^{2}$ is payed more emphasis on. On the contrary, when $w_0 \rightarrow 0$, the term $\rightarrow 0$. (Indeed, when Variance of the term $\rightarrow \infty$ we just neglect it.)
 
-\subsection{Deriving ML Estimators}
+\subsection{Deriving ML Regressors}
 \paragraph{Derivatives}
 \begin{equation}
     \frac{\partial \mathrm{WRSS}}{\partial b_{0}}=-2 \sum_{i=1}^{n} w_{i}\left(y_{i}-b_{0}-b_{1} x_{i}\right)=0
@@ -748,12 +747,12 @@ and the estimators $\bb = [b_0, b_1]^T$ are derived using MLE.
 \begin{equation}
     \sum_{i=1}^{n} w_{i} \sum_{i=1}^{n} w_{i} x_{i} y_{i}=b_{0} \sum_{i=1}^{n} w_{i} \sum_{i=1}^{n} w_{i} x_{i}+b_{1} \sum_{i=1}^{n} w_{i} \sum_{i=1}^{n} w_{i} x_{i}^{2}
 \end{equation}
-\paragraph{WLS Slope Estimator} \footnote{Note that $\bar{x}_{W}=\sum_{i=1}^{n} w_{i} x_{i} / \sum_{i=1}^{n} w_{i}$ and $\bar{y}_{W}=\sum_{i=1}^{n} w_{i} y_{i} / \sum_{i=1}^{n} w_{i}$}
+\paragraph{WLS Slope Regressor} \footnote{Note that $\bar{x}_{W}=\sum_{i=1}^{n} w_{i} x_{i} / \sum_{i=1}^{n} w_{i}$ and $\bar{y}_{W}=\sum_{i=1}^{n} w_{i} y_{i} / \sum_{i=1}^{n} w_{i}$}
 \begin{align}
     \hat{\beta}_{1W} &= \frac{\sum_{i=1}^{n} w_{i} \sum_{i=1}^{n} w_{i} x_{i} y_{i}-\sum_{i=1}^{n} w_{i} x_{i} \sum_{i=1}^{n} w_{i} y_{i}}{\sum_{i=1}^{n} \sum_{i=1}^{n} w_{i} x_{i}^{2}-\left(\sum_{i=1}^{n} w_{i} x_{i}\right)^{2}} \\
     &= \frac{\sum_{i=11}^{n} x_{i}\left(x_{i}-\bar{x}_{W}\right)\left(y_{i}-\bar{y}_{W}\right)}{\sum_{i=1}^{n} w_{i}\left(x_{i}-\bar{x}_{W}\right)^{2}}
 \end{align}
-\paragraph{WLS Intercept Estimator}
+\paragraph{WLS Intercept Regressor}
 \begin{equation}
     \hat{\beta}_{0 W}=\frac{\sum_{i=1}^{n} w_{i} y_{i}}{\sum_{i=1}^{n} w_{i}}-\hat{\beta}_{1 W} \frac{\sum_{i=1}^{n} w_{i} x_{i}}{\sum_{i=1}^{n} w_{i}} = \bar{y}_{w}-\hat{\beta}_{1 W} \bar{x}_{W}
 \end{equation}
