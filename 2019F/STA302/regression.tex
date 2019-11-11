@@ -11,6 +11,7 @@
 \usepackage{hyperref}
 \usepackage{fancyhdr} 
 \usepackage{youngtab}
+% ==== license =====
 \usepackage[
     type={CC},
     modifier={by-nc-sa},
@@ -70,10 +71,22 @@
 \newcommand{\boldf}{\mathbf{f}}
 \newcommand{\bg}{\mathbf{g}}
 \newcommand{\bm}{\mathbf{m}}
+% \newcommand{\A}{\mathbf{A}}
+% \newcommand{\B}{\mathbf{B}}
+% \newcommand{\C}{\mathbf{C}
 
 \title{\LARGE{Miscellaneous Notes on Regression}\\ \normalsize{Based on SJS and KNN}}
 \author{\ccLogo \,\,Tingfeng Xia}
 \date{Fall 2019, modified on \today}
+
+% ===== Setting the page =====
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{by Xia, Tingfeng}
+\lhead{Miscellaneous Notes on Regression; Fall 2019}
+\lfoot{\url{https://tingfengx.github.io/uoftnotes/}}
+\rfoot{Page \thepage}
 
 \begin{document}
 \maketitle
@@ -111,8 +124,23 @@ Notes for STA302H1F fall offering, 2019 with Prof. Shivon Sue-Chee. These notes 
             Q^2 \sim F_{(1,v)}
         \end{equation*}
 \end{itemize}
+\subsection{Matrix Calculus}
+Manuel to matrix calculus provided by professor: \url{http://biostat.mc.vanderbilt.edu/wiki/pub/Main/CourseBios312/chap2.pdf}
+\subsubsection{Lemma I (Real Valued Fcn Matrix Differentiation)} If $\boldsymbol{\theta}^{\prime}=\left(\theta_{1}, \theta_{2}, \ldots, \theta_{k}\right) \text { and } c^{\prime}=\left(c_{1}, c_{2}, \ldots, c_{k}\right)$ is a vector of constant, such that 
+\begin{equation*}
+    f(\boldsymbol{\theta})=\mathbf{c}^{\prime} \boldsymbol{\theta}=\boldsymbol{\theta}^{\prime} \mathbf{c}=\sum_{i} c_{i} \theta_{i}
+\end{equation*}
+is a scalar, then
+\begin{equation*}
+    \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}}=\mathbf{c}
+\end{equation*}
+\subsubsection{Lemma II}
+$\text { Let } \mathbf{A} \text { be a } k \times k \text { symmetric matrix. Suppose } f(\boldsymbol{\theta})=\boldsymbol{\theta}^{\prime} \mathbf{A} \boldsymbol{\theta}$. Then,
+\begin{equation*}
+    \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}}=2 \mathbf{A} \boldsymbol{\theta}
+\end{equation*}
 
-\section{Simple Linear Regression (Under Construction)}
+\section{Simple Linear Regression}
 \subsection{Ordinary Least Square}
 \subsubsection{Simple Linear Regression Models}
 The cost function to use in this case is the RSS, defined as
@@ -402,11 +430,7 @@ The above $F$-test, as well as the sum of squares decomposition, could be summar
     \end{tabular}
 \end{center}
 
-
-
-
-
-% FIXME: HERE!
+% FIXME: more to add to here.
 
 \section{Diagnostics and Transformations for SLR}
 \subsection{Valid and Invalid Data}
@@ -545,7 +569,7 @@ So,
 \end{equation*}
 and
 \begin{equation*}
-    \color{Thistle}{\operatorname{Var}\left(\hat{y}_{i}\right)} \color{Black}=\operatorname{Var}\left(\sum_{j=1}^{n} h_{i j} y_{j}\right)=\sum_{j \neq i} h_{i j}^{2} \operatorname{Var}\left(y_{j}\right)=\sigma^{2} \sum_{j} h_{i j}^{2}=\color{Thistle}{\sigma^{2} h_{i i}}
+    \color{BurntOrange}{\operatorname{Var}\left(\hat{y}_{i}\right)} \color{Black}=\operatorname{Var}\left(\sum_{j=1}^{n} h_{i j} y_{j}\right)=\sum_{j \neq i} h_{i j}^{2} \operatorname{Var}\left(y_{j}\right)=\sigma^{2} \sum_{j} h_{i j}^{2}=\color{Thistle}{\sigma^{2} h_{i i}}
 \end{equation*}
 
 \paragraph{Overcome with Standardization} The above problem of each $\hat{e}_i$ having different variances could be overcame by standardizing the residuals. The $i$-th standardized residual is defined as (notice that the $s = \hat{\sigma}$ is the estimated variance in the SLR settings)
@@ -565,7 +589,7 @@ and
     \item An \textbf{outlier} is a point whose standardized residual falls outside the interval from -2 to 2, i.e. $|r_i| > 2$
     \item A \textbf{Bad Leverage Point} is a leverage point whose standardized residual falls outside the interval from -2 to 2, i.e. $|r_i| > 2 \wedge h_{ii} > \frac{4}{n}$
     \item A \textbf{Good Leverage Point} is a leverage point whose standardized residual falls inside the interval from -2 to 2, i.e. $|r_i| \leq 2 \wedge h_{ii} > \frac{4}{n}$
-    \item \textbf{Dealing with large datasets:} In this case, we should change the above criterion to $r_i| > 4$ and $r_i| \leq 4$ respectively. This is to give allowance for more occurrence of rare events in a large data set.
+    \item \textbf{Dealing with large datasets:} In this case, we should change the above criterion to $|r_i| > 4$ and $|r_i| \leq 4$ respectively. This is to give allowance for more occurrence of rare events in a large data set.
 \end{itemize}
 
 \paragraph{Correlation Between Residuals} Even if the errors are independent (homogeneous), i.e. $e_i \independent e_j~(i \neq j)$, the residuals are still correlated. It can be shown that the covariance and the correlation is given by
@@ -624,7 +648,7 @@ We then proceed as follows
     &=y_{i}-\sum_{j=1}^{n} h_{i j} y_{j} \\ 
     &=\beta_{0}+\beta_{1} x_{i}+e_{i}-\sum_{j=1}^{n} h_{i j}\left(\beta_{0}+\beta_{1} x_{j}+e_{j}\right) \\ 
     &=\beta_{0}+\beta_{1} x_{i}+e_{i}-\beta_{0}-\beta_{1} x_{i}-\sum_{j=1}^{n} h_{i j} e_{j} \\ 
-    &\color{Thistle}{=e_{i}-\sum_{j=1}^{n} h_{i j} e_{j}}
+    &\color{BurntOrange}{=e_{i}-\sum_{j=1}^{n} h_{i j} e_{j}}
 \end{align*}
 \hfill \qed \newline
 The above result showed that the $i$-th least squares residual is equal to $e_i$ minus a weighted sum of all the $e$'s. There are two cases to consider,
@@ -725,7 +749,7 @@ and the estimators $\bb = [b_0, b_1]^T$ are derived using MLE.
 
 \paragraph{Intuition behind WRSS} This cost function may seem wierd at first glance, but it intuitively makes sense. Notice that when $w_i$ is large, the $i$-th lost term $w_{i}\left(y_{i}-\hat{y}_{W_i}\right)^{2}$ is payed more emphasis on. On the contrary, when $w_0 \rightarrow 0$, the term $\rightarrow 0$. (Indeed, when Variance of the term $\rightarrow \infty$ we just neglect it.)
 
-\subsection{Deriving ML Regressors}
+\subsection{Deriving LS Regressors}
 \paragraph{Derivatives}
 \begin{equation}
     \frac{\partial \mathrm{WRSS}}{\partial b_{0}}=-2 \sum_{i=1}^{n} w_{i}\left(y_{i}-b_{0}-b_{1} x_{i}\right)=0
@@ -759,7 +783,7 @@ and the estimators $\bb = [b_0, b_1]^T$ are derived using MLE.
 
 \section{Multiple Linear Regression (Under Construction)}
 
-\section{Selected Properties and Formulae}
+\section{Selected Properties, Formulae, and Theorems}
 This section contains various properties mentioned in the slides/book. They may or may not have appeared in precious sections. 
 \subsection{Properties of Fitted Regression Line}
 \begin{itemize}
@@ -781,7 +805,7 @@ This section contains various properties mentioned in the slides/book. They may 
 
 \subsection{Variance and Covariance}
 \begin{itemize}
-    \item $V(a) = 0, \forall a \in real$
+    \item $V(a) = 0, \forall a \in \real$
     \item $V(aY) = a^2V(Y)$
     \item $\operatorname{Cov}(X, Y)= \mathrm{E}\{(X-\mathrm{E}(X))(Y-\mathrm{E}(Y))\}=\mathrm{E}(X Y)-\mathrm{E}(X) \mathrm{E}(Y)$
     \item $\operatorname{Cov}(Y, Y)=V(Y)$
@@ -789,11 +813,64 @@ This section contains various properties mentioned in the slides/book. They may 
     \item $\mathrm{V}(X \pm Y)=\mathrm{V}(X)+\mathrm{V}(Y) \pm 2 \operatorname{Cov}(X, Y)$
     \item $\operatorname{Cov}(X, Y)=0, \text { if } X \text { and } Y \text { are independent }$
     \item $\operatorname{Cov}(a X+b Y, c U+d W)=a c \operatorname{Cov}(X, U)+a d \operatorname{Cov}(X, W)+b c \operatorname{Cov}(Y, U)+b d \operatorname{Cov}(Y, W)$
-    \item $\text { Correlation: } \rho=\frac{\operatorname{Cov}(X, Y)}{\sqrt{\mathrm{V}(X) \mathrm{V}(Y)}}$
+    \item $\text {Correlation: } \rho=\frac{\operatorname{Cov}(X, Y)}{\sqrt{\mathrm{V}(X) \mathrm{V}(Y)}}$
 \end{itemize}
-\paragraph{Note} 
 
-\subsection{}
+\subsection{The Theorem of Gauss-Markov}
+Under the conditions of the simple linear regression model, the OLS regressors are BLUE (``Best Linear Unbiased Estimators'').
+\begin{itemize}
+    \item Best - obtains the minimum variance among all unbiased linear estimators. 
+    \item Linear - Linear in the parameter space. That is, feature maps are linear, although the actual curve of regression is `non-linear'.
+    \item Unbiased - The estimators are unbiased, namely $\hat{\beta}_0, \hat{\beta}_1$.
+    \item Estimator - Estimators $\hat{\beta}_0, \hat{\beta}_1$ for $\beta_0$ and $\beta_1$ respectively.
+\end{itemize}
+
+\subsection{Matrix Form Rules}
+\subsubsection{Summations}
+Consider $\mathbf{A}, \mathbf{B}$ as compatible matrices where appropirate and $k \in \real$ then
+\begin{itemize}
+    \item $\mathbf{A}+\mathbf{B}=\mathbf{B}+\mathbf{A}$
+    \item $(\mathbf{A}+\mathbf{B})+\mathbf{C}=\mathbf{A}+(\mathbf{B}+\mathbf{C})$
+    \item $(\mathbf{A B}) \mathbf{C}=\mathbf{A}(\mathbf{B C})$
+    \item $\mathbf{C}(\mathbf{A}+\mathbf{B})=\mathbf{C} \mathbf{A}+\mathbf{C B}$
+    \item $k(\mathbf{A}+\mathbf{B})=k \mathbf{A}+k \mathbf{B}$
+\end{itemize}
+\subsubsection{Transpositions}
+\begin{itemize}
+    \item $\left(\mathbf{A}^{\prime}\right)^{\prime}=\mathbf{A}$
+    \item $(\mathbf{A}+\mathbf{B})^{\prime}=\mathbf{A}^{\prime}+\mathbf{B}^{\prime}$
+    \item $(\mathbf{A B})^{\prime}=\mathbf{B}^{\prime} \mathbf{A}^{\prime}$
+    \item $(\mathbf{A B C})^{\prime}=\mathbf{C}^{\prime} \mathbf{B}^{\prime} \mathbf{A}^{\prime}$, this properties is known as `cyclic'
+\end{itemize}
+\subsubsection{Inversions}
+\begin{itemize}
+    \item $(\mathbf{A B})^{-1}=\mathbf{B}^{-1} \mathbf{A}^{-1}$
+    \item $(\mathbf{A B C})^{-1}=\mathbf{C}^{-1} \mathbf{B}^{-1} \mathbf{A}^{-1}$
+    \item $\left(\mathbf{A}^{-1}\right)^{-1}=\mathbf{A}$
+    \item $\left(\mathbf{A}^{T}\right)^{-1}=\left(\mathbf{A}^{-1}\right)^{T}$
+\end{itemize}
+\subsubsection{Covariance Matrix}
+\begin{itemize}
+    \item The variance-covariance matrix of a random vector $\mathbf{Y}$ is a symmetric, positive semi-definite matrix, defined as
+    \begin{align*}
+        \operatorname{Var}(\mathbf{Y}) 
+        &= \mathrm{E}\left[(\mathbf{Y}-\mathbf{E}(\mathbf{Y}))(\mathbf{Y}-\mathbf{E}(\mathbf{Y}))^{\prime}\right] \\
+        &= E\left(
+            \begin{array}{ccc}
+                {\left(Y_{1}-E\left(Y_{1}\right)\right)^{2}} & {\left(Y_{1}-E\left(Y_{1}\right)\right)\left(Y_{2}-E\left(Y_{2}\right)\right)} & {\ldots} \\ {\left(Y_{2}-E\left(Y_{2}\right)\right)\left(Y_{1}-E\left(Y_{1}\right)\right)} & {\left(Y_{2}-E\left(Y_{2}\right)\right)^{2}} & {\cdots} \\ {\vdots} & {\vdots} & {\ddots}
+            \end{array}
+        \right)
+    \end{align*}
+    \item Let $\mathbf{A}$ be a square matrix of constants
+        \begin{align*}
+            \operatorname{Var}(\mathbf{A Y}) 
+            &=\mathrm{E}\left[(\mathbf{A} \mathbf{Y}-\mathbf{E}(\mathbf{A} \mathbf{Y}))(\mathbf{A} \mathbf{Y}-\mathbf{E}(\mathbf{A} \mathbf{Y}))^{\prime}\right] \\ 
+            &=\mathbf{E}\left[\mathbf{A}(\mathbf{Y}-\mathbf{E}(\mathbf{Y}))(\mathbf{Y}-\mathbf{E}(\mathbf{Y}))^{\prime} \mathbf{A}^{\prime}\right] \\ 
+            &=\mathbf{A} \mathbf{E}\left[(\mathbf{Y}-\mathbf{E}(\mathbf{Y}))(\mathbf{Y}-\mathbf{E}(\mathbf{Y}))^{\prime}\right] \mathbf{A}^{\prime} \\ 
+            &=\mathbf{A} \mathbf{V} \mathbf{a r}(\mathbf{V}) \mathbf{A}^{\prime}
+        \end{align*}
+\end{itemize}
+
 
 
 \end{document}
