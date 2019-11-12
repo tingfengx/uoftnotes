@@ -139,6 +139,8 @@ $\text { Let } \mathbf{A} \text { be a } k \times k \text { symmetric matrix. Su
 \begin{equation*}
     \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}}=2 \mathbf{A} \boldsymbol{\theta}
 \end{equation*}
+\subsubsection{Matrix Idempotency}
+
 
 \section{Simple Linear Regression}
 \subsection{Ordinary Least Square}
@@ -169,7 +171,7 @@ We will now derive the OLS estimators as follows.
 \begin{equation*}
     \hat{\beta}_{1}=\frac{\sum_{i=1}^{n} x_{i} y_{i}-n \overline{x y}}{\sum_{i=1}^{n} x_{i}^{2}-n \bar{x}^{2}}=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)}{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}}=\frac{S X Y}{S X X}
 \end{equation*}
-\paragraph{Estimating Variance of Residuals}
+\paragraph{Estimating Variance of Error Term (Using Residuals)}
 \begin{equation*}
     \text{Unbiased Estimator} \quad \hat{\sigma}^2 = S^{2}=\frac{\mathrm{RSS}}{n-2}=\frac{1}{n-2} \sum_{i=1}^{n} \hat{e}_{i}^{2}
 \end{equation*}
@@ -601,6 +603,12 @@ and
 \end{equation*}
 Such correlation could be safely ignored in practice. They are usually given raise by inherent correlation such as data collected over time.
 
+\paragraph{Variance of Residuals} Above we discussed `inter-correlation' of residuals. \color{BurntOrange} The variance of a single residual is
+\begin{equation*}
+    \operatorname{Var}\left(\hat{e}_{i}\right)=\left(1-h_{i i}\right) \sigma^{2}
+\end{equation*}
+\color{Black}
+
 \subsubsection{Recommendations for Handling Outliers \& Leverage}
 We have discussed multiple ways of assessing outliers and talked about the way to deal with them by removing them. However, it is not always a good idea to delete them for the following reasons:
 \begin{itemize}
@@ -799,7 +807,7 @@ This section contains various properties mentioned in the slides/book. They may 
     \item $E(a) = a, \forall a \in \real)$
     \item $E(aY) = aE(Y)$
     \item $E(X \pm Y) = E(X) \pm E(Y)$
-    \item $X\independent Y \implies E(X) E(Y)$
+    \item $X\independent Y \implies E(EY) = E(X) E(Y)$
     \item Tower Rule: $E(Y) = E(E(Y|X))$
 \end{itemize}
 
