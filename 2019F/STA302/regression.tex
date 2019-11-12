@@ -11,6 +11,7 @@
 \usepackage{hyperref}
 \usepackage{fancyhdr} 
 \usepackage{youngtab}
+\usepackage{datetime}
 % ==== license =====
 \usepackage[
     type={CC},
@@ -432,7 +433,186 @@ The above $F$-test, as well as the sum of squares decomposition, could be summar
     \end{tabular}
 \end{center}
 
-% FIXME: more to add to here.
+% TODO: MATRIX SLR
+\subsection{SLR in Matrix Form}
+\subsubsection{Set-Up}
+The simple linear regression model is
+\begin{equation*}
+    Y = X\beta + e
+\end{equation*}
+where $Y \in \mat{n}{1}, X\in \mat{n}{2}, \beta\in \mat{2}{1}, e\in \mat{n}{1}$.
+\subsubsection{The Design Matrix}
+\begin{equation*}
+    X_{n\times 2} = \begin{bmatrix}
+        1 & X_1 \\
+        1 & X_2 \\
+        \vdots & \vdots \\
+        1 & X_n
+    \end{bmatrix}
+    \implies
+    X\beta (n\times 1)
+    \begin{bmatrix}
+        \beta_0 + X_1 \beta_1 \\
+        \beta_0 + X_2 \beta_1 \\
+        \vdots \\
+        \beta_0 + X_n \beta_1
+    \end{bmatrix}
+\end{equation*}
+
+\subsubsection{Normal Error Regression Model}
+\paragraph{Gauss - Markov Conditions}
+\begin{itemize}
+    \item The errors have zero mean, $E(\be) = \bzero$
+    \item The errors have constant variance, $\sigma^2$
+    \item The errors are uncorrelated, $V(\be) = \sigma^2 \mathbf{I}$
+\end{itemize}
+\paragraph{Jointly Normal} The error terms follow a multivariate normal, 
+\begin{equation*}
+    \be \sim N_n (\Sigma = \bzero, \sigma^2 I)
+\end{equation*}
+
+\subsubsection{OLS in Matrix Form}
+Consider $\beta = [\beta_0, \beta_1]'$, and the cost function
+\begin{align*}
+    RSS(\beta) &= \sum_{i = 1}^n [y_i - (\beta_0 + \beta_1 x_i)]^2 \\
+    &= (Y - X\beta) (Y - X\beta)' \\
+    &= (Y' - \beta ' X') (Y - X\beta) \\
+    &= Y'IY + \beta (X'X)\beta ' - Y'X\beta - \beta 'X'Y
+\end{align*}
+\paragraph{Derivative}
+\begin{equation*}
+    \frac{\partial RSS(\beta)}{\partial \beta} = 0 - 2X'Y\beta + 2X'X\beta
+\end{equation*}
+\paragraph{Normal Equation} obtained by setting to zero and re-arrange
+\begin{equation*}
+    2X'X\hat{\beta} = 2X'Y
+\end{equation*}
+\paragraph{OLS Regressor}
+\begin{equation*}
+    \hat{\beta} = (X'X)^{-1}X'Y
+\end{equation*}
+
+\subsubsection{Properties of OLS Regressors}
+\paragraph{Expectation: Unbiased Estimator}
+\begin{align*}
+    E(\hat{\beta}) &= E((X'X)^{-1}X'Y) \\
+    &= E(Y)(X'X)^{-1}X' \\
+    &= (X'X)^{-1}X' E(X\beta + e) \\
+    &= (X'X)^{-1}X' (X\beta + 0) \\
+    &= I\beta = \beta
+\end{align*}
+\qed
+\paragraph{Variance - Covariance Matrix}
+\begin{align*}
+    VAR(\hat{\beta}) &= VAR( (X'X)^{-1}X'Y ) \\
+    &= [(X'X)^{-1}X'] \sigma^2 I [(X'X)^{-1}X']' \\
+    &= \sigma^2 I (X'X)^{-1}  \underbrace{X'X (X'X)^{-1}}_{\equiv~I} \\
+    &= \sigma^2 (X'X)^{-1} \\
+    &=
+    \begin{bmatrix}
+        VAR(\hat{\beta}_0) =  \frac{\sigma^2\sum x_{i}^{2}}{n S X X}
+        & COV(\hat{\beta}_0, \hat{\beta}_1) = \frac{-\sigma^2\bar{x}}{S X X} \\
+        COV(\hat{\beta}_1, \hat{\beta}_0) = \frac{-\sigma^2\bar{x}}{S X X}
+        & VAR(\hat{\beta}_1) = \frac{\sigma^2}{SXX}
+    \end{bmatrix}
+\end{align*}
+
+\subsubsection{The Hat Matrix}
+\paragraph{Defining the Hat}
+We have
+\begin{equation*}
+    \widehat{\mathbf{e}}=\left(\begin{array}{c}{e_{1}} \\ {e_{2}} \\ {\vdots} \\ {e_{n}}\end{array}\right)=\mathbf{Y}-\widehat{\mathbf{Y}}=\mathbf{Y}-\mathbf{X} \widehat{\boldsymbol{\beta}} \quad \text{and} \quad  \widehat{\mathbf{Y}}=\mathbf{X} \widehat{\boldsymbol{\beta}}=\mathbf{X}\left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{Y}=\mathbf{H} \mathbf{Y}
+\end{equation*}
+where
+\begin{equation*}
+    \text{HAT Matrix} \quad \mathbf{H} := \mathbf{X}\left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime}
+\end{equation*}
+Thus, $\widehat{\mathbf{e}}=\mathbf{Y}-\mathbf{H Y}=(\mathbf{I}-\mathbf{H}) \mathbf{Y}$
+\paragraph{Facts About the Hat Matrix}
+\begin{itemize}
+    \item $\mathbf{H}$ is symmetric
+        \begin{equation*}
+            H' = (X(X'T)^{-1}X')' = X(X'X)^{-1}X' = H
+        \end{equation*}
+    \item $\mathbf{H}$ is idenmpotent
+        \begin{align*}
+            H^2 &= HH =  X(X'X)^{-1} \underbrace{X' X(X'X)^{-1}}_{\equiv ~I}X' \\
+            &=  X(X'X)^{-1}X' = H
+        \end{align*}
+\end{itemize}
+
+\subsubsection{Properties of the Residuals in Matrix Form}
+\begin{align*}
+    \hat{e} &= (I - H)Y = (I - H)(X\beta + e) \\
+    &= (I - H)X\beta + (I - H)e \\
+    &= IX\beta - HX\beta + (I - H)e \\
+    &= X\beta - X\underbrace{X(X'X)^{-1}X}_{\equiv ~I} \beta + (I - H)e \\
+    &= X\beta - X\beta + (I - H)e \\
+    &= (I - H)e
+\end{align*}
+\paragraph{Expectation}
+\begin{equation*}
+    E(\hat{e}| X) = E((I - H)Y | X) = E((I - H)e | X) = \underbrace{E(e|X)}_{\equiv 0}(I - H) = 0
+\end{equation*}
+
+\paragraph{Variance - Covariance}
+\begin{align*}
+    VAR(\hat{e}|X) &= VAR((I-H)e|X) \\
+    &= (I - H) VAR(e|X) (I - H)' \\
+    &= (I - H) \sigma^2 I (I - H) '\\
+    &= (I - H) \sigma^2 I (I - H) \quad \text{since $(I - H)$ is symmetric} \\
+    &= \sigma^2 (I - H) \quad \text{since $(I - H)$ is idempotent}
+\end{align*}
+
+\subsubsection{ANOVA in Matrix Form}
+\paragraph{Total Sum Squared (SST)}
+\begin{align*}
+    SST = \sum\left(y_{i}-\bar{y}\right)^{2} &=\sum y_{i}^{2}-n \bar{y}^{2} \\
+    &= Y'Y - \frac{1}{n}Y'J Y \\
+    &= \underbrace{Y'\underbrace{(I - \frac{1}{n}J)}_{\text{symmetric square matrix}} Y}_{\text{quadratic form}}
+\end{align*}
+To find the corresponding df, we first check the idempotency of $I - \frac{1}{n}J$. Indeed,
+\begin{equation*}
+    (I - \frac{1}{n}J)(I - \frac{1}{n}J) = I^2 - \frac{2}{n}J + \frac{1}{n^2}J^2 = I - \frac{1}{n}J
+\end{equation*}
+Then, applying $Rank$(idempotent mat) = $Tr$(idempotent mat), we have
+\begin{equation*}
+    Rank(I - \frac{1}{n}J) = n - 1 = \text{degrees of freedom of} ~SST
+\end{equation*}
+
+\paragraph{Residual Sum Squared (RSS)}
+Notice that $(I - H)$ is symmetric and idempotent,
+\begin{equation*}
+    R S S=\sum \hat{e}_{i}^{2} = \hat{e}' \hat{e} = Y'(I - H)(I - H)Y = Y'(I - H)Y
+\end{equation*}
+and the corresponding degrees of freedom is
+\begin{equation*}
+    Rank(I - H) = Rank(I) - Rank(H) = Tr(I) - Tr(H) = n-2 = \text{df of MSE}
+\end{equation*}
+
+\paragraph{Regression Sum Squared (SSReg)}
+\begin{align*}
+    SSReg &= SST - RSS \\
+    &= Y'(I - 1/n J)Y - Y'(I - H)Y \\
+    &= Y'IY - Y' 1/n JY - Y'IY + Y'HY \\
+    &= Y'(H - \frac{1}{n}J) Y
+\end{align*}
+and the corresponding degrees of freedom is
+\begin{equation*}
+    Rank(H - \frac{1}{n}J) = Rank(H) - Rank(\frac{1}{n}J) = \sum h_{ii} - \sum \frac{1}{n} = 2 - 1 = 1 = \text{df of MSReg}
+\end{equation*}
+
+\subsubsection{ANOVA Table in Matrix Form}
+\begin{center}
+    \begin{tabular}{|c||c|c|}
+        \hline
+        Source & SS & $df$ \\ \hline
+        Regression & $\mathbf{Y}^{\prime}\left(\mathbf{H}-\frac{1}{n} \mathbf{J}\right) \mathbf{Y}$ & 1 \\ \hline
+        Error & $\mathbf{Y}^{\prime}(\mathbf{I}-\mathbf{H}) \mathbf{Y}$ & $n-2$ \\ \hline
+        Total & $\mathbf{Y}^{\prime}\left(\mathbf{I}-\frac{1}{\mathbf{n}} \mathbf{J}\right) \mathbf{Y}$ & $n-1$ \\ \hline
+    \end{tabular}
+\end{center}
+
 
 \section{Diagnostics and Transformations for SLR}
 \subsection{Valid and Invalid Data}
