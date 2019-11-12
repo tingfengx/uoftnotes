@@ -2,3 +2,5 @@
 STA261/.Rhistory
 .vscode/settings.json
 *.synctex.gz
+.texpadtmp/*
+2019F/STA302/.texpadtmp/
