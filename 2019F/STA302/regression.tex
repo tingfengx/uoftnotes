@@ -473,17 +473,17 @@ where $Y \in \mat{n}{1}, X\in \mat{n}{2}, \beta\in \mat{2}{1}, e\in \mat{n}{1}$.
 
 \subsubsection{OLS in Matrix Form}
 Consider $\beta = [\beta_0, \beta_1]'$, and the cost function
-\begin{align*}
-    RSS(\beta) &= \sum_{i = 1}^n [y_i - (\beta_0 + \beta_1 x_i)]^2 \\
-    &= (Y - X\beta) (Y - X\beta)' \\
-    &= (Y' - \beta ' X') (Y - X\beta) \\
-    &= Y'IY + \beta (X'X)\beta ' - Y'X\beta - \beta 'X'Y
+\begin{align*} 
+    RSS(\beta) 
+    &= ({Y}-{X} \beta)^{\prime}({Y}-{X} \beta) \\
+    &={Y}^{\prime} {Y}+({X} \beta)^{\prime} {X} {\beta}-{Y}^{\prime} {X} {\beta}-({X} {\beta})^{\prime} {Y} \\ 
+    &={Y}^{\prime} {Y}+\beta^{\prime}\left({X}^{\prime} {X}\right) \beta-2 {Y}^{\prime} {X} {\beta} 
 \end{align*}
 \paragraph{Derivative}
 \begin{equation*}
-    \frac{\partial RSS(\beta)}{\partial \beta} = 0 - 2X'Y\beta + 2X'X\beta
+    \frac{\partial RSS(\beta)}{\partial \beta} = 0 - 2X'Y + 2X'X\beta
 \end{equation*}
-\paragraph{Normal Equation} obtained by setting to zero and re-arrange
+\paragraph{Normal Equation} obtained by setting derivate to zero and re-arrange
 \begin{equation*}
     2X'X\hat{\beta} = 2X'Y
 \end{equation*}
