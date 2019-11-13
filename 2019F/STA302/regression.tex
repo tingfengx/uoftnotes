@@ -71,12 +71,10 @@
 \newcommand{\boldf}{\mathbf{f}}
 \newcommand{\bg}{\mathbf{g}}
 \newcommand{\bm}{\mathbf{m}}
-% \newcommand{\A}{\mathbf{A}}
-% \newcommand{\B}{\mathbf{B}}
-% \newcommand{\C}{\mathbf{C}
+
 
 \title{\LARGE{Miscellaneous Notes on Regression}\\ \normalsize{Based on SJS and KNN}}
-\author{\ccLogo \,\,Tingfeng Xia}
+\author{\ccLogo \,\,by Xia, Tingfeng}
 \date{Fall 2019, modified on \today}
 
 % ===== Setting the page =====
@@ -140,6 +138,8 @@ $\text { Let } \mathbf{A} \text { be a } k \times k \text { symmetric matrix. Su
     \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}}=2 \mathbf{A} \boldsymbol{\theta}
 \end{equation*}
 \subsubsection{Matrix Idempotency}
+We say that a matrix $A$ is idempotent if and only if $A^2 = AA = A$. It is worth mentioning that projection matrices are idempotent, i.e. you can only project once and projecting the second time makes no change to the already projected result.
+% FIXME: Add to here
 
 
 \section{Simple Linear Regression}
@@ -211,7 +211,7 @@ Recall that degrees of freedom = sample size - number of mean parameters estimat
 \paragraph{Confidence Interval (Var Unknown)}
 The $100(1- \alpha)\%$ CI is
 \begin{equation*}
-    CI \gets \hat{\beta}_1 \pm t^\ast_{()\alpha/2, df=n-2)} \times SE(\hat{\beta}_1) \equiv \hat{\beta}_1 \pm t^\ast_{(\alpha/2, df=n-2)} \frac{S}{\sqrt{S X X}}
+    CI \gets \hat{\beta}_1 \pm t^\ast_{(\alpha/2, df=n-2)} \times SE(\hat{\beta}_1) \equiv \hat{\beta}_1 \pm t^\ast_{(\alpha/2, df=n-2)} \frac{S}{\sqrt{S X X}}
 \end{equation*}
 \paragraph{Distribution Proof}
 Recall OLS regressor for $\beta_1$ is
@@ -233,7 +233,7 @@ Then, since $e_i |X$ are normally distributed, then $y_i = \beta_{0}+\beta_{1} x
 
 Recall that 
 \begin{equation*}
-    \hat{\rho}_{MLE} = r=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)}{\sqrt{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2} \sum_{i=1}^{n}\left(y_{i}-\bar{y}\right)^{2}}}
+    \hat{\rho}_{MLE} = r=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)}{\sqrt{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2} \sum_{i=1}^{n}\left(y_{i}-\bar{y}\right)^{2}}} = \frac{SXY}{\sqrt{SXX~SYY}}
 \end{equation*}
 Use the null hypothesis that $H_0: \rho_{XY} = 0$ and alternative $H_1: \rho_{XY} \neq 0$, then
 \begin{equation*}
@@ -792,13 +792,15 @@ and
     \item The other advantage of standardized residuals is that they immediately tell us how many estimated standard deviations any point is away from the fitted regression model. 
 \end{itemize}
 
-\paragraph{Recognizing Outliers Using Standardized Residuals} 
+\color{RawSienna}
+\paragraph{$\star~$Recognizing Outliers Using Standardized Residuals} 
 \begin{itemize}
     \item An \textbf{outlier} is a point whose standardized residual falls outside the interval from -2 to 2, i.e. $|r_i| > 2$
     \item A \textbf{Bad Leverage Point} is a leverage point whose standardized residual falls outside the interval from -2 to 2, i.e. $|r_i| > 2 \wedge h_{ii} > \frac{4}{n}$
     \item A \textbf{Good Leverage Point} is a leverage point whose standardized residual falls inside the interval from -2 to 2, i.e. $|r_i| \leq 2 \wedge h_{ii} > \frac{4}{n}$
     \item \textbf{Dealing with large datasets:} In this case, we should change the above criterion to $|r_i| > 4$ and $|r_i| \leq 4$ respectively. This is to give allowance for more occurrence of rare events in a large data set.
 \end{itemize}
+\color{Black}
 
 \paragraph{Correlation Between Residuals} Even if the errors are independent (homogeneous), i.e. $e_i \independent e_j~(i \neq j)$, the residuals are still correlated. It can be shown that the covariance and the correlation is given by
 \begin{equation*}

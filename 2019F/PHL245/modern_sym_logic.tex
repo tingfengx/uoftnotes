@@ -109,7 +109,7 @@ We shall see this through some examples:
 \begin{itemize}
     \item In official notation, we need $(P\vee Q)$ while it is safe to drop the parenthesis.
 \end{itemize}
-We can check if a statment is official or informal if it has the same number of brackets as binary connectors in the statement. If you see a bracket around a unitary connector, the sentence is not well-formed.
+We can check if a statement is official or informal if it has the same number of brackets as binary connectors in the statement. If you see a bracket around a unitary connector, the sentence is not well-formed.
 \textbf{Right Most Rule} We say the rightmost connector in a sentence with connectors of the same level the main connector.
 
 
@@ -129,7 +129,7 @@ so they will have and only have two operands. We have the following to consider:
         is false and false otherwise.
 \end{itemize}
 
-\subsection{Sementic Properties in Truth Tables}
+\subsection{Semantic Properties in Truth Tables}
 \begin{itemize}
     \item Tautology if always true
     \item Contradiction if always false 
@@ -154,7 +154,7 @@ Notice that this is equivalent to evaluating
 %  set of solution. Hence the statement is consistent.
 
 
-\section{Addressing Ambiguity in Symboliazation}
+\section{Addressing Ambiguity in Symbolization}
 \subsection{Restrictive and Non-Restrictive Clauses}
 We shall see this through an example
 \begin{itemize}
@@ -165,15 +165,15 @@ We shall see this through an example
     the first one is that `Cats terrify me' and `Cats scratch'. (The which part 
     is an inserted clause describing the subject before it.)
 \end{itemize}
-\subsubsection{Symbolization of Non-Restricive Clauses} In symbolization of
-non-restricive sentences, we simply treat the clause and the main sentence 
-as two seperate sentences and use logical and to connect them. (Two concurrent
+\subsubsection{Symbolization of Non-Restrictive Clauses} In symbolization of
+non-restrictive sentences, we simply treat the clause and the main sentence 
+as two separate sentences and use logical and to connect them. (Two concurrent
 event)
 \subsubsection{Symbolization of Restrictive Clauses} We have to introduce a 
 premise (conditional statement) to address the descriptive part.
 
 \subsubsection{Example}
-Consider the sentence ``Haveing gaaoline, which is smelly, is a necessary 
+Consider the sentence ``Having gasoline, which is smelly, is a necessary 
 condition for my car to run, and in that case I'm going to Vegas.'' and we
 define the following: W: Gasoline is smelly. X: I have gasoline. Y: My car runs.
 Z: I'm going to Vegas. \textbf{Solution:} We first extract the which clause out
@@ -188,7 +188,7 @@ In english language, when we say `bar foo, and in that case baz' the `case' alwa
 to the thing mentioned immediately before. So in our example `foo' would be reason for `baz'.
 
 \section{Derivations in Sentential Logic}
-Full truth tables are impratical when we have a long sentence to check validity 
+Full truth tables are impartial when we have a long sentence to check validity 
 and it turns out that derivation is a nice and simple way to achieve such goal.
 
 \subsection{Ten Basic Rules}
@@ -201,7 +201,7 @@ and it turns out that derivation is a nice and simple way to achieve such goal.
 
 \subsubsection{Modus Ponens (MP)} $\phi \rightarrow \psi$, if we know $\phi$, then it is reasonable to say $\psi$
 \subsubsection{Modus Tollens (MT)} $\phi \rightarrow \psi$ then $\sim\psi \rightarrow \sim\phi$, aka contrapositive
-\subsubsection*{Fallacys} If we deny the antecedent or affirm the consequent, that \textit{doesn't} tell us anything!
+\subsubsection*{Fallacy} If we deny the antecedent or affirm the consequent, that \textit{doesn't} tell us anything!
 \subsubsection{Double Negation (DN)} $\sim\sim\phi \equiv \phi$. Negating a statement two times is the same as the statement itself.
 \subsubsection{Repetition (R)} $\phi \rightarrow \phi$ If you know $\phi$ then you know $\phi$
 
@@ -229,7 +229,7 @@ Let's see the Modus Tollens in action
 \begin{equation*}
     \sim (S\vee P) \rightarrow \sim R.~ R. ~\text{so}~ S\vee P
 \end{equation*}
-THIS IS INCOORECT! We have to take the rules ``as is'', since we are constructing a
+THIS IS INCORRECT! We have to take the rules ``as is'', since we are constructing a
 contrapositive, we will have $\sim\sim (S\vee P)$ as our conclusion. Here is an example of a 
 correct usage of Modus Tollens
 \begin{equation*}
