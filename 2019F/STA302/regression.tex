@@ -321,7 +321,7 @@ The expectation follows directly from definition, and we will now show that the 
     Z=\frac{\hat{y}^{*}-\left(\beta_{0}+\beta_{1} x^{*}\right)}{\sigma \sqrt{\left(\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)}} \sim N(0,1)
 \end{equation*}
 
-\paragraph{Test Statistic (Var Knwon)}
+\paragraph{Test Statistic (Var Known)}
 \begin{equation*}
     T=\frac{\hat{y}^*-\left(\beta_{0}+\beta_{1} x^{*}\right)}{S \sqrt{\left(\frac{1}{n}+\frac{\left(x^{*}-\bar{x}\right)^{2}}{S X X}\right)}} \sim t_{(df=n-2)} \quad \text{where}~~S^2 = \frac{\sum_i \hat{e}_i^2}{n-2} 
 \end{equation*}
@@ -491,6 +491,33 @@ Consider $\beta = [\beta_0, \beta_1]'$, and the cost function
     \hat{\beta} = (X'X)^{-1}X'Y
 \end{equation*}
 
+\paragraph{Reduction From Matrix Notation to Scaler Notation} We will now show that the matrix form we just derived is equivalent to the form that we discussed/derived earlier in the chapter, where we computed the two estimators separately.
+First, Let's show some identities that will be used in the derivation.
+\begin{equation*}
+	\mathbf{X}^{\prime} \mathbf{X}=\left(\begin{array}{ccc}{1} & {1} & {\cdots} \\ {x_{1}} & {x_{2}} & {\cdots x_{n}}\end{array}\right)\left(\begin{array}{cc}{1} & {x_{1}} \\ {1} & {x_{2}} \\ {\vdots} & {\vdots} \\ {1} & {x_{n}}\end{array}\right)=\left(\begin{array}{cc}{n} & {\sum_{i=1}^{n} x_{i}} \\ {\sum_{i=1}^{n} x_{i}} & {\sum_{i=1}^{n} x_{i}^{2}}\end{array}\right)=n\left(\begin{array}{cc}{1} & {\bar{x}} \\ {\bar{x}} & {\frac{1}{n} \sum_{i=1}^{n} x_{i}^{2}}\end{array}\right)
+\end{equation*}
+\begin{equation*}
+	\implies \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1}=\frac{1}{n\left(\frac{1}{n} \sum_{i=1}^{n} x_{i}^{2}-(\bar{x})^{2}\right)}\left(\begin{array}{cc}{\frac{1}{n} \sum_{i=1}^{n} x_{i}^{2}} & {-\bar{x}} \\ {-\bar{x}} & {1}\end{array}\right) = \frac{1}{S X X}\left(\begin{array}{cc}{\frac{1}{n} \sum_{i=1}^{n} x_{i}^{2}} & {-\bar{x}} \\ {-\bar{x}} & {1}\end{array}\right)
+\end{equation*}
+and
+\begin{equation*}
+	\mathbf{X}^{\prime} \mathbf{Y}=\left(\begin{array}{cccc}{1} & {1} & {\cdots} & {1} \\ {x_{1}} & {x_{2}} & {\cdots} & {x_{n}}\end{array}\right) \left(\begin{array}{c}{y_{1}} \\ {y_{2}} \\ {\vdots} \\ {y_{n}}\end{array}\right) = \left(\begin{array}{c}{\sum_{i=1}^{n} y_{i}} \\ {\sum_{i=1}^{n} x_{i} y_{i}}\end{array}\right)
+\end{equation*}
+Thus, the regressor could be break down into
+\begin{align*}
+	\hat{\beta} 
+	&=\left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{Y} \\
+	&=\frac{1}{S X X}\left(\begin{array}{cc}{\frac{1}{n} \sum_{i=1}^{n} x_{i}^{2}} & {-\bar{x}} \\ {-\bar{x}} & {1}\end{array}\right)\left(\begin{array}{c}{\sum_{i=1}^{n} y_{i}} \\ {\sum_{i=1}^{n} x_{i} y_{i}}\end{array}\right) \\
+	&= \frac{1}{S X X}\left(\begin{array}{c}{\frac{1}{n} \sum_{i=1}^{n} y_{i} \sum_{i=1}^{n} x_{i}^{2}-\bar{x} \sum_{i=1}^{n} x_{i} y_{i}} \\ {\sum_{i=1}^{n} x_{i} y_{i}-\bar{x} \sum_{i=1}^{n} y_{i}}\end{array}\right) \\
+	&= \begin{pmatrix}
+		\frac{\bar{y}\left\{\sum_{i=1}^{n} x_{i}^{2}-n \bar{x}^{2}\right\}-\bar{x}\left\{\sum_{i=1}^{n} x_{i} y_{i}-n \overline{x y}\right\}}{S X X} \\
+		{S X Y}/{S X X}
+	\end{pmatrix} \\
+	&= \left(\begin{array}{l}{\bar{y}-\frac{S X Y}{S X X} \bar{x}} \\ {\frac{S X Y}{S X X}}\end{array}\right)
+\end{align*}
+Indeed, the results that we get confirms that our matrix form is equivalent. \qed 
+
+
 \subsubsection{Properties of OLS Regressors}
 \paragraph{Expectation: Unbiased Estimator}
 \begin{align*}
@@ -533,7 +560,7 @@ Thus, $\widehat{\mathbf{e}}=\mathbf{Y}-\mathbf{H Y}=(\mathbf{I}-\mathbf{H}) \mat
         \begin{equation*}
             H' = (X(X'T)^{-1}X')' = X(X'X)^{-1}X' = H
         \end{equation*}
-    \item $\mathbf{H}$ is idenmpotent
+    \item $\mathbf{H}$ is idempotent
         \begin{align*}
             H^2 &= HH =  X(X'X)^{-1} \underbrace{X' X(X'X)^{-1}}_{\equiv ~I}X' \\
             &=  X(X'X)^{-1}X' = H
@@ -618,7 +645,7 @@ and the corresponding degrees of freedom is
 \subsubsection{Residuals}
 One tool that we can use to validate a regression model is one or more plots of residuals (or standardized residuals). These plots will enable us to assess visually whether an appropriate model has been fit to the data no matter how many predictor variables are used. 
 
-\paragraph{Expected Behavior} We expect that the residual graph to have no discern-able pattern and centered at some value (0 in the case of standardized residual). Patterns such as curves, skewness et cetra indicates non-normal residuals. More on this in the below section.
+\paragraph{Expected Behaviour} We expect that the residual graph to have no discern-able pattern and centred at some value (0 in the case of standardized residual). Patterns such as curves, skewness et cetra indicates non-normal residuals. More on this in the below section.
 
 \subsubsection{Reading Residual Plots}
 \paragraph{Criterion} One way of checking whether a valid simple linear regression model has been fit is to plot residuals versus $x$ and look for patterns. If no pattern is found then this indicates that the model provides an adequate summary of the data, i.e., is a valid model. If a pattern is found then the shape of the pattern provides information on the function of $x$ that is missing from the model.  
@@ -841,7 +868,7 @@ We then proceed as follows
 The above result showed that the $i$-th least squares residual is equal to $e_i$ minus a weighted sum of all the $e$'s. There are two cases to consider,
 \begin{itemize}
     \item In small to moderate samples, the second term could dominate the first and first and the residuals can look like they come from a normal distribution even if the errors do not. 
-    \item When $n$ is large, the second term in the derived result (thistle colored) has a much smaller variance than that of the first term and as such the first term dominates the last equation. 
+    \item When $n$ is large, the second term in the derived result (thistle coloured) has a much smaller variance than that of the first term and as such the first term dominates the last equation. 
 \end{itemize}
 \textbf{Conclusion:} For large samples, the residuals can be used to assess normality of the errors.
 
@@ -853,7 +880,7 @@ A normal probability plot of the standardized residuals is obtained by plotting 
     \includegraphics[scale=0.26]{img/qq_over.png}
     \includegraphics[scale=0.26]{img/qq_under.png}
 \end{center}
-The above four are figures that I borrowed from \url{http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html} which illustrates how to interpret QQ plots with non-normal behavior.
+The above four are figures that I borrowed from \url{http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html} which illustrates how to interpret QQ plots with non-normal behaviour.
 
 \subsubsection{Constant Variance (Homoscedasticity)}
 A crucial assumption in any regression analysis is that errors have constant variance. \color{BurntOrange} Notice the difference between error and residual, we have demonstrated in \textbf{(3.2.2 Standardized Residuals)} that residuals are not of constant variance. \color{Black} There are two general methods that we can adopt to overcome this issue, namely (both of which will be discussed later)
@@ -865,7 +892,7 @@ A crucial assumption in any regression analysis is that errors have constant var
 \textit{\textbf{Important:} Ignoring non-constant variance when it exists invalidates all inferential tools, including p-values, CI, PI, et cetra!}
 \color{Black}
 
-\paragraph{Behavior of Non-Homoscedasticity} For example, on the plot explanatory var against standardized residuals, we might see that as $x$ increases, the residuals are more spread out, indicating an increasing trend in the variance. 
+\paragraph{Behaviour of Non-Homoscedasticity} For example, on the plot explanatory var against standardized residuals, we might see that as $x$ increases, the residuals are more spread out, indicating an increasing trend in the variance. 
 
 \paragraph{Checking for Constant Variance} To check this, check the plot of
 \begin{equation*}
@@ -889,7 +916,7 @@ Using the proposed transformation $f(Y)=Y^{0.5}$ and recall from properties of P
 \begin{equation*}
     \operatorname{Var}\left(Y^{0.5}\right) \simeq\left[0.5(\mathrm{E}(Y))^{-0.5}\right]^{2} \operatorname{Var}(Y)=\left[0.5 \lambda^{-0.5}\right]^{2} \lambda=\mathrm{constant}
 \end{equation*}
-\color{Thistle} \textbf{Rule of Thumb:} When both $Y$ and $X$ are measured in the same units then it is often natural to consider the same transformation for both $X$ and $Y$ \color{Black} \newline \newline
+\color{BurntOrange} \textbf{Rule of Thumb:} When both $Y$ and $X$ are measured in the same units then it is often natural to consider the same transformation for both $X$ and $Y$ \color{Black} \newline \newline
 Hence in this case our regression model would be
 \begin{equation*}
     Y=\beta_{0}+\beta_{1} x+e
@@ -924,7 +951,7 @@ Consider the straight line (simple) linear regression model
 \end{equation*}
 For the weight $w_i$, we should note the following
 \begin{itemize}
-    \item $w_i \rightarrow \infty \implies Var(e_i) \rightarrow 0$. In this case, the estimates of the regression parameters $\beta_0, \beta_1$ should be such that the fitted line at $x_i$ should be very close to $y_i$. (Small variance means more strict in terms of deviation from the regressin line, corresponding to a larger emphasis on the $i$-th data point.)
+    \item $w_i \rightarrow \infty \implies Var(e_i) \rightarrow 0$. In this case, the estimates of the regression parameters $\beta_0, \beta_1$ should be such that the fitted line at $x_i$ should be very close to $y_i$. (Small variance means more strict in terms of deviation from the regression line, corresponding to a larger emphasis on the $i$-th data point.)
     \item If $w_i$ is some small value, then the variance of the $i$-th data point would be quite large. In this case, we have a loose restriction of the deviation of the $i$-th data point from the regression line meaning that little emphasis is taken for this data point.
     \item $w_i \rightarrow 0 \implies Var(e_i) \rightarrow \infty$. In this case, we have the variance tending to infinity. Meaning that there is absolutely no restriction/emphasis on the $i$-th data point and it could be simply removed from the set.
 \end{itemize}
@@ -1014,7 +1041,7 @@ Under the conditions of the simple linear regression model, the OLS regressors a
 
 \subsection{Matrix Form Rules}
 \subsubsection{Summations}
-Consider $\mathbf{A}, \mathbf{B}$ as compatible matrices where appropirate and $k \in \real$ then
+Consider $\mathbf{A}, \mathbf{B}$ as compatible matrices where appropriate and $k \in \real$ then
 \begin{itemize}
     \item $\mathbf{A}+\mathbf{B}=\mathbf{B}+\mathbf{A}$
     \item $(\mathbf{A}+\mathbf{B})+\mathbf{C}=\mathbf{A}+(\mathbf{B}+\mathbf{C})$
@@ -1058,6 +1085,5 @@ Consider $\mathbf{A}, \mathbf{B}$ as compatible matrices where appropirate and $
         \end{align*}
 \end{itemize}
 
-we notice that here that the 
 
 \end{document}
