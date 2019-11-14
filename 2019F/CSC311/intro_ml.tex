@@ -1,5 +1,5 @@
 \documentclass[10pt]{article}
-\usepackage[margin=0.3cm]{geometry}
+\usepackage[margin=0.5cm]{geometry}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsfonts}
@@ -11,7 +11,8 @@
 \usepackage{blindtext}
 \usepackage{fancyhdr} 
 \usepackage{youngtab}
-\setlength{\parskip}{-0.9em}
+\usepackage[dvipsnames]{xcolor}
+\setlength{\parskip}{-0.7em}
 % \setlength{\itemsep}{-1em}
 
 \usepackage[
@@ -84,15 +85,15 @@
 % \tableofcontents
 % \newpage
 
-\paragraph{KNN} Find $k$ examples $\left\{ \bx^{(i)}, t^{(i)} \right\}$ closest to the test instance $\bx$ and then output majority $\arg \max_{t^{z}} \sum_{r = 1}^k \delta (t^{(z)}, t^{(r)})$. Define $\delta (a, b) = 1$ if $a = b$, $0$ otw. \textbf{Choice of $k$:} Rule is $k < \sqrt{n}$, small $k$ may overfit, while large may underfit. \textbf{Curse of Dim:} In high dimensions, ``most'' points are approximately the same distance. \textbf{Computation Cost:} 0 (minimal) at trianing/ no learning involved. Query time find $N$ distances in $D$ dimension $\mathcal{O}(ND)$ and $\mathcal{O}(N \log N)$ sorting time.
+\paragraph{KNN} Find $k$ examples $\left\{ \bx^{(i)}, t^{(i)} \right\}$ closest to the test instance $\bx$ and then output majority $\arg \max_{t^{z}} \sum_{r = 1}^k \delta (t^{(z)}, t^{(r)})$. Define $\delta (a, b) = 1$ if $a = b$, $0$ otw. \textbf{Choice of $k$:} Rule is $k < \sqrt{n}$, small $k$ may overfit, while large may under-fit. \textbf{Curse of Dim:} In high dimensions, ``most'' points are approximately the same distance. \textbf{Computation Cost:} 0 (minimal) at training/ no learning involved. Query time find $N$ distances in $D$ dimension $\mathcal{O}(ND)$ and $\mathcal{O}(N \log N)$ sorting time.
 % \paragraph{Accuracy Gain} $L(R)-\frac{\left|R_{1}\right| L\left(R_{1}\right)+\left|R_{2}\right| L\left(R_{2}\right)}{\left|R_{1}\right|+\left|R_{2}\right|}$ 
 \paragraph{Entropy} $H(X)=-\mathbb{E}_{X \sim p}\left[\log _{2} p(X)\right]=-\sum_{x \in X} p(x) \log _{2} p(x)$ \textbf{ Multi-class: } $H(X, Y)=-\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} p(x, y)$ \textbf{ Properties: } $H$ is non-negative, $H(Y|X) \leq H(Y)$, $X\perp Y \implies H(Y|X) = H(Y)$, $H(Y|Y) = 0$, and $H(X,Y) = H(X|Y) + H(Y) = H(Y|X) + H(X)$
 \paragraph{Expected Conditional Entropy} $ H(Y | X) =\mathbb{E}_{X \sim p(x)}[H(Y | X)] =\sum_{x \in X} p(x) H(Y | X=x) =-\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} p(y | x) =-\mathbb{E}_{(X, Y) \sim p(x, y)}\left[\log _{2} p(Y | X)\right]$ \textbf{Information Gain} $IG(Y | X)=H(Y)-H(Y | X)$ 
-\paragraph{Bias Variance Decomposition} Using the square error loss $L(y, t)=\frac{1}{2}(y-t)^{2}$, \textbf{Bias ($\uparrow \implies$ underfitting):} How close is our classifier to true target. \textbf{Variance ($\uparrow \implies$ overfitting):} How widely dispersed are out predictions as we generate new datasets 
+\paragraph{Bias Variance Decomposition} Using the square error loss $L(y, t)=\frac{1}{2}(y-t)^{2}$, \textbf{Bias ($\uparrow \implies$ under-fitting):} How close is our classifier to true target. \textbf{Variance ($\uparrow \implies$ overfitting):} How widely dispersed are out predictions as we generate new datasets 
 $$\begin{aligned} \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-t\right)^{2}\right]=& \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]+\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}\right] \\=& \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)^{2}+\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}+ 2\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)\right] \\=& \underbrace{\mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}}(\mathbf{x})-\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]\right)^{2}\right]}_{\text {variance }}+\underbrace{\mathbb{E}_{\mathbf{x}}\left[\left(\mathbb{E}_{\mathcal{D}}\left[h_{\mathcal{D}}(\mathbf{x})\right]-t\right)^{2}\right]}_{\text {bias }} \end{aligned} $$ 
 
 \paragraph{Bagging with Generating Distribution} Suppose we could sample $m$
- independent trianing sets $\left\{ \mathcal{D}_i\right\}_{i=1}^m$ from $p_{dataset}$. Learn $h_i := h_{\mathcal{D}_i}$ and out final predictor is $h = 1/m \sum_{i=1}^m h_i$. \textbf{Bias Unchanged:} 
+ independent training sets $\left\{ \mathcal{D}_i\right\}_{i=1}^m$ from $p_{dataset}$. Learn $h_i := h_{\mathcal{D}_i}$ and out final predictor is $h = 1/m \sum_{i=1}^m h_i$. \textbf{Bias Unchanged:} 
  $\mathbb{E}_{\mathcal{D}_{1}, \ldots, \mathcal{D}_{m} \stackrel{i i d}{\sim} p_{\text {dataset }}}[h(\mathbf{x})]=\frac{1}{m} \sum_{i=1}^{m} \mathbb{E}_{\mathcal{D}_{i} \sim p_{\text {dataset }}}\left[h_{i}(\mathbf{x})\right]=\mathbb{E}_{\mathcal{D} \sim p_{\text {dataset }}}\left[h_{\mathcal{D}}(\mathbf{x})\right]$ \textbf{Variance Reduced:} $\operatorname{Var}_{\mathcal{D}_{1}, \ldots, \mathcal{D}_{m}}[h(\mathbf{x})]=\frac{1}{m^{2}} \sum_{i=1}^{m} \operatorname{Var}\left[h_{i}(\mathbf{x})\right]=\frac{1}{m} \operatorname{Var}\left[h_{\mathcal{D}}(\mathbf{x})\right]$
 
 \paragraph{Bootstrap Aggregation} Take a single dataset $\mathcal{D}$ with $n$ sample and generate $m$ new datasets, each by sampling $n$ training examples from $\mathcal{D}$, with replacement. We then the average the predictions. We have the reduction in variance to be $\operatorname{Var}\left(\frac{1}{m} \sum_{i=1}^{m} h_{i}(\mathbf{x})\right)=\frac{1}{m}(1-\rho) \sigma^{2}+\rho \sigma^{2}$ 
@@ -123,7 +124,7 @@ $$\begin{aligned} \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}
 
 \paragraph{Cross Entropy Loss} $\mathcal{L}_{CE} = -t \log y - (1-t) \log (1-y)$ \textbf{Logistic CE} $\mathcal{L}_{LCE}(z,t) = \mathcal{L}_{CE}(\sigma (z), t) = t\log (1+e^{-z}) + (1-t) \log (1+e^z)$
 
-\paragraph{Multiclass Classification}
+\paragraph{Multi-class Classification}
 \begin{itemize}
     \setlength\itemsep{-0.45em}
     \item \textbf{Softmax Function} Natural generalization of logistic func: $y_{k}=\operatorname{softmax}\left(z_{1}, \ldots, z_{K}\right)_{k}=\frac{e^{z_{k}}}{\sum_{k^{\prime}} e^{z_{k^{\prime}}}}$; iuputs $z_k$ are called logits. 
@@ -140,11 +141,69 @@ $$\begin{aligned} \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}
     \item \textbf{Choice of Last Layer Activation Func} Regression: $\mathbf{y}=f^{(L)}\left(\mathbf{h}^{(L-1)}\right)=\left(\mathbf{w}^{(L)}\right)^{T} \mathbf{h}^{(L-1)}+b^{(L)}$; Binary Classification: $\mathbf{y}=f^{(L)}\left(\mathbf{h}^{(L-1)}\right)=\sigma\left(\left(\mathbf{w}^{(L)}\right)^{T} \mathbf{h}^{(L-1)}+b^{(L)}\right)$
     \item \textbf{Back Propagation} Suppose $\mathcal{L}$ what I want to optimize, then for some variable $\bw$ that we want to optimize w.r.t., $\frac{\partial \mathcal{L}}{\partial \bw} =: \overbar{\bw}$
     \item \textbf{Back Prop Cost} Forward: one add-multiplicity operation per weight; Backward: two add-multiplicity operations per weight $\implies$ the Backward pass is about as expensive as two Forward passes. (cost is linear in \# of layers, quadratic in \# of units per layer)
-    %     Forward:  $\mathbf{z} =\mathbf{W}^{(1)} \mathbf{x}+\mathbf{b}^{(1)} ; \mathbf{h} =\sigma(\mathbf{z}) ; \mathbf{y} =\mathbf{W}^{(2)} \mathbf{h}+\mathbf{b}^{(2)} ; \mathcal{L} =\frac{1}{2}\|\mathbf{t}-\mathbf{y}\|^{2}$
-
-    % $
-    %     \begin{aligned} \overline{\mathcal{L}} &=1 \\ \overline{\mathbf{y}} &=\overline{\mathcal{L}}(\mathbf{y}-\mathbf{t}) \\ \overline{\mathbf{W}^{(2)}} &=\overline{\mathbf{y}} \mathbf{h}^{\top} \\ \overline{\mathbf{h}^{(2)}} &=\overline{\mathbf{y}} \\ \overline{\mathbf{h}} &=\mathbf{W}^{(2) \top} \overline{\mathbf{y}} \\ \overline{\mathbf{z}} &=\overline{\mathbf{h}} \circ \sigma^{\prime}(\mathbf{z}) \\ \overline{\mathbf{W}^{(1)}} &=\overline{\mathbf{z}} \mathbf{x}^{\top} \\ \overline{\mathbf{b}^{(1)}} &=\overline{\mathbf{z}} \end{aligned}$
 \end{itemize}
+
+% TODO: Support vector machine to be added here.
+
+
+\paragraph{Statistic on Samples}
+\begin{itemize}
+	\setlength\itemsep{-0.45em}
+	\item \textbf{Sample Mean} $\hat{\boldsymbol{\mu}}=\frac{1}{N} \sum_{i=1}^{N} \mathbf{x}^{(i)}$. $\hat{\boldsymbol{\mu}}$ roughly quantifies where your data is located in space
+	\item \textbf{Sample Cov} $\hat{\mathbf{\Sigma}}=\frac{1}{N} \sum_{i=1}^{N}\left(\mathbf{x}^{(i)}-\hat{\boldsymbol{\mu}}\right)\left(\mathbf{x}^{(i)}-\hat{\boldsymbol{\mu}}\right)^{\top}$ quantifies the shape of spread of the data
+\end{itemize}
+\paragraph{Euclidean projection} Let $\mathcal{S}$ denote the subspace with dim = $k$ that is spanned by the basis $\left\{ \mathbf{u}_1,...,\mathbf{u}_K \right\} \subseteq \real^D $. Then,
+\begin{itemize}
+	\setlength\itemsep{-0.45em}
+	\item Any vector $\mathbf{y} \in \mathcal{S}$ could be represented as $\mathbf{y} = \sum_{i=1}^K z_i\mathbf{u}_i$, for some $z_1,...,z_k\in \real$
+	\item The projection of $\mathbf{x}$ onto $\mathcal{S}$ is given as $\operatorname{Proj}_{\mathcal{S}}(\mathbf{x})= \sum_{i=1}^{K} (\mathbf{x}^{\top} \mathbf{u}_{i}) \mathbf{u}_{i} =\sum_{i=1}^{K} z_{i} \mathbf{u}_{i} \quad \text { where } \quad z_{i}=\mathbf{x}^{\top} \mathbf{u}_{i}$
+\end{itemize}
+
+\paragraph{Principle Component Analysis - Projection onto Subspace} 
+\begin{itemize}
+	\setlength\itemsep{-0.45em}
+	\item Let $\left\{\mathbf{u}_{k}\right\}_{k=1}^{K}$ be an \color{BurntOrange}orthonormal \color{Black} basis of the subspace $\mathcal{S}$.
+	\item Define $\mathbf{U}$ to be a matrix with columns $\left\{\mathbf{u}_{k}\right\}_{k=1}^{K}$ then ${\mathbf{z}=\mathbf{U}^{T}(\mathbf{x}-\hat{\boldsymbol{\mu}})}$. Here the $\bz$ is called the code vector 
+	\item Also, $\tilde{\mathbf{x}}=\hat{\boldsymbol{\mu}}+\mathbf{U} \mathbf{z}=\hat{\boldsymbol{\mu}}+\mathbf{U} \mathbf{U}^{T}(\mathbf{x}-\hat{\boldsymbol{\mu}})$ is called the reconstruction of $\mathbf{x}$
+	\item Note: $\mathbf{U} \mathbf{U}^{T}$ is the projector matrix and $\mathbf{U}^{T} \mathbf{U}=I$ is the identity matrix. 
+	\item $\bx$ and $\tilde{\bx}$ are both in $\real^D$ while $\tilde{\bx}$ lives in a low dimensional subspace in $\real^D$. The code vector $\bx$ is in $\real^K$, and is the low dim representation of the vector $\bx$
+\end{itemize}
+
+\paragraph{PCA - Learning Subspace}
+\begin{itemize}
+	\setlength\itemsep{-0.45em}
+	\item \textbf{Criteria I:} Minimize the reconstruction error: Find vectors in a subspace that are closest to data points, $\min _{\mathbf{U}} \frac{1}{N} \sum_{i=1}^{N}\left\|\mathbf{x}^{(i)}-\tilde{\mathbf{x}}^{(i)}\right\|^{2}$
+	\item \textbf{Criteria II:} Maximize the variance of reconstructions: Find subspaces where data has the most variability, $\max _{\mathbf{U}} \frac{1}{N} \sum_{i}\left\|\tilde{\mathbf{x}}^{(i)}-\hat{\boldsymbol{\mu}}\right\|^{2}$
+	\item \textbf{Proof: Criteria I $\equiv$ Criteria II}; It suffices to show that $\frac{1}{N} \sum_{i=1}^{N}\left\|\mathbf{x}^{(i)}-\tilde{\mathbf{x}}^{(i)}\right\|^{2}=\text { const }-\frac{1}{N} \sum_{i}\left\|\tilde{\mathbf{x}}^{(i)}-\hat{\boldsymbol{\mu}}\right\|^{2}$
+%	\begin{itemize}
+%		\setlength\itemsep{-0.45em}
+%		\item Using $\tilde{\mathbf{x}}^{(i)}=\hat{\boldsymbol{\mu}}+\mathbf{U} \mathbf{z}^{(i)} \text { and } \mathbf{z}^{(i)}=\mathbf{U}^{\top}\left(\mathbf{x}^{(i)}-\hat{\boldsymbol{\mu}}\right)$ and $\|\mathbf{v}\|^{2}=\mathbf{v}^{\top} \mathbf{v} \text { and } \mathbf{U}^{\top} \mathbf{U}=I \implies \|\mathbf{U} \mathbf{v}\|^{2}=\mathbf{v}^{\top} \mathbf{U}^{\top} \mathbf{U} \mathbf{v}=\|v\|^{2}$ we have
+%			$$
+%				\left\|\tilde{\mathbf{x}}^{(i)}-\hat{\boldsymbol{\mu}}\right\|^{2}=\left(\mathbf{U} \mathbf{z}^{(i)}\right)^{\top}\left(\mathbf{U} \mathbf{z}^{(i)}\right)=\left[\mathbf{z}^{(i)}\right]^{\top} \mathbf{U}^{\top} \mathbf{U} \mathbf{z}^{(i)}=\left[\mathbf{z}^{(i)}\right]^{\top} \mathbf{z}^{(i)}=\left\|\mathbf{z}^{(i)}\right\|^{2}
+%			$$
+%	\end{itemize}
+\end{itemize}
+\newpage
+
+\paragraph{Work Flow of EM and GGM}
+\begin{itemize}
+    \item Step 0; Assume (1). Pick a cluster (with probability $\pi_k$) and (2). sample  from it using the parameters $\mu_k, \Sigma_k$. (Some gaussian distribution)
+    \item Step 1; The log-likelihood is $\log P(X | \pi, \mu_k, \Sigma_k) = \sum_{i=1}^N \log \sum_{k=1}^K \pi_k N(X_n| \mu_k, \Sigma_k)$
+    \item Step 2; Optimize via EM
+    \item Step 2.1 Compute responsibilities (E)
+    \item Step 2.2 Maximize (M)
+    \begin{equation*}
+        \mu_k = \frac{1}{N_k}\sum_k
+    \end{equation*}
+    \LARGE
+    \item Notice that Generative models are called ``generative'' because they try to learn the underlying distribution, while the discriminative analysis procedures (eg NN) are trying to simply map data. 
+\end{itemize}
+
+
+
+
+
+
 
 
 
