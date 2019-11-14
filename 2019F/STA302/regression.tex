@@ -688,7 +688,7 @@ which means that our residuals resembles the random error!
 The hat came from yet another representation of the $\hat{y}_i$. Recall that $\hat{y}_{i}=\hat{\beta}_{0}+\hat{\beta}_{1} x_{i}$, where $\hat{\beta}_{0}=\bar{y}-\hat{\beta}_{1} \bar{x}$, $\hat{\beta}_{1}=\sum_{j=1}^{n} c_{j} y_{j}$ and $c_{j}=\frac{x_{j}-\bar{x}}{S X X}$.
 Then we have
 \begin{align*}
-    \hat{y}_{i}
+    \hat{y}_{i}	
     &=\bar{y}-\hat{\beta}_{1} \bar{x}+\hat{\beta}_{1} x_{i} 
     =\bar{y}+\hat{\beta}_{1}\left(x_{i}-\bar{x}\right) \\
     &=\frac{1}{n} \sum_{j=1}^{n} y_{j}+\sum_{j=1}^{n} \frac{\left(x_{j}-\bar{x}\right)}{S X X} y_{j}\left(x_{i}-\bar{x}\right) \\
@@ -998,7 +998,157 @@ and the estimators $\bb = [b_0, b_1]^T$ are derived using MLE.
 \end{equation}
 
 \section{Multiple Linear Regression (Under Construction)}
+\subsection{Estimation and Inference in MLR}
+\subsubsection{The MLR Model} In the familiar SLR settings, we have that $Y = \beta_0 + \beta_1 x + error$, where we had one predictor variable (so called `simple'). In the MLR settings, we want to add multiple predictors. This leads to the formulation of expectation
+\begin{equation*}
+    \mathrm{E}\left(Y | X_{1}=x_{1}, X_{2}=x_{2}, \ldots, X_{p}=x_{p}\right)=\beta_{0}+\beta_{1} x_{1}+\beta_{2} x_{2}+\ldots+\beta_{p} x_{p}
+\end{equation*}
+Thus,
+\begin{equation*}
+    Y_{i}=\beta_{0}+\beta_{1} x_{1 i}+\beta_{2} x_{2 i}+\ldots+\beta_{p} x_{p i}+e_{i}
+\end{equation*}
+where $e_i$ is the random fluctuation (or error) in $Y_i$ such that $E(e_i |X) = 0$. In this case the response variable $Y$ is predicted from $p$ predictor variables $X_1,X_2,...,X_p$ and \color{BurntOrange} the relationship between $Y$ and $X_1,X_2,...,X_p$ is \textit{linear} in the parameters $\beta_{0}, \beta_{1}, \beta_{2}, \ldots, \beta_{p}$.  \color{Black}
+\subsubsection{OLS Regressors - Expanded Scaler Form}
+\paragraph{The RSS Cost}
+The least squares regressors of $\beta_{0}, \beta_{1}, \beta_{2}, \ldots, \beta_{p}$ are the value of $b_{0}, b_{1}, b_{2}, \ldots, b_{p}$ for which the sum of the squared residuals, we define our cost function RSS
+\begin{equation*}
+    \mathrm{RSS}=\sum_{i=1}^{n} \hat{e}_{i}^{2}=\sum_{i=1}^{n}\left(y_{i}-\hat{y}_{i}\right)^{2}=\sum_{i=1}^{n}\left(y_{i}-b_{0}-b_{1} x_{1 i}-b_{2} x_{2 i}-\ldots-b_{p} x_{p i}\right)^{2}
+\end{equation*}
+\paragraph{Derivatives}
+\begin{equation*}
+    \begin{matrix}
+        &\frac{\partial \operatorname{RSS}}{\partial b_{0}}=-2 \sum_{i=1}^{n}\left(y_{i}-b_{0}-b_{1} x_{1 i}-b_{2} x_{2 i}-\ldots-b_{p} x_{p i}\right)=0 \quad \,\,\\ \\
+        &\frac{\partial \operatorname{RSS}}{\partial b_{1}}=-2 \sum_{i=1}^{n} x_{1 i}\left(y_{i}-b_{0}-b_{1} x_{1 i}-b_{2} x_{2 i}-\ldots-b_{p} x_{p i}\right)=0\\ \\
+        & \dots \\ \\
+        &\frac{\partial \operatorname{RSS}}{\partial b_{p}}=-2 \sum_{i=1}^{n} x_{p i}\left(y_{i}-b_{0}-b_{1} x_{1 i}-b_{2} x_{2 i}-\ldots-b_{p} x_{p i}\right)=0
+    \end{matrix}
+\end{equation*}
+which will give us a system of $p+1$ equations and $p+1$ variables to optimize on. Notice that this usually requires computers to help in the actual optimization calculations. Hence we should see the much more concise matrix formulation.
 
+\subsubsection{OLS Regressors - Matrix Form}
+Let $Y \in \mat{n}{(p+1)}, X\in \mat{(n)}{p+1}, \beta\in \mat{(p+1)}{1}$ and $e\in mat{n}{1}$ given by
+\begin{equation*}
+    \mathbf{Y}=\left(\begin{array}{c}{y_{1}} \\ {y_{2}} \\ {\vdots} \\ {y_{n}}\end{array}\right), \mathbf{X}=\left(\begin{array}{ccc}{1} & {x_{11}} & {\cdots x_{1 p}} \\ {1} & {x_{21}} & {\cdots x_{2 p}} \\ {\vdots} & {\vdots} & {} \\ {1} & {x_{n 1}} & {\cdots x_{n p}}\end{array}\right), \beta=\left(\begin{array}{c}{\beta_{0}} \\ {\beta_{1}} \\ {\vdots} \\ {\beta_{p}}\end{array}\right), \mathbf{e}=\left(\begin{array}{c}{e_{1}} \\ {e_{2}} \\ {\vdots} \\ {e_{n}}\end{array}\right)
+\end{equation*}
+Then the multiple linear regression model in matrix notation could be written as
+\begin{equation*}
+    \mathbf{Y}=\mathbf{X} \beta+\mathbf{e}
+\end{equation*}
+\paragraph{Notation} Let $\bx_i'$ denote the $i$-th row of the design matrix $\mathbf{X}$, then
+\begin{equation*}
+    \mathbf{x}_{i}^{\prime}:=\begin{bmatrix}
+        1 & x_{i1} & x_{i2} & ... & x_{ip} \in \mat{1}{(p+1)}
+    \end{bmatrix}
+\end{equation*}
+This enables us to write 
+\begin{equation*}
+    \mathrm{E}(Y | X=x)=\beta_{0}+\beta_{1} x_{1}+\beta_{2} x_{2}+\ldots+\beta_{p} x_{p}=\mathbf{x}_{i}^{\prime} \beta
+\end{equation*}
+\paragraph{RSS Cost (Matrix Notation)}
+The residual sum of squares as a function of $\beta$ can be written in matrix form as
+\begin{align*}
+    \operatorname{RSS}(\beta)
+    &=(\mathbf{Y}-\mathbf{X} \beta)^{\prime}(\mathbf{Y}-\mathbf{X} \beta) \\
+    &= \mathbf{Y}^{\prime} \mathbf{Y}+(\mathbf{X} \beta)^{\prime} \mathbf{X} \boldsymbol{\beta}-\mathbf{Y}^{\prime} \mathbf{X} \boldsymbol{\beta}-(\mathbf{X} \boldsymbol{\beta})^{\prime} \mathbf{Y} \\
+    &= \mathbf{Y}^{\prime} \mathbf{Y}+\beta^{\prime}\left(\mathbf{X}^{\prime} \mathbf{X}\right) \beta-2 \mathbf{Y}^{\prime} \mathbf{X} \beta
+\end{align*}
+\paragraph{Normal Equation} is obtained by setting the derivative to zero
+\begin{equation*}
+    \left(\mathbf{X}^{\prime} \mathbf{X}\right) \beta=\mathbf{X}^{\prime} \mathbf{Y}
+\end{equation*}
+\paragraph{OLS Regressor}
+\begin{equation*}
+    \hat{\beta}=\left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{Y}
+\end{equation*}
+Hence, our fitted line is given by
+\begin{equation*}
+    \hat{\mathbf{Y}}=\mathbf{X} \hat{\beta}
+\end{equation*}
+and the residuals are
+\begin{equation*}
+    \hat{\mathbf{e}}=\mathbf{Y}-\hat{\mathbf{Y}}=\mathbf{Y}-\mathbf{X} \hat{\beta}
+\end{equation*}
+
+\subsubsection{Residual Sum of Squares (RSS)}
+The residual sum of squares as a function of the OLS regressors $\hat{\beta}$ can be written in matrix form as follows
+\begin{equation*}
+    \operatorname{RSS}=\operatorname{RSS}(\hat{\beta})=(\mathbf{Y}-\mathbf{X} \hat{\beta})^{\prime}(\mathbf{Y}-\mathbf{X} \hat{\beta})=\hat{\mathbf{e}}^{\prime } \hat{\mathbf{e}}=\sum_{i=1}^{n} \hat{e}_{i}^{2}
+\end{equation*}
+
+\subsubsection{Estimating Error Variance}
+\begin{equation*}
+    \text{Unbiased Estimator}\quad \hat{\sigma}^2 = S^2 = \frac{\mathrm{RSS}}{n-p-1}=\frac{1}{n-p-1} \sum_{i=1}^{n} \hat{e}_{i}^{2}
+\end{equation*}
+
+\subsubsection{CIs and Significance Tests}
+Assuming that the errors are normally distributed\footnote{It is worth noticing that errors are almost always assumed to be normal when are trying to do inferences on the regression results (Estimates).} with constant variance, then for each $i = 0,1,...,p$ we have the test statistic
+\begin{equation*}
+    T_{i}=\frac{\hat{\beta}_{i}-\beta_{i}}{\operatorname{se}(\hat{\beta_i})} \sim t_{df = (n-p-1)}
+\end{equation*}
+
+\subsubsection{ANOVA Test for Linear Association (Y with all/subset of predictors)}
+\paragraph{Hypothesis} The goal is to test if there is a linear association between the explanatory variables and the explained variable. So the null hypothesis we will use is $H_{0}: \beta_{1}=\beta_{2}=\ldots=\beta_{p}=0$ against the alternative hypothesis that $H_{A}: \text { at least some of the } \beta_{i} \neq 0$. 
+\paragraph{Test Statistic} Under the assumption that $e_1,...,e_n$ are independent and normally distributed, it can be shown that the $F$ test statistic is defined as follows and follows a $\mathcal{F}$ distribution.
+\begin{equation*}
+    F=\frac{\text { SSreg } / p}{\operatorname{RSS} /(n-p-1)} {\sim} \mathcal{F}_{(p, n-p-1)}
+\end{equation*}
+\paragraph{MLR ANOVA Table}
+\begin{center}
+    \begin{tabular}{|c||c|c|c|c|}
+        \hline
+        Source of Variation & $df$ & SS & MS = SS/$df$ & $F$ \\ \hline
+        Regression & $p$ & SSReg & SSReg/$p$ & $F=\frac{\text { SSreg } / p}{\operatorname{RSS} /(n-p-1)}$ \\ \hline
+        Residual & $n-p-1$ & RSS & $S^2 = \frac{\text{RSS}}{n-p-1}$ & \\ \hline
+        Total & $n-1$ & SST = $SYY$ & & \\ \hline
+    \end{tabular}
+\end{center}
+\paragraph{Notes}
+\begin{itemize}
+    \item $R^2$, the coefficient of determination of the regression line, is defined as the proportion of the total sample variability in the $Y$'s explained by the regression model, that is 
+        \begin{equation*}
+            R^{2}=\frac{\text { SSreg }}{\mathrm{SST}}=1-\frac{\mathrm{RSS}}{\mathrm{SST}}
+        \end{equation*}
+    \item The above formulation doesn't capture the problem where we have irrelevant predictor variables in the regression equation. To compensate, we define the \textbf{adjusted coefficient of determination}, $R_{adj}^2$
+        \begin{equation*}
+            R_{{adj}}^{2}=1-\frac{\operatorname{RSS} /(n-p-1)}{\operatorname{SST} /(n-1)} 
+        \end{equation*}
+        Here $S^2 = \frac{\mathrm{RSS}}{n-p-1}$ is an unbiased estimate of $\sigma^2 = \mathrm{Var}(Y_i) = \mathrm{Var}(e_i)$ while $SST/(n-1)$ is an unbiased estimate of $\sigma^2 = \mathrm{Var}(Y_i)$ when $\beta_1 = \beta_2 = ... = \beta_p = 0$. \color{BurntOrange} Thus, when comparing models with different numbers of predictors one should use $R_{{adj}}^{2}$ rather than $R^2$. \color{Black}
+    \item The F-test is always used first to test for the existence of a linear association between Y and ANY of the p x-variables. If the F-test is significant then a natural question to ask is
+        \begin{quote}
+            For which of the $p$ $x$-variables is there evidence of a linear association with $Y$? To answer this question we could perform $p$ separate $t$-tests of $H_0 : b_1 = 0$. However, as we shall see later there are problems with interpreting these $t$-tests when the predictor variables are highly correlated.
+        \end{quote}
+        The above problem could be addressed by the \textbf{partial F-test}\footnote{Notice that here the partial means we are not testing all the $\beta_1$ up to $\beta_p$'s but only a subset of them.} which is defined below.
+        
+\end{itemize}
+
+\subsubsection{Partial F-Test}
+\paragraph{Goal} Test whether a specified subset of the predictors have regression coefficients equal to zero.
+\paragraph{Hypothesis}  Suppose that we are interested in testing 
+\begin{equation*}
+    \begin{array}{c}{H_{0}: \beta_{1}=\beta_{2}=\ldots=\beta_{k}=0 \text { where } k<p} \\ {\text { i.e., } Y=\beta_{0}+\beta_{k+1} x_{k+1}+\ldots+\beta_{p} x_{p}+e \text { (reduced model) }}\end{array}
+\end{equation*}
+against
+\begin{equation*}
+    \begin{array}{c}{H_{A}: H_{0} \text { is not true }} \\ {\text { i.e., } Y=\beta_{0}+\beta_{1} x_{1}+\ldots+\beta_{k} x_{k}+\beta_{k+1} x_{k+1}+\ldots+\beta_{p} x_{p}+e ~(\text{full model})}\end{array}
+\end{equation*}
+This can be done using the $F$-Test. Define
+\begin{align*}
+    &\text{RSS(Full)} := \text{RSS under the full model} \\
+    &\text{RSS(reduced)} := \text{RSS under the reduced model}
+\end{align*}
+Then, the $F$-statistic is given by
+\begin{align*}
+    F &= \frac{(\mathrm{RSS}(\mathrm{reduced})-\mathrm{RSS}(\mathrm{full})) /\left(\mathrm{df}_{\mathrm{reduced}}-\mathrm{df}_{\mathrm{full}}\right)}{\operatorname{RSS}(\mathrm{full}) / \mathrm{df}_{\mathrm{full}}} \\
+    &= \frac{(\mathrm{RSS}(\mathrm{reduced})-\mathrm{RSS}(\mathrm{full})) / k}{\operatorname{RSS}(\mathrm{full}) /(n-p-1)}
+\end{align*}
+The reduction on the second line above is done by noticing that the reduced model has $p + 1 - k$ predictors and thus $\left(\mathrm{df}_{\mathrm{reduced}}-\mathrm{df}_{\mathrm{full}}\right) = [n-(p+1-k)]-[n-(p+1)]=k$.
+
+\subsection{Analysis of Covariance}
+
+
+% TODO: Adding to MLR
+
+\newpage
 \section{Selected Properties, Formulae, and Theorems}
 This section contains various properties mentioned in the slides/book. They may or may not have appeared in precious sections. 
 \subsection{Properties of Fitted Regression Line}
