@@ -10,6 +10,10 @@
 \usepackage{hyperref}
 \usepackage{fancyhdr} 
 \usepackage{youngtab}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{color}
+\usepackage{graphicx}
 \usepackage[
     type={CC},
     modifier={by-nc-sa},
@@ -193,6 +197,16 @@ $$
 \end{cases}
 $$
 where we notice that the above problem is entirely linear and thus could be solved using a linear programming algorithm.
+
+\paragraph{Implementation Seen on Slides} Here is the implementation seen on the class slides, which is more intuitive. Recall that a network flow's input is a directed graph $G = (V,E)$ with edge capacities $c:E\rightarrow \real_{\geq 0}$ and we output the maximum flow on the graph. A flow $f$ is valid if
+\begin{itemize}
+    \item Capacity Constraint: $\forall (u,v) \in E: 0 \leq f(u,v) \leq c(u,v)$
+    \item Flow Conservation: $\forall u\in V\setminus\{s,t\}: \sum_{(u,v)\in E}f(u,v) = \sum_{(v,u)\in E}f(v,u)$. (Notice that the flow conservative formulation is \textit{not} true for the source and sink node)
+\end{itemize}
+and we wish optimize the goal
+\begin{equation*}
+    \text{Maximize}~~v(f) = \sum_{(u,v)\in E} f(s,v)
+\end{equation*}
 
 \paragraph{Time Complexity} This generalization uisng LP is much slower than the network flow algorithms (Ford-Fulkerson, Edmonds-Karp, et cetra) in \textbf{single commodity network flow}. 
 
@@ -412,15 +426,29 @@ We will need the following three gadgets, namely the variable gadget, the garbag
 \paragraph{Partition Reduced From Subset Sum} (Subset Sum $\leq_p$ Partition) Given a Subset Sum problem, we add two elements into the set and give this as the input to the Partition solver. If the partition solver was able to return a YES solution, then we know that the elements in the partitions which 
 contains the $2\sigma - t$ element (exclude the $2\sigma - t$ element) has subset sum equal to $t$ which means the Subset Sum could be solved by using Partition as a black box. 
 
+\newpage
+\section{Problem Excerpts from Past Stuff}
+\subsection{Properties of Reductions and Decision Problems}
+\subsubsection{Question 1} Give a detailed argument that for all decision problems $D_1,D_2,D_3$, we have $D_1 \leq_p D_2 \wedge D_2 \leq_p D_3\implies D_1 \leq_p D_3$. 
+\paragraph{Solution} Let $\mathbb{I}_j$ be the set of all inputs to decision problems $D_1, D_2$ and $D_3$. Assuming that $D_1 \leq_p D_2 \wedge D_2 \leq_p D_3$, there must exist functions $f_1: \mathbb{I}_1 \rightarrow \mathbb{I}_2$ and $f_2:  \mathbb{I}_2 \rightarrow \mathbb{I}_3$ both of which is computable in polynomial time. Define $f_3: \mathbb{I}_1 \rightarrow \mathbb{I}_3$ by $f_3(x) = f_2(f_1(x))$. Clearly this could be computed in polynomial time. It is also clearly that
+\begin{equation*}
+    \forall x \in \mathbb{I}_{1}, x \in D_{1} \Leftrightarrow f_{1}(x) \in D_{2} \Leftrightarrow f_{2}\left(f_{1}(x)\right)=f_{3}(x) \in D_{3}
+\end{equation*}
+and this concludes the proof. 
 
 
 
+\subsubsection{Question 2} Suppose $D′$ is some NP-complete problem and $D$ is any decision problem. What can we conclude about $D$ if we know that $D′\leq_p D$ and $D\leq_p D′$? Make the strongest claim you can and prove it. 
+\paragraph{Solution} 
 
-
-
-
-
-
+\color{Red}
+Theorem: $$
+    \text { If } D_{1} \leq_{p} D_{2} \text { and } D_{2} \in P(\text { or } N P \text { or } \mathrm{coNP}), \text { then } D_{1} \in P(\text { or } N P \text { or } \mathrm{coNP},\text { respectively) } $$ \color{Black}
+\begin{itemize}
+    \item We know that $D'\leq_p D$ so $D\in $ NP-HARD. Since we know $D'$ is NP-COMPLETE then in particular it is in NP-HARD. ($D$ is at least as hard as all NP-COMPLETE problems and it can only be harder)
+    \item We know that $D\leq_p D'$ so $D\in$ NP using the above theorem.
+    \item Thus, $D$ is in NP and in NP-HARD thus it is in NP-COMPLETE.
+\end{itemize}
 
 
 
