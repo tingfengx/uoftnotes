@@ -45,7 +45,7 @@
    $latex = 'latex -interaction=nonstopmode -shell-escape';
    $pdflatex = 'pdflatex -interaction=nonstopmode -shell-escape';
    ``````
-- There were a few macros that were created and used during the type-setting process to speed up the entire process, check them out in the .tex source files! I write my Q.E.D for proofs with characters QED in math caligraphy followed by a sword to say "I win!".
+- ```tingfengx.sty``` contains my custom commands and is required to successfully compile some of the notes in this repo. 
 
 ## Makefile
 [Make](https://www.gnu.org/software/make/) is a build automation tool that automatically builds executable programs and libraries from source code by reading files called Makefiles which specify how to derive the target program. In the project, we are using it to automate the compilation of the pdf documents from the LaTeX source codes using ```pdflatex``` as well as clean up all the not needed auxilary log files. 

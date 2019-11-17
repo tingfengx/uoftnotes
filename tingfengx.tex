@@ -1,17 +1,22 @@
-% Declare Custom Package
-\ProvidesPackage{tingfengx}
-
-% General packages
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[english]{babel}
-\RequirePackage{amsmath}
-\RequirePackage{amssymb}
-\RequirePackage{amsfonts}
-\RequirePackage[dvipsname]{xcolor}
-\RequirePackage{hyperref}
+\documentclass[10pt]{article}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{datetime}
+\usepackage{ccicons}
 
 % ==== License =====
-\RequirePackage[type={CC}, modifier={by-nc-sa}, version={4.0},]{doclicense}
+\usepackage[
+    type={CC}, 
+    modifier={by-nc-sa}, 
+    version={4.0},
+]{doclicense}
 
 % General
 \newcommand{\mc}[1]{\mathcal{#1}}
@@ -22,7 +27,7 @@
 \newcommand{\bc}{\mathbf{c}}
 \newcommand{\bd}{\mathbf{d}}
 \newcommand{\be}{\mathbf{e}}
-\newcommand{\bf}{\mathbf{f}}
+\renewcommand{\bf}{\mathbf{f}}
 \newcommand{\bg}{\mathbf{g}}
 \newcommand{\bh}{\mathbf{h}}
 \newcommand{\bi}{\mathbf{i}}
@@ -43,6 +48,7 @@
 \newcommand{\bx}{\mathbf{x}}
 \newcommand{\by}{\mathbf{y}}
 \newcommand{\bz}{\mathbf{z}}
+\newcommand{\bzero}{\mathbf{0}}
 
 % Proofs, Structures
 \newcommand{\proof}{\tit{\underline{Proof:}}} % This equivalent to the \begin{proof}\end{proof} block
@@ -74,3 +80,13 @@
 \newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\independent}{\perp \!\!\! \perp}
+
+\author{\ccLogo \,\,by Xia, Tingfeng}
+\title{}
+\date{\today}
+
+\begin{document}
+\maketitle
+\doclicenseThis
+
+\end{document}
