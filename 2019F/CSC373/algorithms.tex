@@ -13,6 +13,8 @@
 \usepackage{geometry}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{color}
+\usepackage{algorithmic}
+\usepackage{algorithm}
 \usepackage{graphicx}
 \usepackage[
     type={CC},
@@ -96,7 +98,7 @@
 \subsection{Example: Politics, example of optimization}
 \begin{itemize}
     \item Goal: You want to buy elections and you want to minimize the total amount of money spent. 
-    \item How to campaign to win an election? Manager estimates votes obtianed per dollar spent.
+    \item How to campaign to win an election? Manager estimates votes obtained per dollar spent.
 \end{itemize}
 \begin{center}
     \begin{tabular}{|c|c||c|c|c|}
@@ -120,7 +122,7 @@
 \begin{center}
     \begin{tabular}{|c||c|c|c|}
         \hline
-        Polulation & 100,000 & 200,000 & 50,000 \\
+        Population & 100,000 & 200,000 & 50,000 \\
         \hline
         Majority & 50,000 & 100,000 & 25,000 \\
         \hline
@@ -153,8 +155,8 @@
 
 \subsection{Standard Form for LP}
 \begin{itemize}
-    \item Minimize or Maximize\footnote{In the standard form, we consider the maximization problem} linear objective function, subject to linear ineqalities or equations
-    \item Variables $\bx = [x_1,x_2,\dots,x_n]^T$, and the objective function is $\mathbf{c} \cdot \bx = c_1x_1 + \dots + c_nx_n$ and the ineqalities $\mathbf{A}\cdot \bx \leq \mathbf{b}$\footnote{In general, this could have been $\leq, \geq, =$ but for the standard form, we consider $\leq$} and $\bx \geq \mathbf{0}$\footnote{Meaning that each of the slots in the vector should be greater than zero.}
+    \item Minimize or Maximize\footnote{In the standard form, we consider the maximization problem} linear objective function, subject to linear inequalities or equations
+    \item Variables $\bx = [x_1,x_2,\dots,x_n]^T$, and the objective function is $\mathbf{c} \cdot \bx = c_1x_1 + \dots + c_nx_n$ and the inequalities $\mathbf{A}\cdot \bx \leq \mathbf{b}$\footnote{In general, this could have been $\leq, \geq, =$ but for the standard form, we consider $\leq$} and $\bx \geq \mathbf{0}$\footnote{Meaning that each of the slots in the vector should be greater than zero.}
 \end{itemize}
 
 \subsection{Certificate of Optimality}
@@ -183,8 +185,8 @@ But notice that $$3100000/111 \leq x_1 + x_2 + 140/222  x_3 + x_4 \leq x_1 + x_2
 \subsection{Converting to Standard Form}
 \subsubsection{Case 1: Minimize Goal} Suppose that I want to minimize $-2x_1 + 3x_2$, then I can just convert the problem into maximizing the negative of the equation. This case should be easy.
 \subsubsection{Case 2: Missing Non-negative Constraint} Suppose $x_j$ doesn't have a non-negative constraint. In this case, we will replace $x_j$ with $x_j' - x_j''$ such that $x_j' \geq 0\land x_j'' \geq 0$. 
-\subsubsection{Case 3: Equlity Constraint} Suppose the constriant was $x_1 + x_2 = 7$, then we can break it into $x_1 + x_2 \leq y \land -x_1 - x_2 \leq -7$.\footnote{Notice that we did this in this specific way becasue we want to have this in out standard form where the constraint was a $\leq$. The second constraint here, if we multiply it by $-1$ on both sides, is equivalent to saying $x_1+x_2 \geq 7$}
-\subsubsection{Case 4: GEQ Constraint} We have done this above, translate this into a less than or equal tot problem by multiplying $(-1)$ on both sides (which will flip the ineqality sign).
+\subsubsection{Case 3: Equality Constraint} Suppose the constraint was $x_1 + x_2 = 7$, then we can break it into $x_1 + x_2 \leq y \land -x_1 - x_2 \leq -7$.\footnote{Notice that we did this in this specific way because we want to have this in out standard form where the constraint was a $\leq$. The second constraint here, if we multiply it by $-1$ on both sides, is equivalent to saying $x_1+x_2 \geq 7$}
+\subsubsection{Case 4: GEQ Constraint} We have done this above, translate this into a less than or equal tot problem by multiplying $(-1)$ on both sides (which will flip the inequality sign).
 
 \subsection{Max-Flow using LP}
 Consider some network $N:= G = (V,E)$, and denote the flow in the network to be $f$. the function $c(\cdot)$ returns the capacity for an edge. The problems then breaks into
@@ -210,7 +212,7 @@ and we wish optimize the goal
 
 \paragraph{Time Complexity} This generalization uisng LP is much slower than the network flow algorithms (Ford-Fulkerson, Edmonds-Karp, et cetra) in \textbf{single commodity network flow}. 
 
-\paragraph{Multi-Commodity Flow} Consider the case where there are two commodities flowing in the network ($f_1, c_1, f_2, c_2$). In the case where $c_1$ is independent from $c_2$, it is not very interesting, we can just run the network flow algorithm twice to find two maximizers seperately. In the case where there is a single capacity constraint $c$\footnote{A toy example to give would be given a certain road where some cars are running on the road and the raod have a total capacity for all types of cars combined}, the problem ceases to be a simple network flow problem. However, it is still easy to come up with a LP formulation that describes the maximization. 
+\paragraph{Multi-Commodity Flow} Consider the case where there are two commodities flowing in the network ($f_1, c_1, f_2, c_2$). In the case where $c_1$ is independent from $c_2$, it is not very interesting, we can just run the network flow algorithm twice to find two maximizers separately. In the case where there is a single capacity constraint $c$\footnote{A toy example to give would be given a certain road where some cars are running on the road and the road have a total capacity for all types of cars combined}, the problem ceases to be a simple network flow problem. However, it is still easy to come up with a LP formulation that describes the maximization. 
 
 \subsection{Shortest Path using LP}
 \begin{itemize}
@@ -218,7 +220,7 @@ and we wish optimize the goal
     \item $w(u,v)$ means the single edge $(u,v)$'s weight
     \item The shortest path to some vertex $v$ which is a descendent of $u$ is at least shorter than or equal to the existing path that goes from source to $u$ plus the edge $(u,v)$
     \item The shortest path from source to source is zero
-    \item Recall the $\triangle$-ineqality here
+    \item Recall the $\triangle$-inequality here
 \end{itemize}
 This yields the formulation
 \begin{equation*}
@@ -240,7 +242,7 @@ Notice that although we are trying to minimize the distance from source to the n
 \subsubsection{Work Flow}
 \begin{enumerate}
     \item Represent LP in slack form
-    \item Convert one slack form into an equivalent whose objective value has not decreased and has likely increased (no gurantee of increase)
+    \item Convert one slack form into an equivalent whose objective value has not decreased and has likely increased (no guarantee of increase)
     \item Keep going until the optimal solution becomes obvious
 \end{enumerate}
 
@@ -273,7 +275,7 @@ $$
         (I)
     \end{cases}
 \end{equation*}
-It is worth mentioning that now the non-negativity constriant becomes $\real^6 \ni \bx \geq \vzero$, we have ``added''\footnote{This was quoted because we didn't actually introduce any new constraints! In fact, they are pair-wise equivalent to the original ones.} three more new variables that are also non-negative.
+It is worth mentioning that now the non-negativity constraint becomes $\real^6 \ni \bx \geq \vzero$, we have ``added''\footnote{This was quoted because we didn't actually introduce any new constraints! In fact, they are pair-wise equivalent to the original ones.} three more new variables that are also non-negative.
 
 \paragraph{Basic Solution} Set all the non-basic variables to zero, and then compute the values of the basic variables. The objective function will be $z = 3(0) + 1(0) + 1(0) = 0$. This is a trivial starting point and we can think of this solution as $\real^6 \ni \bx = (0,0,0,30, 24, 30)$
 
@@ -287,11 +289,11 @@ It is worth mentioning that now the non-negativity constriant becomes $\real^6 \
 \paragraph{Running the Procedure}
 \begin{itemize}
     \item Suppose we selected the non-basic variable $x_e = x_1$ and we want to increase the value of $x_1$. 
-    \item The third constraint is the tighest one in (I). Rearrange the terms we have 
+    \item The third constraint is the tightest one in (I). Rearrange the terms we have 
         \begin{equation}
             x_1 = 9 - x_2/4 - x_3/2 - x_6/4
         \end{equation}
-    \item Then we will rewrite the other equations with $x_6$ on the RHS. i.e. replace all occurences of $x_1$ with (1) above. \textbf{Important:} What has happened is that $x_1$ and $x_6$ has exchanged their roles. $x_1$ was non-basic and will now become basic and is the reverse for $x_6$. The following is the re-written result:
+    \item Then we will rewrite the other equations with $x_6$ on the RHS. i.e. replace all occurrences of $x_1$ with (1) above. \textbf{Important:} What has happened is that $x_1$ and $x_6$ has exchanged their roles. $x_1$ was non-basic and will now become basic and is the reverse for $x_6$. The following is the re-written result:
         \begin{equation*}
             \begin{cases}
                 \begin{rcases}
@@ -308,7 +310,7 @@ It is worth mentioning that now the non-negativity constriant becomes $\real^6 \
             27 + \frac{1}{4}(0) + \frac{1}{2}(0) - \frac{3}{4}(36) = 0
         \end{equation*}
     For the basic solution for (II), we set the non-basic values to zero which will yield the solution $(9,0,0,21,6,0)$\footnote{The solution was computed by setting variables on the RHS of the equations (which are the non-basic vars now) to zero in (II)}. The objective value is now $3x_1+x_2 + x_3 = 9 \times 3 = 27$.\footnote{The original objective function was used here}
-    \item Repeat the above procesure. In this case, 2 more iterations is required. We will know it is the time to stop when the objective function is some constant followed by negative copies of non-basic variables (which are non-negative) in which case the objective fucntion cannot be increased anymore. We call this the convergence of the Simplex Algorithm.
+    \item Repeat the above procedure. In this case, 2 more iterations is required. We will know it is the time to stop when the objective function is some constant followed by negative copies of non-basic variables (which are non-negative) in which case the objective function cannot be increased anymore. We call this the convergence of the Simplex Algorithm.
 \end{itemize}
   
 \section{6.006 Computational Complexity}
@@ -322,11 +324,11 @@ It is worth mentioning that now the non-negativity constriant becomes $\real^6 \
     \item \textbf{R} Set of all problems that can be computed/solved in finite time
 \end{itemize}
 
-\subsubsection{Theorem: Alomost All Decision Problems are not in R}
+\subsubsection{Theorem: Almost All Decision Problems are not in R}
 This might be counter-intuitive but is mathematically valid. We are here limiting our scope to decision problems only, which is defined as `problems that outputs yes/no (some binary outcome)'. We will now prove this result, \textit{Proof:}
 \begin{itemize}
     \item First, note that a program, what we write on a computer, is just a bianry string in some sense. But if it could be represented in a binary number (which might be a very big one), it is just a natural number in base 2. This is our space of programs.
-    \item Next, a decision problem is a funtion that is $f: \text{input} \rightarrow \{\text{YES}, \text{NO}\}$. But for sure the input for a program is some string which could be converted into binary which is again some natural number. Hence, our $f$ is one such that $f:\mathbb{N} \rightarrow \{\text{YES}, \text{NO}\}$. 
+    \item Next, a decision problem is a function that is $f: \text{input} \rightarrow \{\text{YES}, \text{NO}\}$. But for sure the input for a program is some string which could be converted into binary which is again some natural number. Hence, our $f$ is one such that $f:\mathbb{N} \rightarrow \{\text{YES}, \text{NO}\}$. 
     \item Above, we have argued that a program is a finite string of bits, while a decision problem is a infinite string of bits\footnote{For different inputs, the output may or may not be the same but importantly is never stops, i.e. there always exists the next problem.}.
     \item Hence, decision problems $\in \real$ while programs is $\in \mathbb{N}$. But $|\mathbb{R}| \gg |\mathbb{N}|$! So there is not enough program to solve all the decision problems. 
 \end{itemize}
@@ -349,7 +351,7 @@ This might be counter-intuitive but is mathematically valid. We are here limitin
     \item \textbf{NP} Given any instance $I$ of problem $P$ and witness $W$, if there exists a verifier $V$ so that given the ordered pair $(I, W)$ as input, $V$ returns ``yes'' in polynomial time if the witness proves that the answer is ``yes'' and ``no'' in polynomial time otherwise, then $P$ is in NP. \textbf{Important:} Notice that to show that a problem is in NP, we have to consider all possible certificates ($\forall$ quantified) and for each certificate there should exist some verfier (which could certainly be different each time). 
     \item \textbf{NP-Completeness} A problem X is NP-Complete if X$\in$NP and X$\in $NP-Hard
     \item \textbf{NP-Hard} X is NP-Hard if every problem Y$\in$NP reduces to X.
-    \item \textbf{Redution} from problem A to a problem B = poly-time algorithm converting A inputs to some equivalent B inputs.\footnote{Two important observations here: 1. if B in P then A in P; 2. if B in NP then A in NP}
+    \item \textbf{Reduction} from problem A to a problem B = poly-time algorithm converting A inputs to some equivalent B inputs.\footnote{Two important observations here: 1. if B in P then A in P; 2. if B in NP then A in NP}
 \end{itemize}
 
 \subsection{Class Relationships}
@@ -364,11 +366,11 @@ From a algorithm perspective, the question is `How to prove X is NP-Complete?'
     \item Reduce from some known NP-Complete problem Y to your problem X. \textbf{Important:} Always reduce from the thing that you know is hard to the thing that you want to show is hard. This direction matters. 
 \end{enumerate}
 
-\subsection{3 SAT} Given a boolean formula, which is an AND of triplet ORs. A clause is one of the triplet ORs and a literal is one element in a triplet OR. The question is does there exist a assignment of variables such that the final result (the entire boolean formula) evaluates to true. 
+\subsection{3 SAT} Given a boolean formula, which is an AND of triplet ORs. A clause is one of the triplet ORs and a literal is one element in a triplet OR. The question is does there exist an assignment of variables such that the final result (the entire boolean formula) evaluates to true. 
 \paragraph{Intuition behind the Proof of NP-Completeness of 3 SAT}
 \begin{itemize}
     \item Software $\approx$ Hardware, you can build a circuit for a software/algorithm using logic gates
-    \item If I have a circuit, than I can convert that into a boolean formula.
+    \item If I have a circuit, then I can convert that into a boolean formula.
     \item (Fun Fact; Less obvious) If I have formula, then I can convert it into the form 3 SAT problem requires. 
     \item Then the `witness/oracle' is described by the literals in the formula
     \item Then deciding whether there's some way to set the literals to make the formula true is the same thing as saying `Is there some certificate where the verifier says yes', which is the same thing as saying that the problem has answer yes.
@@ -386,8 +388,8 @@ We will need the following three gadgets, namely the variable gadget, the garbag
 \end{center}
 \begin{itemize}
     \item In the variable gadget, the dots on the inner circle exists in only that gadget, and there is a variable gadget for each and every variable.
-    \item The reason that we have $2n_{x_i}$ sized\footnote{Notice that here $n_{x_i}$ counts all occurences of the variable $x_i$, including the $\overbar{x_i}$'s} variable gadgets is that here in the wheel we are only allowed to choose all the T's or all the F's but not mixed. This way, we have twice the number of needed variable connectors and then we choose half of them which is exactly what we need for the gadget to work. 
-    \item The clause gadget has the two dots on the lower level local and the top three are connected to the outer T/F dots on the variable gadgets. Notice that we are only allowed to choose one of the three triangles in the gadget drawn. Importantly, the one choice gurantees the bottom two nodes are chosen, meaning the clause is satisfied. 
+    \item The reason that we have $2n_{x_i}$ sized\footnote{Notice that here $n_{x_i}$ counts all occurrences of the variable $x_i$, including the $\overbar{x_i}$'s} variable gadgets is that here in the wheel we are only allowed to choose all the T's or all the F's but not mixed. This way, we have twice the number of needed variable connectors and then we choose half of them which is exactly what we need for the gadget to work. 
+    \item The clause gadget has the two dots on the lower level local and the top three are connected to the outer T/F dots on the variable gadgets. Notice that we are only allowed to choose one of the three triangles in the gadget drawn. Importantly, the one choice guarantees the bottom two nodes are chosen, meaning the clause is satisfied. 
     \item Doing the above is not enough since then not all T/F nodes\footnote{That is, all the top three nodes in all the clause gadgets and all the nodes in the outer ring in the variable gadgets} will be used which is problematic. To solve this, we add a garbage collection gadget.
     \item The Garbage Collection Gadget has all the T/F nodes on its lower row, and the gadget itself is repeated $\sum_x n_x - \#Clause$ times. This will help to connect all the unconnected nodes left from the previous steps.  
 \end{itemize}
@@ -400,12 +402,12 @@ We will need the following three gadgets, namely the variable gadget, the garbag
     \item Triple $(x_i, x_j, x_k)$ will be converted into \texttt{0000100001001000$_b$} where the $1$'s are at the $i,j,k$-th position in the number.
     \item The goal is to add up to some number $1111111111 = \sum_{i'} b^{i}$
 \end{itemize}
-\textbf{How does this reduction work?} Notice that my goal now in base $b$ is a bunch of ones, and I am trying to add up to this number from numbers in base $b$ composed of three 1's and 0's on the rest positions. So, I need to gurantee that there is no collision meaning no two occurences of 1 on the same position will be accepted. Then, the problem is essentially choosing non-overlapping subsets that can add up to the target number which is exactly what 3DM solves. \qed
+\textbf{How does this reduction work?} Notice that my goal now in base $b$ is a bunch of ones, and I am trying to add up to this number from numbers in base $b$ composed of three 1's and 0's on the rest positions. So, I need to guarantee that there is no collision meaning no two occurrences of 1 on the same position will be accepted. Then, the problem is essentially choosing non-overlapping subsets that can add up to the target number which is exactly what 3DM solves. \qed
 
 \paragraph{Weakly NP-Hardness} The numbers in the above reduction are giant. The number of digits in the target number in base $b$ have order $\mathcal{O}(n)$ digits. But, the actual values of the numbers are exponential, and this is not allowed in a Strong NP-Hardness setting. 
 
 \subsection{Partition}
-\paragraph{Problem Statement} Given $A = \{a_1,...,a_n\}$ integers, is there a subset $S\subseteq A$ such that  $\sum S = \sum S\setminus A$, i.e. the set is partitioned into two parts that adds up to the same numeber.
+\paragraph{Problem Statement} Given $A = \{a_1,...,a_n\}$ integers, is there a subset $S\subseteq A$ such that  $\sum S = \sum S\setminus A$, i.e. the set is partitioned into two parts that adds up to the same number.
 \paragraph{Reducing From Subset Sum}
 \begin{itemize}
     \item Let $t$ denote the arbitrary target of my Subset Sum instance
@@ -451,7 +453,28 @@ Theorem: $$
 \end{itemize}
 
 
+\section{Collection of Approximation Algorithms}
+\subsection{The TSP using MST}
 
+\paragraph{The Algorithm}
+\begin{itemize}
+    \item Consider $v\in G.V$ as the node that the travelling sales man will start from and end up with in the graph $G$.
+    \item Use Prim's Algorithm to construct a MST on $G$ using $v$ as the source node.
+    \item In the output tree of the above step, list the preorder visit and output such ordering.
+\end{itemize}
+
+\paragraph{Claim: TSP using MST achieves 2-approximation} under triangle inequality. 
+\begin{itemize}
+    \item Define a full walk of the visit as $\mathcal{F}$, this includes the vertices when  they are first visited (explored) and the time the walk went back to that node. 
+    \item Consider the optimal TSP walk $OPT$. We know that $|OPT|\geq |MST|$, this is due to the fact that the minimum spanning tree is the lightest tree that consists of all the nodes in graph $G$. 
+    \item $|\mathcal{F}|\leq 2 \cdot |MST|$, since we visited every edge of MST \textit{at most} twice.
+    \item The preorder traversal output of the above algorithm is less than the cost of the full walk $\mathcal{F}$. In algorithm, we print preorder walk as the output, where two or more edges of $\mathcal{F}$ are replaced with a single edge. Notice that this step follows from our assumption that the triangular in-equality is in effect. 
+\end{itemize}
+Putting everything together, we have
+\begin{equation*}
+    2 |OPT| \geq 2 |MST| \geq |\mathcal{F}| \geq \text{Preorder Walk Output}
+\end{equation*}
+\qed
 
 
 
