@@ -679,10 +679,10 @@ The above result showed that the $i$-th least squares residual is equal to $e_i$
 \paragraph{Assessment Using Normal Q-Q}
 A normal probability plot of the standardized residuals is obtained by plotting the ordered standardized residuals on the vertical axis against the expected order statistics from a standard normal distribution on the horizontal axes. If the resulting plot produces points ``close'' to a straight line then the data are said to be consistent with that from a normal distribution. On the other hand, departures from linearity provide evidence of non-normality. 
 \begin{center}
-    \includegraphics[scale=0.27]{img/qq_left.png}
-    \includegraphics[scale=0.27]{img/qq_right.png}
-    \includegraphics[scale=0.26]{img/qq_over.png}
-    \includegraphics[scale=0.26]{img/qq_under.png}
+    \includegraphics[scale=0.25]{img/qq_left.png}
+    \includegraphics[scale=0.25]{img/qq_right.png}
+    \includegraphics[scale=0.24]{img/qq_over.png}
+    \includegraphics[scale=0.24]{img/qq_under.png}
 \end{center}
 The above four are figures that I borrowed from \url{http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html} which illustrates how to interpret QQ plots with non-normal behaviour.
 
@@ -1166,7 +1166,7 @@ The residual sum of squares as a function of the OLS regressors $\hat{\beta}$ ca
 
 
 \subsubsection{CIs and Significance Tests}
-Assuming that the errors are normally distributed\footnote{It is worth noticing that errors are almost always assumed to be normal when are trying to do inferences on the regression results (Estimates).} with constant variance, then for each $i = 0,1,...,p$ we have the test statistic
+Assuming that the errors are normally distributed\footnote{It is worth noticing that errors are almost always assumed to be normal when we are trying to do inferences on the regression results (Estimates).} with constant variance, then for each $i = 0,1,...,p$ we have the test statistic
 \begin{equation*}
     T_{i}=\frac{\hat{\beta}_{i}-\beta_{i}}{\operatorname{se}(\hat{\beta_i})} \sim t_{df = (n-p-1)}
 \end{equation*}
