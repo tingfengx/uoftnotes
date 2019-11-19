@@ -87,7 +87,7 @@
 \section{Arguments}
 \subsection{Validity}
 We say a deductive argument is valid iff it is not invalid. This means that we can
-find out if a argument is valid or not by assessing the possiblity of the case where 
+find out if a argument is valid or not by assessing the possibility of the case where 
 the premise is true and conclusion is false.
 \subsection{Soundness}
 We say a deductive argument is sound iff it is 
@@ -101,10 +101,10 @@ We say a deductive argument is sound iff it is
 \paragraph{Sentential Logic(SL)} Complex (compound) statements are all built up by joining statements together using LOGICAL CONNECTIONS.
 we have $\wedge, \vee, \rightarrow, \leftarrow, \sim$. Where $\sim$ is the only unitary connector and others are binary.
 
-\paragraph{Atomic vs Molecular} A \textbf{statement} is Atomic if it has no logical connector and is molecular otherwise. We use \textbf{P-Z letters} to represent \textbf{atomic statments}
-Here is an example: You can have fries or salad. $\equiv P \vee Q.$ Then, $P$ is ``You can have fires'' and $Q$ is ``You can have salad''. Notice that we are folowing the definition that $P$ and $Q$ are \textbf{statments}.
+\paragraph{Atomic vs Molecular} A \textbf{statement} is Atomic if it has no logical connector and is molecular otherwise. We use \textbf{P-Z letters} to represent \textbf{atomic statements}
+Here is an example: You can have fries or salad. $\equiv P \vee Q.$ Then, $P$ is ``You can have fires'' and $Q$ is ``You can have salad''. Notice that we are following the definition that $P$ and $Q$ are \textbf{statements}.
 
-\paragraph{Informal Notation Hierachy}\footnote{We use this Informal notation because the formal one is cumbersome. But in order to use the informal one, we have some conventions to follow.} 
+\paragraph{Informal Notation Hierarchy}\footnote{We use this Informal notation because the formal one is cumbersome. But in order to use the informal one, we have some conventions to follow.} 
 We shall see this through some examples:
 \begin{itemize}
     \item In official notation, we need $(P\vee Q)$ while it is safe to drop the parenthesis.
@@ -299,10 +299,10 @@ In doing a proof, we want to keep track of what is available for us to use:
 
 \subsubsection{Abbreviations}
 \begin{itemize}
-    \item Donnot restate the premises
+    \item Don-not restate the premises
     \item Do multiple moves in one line
 \end{itemize}
-Here is an example of using the abbrevaitions in action. Consider the exmaple
+Here is an example of using the abbreviations in action. Consider the example
 $(P\rightarrow \sim Q) \rightarrow(\sim R \rightarrow S). \sim S. \sim(P\rightarrow \sim Q)\rightarrow T. T\rightarrow S ~\text{so}~R$
 \begin{logicproof}{1}
     \text{\sout{show}}~ \sim\sim Z  & \text{show conclusion} \\
@@ -339,7 +339,7 @@ a conditional, we assume $\phi$ and then prve that $\psi$ follows.
 \paragraph{Caveat:} It is not required to write the derivation
  as a subproof, we can also
 carry the moves in just one layer and state on which line we 
-achived a conditional derivation
+achieved a conditional derivation
 
 \subsubsection{Indirect Derivation (Reductio ad Absurdum)}
 The question takes the following form ``Show $\phi$''. If we assume 
@@ -373,11 +373,11 @@ means it could be derived from any set of premises, even including
  $\emptyset$ as the premise set.
 
 \subsection{Derived Rules}
-There are two types dericed rules: negation of blah rules (NC, NB, and DM) and situational rules.
+There are two types derived rules: negation of blah rules (NC, NB, and DM) and situational rules.
 
 \subsubsection{Negation of Condition (NC)} If have a negation of a conditional 
 statement, then $$\sim (\phi \implies \psi) \equiv \phi \land \sim \psi$$ This is
-essentially a `proof by conterexample'
+essentially a `proof by counterexample'
 \subsubsection{Negation of Biconditional (NB)}
 \begin{equation*}
     \sim (\phi\iff \psi) \equiv (\phi \iff \sim \psi) \equiv (\sim \phi \iff \psi)
@@ -404,7 +404,7 @@ present them here.
 \end{align*}
 
 \section{Predicate Logic}
-Although our system of sentential logic is great and powerful, it is not quite strong enough since it doesn't allow assesment of logic within the sentence itself. What we need is the predicate logic, as an extension to the sentential system. 
+Although our system of sentential logic is great and powerful, it is not quite strong enough since it doesn't allow assessment of logic within the sentence itself. What we need is the predicate logic, as an extension to the sentential system. 
 
 \subsection{Sub-Sentential Logic} The discussion of subjects and predicates: subjects specify what we want to talk about (as its name indicates) and predicates allows to describe the subject in some certain way. 
 \subsubsection{Subjects}
@@ -413,7 +413,7 @@ Although our system of sentential logic is great and powerful, it is not quite s
     \item \textbf{General Terms} Universally quantifies terms and Existentially quantified terms
 \end{itemize}
 \subsubsection{Predicates}
-DIfferent types of predicates are related to number of subjects that the predicate is related to. 
+Different types of predicates are related to number of subjects that the predicate is related to. 
 \begin{itemize}
     \item \textbf{Single Place} Only one subject, description of the one and only subject. For example `Raina is evil. Raina is a student of Plato'
     \item \textbf{Two-Place} Usually describes the relationship between two subjects. For example `Joe likes Marry'
@@ -440,12 +440,12 @@ Consider the sentence `Some animals are dogs'. The only way that we can formulat
 Two symbols for the universal quantifier is $\forall$ while existential quantifier uses the symbol $\exists$. 
 \subsubsection{Subject Symbols}
 \begin{itemize}
-    \item Inividual constants or names are marks using lower case lettes $a-h$
-    \item Variable are written as lower case lettes $i-z$. Notice that this is different from the previous case. For example, when I don't want to specify any name for the subject (i want to pick a generic one) I will need a variable.
+    \item Individual constants or names are marks using lower case letters $a-h$
+    \item Variable are written as lower case letters $i-z$. Notice that this is different from the previous case. For example, when I don't want to specify any name for the subject (i want to pick a generic one) I will need a variable.
     \item Operation Letters is also $a-h$, but possibly with number places as superscript.
 \end{itemize}
 
-\subsubsection{Predicate Sumbols}
+\subsubsection{Predicate Symbols}
 \begin{itemize}
     \item Predicates are marked with upper case letters $A-O$ (may have number places as superscript in case of non-single place predicates)
     \item The identity sign ($=$) is rather special. More on this latter.
@@ -484,13 +484,13 @@ i.e.,
 
 \subsection{Single Place Derivations}
 \subsubsection{Substitution}
-Replace a bound variable to a free one. This transforms a synmbolic sentence to a sumbolic formula. Notice that \textbf{All instances of $\alpha$ are replaced wuth a singular term $\beta$} in the following puppy example
+Replace a bound variable to a free one. This transforms a symbolic sentence to a symbolic formula. Notice that \textbf{All instances of $\alpha$ are replaced with a singular term $\beta$} in the following puppy example
 \begin{align*}
     \forall \alpha \phi \alpha &\implies \phi \beta \\
     \exists \alpha \phi \alpha &\implies \phi \beta
 \end{align*}
 
-\subsubsection{Universal Instantiation (UI)} This rule describes the subtitution of $\forall \alpha \phi \alpha$ to $ \phi \beta$. This could also be described as the $\forall$ elimination rule. There is a restriction that comes with this rule which is ``\textbf{Restriction:} $\beta$ could not be a bound variable within $\phi \alpha$''. In naive words, this means we can't substitute in a variable that is already quantified in the inner scope. 
+\subsubsection{Universal Instantiation (UI)} This rule describes the substitution of $\forall \alpha \phi \alpha$ to $ \phi \beta$. This could also be described as the $\forall$ elimination rule. There is a restriction that comes with this rule which is ``\textbf{Restriction:} $\beta$ could not be a bound variable within $\phi \alpha$''. In naive words, this means we can't substitute in a variable that is already quantified in the inner scope. 
 
 \paragraph{Example of Proof using UI}
 Suppose I want to show that $\forall x (Fx\implies Gx). Fa. \text{so} Ga.$. The general format is still the same as proofs in sentential logic. We will do
@@ -501,12 +501,12 @@ Suppose I want to show that $\forall x (Fx\implies Gx). Fa. \text{so} Ga.$. The 
     \item \quad 3, DD
 \end{enumerate}
 
-\subsubsection{Existential Instantiation (EI)} If we have a $\exists \alpha \phi \alpha$, we can replace it with $\phi \beta$. The rule comes with a \textbf{Restriction:} $\beta$ must be a \textit{arbitrary} term\footnote{Arbitrary Term: Weak condition is `A term that is not free in an unboxed line', while the strong condition is `A term that does not appear in any previous line or premise'} ($i$ through $z$) that does not occyr in ANY previous line or premise. This will also be refered to ass the $\exists elimination rule$.  
+\subsubsection{Existential Instantiation (EI)} If we have a $\exists \alpha \phi \alpha$, we can replace it with $\phi \beta$. The rule comes with a \textbf{Restriction:} $\beta$ must be a \textit{arbitrary} term\footnote{Arbitrary Term: Weak condition is `A term that is not free in an unboxed line', while the strong condition is `A term that does not appear in any previous line or premise'} ($i$ through $z$) that does not occur in ANY previous line or premise. This will also be referred to ass the $\exists elimination rule$.  
 
 \subsubsection{Golden Rule} EI first, UI to MATCH. Always match UI to something useful. There is one exception to this rule, which is the case of Buried Existential.  
 
 \subsubsection{Example}
-Consider the quesiton
+Consider the question
 \begin{equation*}
     \exists x(Fx \vee \sim Gx). \forall y (Fy \implies Ay). \forall z Gz. \text{~~~So~} \sim \forall x \sim Ax
 \end{equation*}
@@ -531,13 +531,13 @@ If I know $\phi \beta$ then I can conclude $\exists \alpha \phi \alpha$. This ru
     \item \textbf{Restriction 1:} $\alpha$ cannot be a bound variable within $\phi \beta$
     \item \textbf{Restriction 2:} If $\alpha $ is different from $\beta$, then $\alpha$ cannot be free within $\phi \beta$
 \end{itemize}
-This rule is also refered to as the $\exists$ Introduction Rule. I puppy example would be to say `Steven enjoys the notability app', then for sure `there exists something, something is a person and something enjoys the notability app'. There are certain difference between generalization rules and Instantiation rules, we shall take a look at some examples on genralizing `$Fa\wedge Ga$'
+This rule is also referred to as the $\exists$ Introduction Rule. I puppy example would be to say `Steven enjoys the notability app', then for sure `there exists something, something is a person and something enjoys the notability app'. There are certain difference between generalization rules and Instantiation rules, we shall take a look at some examples on generalizing `$Fa\wedge Ga$'
 \begin{itemize}
     \item $\exists x(Fx \wedge Gx)$ generalizing both $a$'s to $x$
-    \item $\exists y(Fy \wedge Gy)$ generalziing both $a$'s to $y$
-    \item $\exists x(Fx \wedge Ga)$ generalizing the first $a$ to $x$. Notice that this definately incorrect in the Instantiation settings, but in fact this is valid here in generalization. 
-    \item $\exists z(Fa \wedge Gz)$ genralizing the second $a$ to $z$
-    \item $\exists x (Fa \wedge Ga)$ generalziing to $x$. This is a wierd one.
+    \item $\exists y(Fy \wedge Gy)$ generalizing both $a$'s to $y$
+    \item $\exists x(Fx \wedge Ga)$ generalizing the first $a$ to $x$. Notice that this definitely incorrect in the Instantiation settings, but in fact this is valid here in generalization. 
+    \item $\exists z(Fa \wedge Gz)$ generalizing the second $a$ to $z$
+    \item $\exists x (Fa \wedge Ga)$ generalizing to $x$. This is a weird one.
 \end{itemize}
 
 \subsubsection{Universal Derivation (UD)} This is a technique rather than a rule which allows the introduction of the universal quantifier. To add a universal quantifier, we can simply do a `show' of the statement, with no premise whatsoever. The general format will be
@@ -550,7 +550,7 @@ This rule is also refered to as the $\exists$ Introduction Rule. I puppy example
 The restriction of this technique is `$\alpha$ cannot appear unbound in any previous available line, or in a premise used in an available line'. This adds to our list of derivation skills: DD, ID, CD. Now we have the fourth way UD. 
 
 \paragraph{Example on UD (Double)}
-This is considered to be a double UD example because we have to do UD twice. The exmaple is
+This is considered to be a double UD example because we have to do UD twice. The example is
 \begin{equation*}
     Ha.~\exists w \exists z (Hz \land \neg Gw) \implies \forall x Ax.~\exists i \neg Ai \text{~~So~} \forall x \forall y (Fx \implies Gy)
 \end{equation*}
@@ -563,7 +563,27 @@ A quantifier or a negation of quantifier must be the main operator.
     \item $\neg \exists \alpha \phi \equiv \forall \alpha \neg \phi$
 \end{itemize}
 
- 
+\section{Multi-place Symbolization}
+In this section, we focus on predicates that have multiple subjects. In common english, we deal with this all the time and we shall now see how to use them formally.
+\begin{equation*}
+    B^3:\text{\{1\} borrows \{2\} from \{3\}}
+\end{equation*}
+Above is an example where we have to use three subjects to instantiate. 
+
+\subsection{Syntactical Difference}
+\begin{itemize}
+    \item Use brackets for multi place predicates, for example $\mathrm{Fx} . \text { Gy. } \mathrm{A}(\mathrm{xy}) \text { . B (ywza). }$
+    \item Order Matters: $L(ab)\not \equiv L(ba)$, sometimes they are the same and often they don't
+\end{itemize}
+
+
+
+
+
+
+
+
+
 
 
 \end{document}
