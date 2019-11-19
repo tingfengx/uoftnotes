@@ -1165,7 +1165,7 @@ The residual sum of squares as a function of the OLS regressors $\hat{\beta}$ ca
 \end{equation*}
 
 
-\subsubsection{CIs and Significance Tests}
+\subsubsection{CIs and Significance Tests}\footnote{\textbf{Q:} Why was this not included in the class slides?}
 Assuming that the errors are normally distributed\footnote{It is worth noticing that errors are almost always assumed to be normal when we are trying to do inferences on the regression results (Estimates).} with constant variance, then for each $i = 0,1,...,p$ we have the test statistic
 \begin{equation*}
     T_{i}=\frac{\hat{\beta}_{i}-\beta_{i}}{\operatorname{se}(\hat{\beta_i})} \sim t_{df = (n-p-1)}
@@ -1176,7 +1176,7 @@ where we recall that the variance-covariance matrix is $VAR(\hat{\beta}) = \sigm
 \end{equation*}
 
 
-\subsubsection{ANOVA Test for Linear Association (Y with all/subset of predictors)}
+\subsubsection{ANOVA and Global F-Test}
 \paragraph{Hypothesis} The goal is to test if there is a linear association between the explanatory variables and the explained variable. So the null hypothesis we will use is $H_{0}: \beta_{1}=\beta_{2}=\ldots=\beta_{p}=0$ against the alternative hypothesis that $H_{A}: \text { at least some of the } \beta_{i} \neq 0$. 
 \paragraph{Test Statistic} Under the assumption that $e_1,...,e_n$ are independent and normally distributed, it can be shown that the $F$ test statistic is defined as follows and follows a $\mathcal{F}$ distribution.
 \begin{equation*}
@@ -1210,6 +1210,19 @@ where we recall that the variance-covariance matrix is $VAR(\hat{\beta}) = \sigm
         The above problem could be addressed by the \textbf{partial F-test}\footnote{Notice that here the partial means we are not testing all the $\beta_1$ up to $\beta_p$'s but only a subset of them.} which is defined below.
         
 \end{itemize}
+\paragraph{Extra Notes on R-Squared \& Adjusted R-Squared}
+\begin{itemize}
+    \item As $p\uparrow$, we know
+        \begin{itemize}
+            \item SST remains the same
+            \item SSReg remains the same or increases
+            \item RSS remains the same or decreases
+        \end{itemize}
+        Thus, $R^2\uparrow$ regardless.
+    \item Notice that if we use the normal R-Squared ($R^2$), then the value of $R^2$ will always increase regardless of the usefulness of extra predictors added when we increase $p$. That is, when $p$ gets larger, $R^2$ will \textit{always} increase, which makes this statistics useless. (Not helpful in telling whether additional predictors are useful for explaining the response)
+    \item As $p\uparrow$, we know $(n-p-1)\downarrow$. Then $\frac{n-1}{n-p-1}\uparrow$ and thus $R^2_{adj}\downarrow$.
+    \item It is always the case that $R^2_{adj} < R^2$
+\end{itemize}
 
 \subsubsection{Partial F-Test}
 \paragraph{Goal} Test whether a specified subset of the predictors have regression coefficients equal to zero.
@@ -1226,17 +1239,72 @@ This can be done using the $F$-Test. Define
     &\text{RSS(Full)} := \text{RSS under the full model} \\
     &\text{RSS(reduced)} := \text{RSS under the reduced model}
 \end{align*}
+\paragraph{Test Statistics}
 Then, the $F$-statistic is given by
 \begin{align*}
-    F &= \frac{(\mathrm{RSS}(\mathrm{reduced})-\mathrm{RSS}(\mathrm{full})) /\left(\mathrm{df}_{\mathrm{reduced}}-\mathrm{df}_{\mathrm{full}}\right)}{\operatorname{RSS}(\mathrm{full}) / \mathrm{df}_{\mathrm{full}}} \\
-    &= \frac{(\mathrm{RSS}(\mathrm{reduced})-\mathrm{RSS}(\mathrm{full})) / k}{\operatorname{RSS}(\mathrm{full}) /(n-p-1)}
+    F &= \frac{(\mathrm{RSS}(\mathrm{reduced})-\mathrm{RSS}(\mathrm{full})) /\left({df}_{\mathrm{reduced}}-{df}_{\mathrm{full}}\right)}{\operatorname{RSS}(\mathrm{full}) / {df}_{\mathrm{full}}} \\
+    &= \frac{(\mathrm{RSS}(\mathrm{reduced})-\mathrm{RSS}(\mathrm{full})) / k}{\operatorname{RSS}(\mathrm{full}) /(n-p-1)} \overset{H_0}{\sim} \mathcal{F}_{(k, n-p-1)}
 \end{align*}
-The reduction on the second line above is done by noticing that the reduced model has $p + 1 - k$ predictors and thus $\left(\mathrm{df}_{\mathrm{reduced}}-\mathrm{df}_{\mathrm{full}}\right) = [n-(p+1-k)]-[n-(p+1)]=k$.
+The reduction on the second line above is done by noticing that the reduced model has $p + 1 - k$ predictors and thus $\left(df_{\mathrm{reduced}}-{df}_{\mathrm{full}}\right) = [n-(p+1-k)]-[n-(p+1)]=k$.
+\paragraph{Using R Output} To do the above test, we need the ANOVA tables from the reduced and full models in R. 
 
-\subsection{Analysis of Covariance}
+\paragraph{Partial F-Test Interpretation} 
+The above partial F-Test tries to capture the idea of \color{BurntOrange}``Is the unexplained variation reduced by a significant amount when the predictors are added to the model?''.\color{Black} It is important to remember which number is bigger than which in the above calculations. We have, in general, 
+\begin{itemize}
+    \item SST(full) $=$ SST(Reduced)
+    \item SSReg(full) $\geq$ SSReg(reduced)
+    \item RSS(full) $\leq$ RSS(reduced)
+\end{itemize}
+Notice that the third inequality could be simply remembered as ``denominator of the $F$ statistics need to be positive'', i.e. $(\mathrm{RSS}(\mathrm{reduced})-\mathrm{RSS}(\mathrm{full})) \geq 0 \implies $ RSS(reduced) $\geq$ RSS(full)
+\paragraph{Rationale for Above Relationship}
+\begin{itemize}
+    \item RSS(full) $ = \mathrm{min}_{\beta \in \real^{p+1}} (Y - X\beta)'(Y - X\beta)$
+    \item RSS(full) $ = \mathrm{min}_{\beta \in \real^{k+1}} (Y - X\beta)'(Y - X\beta)$
+    \item The minimum in a higher dimensional space is always the same or less.
+\end{itemize}
+
+
+\paragraph{Special Case of $k = 1$}
+In this special case of the Partial F-test, we are testing the whether some specific $\beta_i$ has the value of one, i.e. is irrelevant to the explained variable. A catch here is that \color{BurntOrange} the order in which individual predictors are added to the model in R is important! \color{Black} We can just use a single summary output of the full model if the variable whose coefficient is $\beta_i$ was listed last in the \texttt{lm()} call.
+
+\subsection{Analysis of Covariance (ANCOVA)}
+We shall first discuss the setup of ANCOVA, which is stated as follows. Consider the situation in which we want to model a response variable, $Y$ based on a continuous predictor, $x$ and a dummy variable, $d$. Suppose that the effect of $x$ on $Y$ is linear. This situation is the simplest version of what is commonly referred as Analysis of Covariance, since the predictors include both quantitative variables (i.e., $x$) and qualitative variables (i.e., $d$). 
+\subsubsection{Coincident Regression Lines}
+This is the simplest case of all, which happens when the categorical dummy variable has no effect on $Y$, that is
+\begin{equation*}
+    Y = \beta_0 + \beta_1 x + e \quad \text{for}\,\, b \in \{0, 1\}
+\end{equation*}
+
+\subsubsection{Parallel Regression Lines}
+In this case, the dummy variable produces so called \textit{additive changes} to the regression model. The model takes the form
+\begin{equation*}
+    Y=\beta_{0}+\beta_{1} x+\beta_{2} d+e=\left\{\begin{array}{cc}{ Y=\beta_{0}+\beta_{1} x+e} & {\text { when } d=0} \\ {Y=\beta_{0}+\beta_{2}+\beta_{1} x+e} & {\text { when } d=1}\end{array}\right.
+\end{equation*}
+Here the regression coefficient $\beta_2$ measures the additive change in $Y$ due to the dummy variable. 
+
+\subsubsection{Regression Lines w/ Equal Intercepts \& Different Slopes}
+In this model, the dummy variable only changes the size of the effect of $x$ on Y. This is described by the following formulation,
+\begin{equation*}
+    Y=\beta_{0}+\beta_{1} x+\beta_{3} d \times x+e=\left\{\begin{array}{ll}{ Y=\beta_{0}+\beta_1 x+e} & {\text { when } d=0} \\ {Y=\beta_{0}+\left(\beta_{1}+\beta_{3}\right) x+e} & {\text { when } d=1}\end{array}\right.
+\end{equation*}
+
+\subsubsection{Unrelated Regression Lines} 
+This is the most general case of all, where the dummy variable produces an additive change in $Y$ and also changes the size of the effect of $x$ on $Y$. The formulation breaks into
+\begin{equation*}
+    Y=\beta_{0}+\beta_{1} x+\beta_{2} d+\beta_{3} d \times x+e = \left\{\begin{array}{ll}{ Y=\beta_{0}+\beta_{1} x+e} & {\text { when } d=0} \\ {Y=\beta_{0}+\beta_{2}+\left(\beta_{1}+\beta_{3}\right) x+e} & {\text { when } d=1}\end{array}\right.
+\end{equation*}
+In this formulation, the regression coefficient 
+\begin{itemize}
+    \item $\beta_2$ measures the additive change in $Y$ due to the dummy variable.
+    \item $\beta_3$ measures the change in size of the effect of $x$ on $Y$ due to the dummy variable. 
+\end{itemize}
+%\paragraph{Notes on Unrelated Regression Lines (Interaction)} 
 
 
 % TODO: Adding to MLR
+
+\section{Diagnostics and Transformations for MLR}
+under construction $'\_ >'$
 
 \newpage
 \section{Selected Properties, Formulae, and Theorems}
