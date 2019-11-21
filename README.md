@@ -13,7 +13,7 @@
 * Notes in progress:
    - 2019 Fall
       1. [CSC258](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. Or, if you prefer, the html version os available [here](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html) Midterm Pre-test checklist is [here](https://tingfengx.github.io/uoftnotes/2019F/CSC258/midterm_checklist.pdf).
-      2. [PHL245](https://tingfengx.github.io/uoftnotes/2019F/PHL245/modern_sym_logic.pdf), Modern Symbolic Logic.
+      2. [PHL245](https://tingfengx.github.io/uoftnotes/2019F/PHL245/modern_sym_logic.pdf), Modern Symbolic Logic. (Currently archived)
       3. [CSC311](https://tingfengx.github.io/uoftnotes/2019F/CSC311/intro_ml.pdf), A cheat sheet for the exams, as allowed by the course syllabus. 
       4. [CSC373](https://tingfengx.github.io/uoftnotes/2019F/CSC373/algorithms.pdf), Miscellaneous notes from MIT open courseware (6.006 and 6.046J), aiming to help get a better understanding of the course materials. 
       5. [STA302](https://tingfengx.github.io/uoftnotes/2019F/STA302/regression.pdf). Note from SJS and KNN.
