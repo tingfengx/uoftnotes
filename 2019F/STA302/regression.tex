@@ -1300,11 +1300,47 @@ In this formulation, the regression coefficient
 \end{itemize}
 %\paragraph{Notes on Unrelated Regression Lines (Interaction)} 
 
-
-% TODO: Adding to MLR
-
 \section{Diagnostics and Transformations for MLR}
-under construction $'\_ >'$
+\subsection{Regression Diagnostics for Multiple Regression}
+\subsubsection{Leverage Points in Multiple Regression}
+\color{BurntOrange}
+Data points which exercise considerable influence on the fitted mode are called leverage points. Leverage is a measurement of the extent to which the fitted regression model is attracted by the given data point. We are interested in the relationship of the fitted values $\hat{\mathbf{Y}}$ and $\mathbf{Y}$.
+\color{Black}
+We should recall that from the previous section $\hat{\mathbf{Y}}=\mathbf{X} \hat{\boldsymbol{\beta}}=\mathbf{X}\left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{Y}=\mathbf{H} \mathbf{Y}$. 
+\paragraph{Popular Rule For Identifying Leverage Points} We say the $i$-th point is a point of high leverage in a MLR model with $p$ predictors if
+\begin{equation*}
+	h_{i i}>2 \times \operatorname{average}\left(h_{i i}\right)=2 \times \frac{(p+1)}{n}
+\end{equation*}
+\subsection{Properties of Residuals in MLR}
+Recall that $\hat{\mathbf{e}} = \mathbf{Y} - \hat{\mathbf{Y}} = (\mathbf{I} - \mathbf{H})\mathbf{Y}$, $\mathrm{E}(\hat{\mathbf{e}} | \mathbf{X}) = 0$, and $\operatorname{var}(\hat{\mathbf{e}} | \mathbf{x}) = \sigma^{2}(\mathbf{I}-\mathbf{H})$.
+
+\paragraph{Standardized Residuals} The $i$-th least squares residual have variance given by 
+\begin{equation*}
+	\operatorname{Var}\left(\hat{e}_{i}\right)=\sigma^{2}\left[1-h_{i i}\right]
+\end{equation*}
+	and thus the standardized residual is
+\begin{equation*}
+	r_{i}=\frac{\hat{e}_{i}}{s \sqrt{1-h_{i i}}} \quad \text{where} \quad s=\hat{\sigma}=\sqrt{\frac{1}{n-(p+1)} \sum_{j=1}^{n} \hat{e}_{j}^{2}}
+\end{equation*}
+\paragraph{Fences} As a common practice of labelling points as outliers is to check if the standardized residuals, as calculated above, is in the range $(-\infty, -2] \cup [2, \infty)$. Also notice when we have a large set of data, the fences should be changed to $\pm 4$. 
+
+\paragraph{Residual Plot} When a \textit{valid} model has been fit to the data, the residuals $r_i$'s against \textit{any} predictor or \textit{linear combination} of predictors (such as the fitted values) must be
+\begin{itemize}
+    \item A random scatter of points around the horizontal axis.
+    \item Constant variability as we look along the horizontal axis. \textbf{Note:} If we observe a pattern in the residual plot, then we should consider adding extra predictor variables, since clearly not all variation has been explained.
+\end{itemize}
+
+\subsubsection{Added Variable Plots}
+
+
+
+
+
+
+
+
+% TODO: Adding to MLR Diagnostics
+
 
 \newpage
 \section{Selected Properties, Formulae, and Theorems}
