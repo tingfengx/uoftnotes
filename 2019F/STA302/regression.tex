@@ -1330,7 +1330,15 @@ Recall that $\hat{\mathbf{e}} = \mathbf{Y} - \hat{\mathbf{Y}} = (\mathbf{I} - \m
     \item Constant variability as we look along the horizontal axis. \textbf{Note:} If we observe a pattern in the residual plot, then we should consider adding extra predictor variables, since clearly not all variation has been explained.
 \end{itemize}
 
-\subsubsection{Added Variable Plots}
+\subsubsection{Classification}
+\begin{itemize}
+    \item \textbf{Outlier $y$:} A point $x_i$ is an outlier in the $y$ direction if $|r_i| > 2$. It is not an outlier otherwise.
+    \item \textbf{Leverage Points:} A point $x_i$ is a leverage point if $h_{ii} > \frac{2\times (p+1)}{n}$
+        \begin{enumerate}
+            \item \textbf{Bad, Influential:} means Leverage + Outlier
+            \item \textbf{Good:} means Leverage but not Outlier
+        \end{enumerate}
+\end{itemize}
 
 
 
