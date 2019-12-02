@@ -1366,16 +1366,26 @@ Recall that $\hat{\mathbf{e}} = \mathbf{Y} - \hat{\mathbf{Y}} = (\mathbf{I} - \m
 
 \color{BurntOrange}
 \subsection{Multi-Collinearity}
+\color{Black}
 Multicollinearity occurs when explanatory variables are highly correlated. In such case,
 \begin{enumerate}
     \item It is difficult to measure the individual influence of one of the predictors on the response. 
     \item The fitted equation is unstable
     \item The estimated regression coefficients vary widely from data set to data set, even if the data sets are similar, and depending on which predictor is included in the model.
     \item The estimated regression coefficients may even have opposite sign than what is expected. 
+    \item When some $X$'s are perfectly correlated, we can't acquire the estimate $\hat{\beta}$ since $X'X$ is singular. 
+    \item Even when in the case where $X'X$ is close to singular, its determinant will be close to zero and the standard errors of estimated coefficients will be large. 
 \end{enumerate}
-\color{Black}
-
-
+\subsubsection{Variance Inflation Factors (VIFs)}
+For the general MLR model, 
+\begin{equation*}
+    Y = \beta_0 + \beta_1 x_1 +... + \beta_p x_p + e
+\end{equation*}
+Then, we have
+\begin{equation*}
+    \mathrm{VAR}(\hat{\beta}_j) = \frac{1}{1 - R_j^2} \times \frac{\sigma^2}{(n - 1)S_{x_j}^2} \quad \text{where} ~j = 1,...,p
+\end{equation*}
+The $j$-th Variance Inflation Factor is defined as $\mathrm{VIF}_j := \frac{1}{1 - R_j^2}$. Common identification cut-off is 5. 
 
 
 
