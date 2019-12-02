@@ -135,17 +135,25 @@ Notes for STA302H1F fall offering, 2019 with Prof. Shivon Sue-Chee. These notes 
 Manuel to matrix calculus provided by professor: \url{http://biostat.mc.vanderbilt.edu/wiki/pub/Main/CourseBios312/chap2.pdf}
 \subsubsection{Lemma I (Real Valued Fcn Matrix Differentiation)} If $\boldsymbol{\theta}^{\prime}=\left(\theta_{1}, \theta_{2}, \ldots, \theta_{k}\right) \text { and } c^{\prime}=\left(c_{1}, c_{2}, \ldots, c_{k}\right)$ is a vector of constant, such that 
 \begin{equation*}
-    f(\boldsymbol{\theta})=\mathbf{c}^{\prime} \boldsymbol{\theta}=\boldsymbol{\theta}^{\prime} \mathbf{c}=\sum_{i} c_{i} \theta_{i}
+    f(\boldsymbol{\theta})=\mathbf{c}^{\prime} \boldsymbol{\theta}=\boldsymbol{\theta}^{\prime} \mathbf{c}=\sum_{i} c_{i} \theta_{i} \in \real
 \end{equation*}
 is a scalar, then
 \begin{equation*}
     \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}}=\mathbf{c}
 \end{equation*}
-\subsubsection{Lemma II}
-$\text { Let } \mathbf{A} \text { be a } k \times k \text { symmetric matrix. Suppose } f(\boldsymbol{\theta})=\boldsymbol{\theta}^{\prime} \mathbf{A} \boldsymbol{\theta}$. Then,
+\subsubsection{Lemma II (Symmetric Quadratic Form)}
+Let $\mathbf{A} \text { be a } k \times k \text { \textbf{\textit{symmetric}} square matrix. Suppose } f(\boldsymbol{\theta})=\boldsymbol{\theta}^{\prime} \mathbf{A} \boldsymbol{\theta}$. Then,
 \begin{equation*}
     \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}}=2 \mathbf{A} \boldsymbol{\theta}
 \end{equation*}
+\subsubsection{Lemma II (General Quadratic Form)}
+Let $\mathbf{A} \text { be a } k \times k \text {~square matrix. Suppose } f(\boldsymbol{\theta})=\boldsymbol{\theta}^{\prime} \mathbf{A} \boldsymbol{\theta}$. Then, \color{BurntOrange} as the general case for the above, 
+\color{Black}
+\begin{equation*}
+    \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}}= \boldsymbol{\theta}' (\mathbf{A}' + \mathbf{A})
+\end{equation*}
+
+
 \subsubsection{Matrix Idempotency}
 We say that a matrix $A$ is idempotent if and only if $A^2 = AA = A$. It is worth mentioning that projection matrices are idempotent, i.e. you can only project once and projecting the second time makes no change to the already projected result.
 % FIXME: Add to here
@@ -225,7 +233,7 @@ The $100(1- \alpha)\%$ CI is
 \paragraph{Distribution Proof}
 Recall OLS regressor for $\beta_1$ is
 \begin{equation*}
-    \hat{beta}_1 = \sum_{i = 1}^n c_iy_i \quad \text{where}~~ c_i = \frac{x_i \overbar{x}}{SXX}
+    \hat{\beta}_1 = \sum_{i = 1}^n c_iy_i \quad \text{where}~~ c_i = \frac{x_i \overbar{x}}{SXX}
 \end{equation*}
 The expectation could be derived as\footnote{using the fact that $\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)=0$ and $\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right) x_{i}=\sum_{i=1}^{n} x_{i}^{2}-n \bar{x}^{2}=S X X$}
 \begin{align*}
@@ -702,7 +710,7 @@ A crucial assumption in any regression analysis is that errors have constant var
 \begin{equation*}
     |\text{ Residuals }|^{0.5} \text { against } x \quad \text{or} \quad |\text { Standardized Residuals }|^{0.5} \text { against } x
 \end{equation*}
-The power of $0.5$ here is used to reduce skewness in the absolute values. In the above mentioned example where the residuals become more spread out as $x$ increases, the plot $|\text { Standardized Residuals }|^{0.5} \text { against } x$ will have an overall increasing trend! \color{BurntOrange} This is essentially mirroring all the points to the positive side (and de-skew) to observe a general trend. \color{Black}
+The power of $0.5$ here is used to reduce skewness in the absolute values. In the above mentioned example where the residuals become more spread out as $x$ increases, the plot $|\text { Std Residuals }|^{0.5}$ against $x$ will have an overall increasing trend! \color{BurntOrange} This is essentially mirroring all the points to the positive side (and de-skew) to observe a general trend. \color{Black}
 
 \subsection{Transformation}
 \subsubsection{Variance Stabilizing Transformations}
@@ -897,8 +905,8 @@ Indeed, the results that we get confirms that our matrix form is equivalent. \qe
 \qed
 \paragraph{Variance - Covariance Matrix}
 \begin{align*}
-    VAR(\hat{\beta}) &= VAR( (X'X)^{-1}X'Y ) \\
-    &= [(X'X)^{-1}X'] \sigma^2 I [(X'X)^{-1}X']' \\
+    VAR(\hat{\beta}) &= VAR( \underbrace{(X'X)^{-1}X'}_{\text{constant}}Y ) \\
+    &= [(X'X)^{-1}X'] \underbrace{\sigma^2 I}_{VAR(Y)} [(X'X)^{-1}X']' \\
     &= \sigma^2 I (X'X)^{-1}  \underbrace{X'X (X'X)^{-1}}_{\equiv~I} \\
     &= \sigma^2 (X'X)^{-1} \\
     &=
@@ -925,7 +933,7 @@ Thus, $\widehat{\mathbf{e}}=\mathbf{Y}-\mathbf{H Y}=(\mathbf{I}-\mathbf{H}) \mat
 \begin{itemize}
     \item $\mathbf{H}$ is symmetric
         \begin{equation*}
-            H' = (X(X'T)^{-1}X')' = X(X'X)^{-1}X' = H
+            H' = (X(X'X)^{-1}X')' = X(X'X)^{-1}X' = H
         \end{equation*}
     \item $\mathbf{H}$ is idempotent
         \begin{align*}
@@ -1035,7 +1043,7 @@ The least squares regressors of $\beta_{0}, \beta_{1}, \beta_{2}, \ldots, \beta_
 which will give us a system of $p+1$ equations and $p+1$ variables to optimize on. Notice that this usually requires computers to help in the actual optimization calculations. Hence we should see the much more concise matrix formulation.
 
 \subsubsection{OLS Regressors - Matrix Form}
-Let $Y \in \mat{n}{(p+1)}, X\in \mat{(n)}{p+1}, \beta\in \mat{(p+1)}{1}$ and $e\in \mat{n}{1}$ given by
+Let $Y \in \mat{n}{(p+1)}, X\in \mat{n}{(p+1)}, \beta\in \mat{(p+1)}{1}$ and $e\in \mat{n}{1}$ given by
 \begin{equation*}
     \mathbf{Y}=\left(\begin{array}{c}{y_{1}} \\ {y_{2}} \\ {\vdots} \\ {y_{n}}\end{array}\right), \mathbf{X}=\left(\begin{array}{ccc}{1} & {x_{11}} & {\cdots x_{1 p}} \\ {1} & {x_{21}} & {\cdots x_{2 p}} \\ {\vdots} & {\vdots} & {} \\ {1} & {x_{n 1}} & {\cdots x_{n p}}\end{array}\right), \beta=\left(\begin{array}{c}{\beta_{0}} \\ {\beta_{1}} \\ {\vdots} \\ {\beta_{p}}\end{array}\right), \mathbf{e}=\left(\begin{array}{c}{e_{1}} \\ {e_{2}} \\ {\vdots} \\ {e_{n}}\end{array}\right)
 \end{equation*}
@@ -1092,10 +1100,10 @@ and the residuals are
 \qed
 \paragraph{Variance - Covariance Matrix}
 \begin{align*}
-    VAR(\hat{\beta}) &= VAR( (X'X)^{-1}X'Y ) \\
-    &= [(X'X)^{-1}X'] \sigma^2 I [(X'X)^{-1}X']' \\
+    VAR(\hat{\beta}) &= VAR( \underbrace{(X'X)^{-1}X'}_{\text{constant}}Y ) \\
+    &= [(X'X)^{-1}X'] \underbrace{\sigma^2 I}_{VAR(Y)} [(X'X)^{-1}X']' \\
     &= \sigma^2 I (X'X)^{-1}  \underbrace{X'X (X'X)^{-1}}_{\equiv~I} \\
-    &= \sigma^2 (X'X)^{-1} \\
+    &= \sigma^2 (X'X)^{-1} % \\
 %    &=
 %    \begin{bmatrix}
 %        VAR(\hat{\beta}_0) =  \frac{\sigma^2\sum x_{i}^{2}}{n S X X}
@@ -1266,6 +1274,22 @@ Notice that the third inequality could be simply remembered as ``denominator of 
 
 \paragraph{Special Case of $k = 1$}
 In this special case of the Partial F-test, we are testing the whether some specific $\beta_i$ has the value of one, i.e. is irrelevant to the explained variable. A catch here is that \color{BurntOrange} the order in which individual predictors are added to the model in R is important! \color{Black} We can just use a single summary output of the full model if the variable whose coefficient is $\beta_i$ was listed last in the \texttt{lm()} call.
+\subsubsection{Combining Global F-test with \textit{t}-tests}
+\paragraph{Case A:} If the global F-test is significant, then
+\begin{itemize}
+    \item If all or some f the $t$-tests are significant, then there exists some useful explanatory variable for the predicted variable.
+    \item If all $t$-test are \textit{not} significant, then there is an indication of multicollineararity\footnote{Discussed below in 6.3}, i.e. strongly correlated $X$'s. This implies that individual $X$ do not contribute to the prediction of $Y$ over and above other $X$'s. 
+\end{itemize}
+\paragraph{Case B:} If the Global F-Test is NOT significant, then
+\begin{itemize}
+    \item If all $t$-tests are not significant, then none of the listed predictor variable contribute to the prediction of $Y$.
+    \item If some of the $t$-tests are significant, then
+        \begin{enumerate}
+            \item The model has no predictive ability. Likely, if there are many predictors, there are type I errors\footnote{Type I errors refers to the error caused when we rejected hypotheses that are actually true.} in the $t$-tests. 
+            \item The predictors are poorly chosen. The contribution of one useful predictor among many poor ones may not be enough for the model (Global F-test) to be significant. 
+        \end{enumerate}
+\end{itemize}
+
 
 \subsection{Analysis of Covariance (ANCOVA)}
 We shall first discuss the setup of ANCOVA, which is stated as follows. Consider the situation in which we want to model a response variable, $Y$ based on a continuous predictor, $x$ and a dummy variable, $d$. Suppose that the effect of $x$ on $Y$ is linear. This situation is the simplest version of what is commonly referred as Analysis of Covariance, since the predictors include both quantitative variables (i.e., $x$) and qualitative variables (i.e., $d$). 
@@ -1332,7 +1356,7 @@ Recall that $\hat{\mathbf{e}} = \mathbf{Y} - \hat{\mathbf{Y}} = (\mathbf{I} - \m
 
 \subsubsection{Classification}
 \begin{itemize}
-    \item \textbf{Outlier $y$:} A point $x_i$ is an outlier in the $y$ direction if $|r_i| > 2$. It is not an outlier otherwise.
+    \item \textbf{Outlier \textit{y}:} A point $x_i$ is an outlier in the $y$ direction if $|r_i| > 2$. It is not an outlier otherwise.
     \item \textbf{Leverage Points:} A point $x_i$ is a leverage point if $h_{ii} > \frac{2\times (p+1)}{n}$
         \begin{enumerate}
             \item \textbf{Bad, Influential:} means Leverage + Outlier
@@ -1340,8 +1364,16 @@ Recall that $\hat{\mathbf{e}} = \mathbf{Y} - \hat{\mathbf{Y}} = (\mathbf{I} - \m
         \end{enumerate}
 \end{itemize}
 
-
-
+\color{BurntOrange}
+\subsection{Multi-Collinearity}
+Multicollinearity occurs when explanatory variables are highly correlated. In such case,
+\begin{enumerate}
+    \item It is difficult to measure the individual influence of one of the predictors on the response. 
+    \item The fitted equation is unstable
+    \item The estimated regression coefficients vary widely from data set to data set, even if the data sets are similar, and depending on which predictor is included in the model.
+    \item The estimated regression coefficients may even have opposite sign than what is expected. 
+\end{enumerate}
+\color{Black}
 
 
 
@@ -1408,14 +1440,27 @@ Consider $\mathbf{A}, \mathbf{B}$ as compatible matrices where appropriate and $
     \item $\left(\mathbf{A}^{\prime}\right)^{\prime}=\mathbf{A}$
     \item $(\mathbf{A}+\mathbf{B})^{\prime}=\mathbf{A}^{\prime}+\mathbf{B}^{\prime}$
     \item $(\mathbf{A B})^{\prime}=\mathbf{B}^{\prime} \mathbf{A}^{\prime}$
-    \item $(\mathbf{A B C})^{\prime}=\mathbf{C}^{\prime} \mathbf{B}^{\prime} \mathbf{A}^{\prime}$, this properties is known as `cyclic'
+    \item $(\mathbf{A B C})^{\prime}=\mathbf{C}^{\prime} \mathbf{B}^{\prime} \mathbf{A}^{\prime}$
 \end{itemize}
 \subsubsection{Inversions}
 \begin{itemize}
     \item $(\mathbf{A B})^{-1}=\mathbf{B}^{-1} \mathbf{A}^{-1}$
     \item $(\mathbf{A B C})^{-1}=\mathbf{C}^{-1} \mathbf{B}^{-1} \mathbf{A}^{-1}$
     \item $\left(\mathbf{A}^{-1}\right)^{-1}=\mathbf{A}$
-    \item $\left(\mathbf{A}^{T}\right)^{-1}=\left(\mathbf{A}^{-1}\right)^{T}$
+    \item $\left(\mathbf{A}^{T}\right)^{-1}=\left(\mathbf{A}^{-1}\right)^{T}$ 
+    \item \color{BurntOrange}$[(\mathbf{X}'\mathbf{X})^{-1}]' = [(\mathbf{X}'\mathbf{X})']^{-1}$ \hfill $(**)$\color{Black}
+\end{itemize}
+\subsubsection{Idempotency}
+\begin{itemize}
+    \item If $A$ is an \textit{\textbf{idempotent matrix}}, i.e. $A^2 \equiv A$, then $Tr(A) = Rk(A)$.
+    \item $A\in \mat{n}{n}$ is idempotent \textit{if and only if} 
+        \begin{equation*}
+            Rk(A) + Rk(I_{n \times n} - A) = n
+        \end{equation*}
+\end{itemize}
+\subsubsection{Other Misc}
+\begin{itemize}
+    \item The trace of a composition of linear operators has a cyclic property, $Tr(ABC) = Tr(CAB) = Tr(BCA)$. Notice that arbitrary permutation is not valid for this rule. 
 \end{itemize}
 \subsubsection{Covariance Matrix}
 \begin{itemize}
