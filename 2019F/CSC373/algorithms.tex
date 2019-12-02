@@ -83,6 +83,7 @@
 \newenvironment{rcases}
   {\left.\begin{aligned}}
   {\end{aligned}\right\rbrace}
+\renewcommand{\epsilon}{\varepsilon}
 
 \title{Miscellaneous notes in Algorithm Design, Analysis and Complexity}
 \author{\ccLogo \,\,Tingfeng Xia}
@@ -427,6 +428,19 @@ We will need the following three gadgets, namely the variable gadget, the garbag
 
 \paragraph{Partition Reduced From Subset Sum} (Subset Sum $\leq_p$ Partition) Given a Subset Sum problem, we add two elements into the set and give this as the input to the Partition solver. If the partition solver was able to return a YES solution, then we know that the elements in the partitions which 
 contains the $2\sigma - t$ element (exclude the $2\sigma - t$ element) has subset sum equal to $t$ which means the Subset Sum could be solved by using Partition as a black box. 
+
+\section{6.046J Approximation Algorithms}
+\subsection{Approximation Algorithms and Schemes}
+\paragraph{Approximation Ratio} An algorithm for a problem of size $n$ has an approximation ratio $\rho (n)$ if for any input, the algorithm produces a solution with cost $c$ such that 
+\begin{equation*}
+    \max \left(\frac{c}{c_{opt}}, \frac{c_{opt}}{c} \right) \leq \rho(n)
+\end{equation*}
+
+\paragraph{Approximation \textit{Scheme}} takes as input $\epsilon > 0$ and for any fixed $\epsilon$, the scheme is a $(1 + \epsilon)$-approximation algorithm. 
+\begin{itemize}
+    \item \textbf{PTAS} (Probabilistic/Polynomial Time Approximation Scheme) is polynomial time in the input size $n$ but not necessarily polynomial in terms of $\epsilon$. For example, something like $\mathcal{O}(n^{2/ \epsilon})$. % which clearly blows up when we have $\epsilon \to 0$ (actual optimal solution).
+    \item \textbf{FPTAS} (Fully Probabilistic/Polynomial Time Approximation Scheme) means polynomial time in terms of both $n$ and $1/\epsilon$. For example, something like $\mathcal{O}(n / \epsilon^2)$ belongs to this class. 
+\end{itemize}
 
 \newpage
 \section{Problem Excerpts from Past Stuff}
