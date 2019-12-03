@@ -12,11 +12,13 @@
 <!-- * The notes in this repository that are currently in edit are -->
 * Notes in progress:
    - 2019 Fall
-      1. [CSC258](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. Or, if you prefer, the html version os available [here](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html) Midterm Pre-test checklist is [here](https://tingfengx.github.io/uoftnotes/2019F/CSC258/midterm_checklist.pdf).
-      2. [PHL245](https://tingfengx.github.io/uoftnotes/2019F/PHL245/modern_sym_logic.pdf), Modern Symbolic Logic. (Currently archived)
-      3. [CSC311](https://tingfengx.github.io/uoftnotes/2019F/CSC311/intro_ml.pdf), A cheat sheet for the exams, as allowed by the course syllabus. 
-      4. [CSC373](https://tingfengx.github.io/uoftnotes/2019F/CSC373/algorithms.pdf), Miscellaneous notes from MIT open courseware (6.006 and 6.046J), aiming to help get a better understanding of the course materials. 
-      5. [STA302](https://tingfengx.github.io/uoftnotes/2019F/STA302/regression.pdf). Note from SJS and KNN.
+      1. [CSC258](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. [In plain HTML](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html) 
+         - [Midterm Pre-test checklist](https://tingfengx.github.io/uoftnotes/2019F/CSC258/midterm_checklist.pdf)  
+         - [Final Review Notes (Mainly On Assembly)](https://tingfengx.github.io/uoftnotes/2019F/CSC258/final_review.pdf)  
+      1. [PHL245](https://tingfengx.github.io/uoftnotes/2019F/PHL245/modern_sym_logic.pdf), Modern Symbolic Logic. (Currently archived)
+      2. [CSC311](https://tingfengx.github.io/uoftnotes/2019F/CSC311/intro_ml.pdf), A cheat sheet for the exams, as allowed by the course syllabus. 
+      3. [CSC373](https://tingfengx.github.io/uoftnotes/2019F/CSC373/algorithms.pdf), Miscellaneous notes from MIT open courseware (6.006 and 6.046J), aiming to help get a better understanding of the course materials. 
+      4. [STA302](https://tingfengx.github.io/uoftnotes/2019F/STA302/regression.pdf). Note from SJS and KNN.
 * Notes that have already finished typesetting:
    - 2019 Winter
       1. [MAT224](https://tingfengx.github.io/uoftnotes/2019W/MAT224/MAT224.pdf), Linear Algebra II. Collection of (nearly) all the theorems presented in the book/mentioned during lecture. 
