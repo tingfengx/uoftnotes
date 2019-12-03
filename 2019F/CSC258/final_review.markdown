@@ -153,5 +153,286 @@ Branching statements are used widely in IF statements and WHILE loops, or genera
     - Stored here as number of instructions and not number of bytes
         - Again, not storing the trailing '00' if it is not necessary.
     - The i value can be positive (if you are jumping i instructions forward) or negative (if you are jumping i instructions backward)
-    - 
 
+### Calculating the i value
+- The offset is computed differently, depending on the implementation (i.e. if the PC is incremented by 4 before or after the brach offset calculation).
+- In this course, we assume that i is computed as
+    - ``` i = (label - (current PC)) >> 2```, i.e. PC is incremented first. 
+- Let's see an example where the i is calculated at compile time
+    ``````
+    .text
+    main:   addi $t0, $zero, 1
+            beq $t0, $zero, END
+            addi $t1, $zero, 1
+    END:    addi $t3, $zero, 1
+    ``````
+    We can see, using a simulator, that the immediate value for the ```beq``` call, which is END, is 2. (Since END is 2 instructions down from the branch instruction)
+
+### Conditional Branch Terms 
+- When the branch condition is met, we say the *branch is taken*
+- When the branch condition is not met, we say that the *branch is not taken*.
+    - in the case that the brach is not taken, the next value for the PC is ```PC = PC + 4```, which is exacly the next instruction since each instruction is 4 bytes long (32'b). 
+- **Since branching relies on a 16bit value, branching distance is not unlimited**. Since the 16'b is signed, we have ```+/- 15'b``` to vary in total, which gives 2^16 total different values, corresponding to a range of 2^16 instructions. 
+
+## Comparison Instructions
+| Instruction 	| Opcode 	| Syntax           	| Operation               	|
+|-------------	|--------	|------------------	|-------------------------	|
+| ```slt```   	| 101010 	| ```$d, $s, $t``` 	| ```$d = ($s < $t)```    	|
+| ```sltu```  	| 101001 	| ```$d, $s, $t``` 	| ```$d = ($s < $t)```    	|
+| ```slti```  	| 001010 	| ```$t, $s, i```  	| ```$t = ($s < SE(i))``` 	|
+| ```sltiu``` 	| 001011 	| ```$t, $s, i```  	| ```$t = ($s < ZE(i))``` 	|
+
+- **Note:** Comparison operations stores a 1 in the destination register if the less-than comparison is true, and stores a zero in that location otherwise. This is not used very often, but useful in combination with branch instructions that only depend on one register. For example, ```bgtz``` branching on greater than. (You can do the comparison and store the result and use ```bgtz``` to branch on the computed 1/0 value.)
+
+
+## Using Branches and Jumps
+### If Statements
+- If statements test a condition and then execute lines of code if the condition is true. For instance
+    ``````
+    if (i == j) {
+        i++;
+    }
+    j += i;
+    ``````
+- Testing conditions is done using either a ```beq``` instruction or a ```bne``` instruction. 
+- To achieve this, we can use the ```bne``` instruction to skip the ```i++``` steo and proceed to the ```j += i``` step.
+    ``````
+    # st1 = i, $t2 = j
+    main:   bne $t1, $t2, END
+            addi $t1, $t1, 1
+    END:    add $t2, $t2, $t1
+    ``````
+
+### If/Else Statements
+- Possible approach to if/else statements:
+    - Test condition, and jump to ```if``` logic block whenever the condition is true.
+    - Otherwise, perform the ```else``` logic block, and jump to the first line after ```if``` logic block.
+- Example
+    ``````
+    if (i == j)
+        i++;
+    else
+        i--;
+    j += i;
+    ``````
+    Can be translated into the following
+    ``````
+    # $t1 = i, $t2 = j
+    IFPART:     bne $t1, $t2, ELSEPART
+                addi $t1, $t1, 1
+                j END
+    ELSEPART:   addi $t1, $t1, -1
+    END:        add $t2, $t2, $t1
+    ``````
+
+### Multiple If Statements
+There are cases where the condition for the ```if``` statement has several conditions, such as the follows
+``````
+if ( i == j || i == k ) 
+    i ++;
+else
+    i --; 
+j = i + k;
+``````
+we have the equivalent form in assembly
+``````
+# $t1 = i, $t2 = j, $t3 = k
+main:       beq $t1, $t2, IF        # equal -> short circuit behavior
+            bne $t1, $t3, ELSE      # if equal, do nothing and jump to else
+IF:         addi $t1, $t1, 1
+            j END                   # skip the else part
+ELSE:       addi $t1, $t1, -1
+END:        add $t2, $t1, $t3
+``````
+
+Above we looked at the case where ```if``` was done on two conditions ```or```'ed together. We shall now see an example where it has a ```and``` condition.
+``````
+if (i == j && i == k)
+    i ++; 
+else 
+    j --;
+j = i + k;
+``````
+in assembly, this can be represented as
+``````
+# $t1 = i, $t2 = j, $t3 = k
+MAIN:       bne $t1, $t2, ELSE
+            bne $t1, $t3, ELSE
+            addi $t1, $t1, 1
+            j END
+ELSE:       addi $t1, $t1, -1
+END:        add $t2, $t1, $t3
+``````
+
+### While Loops
+Loops are, in some sense, similar to ```if``` statements. Here is the general recepe for the assembly procedure.
+- Test if the loop condition fails
+    - If it does, branch to the end
+- Otherwise, execute the ```while``` loop contents
+    - Make sure to update the loop condition values
+- Jump back to the beginning
+Consider he following simple program
+``````
+int i = 0;
+while (i < 100) {
+    i++;
+}
+``````
+we have assembly code equivalent
+``````
+# $t0 = i, $t1 = 100 (constant variable to compare to)
+main:       add $t0, $zero, $zero       # set $t0 to 0
+            addi $t1. $zero, 100        # set $t1 to 100
+START:      beq $t0, $t1, END           # while $t0 < $t1
+            addi $t0, $t0, 1            #   $t0 = $t0 + 1
+            j START                     #   jump back to the start
+END:                                    # do nothing after finishing
+``````
+
+### For Loops
+``````
+for ( <init> ; <cond> ; <update> ) {
+    <for body content>
+}
+``````
+Cosinder the problem
+``````
+for ( i = 0 ; i < 100 ; i++ ) {
+    j  = j + i;
+}
+``````
+which translates into assembly as
+``````
+# $t0 = i, $t1 = j, $t9 = 100 (constant var)
+main:       add $t0, $zero, $zero       # Init $t0 <- 0
+            add $t1, $zero, $zero       # Init $t1 <- 0
+            addi $t9, $zero, 100        # Init $t9 <- 100
+START:      beq $t0, $t9, EXIT
+            add $t1, $t1, $t0
+UPDATE:     addi $t0, $t0, 1
+            j START
+EXIT:
+``````
+**Note:** Without the initialization and update sections, this is the same as a ```while``` loop. 
+
+# Interactng With Memory
+- All of the previous instructions perform operations on registers and immediate values, **what about momory?**
+- All program must fetch values from memory into registers, operate on them, and then store the values back into memory.
+- Memory operations are I-type, with the form
+``````
+|Load/Store Operation|Load Data Register|offset(Address in Memory)|
+|         lw         |        $t0       |         12 ($t0)        |
+``````
+## Load Versus Stores
+- The terms "laod" and "store" are seen from the perspective of the processor, looking at memory
+- Load are read operations
+    - We load (**i.e., read**) from memory
+    - We load a value from a memory address into a register
+- Stores are write operations
+    - We store (**i.e. write**) a data value from a register to a memory address.
+    - Store instructions do not have a destination register, and therefore do not write to the register file. 
+
+## Memory Instructions in MIPS Assembly
+- Load and store instructions are I-type operations
+``````
+| 6'b Opcode | 5'b rs | 5'b rt | 16'b immediate |
+``````
+- Here is a nice way to organize all the possible assembly commands in this category, represented in regular expression
+    ``````
+    (load + store) (size of value) (signed or unsigned)
+    (l + s)        (w + h + b)     (u / <>)
+    ``````
+    - ```w = word```
+    - ```h = half```
+    - ```b = bit```
+- Load and store instructions (omitted since not necessary to reproduce here)
+- Above we have discussed a way to organize all possible commands, we will represent them using ```<1><2><3>``` to further discuss the trailling arguments
+    ``````
+    | Command Name | Destination, offset (access location) |
+    |   <1><2><3>  |      $t    ,       i($s)              |
+    ``````
+    The ```access location``` specifies the location to access as ```MEM[$s + SE(i)]``` while ```Destination``` stores the destination register for loads, source register for store. (These are register locations in the register file, so from the processos' perspective of view we load from memory into a destination register OR we write to memory using a source register as source)
+
+## Alignment Requirements
+- Misaligned memory accesses result in errors
+    - Word access should word aligned (divisible by four). This is used in addresses specified in a ```lw``` or ```sw``` instruction.
+    - Half word access should only involve half-word aligned address (i.e., even addresses)
+    - **No** constraints for byte access. 
+
+## Notes on Memory
+### Big/Small Endian-ness
+- **Big Endian**
+    - The **most significant byte** of the word is stored first. The second most significant byte is stored at address that immediately follows and so on and so forth.
+- **Small Endian**
+    - The **least significant byte** of the word is stored first. The second least significant byte is stored at address that immediately follows and so on ans so dorth.
+
+### MIPS Endianness
+- MIPS processors are bi-endian i.e., they can operate with either big/small endian byte order.
+
+## Reading From Devices
+- The offset value is useful for objects or stack parameters, when multiple values are needed from a given memory location.
+- Memory is also used to communicate with outside deices, such as keyboards and monitors
+    - known as **memory mapped IO**
+    - Invoked with a **trap** or [**syscall**](http://courses.missouristate.edu/kenvollmar/mars/help/syscallhelp.html) function
+
+### Trap Instructions
+- Trap instructions send system calls to the operating system
+    - For example, interacting with the user, and exiting the program etc.
+- This is similar, but not quite the same, as compared to the ```syscall``` command. 
+
+## Memory Segments and Syntax
+- Program are divided into two main sections in memory:
+    - ```.data```
+        - Indicates the start of the data values section. (Typically, the beginning of the program)
+    - ```.text```
+        - Indicates the start of the program instruction section.
+- Withhin the instruction section are program labels and branch addresses.
+    - ```main:```
+        - The initial line to run when executing the program
+    - Other labels are determined by the function names used in one's program. 
+
+### Labeling data values
+- Data storage
+    - At beginning of program, create labels for memory locations that are used to store values.
+    - Always in form ```label       .type       value(s)```
+    - Create a single integer variable with initial value 3
+    ``````
+    var1:       .word       3
+    ``````
+    - Create a 2-element character array with elements initialized to a and b
+    ``````
+    array1:     .byte       'a', 'b'
+    ``````
+    - Allocate 40 consecutive bytes, with uninitialized storage. Could be used as a 40 element character array, or a 10 element integer array
+    ``````
+    array2:     .space      40
+    ``````
+
+# Pseudo-Instructions
+- Pseudo-instructions are there for the convenience of the programmer. 
+- The assembler translates them into 1 ot more *real* MIPS assembly instructions
+    - **Real MIPS instructions have opcodes, pesudo-instructions do not!**
+    - The assembler often uses the special ```$at``` register (also written as ```$t```) when mapping pseudo-instructions to MIPS instructions.
+
+## Example: The ```la``` instruction
+- ```la``` (load address) is a pseudo-instruction written in the format
+    - ```la $d, label```
+    - Loads a register ```$d``` with memory address that ```label``` corresponds to.
+- Usually translated by the assembler into the following two MIPS instructions
+    1. ```lui $at, immediate```, load upper immediate
+       - The immediate represents the upper 16 bits of the memory address label corresponds to. These bits are loaded in the upper 16 bits of the destination register. Lowest 16 bits are set to 0.
+       - Register ```$at($1)``` is the register used by the assembler
+    2. ```ori $d, $at, immediate2```
+       -  ```immediate2``` represents the lower 16 bits of the memory address label corresponds to. 
+
+## Example: ```bge``` branching
+- Some branch instructions are pseudo instructions, for example
+    - ```bge $s, $t, label```
+        - Branch to label if and only if ```$s >= $t```
+            - (Comparing regiser contents)
+    - Implemented by using one of comparison instructions followed by ```beq``` or ```bne```. One plausible implementation is
+        ``````
+        slt $at, $s, $t         # set $at to 1 if $s<$t
+        beq $at, $zero, $label  # branch if $at == 0
+        ``````
+        Notice that here we have usde the ```$at``` register. This is legal because we are now doing the role of assembler and ```$at``` is reserved for the assembler. 
