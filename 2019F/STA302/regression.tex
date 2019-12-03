@@ -1392,6 +1392,46 @@ The $j$-th Variance Inflation Factor is defined as $\mathrm{VIF}_j := \frac{1}{1
 % TODO: Adding to MLR Diagnostics
 
 
+\section{Variable Selection}
+\subsection{Information Criterion}
+\subsubsection{R-squared Adjusted}
+
+\subsubsection{Akaike’s Information Criterion (AIC)}
+\paragraph{Goal} Balance goodness of fit of the model and the complexity of the model, in terms of number of predictors. 
+\paragraph{AIC Defined}
+\begin{equation*}
+    \mathrm{AIC}=2\left[-\log \left(L\left(\hat{\beta}_{0}, \hat{\beta}_{1}, \ldots, \hat{\beta}_{p}, \hat{\sigma}^{2} | Y\right)\right)+K\right] \quad \quad \text{where} ~ K = p + 2
+\end{equation*}
+One can think of the $K = p + 2$ as a `degree of freedom', since here we have $\beta_{0}, \beta_{1}, \ldots, \beta_{p}, \sigma^{2}$ in total of $p + 2$ estimated values in the model.
+\paragraph{AIC in R}
+\begin{equation*}
+    \mathrm{AIC}=n \log \left(\frac{\mathrm{RSS}}{n}\right)+2 p
+\end{equation*}
+\subsubsection{AIC - Corrected}
+\paragraph{Goal} When the sample size is small, or when the number of parameters estimated is a moderate to large fraction of the sample size, it is well-known that AIC has a tendency for over-fitting since the penalty for model complexity is not strong enough. As such, the $AIC_C$ is developed to address this issue.
+
+
+\paragraph{$AIC_C$ Defined}
+\begin{equation*}
+    \mathrm{AIC}_{\mathrm{C}}=-2 \log (L(\hat{\theta} | Y))+2 K+\frac{2 K(K+1)}{n-K+1}=\mathrm{AIC}+\frac{2 K(K+1)}{n-K+1}
+\end{equation*}
+when $K = p + 2$, we have the equivalent form
+\begin{equation*}
+    \mathrm{AIC}_{\mathrm{C}}=\mathrm{AIC}+\frac{2(p+2)(p+3)}{n-p-1}
+\end{equation*}
+
+\paragraph{When To Use?} In general, use $AIC_C$ over $AIC$ since when $n \to \infty$, $AIC_C$ converges to $AIC$. It is recommended that $AIC_C$ should be used over $AIC$ if $\frac{n}{K} > 40$. 
+
+\subsubsection{Bayesian Information Criterion (BIC)}
+\paragraph{BIC Defined} The BIC is defined as,
+\begin{equation*}
+    \mathrm{BIC}=-2 \log \left(L\left(\hat{\beta}_{0}, \hat{\beta}_{1}, \ldots, \hat{\beta}_{p}, \hat{\sigma}^{2} | Y\right)\right)+K \log (n) \quad \quad \text{where} ~ K = p + 2
+\end{equation*}
+The BIC is formulated quite similarly o the AIC we defined above, notice that we replaced the complexity penalty of $2K$ in AIC with $K \log n$ here in BIC. (Notice that the factors here are 2 and $\log n$ respectively.) We see that when $n \geq 8$, $\log n \geq 2$ and hence when sample size is larger than 8, BIC penalizes more to the model complexity. \color{BurntOrange}This results in BIC favouring simpler models than AIC\color{Black}
+
+\subsubsection{Comparison of Information Criteria}
+
+
 \newpage
 \section{Selected Properties, Formulae, and Theorems}
 This section contains various properties mentioned in the slides/book. They may or may not have appeared in precious sections. 
