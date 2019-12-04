@@ -319,10 +319,10 @@ EXIT:
 - All of the previous instructions perform operations on registers and immediate values, **what about momory?**
 - All program must fetch values from memory into registers, operate on them, and then store the values back into memory.
 - Memory operations are I-type, with the form
-``````
-|Load/Store Operation|Load Data Register|offset(Address in Memory)|
-|         lw         |        $t0       |         12 ($t0)        |
-``````
+    ``````
+    |Load/Store Operation|Load Data Register|offset(Address in Memory)|
+    |         lw         |        $t0       |         12 ($t0)        |
+    ``````
 ## Load Versus Stores
 - The terms "laod" and "store" are seen from the perspective of the processor, looking at memory
 - Load are read operations
@@ -334,9 +334,9 @@ EXIT:
 
 ## Memory Instructions in MIPS Assembly
 - Load and store instructions are I-type operations
-``````
-| 6'b Opcode | 5'b rs | 5'b rt | 16'b immediate |
-``````
+    ``````
+    | 6'b Opcode | 5'b rs | 5'b rt | 16'b immediate |
+    ``````
 - Here is a nice way to organize all the possible assembly commands in this category, represented in regular expression
     ``````
     (load + store) (size of value) (signed or unsigned)
@@ -423,7 +423,7 @@ EXIT:
        - The immediate represents the upper 16 bits of the memory address label corresponds to. These bits are loaded in the upper 16 bits of the destination register. Lowest 16 bits are set to 0.
        - Register ```$at($1)``` is the register used by the assembler
     2. ```ori $d, $at, immediate2```
-       -  ```immediate2``` represents the lower 16 bits of the memory address label corresponds to. 
+       -  ```immediate2``` represents the lower 16 bits of the memory address label corresponds to. (Here ```ori``` is the OR immediate operation.)
 
 ## Example: ```bge``` branching
 - Some branch instructions are pseudo instructions, for example
@@ -436,3 +436,65 @@ EXIT:
         beq $at, $zero, $label  # branch if $at == 0
         ``````
         Notice that here we have usde the ```$at``` register. This is legal because we are now doing the role of assembler and ```$at``` is reserved for the assembler. 
+
+# Arrays and Structs
+## Arrays
+- Arrays in assembly languarge:
+    - Arrays are stored in consecutive locations in memory.
+        - The address of the array is the address of the array's first element
+        - To access element i of an aray, use i to calculate an offset distance. Add that offset to the address of the first element to get the address of the i-th element.
+            - ```offset = i * sizeof(single element)```
+    - To operate on array elements, load the array values into registers. Operate on them, then store them back into memory.
+
+## Translating Arrays
+Consider the code snippet
+``````
+int A[100], B[100];     # B is an array of 100 slots, each of value 42
+for (i = 0; i < 100; i++) {
+    A[i] = B[i] + 1
+}
+``````
+Then, in assembly
+``````
+        .data
+A:      .space 400
+B:      .word  42:100
+
+        .text
+main:   la $t9, A               # Load From Memory
+        la $t9, B               # Load From Memory
+        add $t0, $zero, $zero   # $t0 <- i, Init to 0
+        addi $t1, $zero, 100    # $t1 <- 100, stop condition
+
+LOOP:   bge $t0, $t1, END
+        sll $t2, $t0, 2         # sizeof(int) = 4 byte, $t2 = offset
+        add $t3, $t8, $t2       # $t3 = (*)A + offset
+        add $t4, $t9, $t2       # $t4 = (*)B + offset
+                                # Note: In memory, above two are different addresses
+        lw $t5, 0($t4)          # $t4 = addr(B[i]), $t5 = B[i] 
+        addi $t5, $t5, 1        # Increment by one on loaded value
+        sw $t5, 0($t3)          # Store the value into appropraiate A position
+
+UPDATE: addi $t0, $t0, 1        # i++
+        j LOOP                  # Jump Back
+
+END:    ...
+``````
+In above implementation, we used a seperate loop variable to count the number of loops. It is also possible to do this with just the offset value where we constantly compare to 400, the final offset in the last iteration corresponding to the last element in both arrays. 
+
+## Example: Struct Program
+``````
+        .data
+a1:     .space 12
+
+        .text
+main:   addi $t0, $zero, a1
+        addi $t1, $zero, 5
+        sw $t1, 0($t0)
+        addi $t1, $zero, 13
+        sw $t1, 4($t0)
+        addi $t1, $zero, -7
+        sw $t1, 8($t0)
+``````
+
+
