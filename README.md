@@ -14,7 +14,7 @@
    - 2019 Fall
       1. [CSC258](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. [In plain HTML](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html) 
          - [Midterm Pre-test checklist](https://tingfengx.github.io/uoftnotes/2019F/CSC258/midterm_checklist.pdf)  
-         - [Final Review Notes (Mainly On Assembly)](https://tingfengx.github.io/uoftnotes/2019F/CSC258/final_review.pdf)  
+         - [Final Review Notes (Mainly On Assembly)](https://tingfengx.github.io/uoftnotes/2019F/CSC258/final_review.pdf)
       1. [PHL245](https://tingfengx.github.io/uoftnotes/2019F/PHL245/modern_sym_logic.pdf), Modern Symbolic Logic. (Currently archived)
       2. [CSC311](https://tingfengx.github.io/uoftnotes/2019F/CSC311/intro_ml.pdf), A cheat sheet for the exams, as allowed by the course syllabus. 
       3. [CSC373](https://tingfengx.github.io/uoftnotes/2019F/CSC373/algorithms.pdf), Miscellaneous notes from MIT open courseware (6.006 and 6.046J), aiming to help get a better understanding of the course materials. 
