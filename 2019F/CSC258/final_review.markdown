@@ -712,6 +712,40 @@ int fact (int x) {
 - **Solution:** **the stack!**
     - Before recursive call, store the register values that you use onto the stack, and restore them when you come back to that point. 
     - Don't forget to store ```$ra``` as one of those values, or else the program will loop forever. 
+### Translated ```fact(int x)``` in Assembly
+```
+main:           addi $t0, $zero, 10     # Assume call on fact(10)
+                addi $sp, $sp, -4       # Push 10 onto stack
+                sw   $t0, 0($sp)        # puch 10 onto stack
+                jal  factorial          # result will be on stack
+                ...
+
+factorial:      lw   $t0, 0($sp)        # get x from stack
+                bne  $t0, $zero, rec    # base case ?
+
+base:           addi $t1, $zero, 1      # Base case reached, make 1
+                sw   $t1, 0($sp)        # put 1 
+                jr   $ra                # return to caller
+
+rec:            addi $t1, $t0, -1       # $t1 <- x - 1
+                addi $sp, $sp, -4       # put return value
+                sw   $ra, 0($sp)        #  onto the stack
+                addi $sp, $sp, -4       # put x - 1 onto
+                sw   $t1, 0($sp)        #   stack
+                jal  factorial          # RECURSIVE CALL
+                lw   $t2, 0($sp)        # pop return value
+                addi $sp, $sp, 4        #   from stack
+                lw   $ra, 0($sp)        # restore return
+                addi $sp, $sp, 4        #   address value
+                lw   $t0, 0($sp)        # restore x value
+                addi $sp, $sp, 4        #   for this call
+                mult $t0, $t2           # x * fact (x - 1)
+                mflo $v0                # fetch product
+                addi $sp, $sp, -4       # push n! result
+                sw   $v0, 0($sp)        #   onto stack
+                jr   $ra                # return to caller
+```
+
 
 
 
