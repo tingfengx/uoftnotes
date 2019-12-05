@@ -344,7 +344,7 @@ EXIT:
     ``````
     - ```w = word```
     - ```h = half```
-    - ```b = bit```
+    - ```b = byte``` **not bit!**
 - Load and store instructions (omitted since not necessary to reproduce here)
 - Above we have discussed a way to organize all possible commands, we will represent them using ```<1><2><3>``` to further discuss the trailling arguments
     ``````
@@ -488,13 +488,230 @@ In above implementation, we used a seperate loop variable to count the number of
 a1:     .space 12
 
         .text
-main:   addi $t0, $zero, a1
-        addi $t1, $zero, 5
-        sw $t1, 0($t0)
-        addi $t1, $zero, 13
-        sw $t1, 4($t0)
+main:   addi $t0, $zero, a1     # store array head a1 in $t0
+        addi $t1, $zero, 5      # initialize $t1 to 5, prep
+        sw $t1, 0($t0)          # write to position 0($t0), value of $t1
+        addi $t1, $zero, 13     # ... (repeat above)
+        sw $t1, 4($t0)          # second slot, off-set 4 bytes (32 bits)
         addi $t1, $zero, -7
-        sw $t1, 8($t0)
+        sw $t1, 8($t0)          # ... (repeat above)
 ``````
+- How can we figure out the purpose of this code?
+- The ```sw``` lines indicate that values in ```$t1``` are being stored at ```$t0```, ```$t0 + 4```, and ```$t0 + 8```. 
+    - Each previous line sets the value of ```$t1``` to store
+- Therefore, this code stores the value 5, 13, and -7 into the struct at location ```a1```. 
+
+# Designing Assembly Code
+## Making sense of assembly code
+- Assembly language looks intimidating because the programs involve a lot of code. 
+    - No worse than your CSC108 assignments would look to the untrained eye!
+- The key to reading and designing assembly code is recognizing portions of code that represent higher-level operations that you're familiar with. 
+
+# Functions in Assembly - Introducing Stacks
+## Function Calls and Returns
+- To suppirt functions, we need to be able to:
+    - Define the start of a function
+        - Label the first line to provide a target address to jump to.
+    - Take in function arguments and return values
+        - Could use registers but *might need another solution*
+    - Store variables local to the fnction and also ensure functions don't clobber useful data on registers
+        - Registers for storing data, *but are any off-limit?*
+    - Return to the calling site
+        - after the last line in the function, return to the instruction after the one that dod the function call. 
+
+### How do we call a function?
+- ```jal FUNCTION_LABEL```
+    - This jumps to the first line of the function, which has the specified label (i.e. ```function_X``` here)
+- ```jal``` is a J-type instruction
+    - It updates register ```$31``` (```$ra```, return address register) and also the program counter
+    - After it's executed, ```$ra``` contains the address of the instruction ***after*** the line that called ```jal```. 
+
+### How do we return from a function?
+- ```jr $ra```
+    - The PC is stet to the address in ```$ra```
+- But how do we knwo what is in ```$ra``` ?
+    - ```$ra``` was set by the most recent ```jal``` instruction (function call)!
+- **Problem: nested function calls are not able to run using this simple scheme!**
+
+### Solving the ```$ra``` dilemma
+- How do we make sure tat we don't clobber the value of ```$ra``` every time we call a nested function?
+- Need to put ```$ra``` away somewhere for safe keeping if we know we are about to overwrite it. 
+- Would be ideal if the sturcture used for this mode it it easy to find the last item that was stored away. **STACK!!!**
+
+## The Stack
+### The Stack and the Stack Pointer
+- The statck is a spot in memory used to store values independent of the registers (which can get overwritten easily)
+- A special register stores the **stack pointer**, which points to the last element pushed onto the top of the stack.
+    - For MIPS the stack pointer is ```$sp($29)```. This holds the address of the last element pushed to the top of the stack
+    - In other systems, ```$sp``` could point to the first empty location on top of the stack.
+- We can push data, like ```$ra```, onto the stack (which makes it *grow*) and pop data from the stack (which makes it *shrink*).
+- The stack is allocated a maximum space in memory. If it grows too large, there is the risk of it exceeding this predefined size and/or overlapping with heap (Whoops, bad memory from 209 : / Stack frames are allocated with 6MB each, and huge recursions can potetially overflow in this.)
+
+### The programmer's view of memory
+- The stack is a part of memory used for function calls etc.
+- The stack grows towards samller (lower) addresses
+- The stack uses LIFO (last in first out order)
+    ``````
+    --------------------------
+    0x00000000 |  Reserved   |
+    ...        |             |
+    --------------------------
+               |  Code(.text)|
+    ...        |             |
+    --------------------------
+               |   (.data)   |  <- Global Variables 
+    ...        |             |
+    --------------------------
+               |     Heap    |  (Heap grows downward)
+    ...        |             |
+    --------------------------
+    ...        |             |
+               | Unallocated |
+    ...        |             |
+    --------------------------
+               |        (top)|  (<- $sp points to current top)
+               |    Stack    |  (Stack grows upward, to small address)
+    0x7FFFFFFF |        (bot)|
+    --------------------------
+    0xFFFFFFFF |   OS Code   |
+    --------------------------
+    ``````
+
+### The stack to the rescue!
+- When do you store values onto the stack?
+    - Whenever you call a function and want to preserve values from getting overwritten (like ```$ra```)
+- What happens when you have nested function calls, each of which stores ```$ra``` on the stack?
+    - Different ```$ra``` value will exists in layers on the stack over time. 
+- We can also use the stack to store 
+    - Function Arguments
+    - Function return values
+
+### Popping Values off the stack
+``````
+# pop a word off the stack
+lw $ra, 0($sp)
+# move stack pointer a word (4 bytes)
+addi $sp, $sp, 4
+``````
+- **Note:** ```addi $sp, $sp, 4``` is adding 4 to the stack pointer, hence moving downward by a word length
+
+### Pushing Values to the stack
+``````
+# move stack pointer a word (new location at top)
+addi $sp, $sp, -4
+# push a word onto the stack
+sw $ra, 0($sp)
+``````
+
+### Advice on using the stack
+- Any space you allocate on the stack, you should later deallocate. (Similar to in C, ```malloc()``` on heap and de-allocate using ```free()```) 
+- If you push items in a certain order, you should pop the items in the reverse order.
+    - might help to draw out an image of how the stack looks like
+- When pushing more than one item onto the stack, you can:
+    - Either allocate all the spaces in the beginning or allocate spaces as you go. Same principle applies for popping
+
+# Passing Function Parameters
+## Functions versus Code
+- Since functions have entry and exit points, they also need input and output parameters. 
+    - In other languages, these parameters are assumed to be available at the start of the function.
+    - In Assembly, you have to fetch those values from memory first before you can operate on them.
+
+## Common Calling Conventions
+- While most programs pass parameters through the stack, it is also possible to use registers to pass values to and from programs:
+    - Registers 2 - 3 (```$v0, $v1```): return values
+    - Registers 4 - 7 (```$a0 - $a3```): function arguments
+- If your function has up to 4 arguments you would use the ```$a0``` to ```$a3``` registers in that order. Any additional arguments would be pushed on the stack. 
+    - More common convention is to just push all arguments to the stack. (Specific way of doing this will be provided on he final exam.)
+
+## Example: String function ```strcpy``` program
+``````
+void strcpy (char* x, char* y) {
+    int i = 0;
+    while ((x[i] = y[i]) != '\0')
+        i += 1;
+    return 1;
+}
+``````
+We will convert the above program into assembly, using parameters from the stack. In this case, the parameters ```x``` and ```y``` are passed into the function, in that order. 
+``````
+!#! Each char is 1 byte
+
+strcpy:     lw      $a0, 0($sp)         # load *y* into $a0
+            addi    $sp, $sp, 4         # move to next word
+            lw      $a1, 0($sp)         # load *x* into $a1
+            addi    $sp, $sp, 4         # move new stack top
+            add     $t0, $zero, $zero   # $t0 = i, init to 0
+
+L1:         add     $t1, $t0, $a0       # $t1 = y + i = ystart + offset
+            lb      $t2, 0($t1)         # $t2 = current y[i]
+            add     $t3, $t0, $a1       # #t3 = x + i = xstart + offset 
+            sb      $t2, 0($t3)         # x[i] = $t2 (x[i] = y[i])
+            beq     $t2, $zero, L2      # y[i] ?= '\0'
+            addi    $t0, $t0, 1         # i++
+            j       L1                  # loop again
+
+L2:         addi    $sp, $sp, -4        # Move $sp to 1 above top
+            addi    $t0, $zero, 1       # $t0 = 1
+            sw      $t0, 0($sp)         # Write $t0 to stack top
+            jr      $ra                 # return 
+``````
+
+# Function Considerations
+## Maintaining Register Values
+- We have already demonstrated why we'd need to push ```$ra``` onto the stack when having nested function calls. 
+- What about other registers?
+    - How do we know that a fnction we called didn't overwrite registers that we were using?
+        - **Remember there is one and only one register file!**
+- **Solution: caller and callee calling conventions**
+
+## Calling Conventions
+- Caller vs. Callee
+    - Caller is the function calling another function.
+    - Callee is the function being called.
+    - A function canbe both a caller and a callee
+- We seperate registers into
+    - Caller-Saved Registers (```$t0 - $t9```)
+    - Callee-Saved Registers (```$s0 - $s7```)
+## Register Saving Conventions
+- Caller-Saved Registers
+    - Regisers ```8-15,24,25 ($t0 - $t9)```: **temporaries**
+    - Registers that the caller should save to the stack before calling a function. If they don't save them, there is no gurantee that the contents of these registers will bot be clobbered.
+    - Push them to the stack just before you call another function and restore them immediately after.
+- Calle-Saved Registers
+    - Registers ```16-23 ($s0 - $s7)```: **saved temporaries**
+    - It is the responsiblility of te callee to save these registers and later restore them, if it is going to modify them.
+    - Push them to the stack first thing in your function body and restore them just before you return. (preserving the values in the registers using the stack) 
+
+## Stack & Function Summary
+- Before Calling a subroutine
+    - Push registers onto the stack to preserve their values
+    - Push the input paraeters onto the stack
+- At the start of the subroutine
+    - Pop the input parameters from the stack 
+- At the end of subroutine
+    - Push the return values onto the stack
+- Coming back from a subroutine call:
+    - Pop the return values from the stack
+    - Pop the saved register values and restore them
+
+# Recursion in Assembly
+## Recursive Programs
+```
+int fact (int x) {
+    if (x == 0)
+        return 1;
+    else 
+        return x * fact(x - 1)
+}
+```
+- Still needs base case and recursive step, as with other languages. 
+- Main difference (w.r.t. other language): **Maintainning register values**
+    - When a recursive function calls itself in assembly, it calls ```jal``` back to the beginning of the program
+    - What happens to the prevous value ```$ra```?
+    - What happens to the previous register values, when the program runs a second time?
+- **Solution:** **the stack!**
+    - Before recursive call, store the register values that you use onto the stack, and restore them when you come back to that point. 
+    - Don't forget to store ```$ra``` as one of those values, or else the program will loop forever. 
+
 
 
