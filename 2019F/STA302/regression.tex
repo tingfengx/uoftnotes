@@ -1364,6 +1364,37 @@ Recall that $\hat{\mathbf{e}} = \mathbf{Y} - \hat{\mathbf{Y}} = (\mathbf{I} - \m
         \end{enumerate}
 \end{itemize}
 
+
+\subsection{Box-Cox Transformation} 
+\begin{itemize}
+    \item \textbf{Note:} Details not needed.
+    \item One of the most cited papers in Statistics - Box and Cox (1964)
+    \item A general method for transforming a strictly positive response variable
+    \item Aims to find transformation that makes the transformed variable close to normally distributed
+    \item Considers a family of power transformation
+    \item Based on maximizing a likelihood function
+\end{itemize}
+
+\subsection{Added Variable Plots}
+Suppose that our current model is 
+\begin{equation*}
+    Y = X\beta + e \quad \quad \text{(modelYX)}
+\end{equation*}
+and we are considering the introduction of an additional predictor variable, $Z$, that is, our new model is 
+\begin{equation*}
+    Y = X\beta + Z \alpha + e \quad \quad \text{(modelYXZ)}
+\end{equation*}
+and the added-variable plot is obtained by plotting the residuals from (modelYX) against the residuals from the model
+\begin{equation*}
+    Z = X\delta + e\quad \quad \text{(modelZX)}
+\end{equation*}
+\paragraph{Rationale for using such method}
+\begin{itemize}
+    \item To visually assess the effect of each predictor, having adjusted for the effects of the other predictors
+    \item To visually estimate $\alpha$
+    \item Can be used to identify points which have undue influence on the least squares estimate of $\alpha$
+\end{itemize}
+
 \color{BurntOrange}
 \subsection{Multi-Collinearity}
 \color{Black}
@@ -1393,11 +1424,59 @@ The $j$-th Variance Inflation Factor is defined as $\mathrm{VIF}_j := \frac{1}{1
 
 
 \section{Variable Selection}
+\begin{itemize}
+    \item Variable selection methods aim to choose the subset of the explanatory variables that is the best in a given sense
+    \item \textbf{Overfitting:} occurs when too many predictors are in the final regression model. Essentially, we have learnt too much information about some data set and may not be able to generalize in future predictions. The term \textbf{under-fitting} refers to the opposite of above.
+    \item In general, there is a bias variance trade-off: when we add more predictors to a valid model,
+    \begin{itemize}
+        \item the bias of the predictions gets smaller,
+        \item but the variance of the estimated coefficients gets larger. 
+    \end{itemize}
+    \item \textbf{Thoughts:} Might be helpful to think of this in the following way: when we add more and more predictors to the regression model, we are capturing more and more information from the data set. To some extent, we will also capture inherent variability in the data which means we will have high variance. However, indeed we learnt the training data, at least, well so the bias is low. The reverse of the argument says about having a model that has too few predictors that fails to explain pattern in the data. 
+\end{itemize}
 \subsection{Information Criterion}
-\subsubsection{R-squared Adjusted}
+\subsubsection{Likelihood-based Criteria}
+\paragraph{Defining Likelihood}
+Suppose that $y_{i}, x_{1 i}, \ldots, x_{p i}, i=1, \ldots, n$ are observed values of normal random variables and
+\begin{equation*}
+    y_{i} | x_{1 i}, \ldots, x_{p i} \sim \mathcal{N}\left(\beta_{0}+\beta_{1} x_{1 i}+\cdots+\beta_{p} x_{p i}, \sigma^{2}\right)
+\end{equation*}
+Thus, the \textit{conditional density} of $y_i$ given $x_{1 i}, \ldots, x_{p i}$ is given by
+\begin{equation*}
+    f\left(y_{i} | x_{1 i}, \ldots, x_{p i}\right)=\frac{1}{\sigma \sqrt{2 \pi}} \exp \left(-\frac{\left(y_{i}-\left\{\beta_{0}+\beta_{1} x_{1 i}+\cdots+\beta_{p} x_{p i}\right\}\right)^{2}}{2 \sigma^{2}}\right)
+\end{equation*}
+Assuming that the $n$ observations are independent, then the likelihood function of the unknown parameters $\beta_{0}, \beta_{1}, \dots, \beta_{p}, \sigma^{2}$ given $Y$ is given by
+\begin{align*}
+    L\left(\beta_{0}, \beta_{1}, \ldots, \beta_{p}, \sigma^{2} | Y\right)
+    &=\prod_{i=1}^{n} f\left(y_{i} | x_{i}\right) \\
+    &=\prod_{i=1}^{n} \frac{1}{\sigma \sqrt{2 \pi}} \exp \left(-\frac{\left(y_{i}-\left\{\beta_{0}+\beta_{1} x_{1 i}+\cdots+\beta_{p} x_{p i}\right\}\right)^{2}}{2 \sigma^{2}}\right) \\
+    &=\left(\frac{1}{\sigma \sqrt{2 \pi}}\right)^{n} \exp \left(-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(y_{i}-\left\{\beta_{0}+\beta_{1} x_{1 i}+\cdots+\beta_{p} x_{p i}\right\}\right)^{2}\right)
+\end{align*}
+\paragraph{Log-Likelihood Function} is given by
+\begin{multline*}
+    \log L\left(\beta_{0}, \beta_{1}, \ldots, \beta_{p}, \sigma^{2} | Y\right) \\
+    =-\frac{n}{2} \log (2 \pi)-\frac{1}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(y_{i}-\left\{\beta_{0}+\beta_{1} x_{1 i}+\cdots+\beta_{p} x_{p i}\right\}\right)^{2}
+\end{multline*}
+\paragraph{Equivalence of MLE and OLS} We notice that above only the the third term contains the regression parameters $\beta_{0}, \beta_{1}, \ldots, \beta_{p}$. The MLEs of $\beta_{0}, \beta_{1}, \ldots, \beta_{p}$ can be obtained by minimizing the third term only, which is equivalent to minimizing the RSS. Hence, \color{BurntOrange} MLEs, of $\beta_{0}, \beta_{1}, \ldots, \beta_{p}$ are equal to the least squares estimates \color{Black}.
+\paragraph{Log-Like w/ MLR} Substituting the least square estimates of $\beta_{0}, \beta_{1}, \ldots, \beta_{p}$, the log-likelihood function is rewritten as
+\begin{equation*}
+    \log L\left(\hat{\beta}_{0}, \hat{\beta}_{1}, \ldots, \hat{\beta}_{p}, \sigma^{2} | Y\right)= 
+    -\frac{n}{2} \log (2 \pi)-\frac{n}{2} \log \sigma^{2}-\frac{1}{2 \sigma^{2}} R S S
+\end{equation*}
+where $RSS$ is defined as $RSS:= \sum_{i=1}^{n}\left(y_{i}-\left\{\beta_{0}+\beta_{1} x_{1 i}+\cdots+\beta_{p} x_{p i}\right\}\right)^{2}$. Solving for the MLE of $\sigma^2$, we get
+\begin{equation*}
+    \sigma_{M L E}^{2}=\frac{R S S}{n}
+\end{equation*}
+which differs slightly from the unbiased estimate of $\sigma^2$, namely, $S^{2}=R S S /(n-p-1)$. Substituting the MLE of $\sigma^2$ into the expression for the log-like, we find that the likelihood associated with the maximum likelihood estimates is given by
+\begin{equation*}
+    \log L\left(\hat{\beta}_{0}, \hat{\beta}_{1}, \ldots, \hat{\beta}_{p}, \hat{\sigma}^{2} | Y\right)=-\frac{n}{2} \log (2 \pi)-\frac{n}{2} \log \left(\frac{R S S}{n}\right)-\frac{n}{2}
+\end{equation*}
 
+
+
+%\subsubsection{R-squared Adjusted}
 \subsubsection{Akaike’s Information Criterion (AIC)}
-\paragraph{Goal} Balance goodness of fit of the model and the complexity of the model, in terms of number of predictors. 
+\paragraph{Goal} Balance goodness-of-fit of the model and the complexity of the model, in terms of number of predictors. 
 \paragraph{AIC Defined}
 \begin{equation*}
     \mathrm{AIC}=2\left[-\log \left(L\left(\hat{\beta}_{0}, \hat{\beta}_{1}, \ldots, \hat{\beta}_{p}, \hat{\sigma}^{2} | Y\right)\right)+K\right] \quad \quad \text{where} ~ K = p + 2
@@ -1407,6 +1486,7 @@ One can think of the $K = p + 2$ as a `degree of freedom', since here we have $\
 \begin{equation*}
     \mathrm{AIC}=n \log \left(\frac{\mathrm{RSS}}{n}\right)+2 p
 \end{equation*}
+\paragraph{Rule} The smaller the value of AIC the better the model. 
 \subsubsection{AIC - Corrected}
 \paragraph{Goal} When the sample size is small, or when the number of parameters estimated is a moderate to large fraction of the sample size, it is well-known that AIC has a tendency for over-fitting since the penalty for model complexity is not strong enough. As such, the $AIC_C$ is developed to address this issue.
 
@@ -1429,7 +1509,51 @@ when $K = p + 2$, we have the equivalent form
 \end{equation*}
 The BIC is formulated quite similarly o the AIC we defined above, notice that we replaced the complexity penalty of $2K$ in AIC with $K \log n$ here in BIC. (Notice that the factors here are 2 and $\log n$ respectively.) We see that when $n \geq 8$, $\log n \geq 2$ and hence when sample size is larger than 8, BIC penalizes more to the model complexity. \color{BurntOrange}This results in BIC favouring simpler models than AIC\color{Black}
 
-\subsubsection{Comparison of Information Criteria}
+\paragraph{BIC in R}
+\begin{equation*}
+    \mathrm{BIC} =n \log \left(\frac{R S S}{n}\right)+p \log (n)
+\end{equation*}
+
+\subsubsection{Data Strategy}
+A popular data strategy is to
+\begin{enumerate}
+    \item Calculate $R_{\mathrm{ad} j}^{2}, \mathrm{AlC}, \mathrm{AIC}_C, \text { and } \mathrm{BIC}$, and then
+    \item compare the models which minimize $\mathrm{AIC}, \mathrm{AIC}_C$, and $\mathrm{BIC}$ with the model that maximizes $R^2_{adj}$
+\end{enumerate}
+
+\subsection{Stepwise Regression}
+\subsubsection{Terminologies}
+If there are $k$ terms that can be added to the mean function apart from the intercept, then there are $2^k$ possible regression equations. In general, we have the following terminologies
+\begin{itemize}
+    \item \textbf{Backward Elimination:} starts with all the potential terms in the model, then removes the term with the largest $p$-value each time to give a smaller information criterion.
+    \item \textbf{Forward Selection:} starts with no term in the model, then adds one term at a time (with the smallest $p$-value) until no further terms can be added to produce a smaller information criterion.
+    \item \textbf{Stepwise regression:} alternates forward steps with backward steps. 
+\end{itemize}
+\subsubsection{Interpretation} 
+\begin{itemize}
+    \item Backward elimination and forward selection considers at most $k + (k - 1) + ... + 1 = \frac{k(k+1)}{2}$ of the $2^k$ possible predictor subsets.
+    \item Stepwise regression can consider more subsets than the backward or forward methods.
+    \item The idea is to end up with a model where no variables are redundant given the other variables in the model. We have a term for this: ``parsimonious''. 
+    \item Often, backward elimination and forward selection will produce the same final model.
+    \item \textbf{Selection overstates significance}
+    \begin{itemize}
+        \item estimates of regression coefficients are biased
+        \item $p$-values from $F$ and $t$-tests are generally smaller than their true values. 
+    \end{itemize}
+\end{itemize}
+
+\subsection{Penalized Regression}
+Penalized Linear Regression performs vriable selection and regression coefficient estimation simultaneously. It can be formulated as a constrained OLS optimization problem, with the cost function
+\begin{equation*}
+    \mathcal{J}:= \sum_{i=1}^{n}\left(Y_{i}-\boldsymbol{\beta}^{\prime} \mathbf{x}_{i}\right)^{2}+\sum_{j=1}^{p} p_{\lambda}(.) \quad \quad \text{optimized at}~\min_{\beta_p} \mathcal{J}
+\end{equation*}
+In the above formulation, the $p(\cdot)$ is the penalty function and $\lambda \geq 0$ is the penalty (hyper-)parameter which we have to tune. When $\lambda = 0$, this is just the familiar OLS. We have two common choices for the penalty function,
+\begin{itemize}
+    \item \textbf{(L2-Norm Penalty) Ridge:} $p_{\lambda}=\lambda \beta_{j}^{2}$
+    \item \textbf{(L1-Norm Penalty) Lasso:} $p_{\lambda}=\lambda\left|\beta_{j}\right|$
+\end{itemize}
+
+
 
 
 \newpage
