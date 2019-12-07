@@ -746,6 +746,38 @@ rec:            addi $t1, $t0, -1       # $t1 <- x - 1
                 jr   $ra                # return to caller
 ```
 
+<br>
+<br>
+<br>
 
+# Final Checklist
+## ```RegDst``` Rule
+- High for 3-register operations
+- Low for 2-register operations
 
+## 2013 December Questions
+- **T**/F When assigning flip-flop values to states, it is better to use more flip flop in your design if it avoids multiple flip flops change at the same time.
+- ALU selection bits S2 is the special one. S2 = 0 then use arithmetic, and if = 1 then use logic. When logic, 00 = AND , 01 = OR, 10 = XOR, 11 = NOT A. 
+- What kind of interrupt handling does the MIPS architecture use? **ISR: Interupt Service Routine**
+- Which of the following devices require the most gates to implement?
+    - RS Flip-Flop
+    - Full adder
+    - 1 - bit comparator
+    - D-Flip Flop
+    - Multiplexer
+    - T Flip Flop
+- In reading from memory, $t_{AA}$ is the Address Access Time: Time needed for address to be stable before reading data values. $t_{OHA}$ is the Output Hold Time: time outpt data is held after change of address.
+- R type Instru ```|6'b0|5'b RS|5'b RT|5'b RD|5'b shamt|6'b Func|```
+- I type Instru ```|6'b Func|5'b RS|5'b RT|16'b Imm|```
+- J type Instru ```|6'b Func|26'b Address|```
 
+## 2014 April Questions
+- How many byts can be storede in a memory unit that uses 8 address bits and a 16-bit architecture? **I think this should be 256, regarless of the 16-bit information**
+- Which of the following assembly instructions use the processor's shift left units? jal, bne, lb, and sub. **IDK this one**
+- Which of the following assembly instructions use the processor's sign extend unit? **addi, srl**, addu, beq, lw, sw. **NOT SURE ABOUT THIS ONE.**
+- Which ALU outout signal triggers an exception condition? Let's state the four indicators here
+    - **V: overflow condition**
+    - C: Carry bit
+    - N: negative indicator
+    - Z: zero condition indicator
+- 
