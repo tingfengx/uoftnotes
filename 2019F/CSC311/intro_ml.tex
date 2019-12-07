@@ -1,5 +1,5 @@
 \documentclass[10pt]{article}
-\usepackage[margin=0.5cm]{geometry}
+\usepackage[margin=0.4cm]{geometry}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsfonts}
@@ -10,9 +10,11 @@
 \usepackage{hyperref}
 \usepackage{blindtext}
 \usepackage{fancyhdr} 
+\usepackage{algorithmic}
+\usepackage{algorithm}
 \usepackage{youngtab}
 \usepackage[dvipsnames]{xcolor}
-\setlength{\parskip}{-0.7em}
+\setlength{\parskip}{-0.9em}
 % \setlength{\itemsep}{-1em}
 
 \usepackage[
@@ -84,6 +86,10 @@
 % \doclicenseThis
 % \tableofcontents
 % \newpage
+\abovedisplayskip=-0.1cm
+\abovedisplayshortskip=-0.2cm
+\belowdisplayskip=-0.1cm
+\belowdisplayshortskip=0.4cm
 
 \paragraph{KNN} Find $k$ examples $\left\{ \bx^{(i)}, t^{(i)} \right\}$ closest to the test instance $\bx$ and then output majority $\arg \max_{t^{z}} \sum_{r = 1}^k \delta (t^{(z)}, t^{(r)})$. Define $\delta (a, b) = 1$ if $a = b$, $0$ otw. \textbf{Choice of $k$:} Rule is $k < \sqrt{n}$, small $k$ may overfit, while large may under-fit. \textbf{Curse of Dim:} In high dimensions, ``most'' points are approximately the same distance. \textbf{Computation Cost:} 0 (minimal) at training/ no learning involved. Query time find $N$ distances in $D$ dimension $\mathcal{O}(ND)$ and $\mathcal{O}(N \log N)$ sorting time.
 % \paragraph{Accuracy Gain} $L(R)-\frac{\left|R_{1}\right| L\left(R_{1}\right)+\left|R_{2}\right| L\left(R_{2}\right)}{\left|R_{1}\right|+\left|R_{2}\right|}$ 
@@ -168,7 +174,6 @@ $$\begin{aligned} \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}
 	\item Note: $\mathbf{U} \mathbf{U}^{T}$ is the projector matrix and $\mathbf{U}^{T} \mathbf{U}=I$ is the identity matrix. 
 	\item $\bx$ and $\tilde{\bx}$ are both in $\real^D$ while $\tilde{\bx}$ lives in a low dimensional subspace in $\real^D$. The code vector $\bx$ is in $\real^K$, and is the low dim representation of the vector $\bx$
 \end{itemize}
-
 \paragraph{PCA - Learning Subspace}
 \begin{itemize}
 	\setlength\itemsep{-0.45em}
@@ -183,26 +188,133 @@ $$\begin{aligned} \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}
 %			$$
 %	\end{itemize}
 \end{itemize}
-\newpage
 
-\paragraph{Work Flow of EM and GGM}
+\paragraph{Support Vector Machines}
 \begin{itemize}
-    \item Step 0; Assume (1). Pick a cluster (with probability $\pi_k$) and (2). sample  from it using the parameters $\mu_k, \Sigma_k$. (Some gaussian distribution)
-    \item Step 1; The log-likelihood is $\log P(X | \pi, \mu_k, \Sigma_k) = \sum_{i=1}^N \log \sum_{k=1}^K \pi_k N(X_n| \mu_k, \Sigma_k)$
-    \item Step 2; Optimize via EM
-    \item Step 2.1 Compute responsibilities (E)
-    \item Step 2.2 Maximize (M)
-    \begin{equation*}
-        \mu_k = \frac{1}{N_k}\sum_k
-    \end{equation*}
-    \LARGE
-    \item Notice that Generative models are called ``generative'' because they try to learn the underlying distribution, while the discriminative analysis procedures (eg NN) are trying to simply map data. 
+    \setlength\itemsep{-0.45em}
+    \item \textbf{Hinge Loss} is defined as $\mathcal{L}_{z, t}:= \max \{0, 1- zt\}$, where $z:= \bw^T \bx + b$ and $t$ is the target
+    \item \textbf{Formulation} $\operatorname{minimize}_{\bw, b} \sum_{i =1}^N\max\{0, 1 - t^{(i)}z^{(i)}(\bw, b)\}$ 
+    \item \textbf{L2 - Regularized} $\operatorname{minimize}_{\bw, b} \sum_{i =1}^N\max\{0, 1 - t^{(i)}z^{(i)}(\bw, b)\} + \frac{\lambda}{2} \norm{\bw}^2_2$
+    \item \textbf{Optimal Separating \textit{Hyperplane}} A hyperplane that separate two classes and maximizes the distance to the closest point from either class, i.e., maximizes the \textit{margin} ($C = \frac{1}{\norm{\bw}_2}$) of the classifier. 
+    \item \textbf{Note:} A separating hyperplane is optimal \textit{iff} it touches three data points near the margin. 
 \end{itemize}
 
+\paragraph{AdaBoost Key Concepts}
+\begin{itemize}
+    \setlength\itemsep{-0.45em}
+    \item \textbf{Boosting:} Train classifier sequentially, each time focusing on training data points that were previously misclassified. 
+    \item \textbf{Weighted Training Set:} The weighted misclassification rate is $\sum_{i = 1}^N w^{(n)} \mathbb{I}(h(x^{(n)} \neq t^{(n)}))$ where $w^{(n)} > 0 \text{ and } \sum_n w^{(n)} = 1$
+    \item \textbf{Weak Learner (Informal):} Weak learners are algorithms that output slightly better than chance
+    \item \textbf{Efficient Weak Learners:} We are interested in weak learners that are computationally efficient, for example decision trees, or even decision stumps (decision trees with only one split) 
+    \item \textbf{Weak Classifier:} The error of classifier $h$ according to the given weights $\{w^{(1)},...,w^{(N)}\}$ is $err:= \sum_{i = 1}^N w^{(n)} \mathbb{I}(h(x^{(n)} \neq t^{(n)})) < \frac{1}{2} - \gamma$ for some $\gamma >0$ ~(``better than chance'')
+    \item \textbf{Reduced Bias} AdaBoost reduces bias by making each classifier focus on previous mistakes. 
+\end{itemize}
 
+\paragraph{AdaBoost Workflow}
+\begin{enumerate}
+    \setlength\itemsep{-0.45em}
+    \item At each iteration we re-weight the training samples by assigning larger weights to samples (data points) that were classified incorrectly. 
+    \item We train a new weak classifier based on the re-weighted samples
+    \item We add this weak classifier to the ensemble of weak classifiers. This ensemble is our new classifier.
+    \item Repeat
+\end{enumerate}
 
+\paragraph{AdaBoost Algorithm}
+\begin{itemize}
+    \setlength\itemsep{-0.4em}
+    \item Input data $\mathcal{D}_N = \{\bx^{(n)}, t^{(n)}\}_{n = 1}^N$ where $t^{(n)}\in \{-1, 1\}$
+    \item A classifier (hypothesis $h:\bx \to \{-1, 1\}$), and 0-1 loss $\mathbb{I}[h(x^{(n)})\neq t^{(n)}] := \frac{1}{2}(1 - h(x^{n})\cdot t^{(n)})$ 
+    \item A classification procedure that returns a classifier $h$, e.g. best decision stump from a set of classifier $\mathcal{H}$, e.g. all possible decision stumps)
+    \item Output a master classifier $H(x)$
+    \item For $t = 1,...,T$ ($T$ is the number of iteration)
+    \begin{enumerate}
+    \setlength\itemsep{-1.8em}
+    \item Fit a classifier to data using weighted samples $h_t \gets WeakLearn(\mathcal{D}_N,\bw)$. For example we can use $$h_t \gets \arg\min_{h \in \mathcal{H}}\sum_{n = 1}^N w^{(n)}\mathbb{I} \{h(\bx^{(n)} \neq t^{(n)}\} $$
+    \item Compute the weighted error $$\mathrm{err}_t = \frac{\sum_{n=1}^{N} w^{(n)} \mathbb{I}\left\{h_{t}\left(\mathbf{x}^{(n)}\right) \neq t^{(n)}\right\}}{\sum_{n=1}^{N} w^{(n)}}$$
+    \item Compute classifier coefficient $$\alpha_{t}=\frac{1}{2} \log \frac{1-\operatorname{err}_{t}}{\operatorname{err}_{t}} \quad(\in(0, \infty))$$
+    \item Update data weights $$w^{(n)} \leftarrow w^{(n)} \exp \left(-\alpha_{t} t^{(n)} h_{t}\left(\mathbf{x}^{(n)}\right)\right)\left[\equiv w^{(n)} \exp \left(2 \alpha_{t} \mathbb{I}\left\{h_{t}\left(\mathbf{x}^{(n)}\right) \neq t^{(n)}\right\}\right)\right]$$
+\end{enumerate}
+    \item Return $H(x) = \operatorname{sign}\left(\sum_{t=1}^{T} \alpha_{t} h_{t}(\mathbf{x})\right)$
+\end{itemize}
+\paragraph{AdaBoost Weighting Intuition}
+\begin{itemize}
+    \setlength\itemsep{-0.45em}
+    \item $H(\mathbf{x})=\operatorname{sign}\left(\sum_{t=1}^{T} \alpha_{t} h_{t}(\mathbf{x})\right) \text { where } \alpha_{t}=\frac{1}{2} \log \frac{1-\mathrm{err}_{t}}{\mathrm{err}_{t}}$ is ``{how much you trust weak learner $t$}''. 
+    \item Weak classifiers which get lower weighted error get more weight in the final classifier. When some $err_t$ is small, $\alpha_t = \frac{1}{2}\log \frac{1 - err_t}{err_t}$ is large in the final classifier.  
+    \item Also in weight updates, $w^{(n)} \leftarrow w^{(n)} \exp \left(2 \alpha_{t} \mathbb{I}\left\{h_{t}\left(\mathbf{x}^{(n)}\right) \neq t^{(n)}\right\}\right)$. \textbf{If $err_t \approx 0$ then}, $\alpha_t$ hight so misclassified examples get more attention. \textbf{Else If $err_t \approx 0.5$ then} $\alpha_t$ low hence misclassified examples not emphasized. 
+\end{itemize}
 
+\paragraph{AdaBoost Geometric Convergence and Generalization Errors}
+\begin{itemize}
+    \setlength\itemsep{-0.45em}
+    \item \textbf{Theorem:} Assume that at each iteration of AdaBoost the WeakLearn returns a hypothesis with error $err_t < \frac{1}{2} - \gamma$ for all $t = 1,...,T$ with $\gamma > 0$. The trainning error of the output hypothesis $H(\bx) = \operatorname{sign}\left(\sum_{t=1}^{T} \alpha_{t} h_{t}(\mathbf{x})\right)$ is at most $$L_{N}(H)=\frac{1}{N} \sum_{i=1}^{N} \mathbb{I}\left\{H\left(\mathbf{x}^{(i)}\right) \neq t^{(i)}\right\} \leq \exp \left(-2 \gamma^{2} T\right)$$ under the simplifying assumption that each weak learner is $\gamma>0$ better than a random predictor. The convergence is called geometric convergence, very fast!
+    \item \textbf{Generalization Error:} \textit{AdaBoost's Training error converges to zero.} In testing set, AdaBoost can overfit when we add too much weak learners. However this doesn't always happen. \textbf{There are cases where the testing error keeps decreasing even when training error is zero.} \color{Red}WHY?\color{Black}~This is because even when training error is zero, the margin (= sample distance to decision boundary) is still improved by further boosting iterations. 
+\end{itemize}
 
+\paragraph{Additive Models - AdaBoost Alternative View Point}
+\begin{itemize}
+    \setlength\itemsep{-0.45em}
+    \item Consider hypothesis class $\mathcal{H}$ with $\mathcal{H} \ni h_i: \bx \to \{-1, 1\}$ weak learners. Aka bases in this context.
+    \item An additive model with $m$ terms is given by $H_{m}(x)=\sum_{i=1}^{m} \alpha_{i} h_{i}(\mathbf{x})$ where $(\alpha_1,...,\alpha_m) \in \real^m$ (generally $\alpha_i \geq 0$ and $\sum_i \alpha_i = 1$)
+    \item \textbf{Stage-wise Training of Additive Models}
+    \begingroup
+    \begin{algorithm}
+    \abovedisplayskip=0.1cm
+    \abovedisplayshortskip=-0.1cm
+    \belowdisplayskip=-0.1cm
+    \belowdisplayshortskip=0.1cm
+    Initialize $H_0(x) = 0$ \\
+    For $m = 1$ up to $T$ do \\
+    \indent ~~~~~~ Compute $m$-th hypothesis $h_m = H_{m - 1} + \alpha_m h_m$, i.e. $h_m$ and $\alpha_m$ assuming previous additive model $H_{m-1}$ is fixed
+    \begin{equation}\left(h_{m}, \alpha_{m}\right) \leftarrow \underset{h \in \mathcal{H}, \alpha}{\operatorname{argmin}} \sum_{i=1}^{N} \mathcal{L}\left(H_{m-1}\left(\mathbf{x}^{(i)}\right)+\alpha h\left(\mathbf{x}^{(i)}\right), t^{(i)}\right)\end{equation}
+    \indent ~~~~~~ Add it to the additive model
+    $$H_m = H_{m - 1} + \alpha_m h_m$$
+    \end{algorithm}
+    \endgroup
+    \item \textbf{Additive Model with Exp Loss:} Consider the Exponential Loss $\mathcal{L}_E (z, t) := \exp (-tz)$. Then, (1) becomes
+    \small{
+    \begin{align*}
+        \left(h_{m}, \alpha_{m}\right) &\leftarrow \underset{h \in \mathcal{H}, \alpha}{\operatorname{argmin}} \sum_{i=1}^{N} \exp \left(-\left[H_{m-1}\left(\mathbf{x}^{(i)}\right)+\alpha h\left(\mathbf{x}^{(i)}\right)\right] t^{(i)}\right) = \sum_{i=1}^{N} \exp \left(-H_{m-1}\left(\mathbf{x}^{(i)}\right) t^{(i)}-\alpha h\left(\mathbf{x}^{(i)}\right) t^{(i)}\right) \\
+        &=\sum_{i=1}^{N}\underbrace{\exp \left(-H_{m-1}\left(\mathbf{x}^{(i)}\right) t^{(i)}\right) }_{ \triangleq w_{i}^{(m)} }\exp \left(-\alpha h\left(\mathbf{x}^{(i)}\right) t^{(i)}\right) =\sum_{i=1}^{N} w_{i}^{(m)} \exp \left(-\alpha h\left(\mathbf{x}^{(i)}\right) t^{(i)}\right)
+    \end{align*}}
+    \item \textbf{$h$ Optimized at:} $h_{m} \leftarrow \underset{h \in \mathcal{H}}{\operatorname{argmin}} \sum_{i=1}^{N} w_{i}^{(m)} \exp \left(-\alpha h\left(\mathbf{x}^{(i)}\right) t^{(i)}\right) \equiv \underset{h \in \mathcal{H}}{\operatorname{argmin}} \sum_{i=1}^{N} w_{i}^{(m)} \mathbb{I}\left\{h\left(\mathbf{x}^{(i)}\right) \neq t^{(i)}\right\}$
+    \item \textbf{Weight Update Optimized at:} $w_{i}^{(m + 1)} \gets w_{i}^{(m)} \exp \left(-\alpha_{m} h_{m}\left(\mathbf{x}^{(i)}\right) t^{(i)}\right)$
+    \item \textbf{Coefficient Optimized at:} $\alpha=\frac{1}{2} \log \left(\frac{1-\operatorname{err}_{m}}{\operatorname{err}_{m}}\right)$ \quad where $err_m \triangleq \frac{\sum_{i=1}^{N} w_{i}^{(m)} \mathbb{I}\left\{h_{m}\left(\mathbf{x}^{(i)}\right) \neq t^{(i)}\right\}}{\sum_{i=1}^{N} w_{i}^{(m)}}$
+\end{itemize}
+
+\paragraph{Na\"ive Bayes}
+\begin{itemize}
+    \setlength\itemsep{-0.45em}
+    \item \textbf{Na\"ive Assumption:} Na\"ive Bayes assumes that the features are \textit{conditionally independent given the class $c$}, i.e. $p(c, x_1, ..., x_D) = p(c) p(x_1 |c) ... p(x_D|c)$. \textbf{Benefit:} This gives us a compact representation of the joint distribution. $\mathcal{O}({2^{D+1} - 1}) \to  \mathcal{O}(2D + 1)$
+    \item \textbf{Bayes Rule} $p(c|\bx) = \frac{p(\bx, c)}{p(\bx)} = \frac{p(\bx |c) p(c)}{p(\bx)}$ ~~ \textbf{Formally}~ $\text{posterior} = \frac{\text{Class likelihood } \times \text{ prior}}{\text{Evidence}}$
+    \item \textbf{Na\"ive Bayes Inference} $p(c | \mathbf{x})=\frac{p(c) p(\mathbf{x} | c)}{\sum_{c^{\prime}} p\left(c^{\prime}\right) p\left(\mathbf{x} | c^{\prime}\right)}=\frac{p(c) \prod_{j=1}^{D} p\left(x_{j} | c\right)}{\sum_{c^{\prime}} p\left(c^{\prime}\right) \prod_{j=1}^{D} p\left(x_{j} | c^{\prime}\right)}$ ~~\textbf{Shorthand}~$p(c | \mathbf{x}) \propto p(c) \prod_{j=1}^{D} p\left(x_{j} | c\right)$
+    \item \textbf{Computational Cost of Na\"ive Bayes:} (1) \textbf{Training Time:} estimate parameters using MLE, requires one pass in the data. (2) \textbf{Test Time:} apply Baye's Rule. Cheap because of the model structure. 
+\end{itemize}
+
+\paragraph{Bayesian Parameter Estimation}
+\begin{itemize}
+    \setlength\itemsep{-0.45em}
+    \item \textbf{Posterior Distribution:} $p(\boldsymbol{\theta} | \mathcal{D})=\frac{p(\boldsymbol{\theta}) p(\mathcal{D} | \boldsymbol{\theta})}{\int p\left(\boldsymbol{\theta}^{\prime}\right) p\left(\mathcal{D} | \boldsymbol{\theta}^{\prime}\right) \mathrm{d} \boldsymbol{\theta}^{\prime}}$
+    \item \textbf{Gamma As Prior:} $p(\theta ; a, b)= \color{Gray}\frac{\Gamma(a+b)}{\Gamma(a) \Gamma(b)} \color{Black}\theta^{a-1}(1-\theta)^{b-1}$.~ \textbf{Proportionality:} $p(\theta ; a, b) \propto \theta^{a-1}(1-\theta)^{b-1}$
+    \item \textbf{Maximum A-posteriori Estimation:} $\hat{\boldsymbol{\theta}}_{\mathrm{MAP}}=\arg \max _{\boldsymbol{\theta}} p(\boldsymbol{\theta} | \mathcal{D}) =\arg \max _{\boldsymbol{\theta}} p(\boldsymbol{\theta}) p(\mathcal{D} | \boldsymbol{\theta}) = \arg \max _{\boldsymbol{\theta}} \log p(\boldsymbol{\theta})+\log p(\mathcal{D} | \boldsymbol{\theta})$
+\end{itemize}
+
+\paragraph{Properties of Gaussian Distribution}
+\begin{itemize}
+    \setlength\itemsep{-0.65em}
+    \item $\mathbf{x} \sim \mathcal{N}(\boldsymbol{\mu}, \mathbf{\Sigma})$ is defined as $p(\mathbf{x})=\frac{1}{(2 \pi)^{d / 2}|\mathbf{\Sigma}|^{1 / 2}} \exp \left[-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^{T} \mathbf{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right]$
+    \item \textbf{Empirical Mean} $\hat{\boldsymbol{\mu}}=\frac{1}{N} \sum_{i=1}^{N} \mathbf{x}^{(i)}$~~ \textbf{Empirical Cov}~ $\hat{\mathbf{\Sigma}}=\frac{1}{N} \sum_{i=1}^{N}\left(\mathbf{x}^{(i)}-\hat{\boldsymbol{\mu}}\right)\left(\mathbf{x}^{(i)}-\hat{\boldsymbol{\mu}}\right)^{\top}$
+\end{itemize}
+
+\paragraph{Gaussian Discriminant Analysis (Gaussian Bayes Classifier)}
+\begin{itemize}
+    \setlength\itemsep{-0.4em}
+    \item \textbf{Idea:} Make decisions by comparing class posteriors. $\log p\left(t_{k} | \mathbf{x}\right)=\log p\left(\mathbf{x} | t_{k}\right)+\log p\left(t_{k}\right)-\log p(\mathbf{x})$
+    \item \textbf{Expanded} $ \log p\left(t_{k} | \mathbf{x}\right) = \color{Red} -\frac{d}{2} \log (2 \pi) -\frac{1}{2} \log \left|\boldsymbol{\Sigma}_{k}^{-1}\right| \color{Black}-\frac{1}{2}\left(\mathbf{x}-\boldsymbol{\mu}_{k}\right)^{T} \boldsymbol{\Sigma}_{k}^{-1}\left(\mathbf{x}-\boldsymbol{\mu}_{k}\right) \color{Red} +\log p\left(t_{k}\right)-\log p(\mathbf{x})\color{Black}$
+    \item \textbf{Decision Boundary:} $\log p\left(t_{k} | \mathbf{x}\right)=\log p\left(t_{l} | \mathbf{x}\right) \implies \left(\mathbf{x}-\boldsymbol{\mu}_{k}\right)^{T} \boldsymbol{\Sigma}_{k}^{-1}\left(\mathbf{x}-\boldsymbol{\mu}_{k}\right)=\left(\mathbf{x}-\boldsymbol{\mu}_{\ell}\right)^{T} \boldsymbol{\Sigma}_{\ell}^{-1}\left(\mathbf{x}-\boldsymbol{\mu}_{\ell}\right)+\color{Red}C_{k, l}\color{Black}$ \\Then, $\mathbf{x}^{T} \boldsymbol{\Sigma}_{k}^{-1} \mathbf{x}-2 \boldsymbol{\mu}_{k}^{T} \mathbf{\Sigma}_{k}^{-1} \mathbf{x}=\mathbf{x}^{T} \mathbf{\Sigma}_{\ell}^{-1} \mathbf{x}-2 \boldsymbol{\mu}_{\ell}^{T} \mathbf{\Sigma}_{\ell}^{-1} \mathbf{x}+\color{Red}C_{k, l}\color{Black}$
+    \item \textbf{Decision Boundary:} is quadratic since gaussian is quadratic. When we have to humps that share the same covariance, the decision boundary is linear. 
+    \item \textbf{VS Logistic Regression}~ (1) GDA is generative while LR is discriminative model. (2) GDA makes stringer modelling assumptions: assumes gaussian distributon. When assumption true, GDA asymptotically efficient. (3) LR more robust, less sensitive to incorrect modelling assumptions (LR uses CE, no assumption.) (4) Class-conditional distributions usually lead to logistic classifier. 
+\end{itemize}
 
 
 
