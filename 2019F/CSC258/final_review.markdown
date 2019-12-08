@@ -772,12 +772,32 @@ rec:            addi $t1, $t0, -1       # $t1 <- x - 1
 - J type Instru ```|6'b Func|26'b Address|```
 
 ## 2014 April Questions
-- How many byts can be storede in a memory unit that uses 8 address bits and a 16-bit architecture? **I think this should be 256, regarless of the 16-bit information**
+- How many bytes can be storede in a memory unit that uses 8 address bits and a 16-bit architecture? **I think this should be 2^8 * 2 = 512, but this is not present as one of the possible answers**
 - Which of the following assembly instructions use the processor's shift left units? jal, bne, lb, and sub. **IDK this one**
-- Which of the following assembly instructions use the processor's sign extend unit? **addi, srl**, addu, beq, lw, sw. **NOT SURE ABOUT THIS ONE.**
+- Which of the following assembly instructions use the processor's sign extend unit? **addi, srl**, addu, beq, **lw, sw**. **NOT SURE ABOUT THIS ONE.**
 - Which ALU outout signal triggers an exception condition? Let's state the four indicators here
     - **V: overflow condition**
     - C: Carry bit
     - N: negative indicator
     - Z: zero condition indicator
-- 
+
+
+## 2014 December Questions
+- How many bytes can be stored in a memory unit that uses 8 address bits and a 32 bit architecture? **Should the answer be 1024? since 2^8 * 4 = 1024. Not sure about this one**
+- How many address bits are needed to specify the location of an integer in a 1024 bit memory unit, given a 64 bit architecture? **Do I assume int to be 64 bit in such case? I think int can only be 32 bit, while ```longlong``` can be 64 bit**
+- **Polled Exception Handling:** (MIPS uses this) The processor can branch to a certain address that begins a sequence of instructions that check the cause of the exception and branch to handler code for the type of exception encountered.
+- **Vectored Exception Handling** The processor can branch to a different address for each type of exception. Each exception address is separated by only one word. A jump instruction is placed at each of these addresses that forces the processor to jump to the handler code for each type of exception.
+- **Registers HI and LO:** 
+    - Used for division operation. LO stores the integer division result and HI is the reminder. (the counter-intuitive way)
+    - Used for multiplication operation. LO stores the 32bit LSB and HI stores 32 bit MSB. This makes sense since we are multiplying 32 bit with 32 bit, which shall produce at most 32 * 2 = 64 bit result. Notice that the 64th bit is 1 iff it was add-carried from 63th. 
+
+## 2017 April Questions
+- **Writing to memory - Timing Constraints**
+    - THA: Address Hold, time for address to stay stable after enabling write signal
+    - TSA: Address Setup Time, time for address to be stable before enabling write signal =
+    - TSD: Stable Data, time for data-in value to set up at destination. (Essentially reading into memory)
+    - TDH: Data Hold, time for data-in stay unchanged after write signal changes. 
+    - TWP: Write Pulse Width
+- **Reading From Memory - Timing Constraints**
+    - TAA: Address Access Time, time needed for address to be stable before reading data values
+    - TOHA: Output Hold Time, time output data is held after change of address. 
