@@ -7,9 +7,10 @@
 
 
 ## :book: Notes for some of my courses at University of Toronto 
-<!-- * The notes in this repository that are currently in edit are -->
 ### Notes in progress:
-
+#### 2020 Winter
+1.  
+2.  
 ### Notes that have already finished typesetting:
 #### 2019 Fall
 1. [CSC258](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. [In plain HTML](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html) 
