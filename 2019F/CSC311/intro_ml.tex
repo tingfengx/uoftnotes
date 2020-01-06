@@ -206,7 +206,7 @@ $$\begin{aligned} \mathbb{E}_{\mathbf{x}, \mathcal{D}}\left[\left(h_{\mathcal{D}
     \item \textbf{Weighted Training Set:} The weighted misclassification rate is $\sum_{i = 1}^N w^{(n)} \mathbb{I}(h(x^{(n)} \neq t^{(n)}))$ where $w^{(n)} > 0 \text{ and } \sum_n w^{(n)} = 1$
     \item \textbf{Weak Learner (Informal):} Weak learners are algorithms that output slightly better than chance
     \item \textbf{Efficient Weak Learners:} We are interested in weak learners that are computationally efficient, for example decision trees, or even decision stumps (decision trees with only one split) 
-    \item \textbf{Weak Classifier:} The error of classifier $h$ according to the given weights $\{w^{(1)},...,w^{(N)}\}$ is $err:= \sum_{i = 1}^N w^{(n)} \mathbb{I}(h(x^{(n)} \neq t^{(n)})) < \frac{1}{2} - \gamma$ for some $\gamma >0$ ~(``better than chance'')
+    \item \textbf{Weak Classifier:} The error of classifier $h$ according to the given weights $\{w^{(1)},...,w^{(N)}\}$ is $err:= \sum_{n = 1}^N w^{(n)} \mathbb{I}(h(x^{(n)} \neq t^{(n)})) < \frac{1}{2} - \gamma$ for some $\gamma >0$ ~(``better than chance'')
     \item \textbf{Reduced Bias} AdaBoost reduces bias by making each classifier focus on previous mistakes. 
 \end{itemize}
 
