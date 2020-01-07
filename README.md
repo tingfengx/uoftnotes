@@ -2,7 +2,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/pjxh5g91jpbh7t84?svg=true)](https://github.com/tingfengx/uoftnotes)
 [![made-with-latex](https://img.shields.io/badge/Made%20with-LaTeX-1f425f.svg)](https://www.latex-project.org/)
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![HitCount](http://hits.dwyl.io/tingfengx/uoftnotes.svg)](http://hits.dwyl.io/tingfengx/uoftnotes)
+<!-- [![HitCount](http://hits.dwyl.io/tingfengx/uoftnotes.svg)](http://hits.dwyl.io/tingfengx/uoftnotes) -->
 
 
 
@@ -11,12 +11,12 @@
 ### **Notes in progress:**  
   
 #### 2020 Winter  
-1. **STA414**
-2. **CSC413**
-3. **CSC309**
-4. **CSC369**
-5. **ENV200**
-6. **MAT337**
+- **STA414**
+- **CSC413**
+- **CSC309**
+- **CSC369**
+- **ENV200**
+- **MAT337**
   
 ### **Notes that have already finished typesetting:**  
 
