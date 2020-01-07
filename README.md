@@ -7,7 +7,9 @@
 
 
 ## :book: Notes for some of my courses at University of Toronto  
+  
 ### **Notes in progress:**  
+  
 #### 2020 Winter  
 1. **STA414**
 2. **CSC413**
@@ -17,6 +19,7 @@
 6. **MAT337**
   
 ### **Notes that have already finished typesetting:**  
+
 #### 2019 Fall  
 1. [**CSC258**](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. [In plain HTML](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html) 
    - [Midterm Pre-test checklist](https://tingfengx.github.io/uoftnotes/2019F/CSC258/midterm_checklist.pdf)  
@@ -25,6 +28,8 @@
 3. [**CSC311**](https://tingfengx.github.io/uoftnotes/2019F/CSC311/intro_ml.pdf), A cheat sheet for the exams, as allowed by the course syllabus. 
 4. [**CSC373**](https://tingfengx.github.io/uoftnotes/2019F/CSC373/algorithms.pdf), Miscellaneous notes from MIT open courseware (6.006 and 6.046J), aiming to help get a better understanding of the course materials. 
 5. [**STA302**](https://tingfengx.github.io/uoftnotes/2019F/STA302/regression.pdf). Note from SJS and KNN.  
+
+  
 #### 2019 Winter  
 1. [**MAT224**](https://tingfengx.github.io/uoftnotes/2019W/MAT224/MAT224.pdf), Linear Algebra II. Collection of (nearly) all the theorems presented in the book/mentioned during lecture. 
 2. [**STA261**](https://tingfengx.github.io/uoftnotes/2019W/STA261/test_statistics_manuel.pdf), Statistics II. A manuel for common test statistics.
