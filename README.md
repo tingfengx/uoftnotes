@@ -15,8 +15,8 @@
 - **CSC413**
 - **CSC309**
 - **CSC369**
-- **ENV200**
-- **MAT337**
+- [**ENV200**](https://tingfengx.github.io/uoftnotes/2020W/ENV200/env_sci.pdf), Science and Environment. Consisting of notes from the book and lecture slides. 
+<!-- - **MAT337** -->
   
 ### **Notes that have already finished typesetting:**  
 
