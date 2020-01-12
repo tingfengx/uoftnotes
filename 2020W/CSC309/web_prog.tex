@@ -1,0 +1,293 @@
+\documentclass[10pt]{article}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{datetime}
+\usepackage{ccicons}
+\usepackage{mdframed}
+\usepackage[outputdir=.texpadtmp]{minted}
+
+% ==== License =====
+\usepackage[
+    type={CC}, 
+    modifier={by-nc-sa}, 
+    version={4.0},
+]{doclicense}
+
+% General
+\newcommand{\mc}[1]{\mathcal{#1}}
+
+% Math Bold Font, Vector Notations
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bd}{\mathbf{d}}
+\newcommand{\be}{\mathbf{e}}
+\renewcommand{\bf}{\mathbf{f}}
+\newcommand{\bg}{\mathbf{g}}
+\newcommand{\bh}{\mathbf{h}}
+\newcommand{\bi}{\mathbf{i}}
+\newcommand{\bj}{\mathbf{j}}
+\newcommand{\bk}{\mathbf{k}}
+\newcommand{\bl}{\mathbf{l}}
+\newcommand{\bm}{\mathbf{m}}
+\newcommand{\bn}{\mathbf{n}}
+\newcommand{\bo}{\mathbf{o}}
+\newcommand{\bp}{\mathbf{p}}
+\newcommand{\bq}{\mathbf{q}}
+\newcommand{\br}{\mathbf{r}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bt}{\mathbf{t}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bzero}{\mathbf{0}}
+
+% Proofs, Structures
+\newcommand{\proof}{\tit{\underline{Proof:}}} % This equivalent to the \begin{proof}\end{proof} block
+\newcommand{\proofforward}{\tit{\underline{Proof($\implies$):}}}
+\newcommand{\proofback}{\tit{\underline{Proof($\impliedby$):}}}
+\newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
+\newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
+\newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
+\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
+
+% Number Spaces, Vector Space
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\field}{\mathbb{F}}
+
+% customized commands
+\newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
+\newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
+\newcommand{\map}[3]{\text{$\left[#1\right]_{#2}^{#3}$}}
+\newcommand{\dime}[1]{\text{dim}(#1)}
+\newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
+\newcommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
+\newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
+\newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\independent}{\perp \!\!\! \perp}
+
+\author{\ccLogo \,\,by Xia, Tingfeng}
+\title{\textsc{Programming on the Web}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\doclicenseThis
+\tableofcontents
+\newpage
+
+\section{Communication and Protocols}
+
+\subsection{The Network 4-Layer Model}
+\subsubsection{Application Layer}
+\begin{itemize}
+    \item The application layer provides with standardized protocols to exchange data. For example, web browsers need a protocol to get and send data. 
+    \item Protocols include, but is not limited to, HTTP, FTP, SSH, SMTP, POP3\dots
+\end{itemize}
+
+\subsubsection{Transport Layer}
+\begin{itemize}
+    \item Provides \textit{\textbf{host-to-host}} communication service
+    \begin{itemize}
+        \item It is ``Connection Oriented''
+        \item Sends segments of data from the application layer (packets).
+    \end{itemize}
+    \item \color{Red} Transport protocol for the common TCP/IP is TCP \color{Black}, and other transport protocols such as UDP exists.  
+\end{itemize}
+
+\subsubsection{Internet Layer}
+\begin{itemize}
+    \item Provides protocols for sending packets across a network or through multiple networks.
+    \item \color{Red} The \textit{Internet Protocol (IP)} handles this in TCP/IP.\color{Black} ~It routes data across networks using IP addresses. 
+\end{itemize}
+
+\subsubsection{Link Layer}
+\begin{itemize}
+    \item Protocols of the physical link between the nodes of the network, for example ethernet, WiFi, DSL, etc.
+    \item Link Layer resides as the lowest layer in the 4 layer model, since TCP/IP can sit on top of any Link Layer. 
+\end{itemize}
+
+\subsection{TCP}
+\paragraph{(Definition) - Connection Oriented}
+\begin{itemize}
+    \item Needs to have a pre-arranged connection before sending data
+    \item Should be \textbf{\textit{bi-directional}}
+    \item Both client and server should acknowledge when they get data    
+\end{itemize}
+
+\paragraph{Acknowledgements} Are important part of TCO because
+\begin{itemize}
+    \item Can check packet is from correct host, and
+    \item Losing packets is a real problem
+\end{itemize}
+If no acknowledgement that packet was received then the packet is sent again.
+
+\paragraph{TCP is Reliable} but reacts to losing packets by slowing connection. Whereas UDP is not reliable but doesn't react to packet loss. There is usually a trade-off for different use case scenario in choosing TCP over UDP or otherwise. 
+
+\subsubsection{3-way Handshake - Starting a Connection}
+The procedure of 3-way handshake is as follows
+\begin{enumerate}
+    \item $Client \overset{\texttt{SYN}}{\longrightarrow} Server$; ``Hi! Let's talk.''; Signal \texttt{(SYN)chronize}
+    \item $Client \overset{\texttt{SYN-ACK}}{{\longleftarrow}} Server$; ``Ok, let's talk.''; Signal \texttt{(SYN)chronize - ACK(nowledgement)}
+    \item $Client ~\overset{\texttt{ACK}}{{\longleftarrow}}~ Server$; ``Ok.'' Signal \texttt{ACK(nowledgement)}
+\end{enumerate}
+The client and server can now send each other data, and must acknowledge to each other when they receive something. 
+
+
+\subsection{IP Protocol and IP Packets}
+\begin{itemize}
+    \item IP is a ``connection less`` protocol: No pre-arranged connection required to send data, and
+    \item IP \textbf{\textit{just}} sends packets over networks. There is absolutely no assurance that they will be delivered, and no way to find out if they were delivered. There is also \textit{no way} to let the destination know to expect a packet. 
+    \item It is easy to `spoof' packets
+    \begin{itemize}
+        \item Connection-less protocol means you can send around packets that pretend they came from a specific IP address.
+        \item Defence against this can come from higher network layers and network monitoring.
+    \end{itemize}
+\end{itemize}
+
+\section{The World Wide Web and HTTP - Application Layer}
+\paragraph{Note} The World Wide Web \textbf{\textit{is not}} the internet, but it uses the internet to do its work.
+\begin{mdframed}
+    \textbf{\textit{(Important!)}} The world Wide Web works over the Internet. 
+\end{mdframed}
+
+\subsection{Defining the Web} In general, the web could be defined as follows:
+\begin{mdframed}
+    A \textbf{\textit{global collection of resources}} which are \textit{\textbf{identifiable}} and \textit{\textbf{linked}} together. 
+\end{mdframed}
+we will now discuss the three bolded italic keywords in detail.
+
+\subsubsection{Global Collection}
+\begin{itemize}
+    \item A \textit{\textbf{web resource}} can be any data we can send through the internet, for example text, images, video, auto, etc.
+    \item \textit{\textbf{Global}} - want to access these resources no matter where they are in the world.
+    \item Stored in ``web'' servers, that is computers with resources that are accessible. 
+\end{itemize}
+
+\subsubsection{Identifiable}
+We need a way to get these resources from their respective web servers. To be able to achieve this, it is necessary that we can
+\begin{enumerate}
+    \item locate where they are in the entire web 
+    \item use a consistent way to identify and access each one of these resources. 
+\end{enumerate}
+To achieve this, we need Uniform Resource Locators (URLs).
+
+\subsubsection{Linked Together}
+\begin{itemize}
+    \item It is a \textit{web} to begin with and thus we have resources linked each other which allows us to easily discover the web.
+    \item Generally, resources that are similar tend to link to each other. 
+\end{itemize}
+
+\subsection{HyperText Transfer Protocol (HTTP)}
+HTTP is the protocol of the web and gives the client and serve a mutual language at the application layer. 
+\paragraph{Global Collection of Resources} \textit{All machines} can use HTTP through applications - global reach.
+
+\paragraph{Identified through URLs} Let's take the following example
+\begin{center}
+    \texttt{\color{Green}http://\color{Black}google.com}
+\end{center}
+in the URL, \color{Green}the green part is called the \textit{\textbf{protocol}} ~\color{Black} while the rest is the \textit{\textbf{Hostname}} aka \textit{\textbf{Domain name}}. \textbf{\#!Note:} URLs are not unique to HTTP; they are used in other protocols as well. 
+
+\paragraph{HTTP URLs}
+\begin{itemize}
+    \item Hostnames translated to IP addresses by the Domain Name System (DNS).
+    \item IP address can change, name can stay the name.
+    \item A general picture
+    \begin{mdframed}
+        \begin{center}
+            \texttt{http://google.com} \\
+            $\downarrow$\\ 
+            DNS\\
+            $\downarrow$\\
+            \texttt{http://172.217.1.14}
+        \end{center}
+    \end{mdframed}
+\end{itemize}
+
+\paragraph{Why HTTP?} Accessing resources through URLs doesn't always mean downloading something. From day-to-day use of web, we generally use the web in the following 4 ways,
+\begin{itemize}
+    \item Download things
+    \item Upload things
+    \item Change things
+    \item Delete things
+\end{itemize}
+and they are handled in the HTTP!
+
+\subsubsection{Request - Response of HTTP}
+We have requests form clients and responses from the server. \textit{Request and response originate from the Application Layer on both sides.} A HTTP request includes
+\begin{itemize}
+    \item \textbf{\textit{URL}}: to get to the resource on the server we want.
+    \item \textit{\textbf{HTTP Method}}: to tell the server what we want to do with that resource.
+    \item \textbf{\textit{Request Headers and Body}}: Give the server additional information about out request. 
+\end{itemize}
+
+\paragraph{HTTP Methods}
+HTTP methods are \textit{\textbf{verbs}} hat are used to label the actions we expect a server to take. \color{Red} Servers doesn't have 100\% obligation to do these expected actions, but they are pretty well followed standards. \color{Black}
+\begin{center}
+    \begin{tabular}{|c|c|}
+        \hline
+        Verb            & Expected Server Action \\ \hline
+        \texttt{GET}    & Retrieve a resource    \\ \hline
+        \texttt{POST}   & Create a resource      \\ \hline
+        \texttt{PATCH}  & Update a resource      \\ \hline
+        \texttt{DELETE} & Delete a resource      \\ \hline
+    \end{tabular}
+\end{center}
+
+\paragraph{Response} The response from a server has
+\begin{itemize}
+    \item \textit{\textbf{Response code}}: Gives us standard indicator of the overall status of the response.
+    \item \textit{\textbf{Headers}}: Give information about the response.
+    \item \textit{\textbf{Body}}: The content of the resource, if available and/or applicable.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
