@@ -10,7 +10,8 @@
 \usepackage{fancyhdr}
 \usepackage{datetime}
 \usepackage{ccicons}
-\usepackage[outputdir=.texpadtmp]{minted}
+\usepackage{mdframed}
+%\usepackage[outputdir=.texpadtmp]{minted}
 
 % ==== License =====
 \usepackage[
@@ -65,6 +66,11 @@
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\complex}{\mathbb{C}}
 \newcommand{\field}{\mathbb{F}}
+
+% Statistics
+\newcommand{\cov}{\operatorname{COV}}
+\newcommand{\var}{\operatorname{VAR}}
+\newcommand{\expectation}{$\mathbb{E}$}
 
 % customized commands
 \newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
