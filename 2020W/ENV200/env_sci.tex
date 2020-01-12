@@ -1,0 +1,273 @@
+\documentclass[10pt]{article}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{datetime}
+\usepackage{ccicons}
+\usepackage{mdframed}
+%\usepackage[outputdir=.texpadtmp]{minted}
+
+% ==== License =====
+\usepackage[
+    type={CC}, 
+    modifier={by-nc-sa}, 
+    version={4.0},
+]{doclicense}
+
+% General
+\newcommand{\mc}[1]{\mathcal{#1}}
+
+% Math Bold Font, Vector Notations
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bd}{\mathbf{d}}
+\newcommand{\be}{\mathbf{e}}
+\renewcommand{\bf}{\mathbf{f}}
+\newcommand{\bg}{\mathbf{g}}
+\newcommand{\bh}{\mathbf{h}}
+\newcommand{\bi}{\mathbf{i}}
+\newcommand{\bj}{\mathbf{j}}
+\newcommand{\bk}{\mathbf{k}}
+\newcommand{\bl}{\mathbf{l}}
+\newcommand{\bm}{\mathbf{m}}
+\newcommand{\bn}{\mathbf{n}}
+\newcommand{\bo}{\mathbf{o}}
+\newcommand{\bp}{\mathbf{p}}
+\newcommand{\bq}{\mathbf{q}}
+\newcommand{\br}{\mathbf{r}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bt}{\mathbf{t}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bzero}{\mathbf{0}}
+
+% Proofs, Structures
+\newcommand{\proof}{\tit{\underline{Proof:}}} % This equivalent to the \begin{proof}\end{proof} block
+\newcommand{\proofforward}{\tit{\underline{Proof($\implies$):}}}
+\newcommand{\proofback}{\tit{\underline{Proof($\impliedby$):}}}
+\newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
+\newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
+\newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
+\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
+
+% Number Spaces, Vector Space
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\field}{\mathbb{F}}
+
+% customized commands
+\newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
+\newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
+\newcommand{\map}[3]{\text{$\left[#1\right]_{#2}^{#3}$}}
+\newcommand{\dime}[1]{\text{dim}(#1)}
+\newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
+\newcommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
+\newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
+\newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\independent}{\perp \!\!\! \perp}
+
+\author{\ccLogo \,\,by Xia, Tingfeng}
+\title{\textsc{Science and Environment}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\doclicenseThis
+\tableofcontents
+\newpage
+\section{Lecture 1 - Understanding Environmental Issues and Science}
+\subsection{Learning Outcomes}
+\begin{itemize}
+    \item Describe several important environmental problems facing the world.
+    \begin{mdframed}
+        There are seven major problems discussed in this lecture, they are climate change, hunger, clean water, energy resources, air quality, biodiversity loss, and marine resources. 
+    \end{mdframed}
+    \item List several examples of progress in environmental quality.
+    \begin{mdframed}
+        Plateau of population growth, decrease in life-threatening diseases, more access-able renewable energy source, more access-able education due to Internet, decrease in rate of deforestation, and better protected marine resources. 
+    \end{mdframed}
+    \item Explain the idea of sustainability and some of its aims.
+    \begin{mdframed}
+        Sustainability is a search for long term ecological stability and human progress. Quote: ``meeting the needs of the present without compromising the ability of future generations to meet their own needs''
+    \end{mdframed}
+\end{itemize}
+
+\subsection{Definition - Environmental Science}
+\begin{itemize}
+    \item Environmental science is the systematic study of our environment and out place in it, and
+    \item Environmental science draws on many fields of knowledge to fully understand a problem and solve it. 
+\end{itemize}
+
+\subsection{Environmental and Political Problems}
+\subsubsection{Climate Change} Human activities have greatly increased concentrations of carbon dioxide and other greenhouse gases over the last 200 years. Climate models indicate that by 2100, if current trends continue, global mean temperatures will probably warm between about 2 and 6 degrees Celsius. 
+
+\subsubsection{Hunger} Over the past century, global food production has increased faster than human population growth, but hunger remains a chronic problem. At least 60 million people face acute food shortages due to weather, politics, or war. 
+
+\subsubsection{Clean Water}
+\begin{itemize}
+    \item 1.1 billion people lack access to safe drinking water.
+    \item Every year polluted water contributes to the death of more than 15 million people.
+    \item 40 \% of the population live in countries where water demands now exceed supplies. 
+\end{itemize}
+
+\subsubsection{Energy Resources}
+\begin{itemize}
+    \item Fossil fuels (oil, coal, and natural gas) presently provide around 80 percent of the energy used in industrialized countries.
+    \item Supplies of these fuels are diminishing, and there are many problems associated with their acquisition and use.
+    \item Investing in renewable energy and energy conservation measures could give us cleaner, less destructive options.
+\end{itemize}
+
+\subsubsection{Air Quality}
+\begin{itemize}
+    \item Air quality has worsened dramatically in many areas, especially China and India.
+    \item Nobel laureate Paul Crutzen estimates that at least 3 million people die each year from diseases triggered by air pollution.
+    \item Word-wide, the UN estimates that more than 2 billion metric tons of air pollutants (\textit{which doesn't include carbon dioxide, or wind-blown soil}) are released each year.
+\end{itemize}
+
+\subsubsection{Biodiversity Loss}
+Habitat destruction, overexploitation, pollution, and introduction of exotic organisms are eliminating species at a rate comparable to the great extinction that marked the end of the age of dinosaurs.
+
+\subsubsection{Marine Resources}
+\begin{itemize}
+    \item More than a billion people depend on seafood for their main source of animal protein.
+    \item According to the World Resources Institute (WRI), more than three-quarters of the 441 fish stocks for which information is available are severely depleted or in urgent need of better management. 
+\end{itemize}
+
+\subsection{Signs of Progress}
+\subsubsection{Population}
+Population has stabilized in most industrialized countries where democracy has been established. 
+\begin{itemize}
+    \item Since 1960, the average number of children born per woman worldwide has decreased from 5.0 to 2.45. 
+    \item The UN Population Division predicts that the world population will stabilize at about 8.9 billion by the year 2050.
+\end{itemize}
+
+\subsubsection{Health}
+The incidence of life-threatening infectious diseases like smallpox and polio have been reduced sharply in most countries during the past century, while life expectancies have nearly doubled. 
+
+\subsubsection{Renewable Energy}
+Encouraging progress is being made in a transition to renewable energy sources.
+\begin{itemize}
+    \item Growth in wind energy, solar, and biomass power and improvements in efficiency are beginning to reduce reliance on fossil fuels.
+    \item The cost of solar power has plummeted (dropped, at high speed), and both solar and wind power are now far cheaper, easier, and faster to install than nuclear power or new coal plants. 
+\end{itemize}
+
+\subsubsection{Information and Education}
+\begin{itemize}
+    \item Literacy and access to education are expanding in most regions of the world.
+    \item The Internet makes it easier to share environmental solutions.
+    \item Expanding education for girls is driving declining birth rates worldwide.
+\end{itemize}
+
+\subsubsection{Conservation of Forest and Nature Preserves}
+\begin{itemize}
+    \item Deforestation has slowed in Asia.
+    \item A former leader in deforestation, Brazil, is now working to protect forests.
+    \item 13.5\% of the world's land area is now in protected areas.
+\end{itemize}
+
+\subsubsection{Protection of Marine Resources}
+\begin{itemize}
+    \item Marine protected areas and better monitoring of provides for more sustainable management.
+    \item Marine reserves have been established in California, Hawaii, New Zealand, Great Britain, and many other areas.
+\end{itemize}
+
+\subsection{Definition - Sustainability}
+\begin{itemize}
+    \item \textit{Sustainability} is a search for long term ecological stability and human progress.
+    \item World Health Organization director Gro Harlem Brundtland has defined sustainable development as ``meeting the needs of the present without compromising the ability of future generations to meet their own needs.''
+\end{itemize}
+
+\subsection{Definition - Science}
+\begin{itemize}
+    \item Science is a process for producing knowledge based on observations. We develop or test theories (proposed explanations of how a process works) using these observations.
+    \item Science also refers to the cumulative body of knowledge produced by many scientists.
+    \item Science rests on the assumption that the world is knowable and that we can learn about it by careful observation and logical reasoning. 
+\end{itemize}
+
+\subsection{Orderly Procedure - Scientific Method}
+\begin{enumerate}
+    \item Make an observation and identify a question.
+    \item Propose a hypothesis
+    \item Test the hypothesis.
+    \item Gather data from the test.
+    \item Interpret the results. (Re-define and revise original hypothesis if it didn't work; Go back to step 2. )
+    \item Report for peer review. 
+\end{enumerate}
+
+\subsection{Conclusions}
+\begin{itemize}
+    \item We face many persistent environmental problems, but we can also see many encouraging examples of progress.
+    \item \color{Red} Resolving these multiple problems together is the challenge for sustainability.\color{Black}
+    \item Science gives us an orderly, methodical approach to examining environmental problems. 
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
