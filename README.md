@@ -14,7 +14,7 @@
 - **STA414**
 - **CSC413**
 - **CSC369**
-- [**CSC309**](https://tingfengx.github.io/uoftnotes/2020W/CSC309/web_prog.pdf)
+- [**CSC309**](https://tingfengx.github.io/uoftnotes/2020W/CSC309/web_prog.pdf), Programming on the Web. Notes on technical stuff covered in the course. 
 - [**ENV200**](https://tingfengx.github.io/uoftnotes/2020W/ENV200/env_sci.pdf), Science and Environment. Consisting of notes from the book and lecture slides. 
 <!-- - **MAT337** -->
   
