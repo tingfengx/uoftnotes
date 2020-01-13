@@ -205,6 +205,8 @@ HTTP is the protocol of the web and gives the client and serve a mutual language
 \end{center}
 in the URL, \color{Green}the green part is called the \textit{\textbf{protocol}} ~\color{Black} while the rest is the \textit{\textbf{Hostname}} aka \textit{\textbf{Domain name}}. \textbf{\#!Note:} URLs are not unique to HTTP; they are used in other protocols as well. 
 
+\paragraph{Linking together everything in HTTP} We have resources (usually text in this case) with \textit{\textbf{hyperlinks}} which gives us a feeling of connected web. 
+
 \paragraph{HTTP URLs}
 \begin{itemize}
     \item Hostnames translated to IP addresses by the Domain Name System (DNS).
@@ -258,10 +260,33 @@ HTTP methods are \textit{\textbf{verbs}} hat are used to label the actions we ex
     \item \textit{\textbf{Body}}: The content of the resource, if available and/or applicable.
 \end{itemize}
 
+\section{Ports}
+\paragraph{Why ports?} A web server listens for a request, meaning that there needs to be a process on the server that is listening. There could be multiple processes that want to listen for connections. 
 
+\subsection{Introducing Ports}
+\begin{itemize}
+    \item Every process on a computer that uses the internet is assigned a port (TCP or UDP port).
+    \item Server process that listens for HTTP requests usually uses \textit{\textbf{port 80}}. 
+\end{itemize} 
 
+\subsection{Example of TCP working with ports}
+Assume that the server is listening on usual HTTP port of 80, and client process taking through port 1753 (some randomly assigned port).
+\begin{enumerate}
+    \item $Client ~{\longrightarrow}~Server$; ``Give me \texttt{index.html}''
+    \item $Client ~{{\longleftarrow}}~Server$; ``Ok, here is \texttt{index.html}''
+    \item $Client ~{{\longleftarrow}}~ Server$; ``Ok, I got it. ''
+\end{enumerate}
 
-
+\subsection{HTTP: ``Stateless' Protocol}
+\begin{itemize}
+    \item Each request independent, i.e.
+    \begin{itemize}
+        \item Server doesn't need to keep track of previous requests.
+        \item Doesn't care how many are sent at once. 
+    \end{itemize}
+    \item This simplifies the protocol.
+    \item \textit{\textbf{\#! Important:}} Illusions of state (e.g. knowing which pages the user browsed) can still occur, but is not part of the protocol. 
+\end{itemize}
 
 
 
