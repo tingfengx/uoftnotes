@@ -11,7 +11,7 @@
 ### **Notes in progress:**  
   
 #### 2020 Winter  
-- **STA414**
+- [**STA414**](https://tingfengx.github.io/uoftnotes/2020W/STA414/prob_ml.pdf), Statistical Methods for Machine Learning II. 
 - **CSC413**
 - **CSC369**
 - [**CSC309**](https://tingfengx.github.io/uoftnotes/2020W/CSC309/web_prog.pdf), Programming on the Web. Notes on technical stuff covered in the course. 
