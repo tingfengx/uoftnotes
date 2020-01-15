@@ -1,0 +1,293 @@
+\documentclass[10pt]{article}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{datetime}
+\usepackage{ccicons}
+%\usepackage[outputdir=.texpadtmp]{minted}
+
+% ==== License =====
+\usepackage[
+    type={CC}, 
+    modifier={by-nc-sa}, 
+    version={4.0},
+]{doclicense}
+
+% General
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\argmax}{\arg\max}
+
+% Math Bold Font, Vector Notations
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bd}{\mathbf{d}}
+\newcommand{\be}{\mathbf{e}}
+\renewcommand{\bf}{\mathbf{f}}
+\newcommand{\bg}{\mathbf{g}}
+\newcommand{\bh}{\mathbf{h}}
+\newcommand{\bi}{\mathbf{i}}
+\newcommand{\bj}{\mathbf{j}}
+\newcommand{\bk}{\mathbf{k}}
+\newcommand{\bl}{\mathbf{l}}
+\newcommand{\bm}{\mathbf{m}}
+\newcommand{\bn}{\mathbf{n}}
+\newcommand{\bo}{\mathbf{o}}
+\newcommand{\bp}{\mathbf{p}}
+\newcommand{\bq}{\mathbf{q}}
+\newcommand{\br}{\mathbf{r}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bt}{\mathbf{t}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bzero}{\mathbf{0}}
+
+% Proofs, Structures
+\newcommand{\proof}{\tit{\underline{Proof:}}} % This equivalent to the \begin{proof}\end{proof} block
+\newcommand{\proofforward}{\tit{\underline{Proof($\implies$):}}}
+\newcommand{\proofback}{\tit{\underline{Proof($\impliedby$):}}}
+\newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
+\newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
+\newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
+\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
+
+% Number Spaces, Vector Space
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\field}{\mathbb{F}}
+
+% customized commands
+\newcommand{\settag}[1]{\renewcommand{\theenumi}{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
+\newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
+\newcommand{\map}[3]{\text{$\left[#1\right]_{#2}^{#3}$}}
+\newcommand{\dime}[1]{\text{dim}(#1)}
+\newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
+\newcommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
+\newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
+\newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\independent}{\perp \!\!\! \perp}
+
+\author{\ccLogo \,\,by Xia, Tingfeng}
+\title{\textsc{Statistical Methods for Machine Learning II}}
+\date{2020 winter term}
+
+\begin{document}
+\maketitle
+\doclicenseThis
+\section*{Preface} 
+This document is consist of notes from lectures and the online course notes that I, personally, find interesting/important. You can find the online course notes on the course website here: \url{https://probmlcourse.github.io/sta414/}
+
+\tableofcontents
+
+\newpage
+
+\section{Lecture 2 - Introduction to Probabilistic Models}
+\subsection{Overview}
+We have a random vector in the form $X = (X_1,\dots,X_m)$ which can be \textit{\textbf{either observed or unobserved}}. To approach this in a generative way, we make the so called generative assumption. which is that $X\sim P_{true}(X)$, i.e. there is some true distribution that is behind the scene and our data is from such distribution. 
+
+\paragraph{Goal} Model a parametric joint distribution $P_\theta (X)$ by learning the parameters. The learning here means we want to find a/the ``close''/``best'' estimation to our parameter $\theta$. In this course we will investigate the following three problems,
+\begin{itemize}
+    \item How to specify the joint, $P_\theta(X)$?
+    \item What does ``best''/``close'' mean? In some sense we want to find $P_\theta \approx P_{true}$, however $P_{true}$ might also be unknown.
+    \item How to find the best $\theta$? In this course we will generally rely on gradient methods, so $\nabla_\theta$...
+\end{itemize}
+
+\subsection{Probabilistic Perspective on ML}
+With this perspective, we can think about common machine learning tasks differently, where random variables represent:
+\begin{itemize}
+    \item $X$: (high dimensional) input data
+    \item $C$: discrete label
+    \item $Y$: continuous target
+\end{itemize}
+If we assume our knowledge of the joint of the above three, i.e. we know $P(X,C,Y)$, then we can write our familiar tasks in the following way
+\begin{itemize}
+    \item \textit{\textbf{Regression}}:
+        \begin{equation*}
+            p(Y|X) = \frac{p(X,Y)}{P(X)} = \frac{p(X,Y)}{\int p(X,Y)dY}
+        \end{equation*}
+    \item \textit{\textbf{Classification/Clustering}}:
+        \begin{equation*}
+            p(C|X) = \frac{p(X,C)}{\sum_{C'}p(X,C')}
+        \end{equation*}
+\end{itemize}
+
+\subsubsection{(Example) Classification} Suppose we have data of the form $\mathcal{D} = \{(x,c)_i\}_i$. We assume that they came from a certain true distribution, i.e. $\{(x,c)_i\}_i \sim p(X,C)$. Then, the ultimate goal of the ML problem is converted into finding $p(C|X)$. Using Bayes Rule of total probability, we can expand the distribution of interest into
+\begin{equation*}
+    p(C | X)= \frac{p(X,C)}{P(X)} =\frac{p(X, C)}{\sum_{C'} p(X, C')}
+\end{equation*}
+
+\paragraph{Output Heuristics} After we acquire $p(C|X)$ as above, we are one step away from our goal of output the actual prediction $c^*$. There are three ways that we can do this, namely
+\begin{itemize}
+    \item \textit{\textbf{MLE Estimate}} is the most intuitive one, we simply choose
+        \begin{equation*}
+            c^* = \argmax_c p(C = c|X)
+        \end{equation*}
+    \item \textit{\textbf{Sample Learnt Dist}} is another approach which produces non-deterministic results, i.e. we sample $c^* \sim p(C|X)$.
+    \item \textit{\textbf{Combined}} is usually a safe way of doing this. We output
+        \begin{equation*}
+            (c^*, p(C=c^*|X)) \iff (\text{result}, \text{how sure?})
+        \end{equation*}
+    As an example, we have a ML algorithm drives a car. In this case, we might want to make decision only when the machine learning model has a certain level of confidence. 
+\end{itemize}
+
+\subsection{Observed vs Unobserved Random Variables}
+\subsubsection{Supervised Dataset}
+\begin{equation*}
+    \left\{x_{i}, c_{i}\right\}_{i=1}^{N} \sim p(X, C)
+\end{equation*}
+In such case, the class labels are observed and finding the conditional distribution $p(C|X)$ satisfies the supervised classification problem. 
+
+\subsubsection{Unsupervised Dataset}
+\begin{equation*}
+    \left\{x_{i}\right\}_{i=1}^{N} \sim p(X, C)
+\end{equation*}
+Still under the generative assumption, where we assume that there is some underlying distribution for our dataset. Further, we assume that the distribution of data is related to the class labels for the data points even though the class labels are never observed. \textbf{A common way to refer to an unobserved discrete class label is ``cluster''}. However, in this case, our final goal of classification is still $p(C|X)$\footnote{Might be helpful to think of Gaussian Mixture Models}. 
+
+\subsubsection{Latent Variables} 
+\begin{quote}
+    Further, like clusters, introducing assumptions about unobserved variables is a powerful modelling tool. We will make use of this by modelling variables which are never observed in the dataset, called latent or hidden variables. By introducing and modelling latent variables, we will be able to naturally describe and capture abstract features of our input data.
+\end{quote}
+
+\subsection{Operations on Probabilistic Models}
+\begin{itemize}
+    \item \textit{\textbf{Generate Data}}: Sample from the model.
+    \item \textit{\textbf{Estimate Likelihood}}: When all variables are either observed or marginalized the result is a single real number which is the probability of the all variables taking on those specific values.
+    \item \textit{\textbf{Inference}}: Compute the expected value of some variables given others which are either observed or marginalized. 
+    \item \textit{\textbf{Learning}}: Set the parameters of the joint distribution given some observed data to maximize the probability of the observed data. 
+\end{itemize}
+
+\subsection{Desiderata of Probabilistic Models}
+We have to desires for the joint distribution to learn, namely
+\begin{itemize}
+    \item The marginal and conditional distribution can be computed efficiently
+    \item The representation of the joint distribution should be compact. This is especially important when we are dealing with joint distributions over many variables.
+\end{itemize}
+In general, total joint distribution are too large to specify and would require an insane amount of data to fit even we wanted to. Thus, we need modelling assumptions. 
+
+\subsubsection{Fully Dependent Factorization (Chain Rule)}
+Suppose we have sample space defined such that $|T| = 2$, $|W| = 3$, and $|M| = 4$. Then the total joint distribution could be expanding using the chain rule as (\textit{note: not unique})
+\begin{equation*}
+    P_\theta(T,W,M) = P(T)P(W|T)P(M|T,W)
+\end{equation*} 
+which requires\footnote{Here the bars mean ``cardinality'' rather than vector norm} $|\theta| = (2 - 1) + (3 - 1) \times 2 + (4 - 1)\times 2 \times 3 = 23$ parameters in total to specify. 
+
+\subsubsection{Assumptions (Independence)}
+Introducing assumptions results in
+\begin{itemize}
+    \item a less expressive model
+    \item $|\theta|$ (usually, much) smaller
+\end{itemize}
+which can be bad sometimes and is a trade-off that we as modellers have to deal with. 
+
+\paragraph{(Example) Fully Independent}
+We assume that $T\independent W \independent M$, then by definition we know, for example, $P(W|T)= P(W)$. Then
+\begin{align*}
+    P_\theta(T,W,M) &= P(T)P(W|T)P(M|T,W) \\
+    &= P(T)P(W)P(M)
+\end{align*}
+which requires only $|\theta| = (2-1) + (3-1) + (4-1) = 6$ to fit.
+
+\subsection{Likelihood Function}
+For some observed data $X$, the likelihood describes the likeliness of the data under then distribution with parameter $\theta$. 
+\begin{equation*}
+    L(\theta) = p(X|\theta)
+\end{equation*}
+
+In general, we prefer to deal with the log likelihood function, which is defined as
+\begin{equation*}
+    \ell(\theta;X) = \log L(\theta) = \log p(x|\theta)
+\end{equation*}
+
+\subsection{Maximum Likelihood Estimation}
+The idea is to find
+\begin{equation*}
+    \hat{\theta}_{MLE} := \argmax_\theta \ell(\theta; \mathcal{D})
+\end{equation*}
+In the case of i.i.d, we can re-write as
+\begin{align*}
+    \hat{\theta}_{MLE} &= \argmax_\theta \ell(\theta; \mathcal{D})\\
+    &= \argmax_\theta \log \prod_{m} p\left(x^{(m)} | \theta\right) \\
+    &= \argmax_\theta\sum_{m} \log p\left(x^{(m)} | \theta\right)
+\end{align*}
+
+\subsection{Sufficient Statistics}
+\paragraph{(Definition) Statistic}
+A statistic is a possibly vector valued \textit{deterministic} function of a set of random variables.
+
+\paragraph{(Definition) Sufficient Statistic} 
+is a statistic that conveys exactly the same information about the data generating process that created the data as the entire data itself.\footnote{Could also be interpreted as ``summarize the data with respect to the likelihood''} In formal language, Sufficient Statistic ($T(X)$) for $X$ could be defined as
+\begin{equation*}
+    T(X^{(1)}) = T(X^{(2)})~ \implies~ L(\theta; X^{1}) = L(\theta; X^{2}), ~~\forall \theta
+\end{equation*}
+alternatively, we can define it as
+\begin{equation*}
+    P(\theta | T(X)) = P(\theta | X); ~~~\text{\color{Gray} i.e. data doesn't give further info}
+\end{equation*}
+\subsubsection{Neyman Factorization}
+Equivalently to the above, we can write
+\begin{equation*}
+    P(\theta | T(X))=h(x, T(x)) g(T(x), \theta)
+\end{equation*}
+
+\subsection{Exponential Family}
+Factorizes as
+\begin{align*}
+    p(x | \eta) 
+    &=h(x) \exp \left\{\eta^{T} T(x)-g(\eta)\right\} \\
+    &=h(x) g(\eta) \exp \left\{\eta^{T} T(x)\right\}
+\end{align*}
+\subsubsection{(Example) 1-D Gaussian}
+\begin{align*}
+    p(x|\theta) = \mathcal{N}(x|\mu, \sigma)
+    &= \frac{1}{\sqrt{2\pi \sigma^2}}\exp \left(- \frac{1}{2\sigma^2} (x - \mu)^2 \right) \\
+    &= \frac{1}{\sqrt{2\pi \sigma^2}}\exp \left(- \frac{1}{2\sigma^2} (x^2 - 2x\mu + \mu^2) \right) \\
+    &= \underbrace{\frac{1}{\sqrt{2\pi}\sigma} \exp\left( \frac{-\mu^2}{2\sigma^2} \right)}_{\log A(\eta)}
+    \exp\left(
+    \underbrace{
+        \begin{bmatrix}
+            \frac{\mu}{\sigma^2} & \frac{-1}{2\sigma^2}
+        \end{bmatrix}}_{\eta}
+    \underbrace{
+        \begin{bmatrix}
+            x \\
+            x^2
+        \end{bmatrix}}_{T(X)}
+    \right)
+\end{align*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
