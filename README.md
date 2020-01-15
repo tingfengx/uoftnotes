@@ -50,7 +50,7 @@
 - Compilation automated with ```latexmk```:
    ``````
    $ latexmk -version
-   Latexmk, John Collins, 18 June 2019. Version 4.65
+   Latexmk, John Collins, 26 Dec. 2019. Version 4.67
    ``````
    This is particularly useful to automate the multiple runs of ```pdflatex``` needed for some documents.
 - Please note that some of these notes used the LaTeX package `minted`. To compile the documents containing `minted` using ```latexmk```, you need to use the shell escape flag. Please (create if not exist) add the following to your `~/.latexmkrc`.
