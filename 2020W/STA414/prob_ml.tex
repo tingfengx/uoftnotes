@@ -1,4 +1,4 @@
-\documentclass[10pt]{article}
+\documentclass[11pt]{article}
 \usepackage{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -10,6 +10,7 @@
 \usepackage{fancyhdr}
 \usepackage{datetime}
 \usepackage{ccicons}
+\usepackage{tikz}
 %\usepackage[outputdir=.texpadtmp]{minted}
 
 % ==== License =====
@@ -249,19 +250,21 @@ Equivalently to the above, we can write
 Factorizes as
 \begin{align*}
     p(x | \eta) 
-    &=h(x) \exp \left\{\eta^{T} T(x)-g(\eta)\right\} \\
-    &=h(x) g(\eta) \exp \left\{\eta^{T} T(x)\right\}
+    &=h(x) \exp \left\{\eta' T(x)-g(\eta)\right\} \\
+    &=h(x) g(\eta) \exp \left\{\eta' T(x)\right\}
 \end{align*}
 \subsubsection{(Example) 1-D Gaussian}
 \begin{align*}
     p(x|\theta) = \mathcal{N}(x|\mu, \sigma)
     &= \frac{1}{\sqrt{2\pi \sigma^2}}\exp \left(- \frac{1}{2\sigma^2} (x - \mu)^2 \right) \\
     &= \frac{1}{\sqrt{2\pi \sigma^2}}\exp \left(- \frac{1}{2\sigma^2} (x^2 - 2x\mu + \mu^2) \right) \\
-    &= \underbrace{\frac{1}{\sqrt{2\pi}\sigma} \exp\left( \frac{-\mu^2}{2\sigma^2} \right)}_{\log A(\eta)}
+    &= \underbrace{
+        \frac{1}{\sqrt{2\pi}\sigma} \exp\left( \frac{-\mu^2}{2\sigma^2} \right)}_{\log A(\eta)}
     \exp\left(
     \underbrace{
         \begin{bmatrix}
-            \frac{\mu}{\sigma^2} & \frac{-1}{2\sigma^2}
+            \frac{\mu}{\sigma^2} 
+            & \frac{-1}{2\sigma^2}
         \end{bmatrix}}_{\eta}
     \underbrace{
         \begin{bmatrix}
@@ -273,7 +276,156 @@ Factorizes as
 
 
 
+\section{Lecture 3 - Directed Graphical Models}
+\subsection{Graphical Model Notation}
+\subsubsection{Chain Rule Expansion} Given any joint probability of $N$ random variables, we can expand it as follows
+\begin{equation*}
+    p\left(x_{1, \ldots, N}\right)=p\left(x_{1}\right) p\left(x_{2} | x_{1}\right) p\left(x_{3} | x_{2}, x_{1}\right) \ldots p\left(x_{n} | x_{n-1: 1}\right)
+\end{equation*}
+Formally speaking, in the case of two random variables would simply
+\begin{equation*}
+    p(x, y)=p(x | y) p(y)
+\end{equation*}
+and the general case for $N$ random variables could be written as
+\footnote{Note: when $k = 1$, $p\left(x_{k} | \cap_{j=1}^{k-1} x_{j}\right) = p(x_1)$}
+\begin{equation*}
+    p\left(\bigcap_{i=1}^{N} x_{i}\right)
+    = \prod_{j=1}^{N} p\left(x_{j} \left\vert\,\, \bigcap_{k=1}^{j-1} x_{k}\right)\right.
+\end{equation*}
 
+\subsubsection{Graph Representation} 
+\paragraph{(Example) 2 Nodes}Consider the model
+\begin{equation*}
+    p\left(x_{i}, x_{\pi_{i}}\right)=p\left(x_{\pi_{i}}\right) p\left(x_{i} | x_{\pi_{i}}\right)
+\end{equation*}
+which we can use the following graph to represent:
+\begin{center}
+    \begin{tikzpicture}[scale=0.2]
+        \tikzstyle{every node}+=[inner sep=0pt]
+        \draw [black] (25.7,-27.6) circle (3);
+        \draw (25.7,-27.6) node {$x_{\pi_1}$};
+        \draw [black] (41.1,-27.6) circle (3);
+        \draw (41.1,-27.6) node {$x_1$};
+        \draw [black] (28.7,-27.6) -- (38.1,-27.6);
+        \fill [black] (38.1,-27.6) -- (37.3,-27.1) -- (37.3,-28.1);
+    \end{tikzpicture}
+\end{center}
+where
+\begin{itemize}
+    \item \textit{\textbf{nodes}} represent random variables
+    \item \textit{\textbf{arrows}} mean ``conditioned on'', e.g. ``$x_i$ is conditioned on $x_{\pi_i}$''
+\end{itemize}
+
+\paragraph{(Example) Fully Dependent 6 Nodes}
+The total expansion of $p(x_{1:6})$ could be represented as
+\begin{center}
+    \begin{tikzpicture}[scale=0.2]
+        \tikzstyle{every node}+=[inner sep=0pt]
+        \draw [black] (19.3,-19.9) circle (3);
+        \draw (19.3,-19.9) node {$x_1$};
+        \draw [black] (36.4,-15.5) circle (3);
+        \draw (36.4,-15.5) node {$x_2$};
+        \draw [black] (53.6,-19.9) circle (3);
+        \draw (53.6,-19.9) node {$x_3$};
+        \draw [black] (53.6,-31.7) circle (3);
+        \draw (53.6,-31.7) node {$x_4$};
+        \draw [black] (19.3,-31.7) circle (3);
+        \draw (19.3,-31.7) node {$x_6$};
+        \draw [black] (36.4,-36.4) circle (3);
+        \draw (36.4,-36.4) node {$x_5$};
+        \draw [black] (22.21,-19.15) -- (33.49,-16.25);
+        \fill [black] (33.49,-16.25) -- (32.6,-15.96) -- (32.84,-16.93);
+        \draw [black] (22.3,-19.9) -- (50.6,-19.9);
+        \fill [black] (50.6,-19.9) -- (49.8,-19.4) -- (49.8,-20.4);
+        \draw [black] (22.14,-20.88) -- (50.76,-30.72);
+        \fill [black] (50.76,-30.72) -- (50.17,-29.99) -- (49.84,-30.94);
+        \draw [black] (21.46,-21.98) -- (34.24,-34.32);
+        \fill [black] (34.24,-34.32) -- (34.01,-33.4) -- (33.32,-34.12);
+        \draw [black] (19.3,-22.9) -- (19.3,-28.7);
+        \fill [black] (19.3,-28.7) -- (19.8,-27.9) -- (18.8,-27.9);
+        \draw [black] (39.31,-16.24) -- (50.69,-19.16);
+        \fill [black] (50.69,-19.16) -- (50.04,-18.47) -- (49.79,-19.44);
+        \draw [black] (38.58,-17.56) -- (51.42,-29.64);
+        \fill [black] (51.42,-29.64) -- (51.18,-28.73) -- (50.49,-29.46);
+        \draw [black] (36.4,-18.5) -- (36.4,-33.4);
+        \fill [black] (36.4,-33.4) -- (36.9,-32.6) -- (35.9,-32.6);
+        \draw [black] (34.22,-17.56) -- (21.48,-29.64);
+        \fill [black] (21.48,-29.64) -- (22.4,-29.45) -- (21.71,-28.72);
+        \draw [black] (53.6,-22.9) -- (53.6,-28.7);
+        \fill [black] (53.6,-28.7) -- (54.1,-27.9) -- (53.1,-27.9);
+        \draw [black] (51.44,-21.98) -- (38.56,-34.32);
+        \fill [black] (38.56,-34.32) -- (39.49,-34.13) -- (38.8,-33.41);
+        \draw [black] (50.76,-20.88) -- (22.14,-30.72);
+        \fill [black] (22.14,-30.72) -- (23.06,-30.94) -- (22.73,-29.99);
+        \draw [black] (50.71,-32.49) -- (39.29,-35.61);
+        \fill [black] (39.29,-35.61) -- (40.2,-35.88) -- (39.93,-34.92);
+        \draw [black] (50.6,-31.7) -- (22.3,-31.7);
+        \fill [black] (22.3,-31.7) -- (23.1,-32.2) -- (23.1,-31.2);
+        \draw [black] (33.51,-35.6) -- (22.19,-32.5);
+        \fill [black] (22.19,-32.5) -- (22.83,-33.19) -- (23.1,-32.22);
+    \end{tikzpicture}
+\end{center}
+This is the resultant graphical model if we make \textit{\textbf{absolutely no assumption}} on the independence. Notice that such model grows exponentially in complexity with respect to the number of parameters considered. We say such model ``scales poorly''.
+
+\subsubsection{Conditional Independence} 
+\paragraph{(Definition) Conditional Independence} Let $X$ be the set of nodes in our graph (the random variables of our model), then two sets of variables $X_A, X_B$ are said to be conditionally independent given a third set of variables $X_C$ if and only if either
+\begin{equation*}
+    p\left(X_{A}, X_{B} | X_{C}\right)=p\left(X_{A} | X_{C}\right) p\left(X_{B} | X_{C}\right)
+\end{equation*}
+or (\textit{\textbf{!\# Important!}})
+\begin{equation*}
+    p\left(X_{A} | X_{B}, X_{C}\right)=p\left(X_{A} | X_{C}\right)
+\end{equation*}
+and we denote the relation as $\left(X_{A} \independent X_{B} | X_{C}\right)$
+
+\subsection{Directed Acyclic Graphical Models (DAGM)}
+A directed acyclic graphical model over $N$ random variables look like
+\begin{equation*}
+    p\left(x_{1:N}\right)=\prod_{i}^{N} p\left(x_{i} | x_{\pi_{i}}\right)
+\end{equation*}
+where $x_i$ is a random variable and $x_{\pi_i}$ denotes the parents of the node (which could be an empty set). This notion is more general than the fully dependence model that looked at above. Notice that here each node is only dependent on its parents rather than all other nodes. Thus, the complexity of such model reduces to exponential in fan-in of each node, instead of the total $N$. 
+
+\subsubsection{Independence Assumption on DAGMs}
+% TODO: Topological Sort?
+Then, we have the independence relationship of
+$
+    x_i \independent x_{\tilde{\pi_i}} \vert x_{\pi_i}
+$
+which expands into
+\begin{equation*}
+    p\left(x_{1, \ldots, 6}\right)=p\left(x_{1}\right) p\left(x_{2} | x_{1}\right) p\left(x_{3} | x_{1}\right) p\left(x_{4} | x_{2}\right) p\left(x_{5} | x_{3}\right) p\left(x_{6} | x_{2}, x_{5}\right)
+\end{equation*}
+with the following respective graph
+\begin{center}
+    \begin{tikzpicture}[scale=0.2]
+        \tikzstyle{every node}+=[inner sep=0pt]
+        \draw [black] (19.3,-19.9) circle (3);
+        \draw (19.3,-19.9) node {$x_1$};
+        \draw [black] (36.4,-15.5) circle (3);
+        \draw (36.4,-15.5) node {$x_2$};
+        \draw [black] (53.6,-19.9) circle (3);
+        \draw (53.6,-19.9) node {$x_3$};
+        \draw [black] (53.6,-31.7) circle (3);
+        \draw (53.6,-31.7) node {$x_4$};
+        \draw [black] (19.3,-31.7) circle (3);
+        \draw (19.3,-31.7) node {$x_6$};
+        \draw [black] (36.4,-36.4) circle (3);
+        \draw (36.4,-36.4) node {$x_5$};
+        \draw [black] (22.21,-19.15) -- (33.49,-16.25);
+        \fill [black] (33.49,-16.25) -- (32.6,-15.96) -- (32.84,-16.93);
+        \draw [black] (34.22,-17.56) -- (21.48,-29.64);
+        \fill [black] (21.48,-29.64) -- (22.4,-29.45) -- (21.71,-28.72);
+        \draw [black] (38.58,-17.56) -- (51.42,-29.64);
+        \fill [black] (51.42,-29.64) -- (51.18,-28.73) -- (50.49,-29.46);
+        \draw [black] (22.3,-19.9) -- (50.6,-19.9);
+        \fill [black] (50.6,-19.9) -- (49.8,-19.4) -- (49.8,-20.4);
+        \draw [black] (51.44,-21.98) -- (38.56,-34.32);
+        \fill [black] (38.56,-34.32) -- (39.49,-34.13) -- (38.8,-33.41);
+        \draw [black] (33.51,-35.6) -- (22.19,-32.5);
+        \fill [black] (22.19,-32.5) -- (22.83,-33.19) -- (23.1,-32.22);
+    \end{tikzpicture}
+\end{center}
+As we can see, the introduction of the assumption greatly reduced the complexity of the model. 
 
 
 
