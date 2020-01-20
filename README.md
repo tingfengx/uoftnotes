@@ -6,11 +6,11 @@
 
 
 
-## :book: Notes for some of my courses at University of Toronto  
+## &#x1F4DA; Notes for some of my courses at University of Toronto  
   
 ### **Notes in progress:**  
   
-#### 2020 Winter  
+#### &#x1F4D8; 2020 Winter  
 - [**STA414**](https://tingfengx.github.io/uoftnotes/2020W/STA414/prob_ml.pdf), Statistical Methods for Machine Learning II. 
 - **CSC413**
 - **CSC369**
@@ -20,7 +20,7 @@
   
 ### **Notes that have already finished typesetting:**  
 
-#### 2019 Fall  
+#### &#x1f4d7;2019 Fall  
 - [**CSC258**](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. [In plain HTML](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html) 
    - [Midterm Pre-test checklist](https://tingfengx.github.io/uoftnotes/2019F/CSC258/midterm_checklist.pdf)  
    - [Final Review Notes (Mainly On Assembly)](https://tingfengx.github.io/uoftnotes/2019F/CSC258/final_review.pdf)
@@ -30,7 +30,7 @@
 - [**STA302**](https://tingfengx.github.io/uoftnotes/2019F/STA302/regression.pdf). Note from SJS and KNN.  
 
   
-#### 2019 Winter  
+#### &#x1F4d5; 2019 Winter 
 - [**MAT224**](https://tingfengx.github.io/uoftnotes/2019W/MAT224/MAT224.pdf), Linear Algebra II. Collection of (nearly) all the theorems presented in the book/mentioned during lecture. 
 - [**STA261**](https://tingfengx.github.io/uoftnotes/2019W/STA261/test_statistics_manuel.pdf), Statistics II. A manuel for common test statistics.
 - [**MAT237**](https://tingfengx.github.io/uoftnotes/2019W/MAT237/advanced_calc_review.pdf), Advanced Calculus. A Collection of Theorems, with focus on fall 2018 term which was not present in the notes that I typesetted together with [@yuchenWYC](https://github.com/yuchenWYC).  
@@ -39,7 +39,7 @@
 - **MAT237**, Advanced Calculus, a short guide to theorems, lemmas and propositions. This particular set of notes was made together with [@yuchenWYC](https://github.com/yuchenWYC). [@AndyTQ](https://github.com/AndyTQ) et al. also made some useful comments for the improvment of the .tex file. They are available [here](https://github.com/yuchenWYC/MAT237). 
    
 
-## :keyboard: Typesetting in \LaTeX
+## &#x1F4BB; Typesetting in \LaTeX
 - Compiled using ```pdflatex```:
    ``````
    $ pdflatex --version
