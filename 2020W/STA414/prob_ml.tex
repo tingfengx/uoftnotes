@@ -82,7 +82,7 @@
 \newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
 \newcommand{\inductive}{\textsc{\underline{Inductive Step:}} }
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
-\newcommand{\independent}{\perp \!\!\! \perp}
+\newcommand{\independent}{\perp}
 
 \author{\ccLogo \,\,by Xia, Tingfeng}
 \title{\textsc{Statistical Methods for Machine Learning II}}
@@ -277,6 +277,12 @@ Factorizes as
 
 
 \section{Lecture 3 - Directed Graphical Models}
+\subsection{Decision Theory (Utility Theory)}
+Let $a$ denote action, and $a^*$ be the optimal one. Also use $s$ to denote state and $V(\cdot)$ be the value function. We have, in general
+\begin{equation*}
+    a^* = \arg\min_a/\argmax_a \underbrace{{\mathbb{E}}_{p(s\vert a, knowledge)}\left[V(s)\right]}_{u(a)~ \overset{\Delta}{=} ~\text{utility of action $a$}}
+\end{equation*}
+
 \subsection{Graphical Model Notation}
 \subsubsection{Chain Rule Expansion} Given any joint probability of $N$ random variables, we can expand it as follows
 \begin{equation*}
@@ -388,9 +394,9 @@ where $x_i$ is a random variable and $x_{\pi_i}$ denotes the parents of the node
 
 \subsubsection{Independence Assumption on DAGMs}
 % TODO: Topological Sort?
-Then, we have the independence relationship of
+Then, we have the independence relationship of\footnote{Requires topological ordering, to be added later. }
 $
-    x_i \independent x_{\tilde{\pi_i}} \vert x_{\pi_i}
+    x_i \independent x_{Ancestor({\pi_i})} \vert x_{\pi_i}
 $
 which expands into
 \begin{equation*}
