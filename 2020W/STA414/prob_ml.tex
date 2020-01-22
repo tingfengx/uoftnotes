@@ -60,7 +60,7 @@
 \newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
 \newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
 \newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
-\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
+\newcommand{\qed}{\hfill $\blacksquare$}
 
 % Number Spaces, Vector Space
 \newcommand{\R}{\mathbb{R}}
@@ -300,7 +300,7 @@ and the general case for $N$ random variables could be written as
 \end{equation*}
 
 \subsubsection{Graph Representation} 
-\paragraph{(Example) 2 Nodes}Consider the model
+\paragraph{(Example) Grouping Variables} Consider the model
 \begin{equation*}
     p\left(x_{i}, x_{\pi_{i}}\right)=p\left(x_{\pi_{i}}\right) p\left(x_{i} | x_{\pi_{i}}\right)
 \end{equation*}
@@ -321,6 +321,8 @@ where
     \item \textit{\textbf{nodes}} represent random variables
     \item \textit{\textbf{arrows}} mean ``conditioned on'', e.g. ``$x_i$ is conditioned on $x_{\pi_i}$''
 \end{itemize}
+Notice that we can always group the variables together into one bigger variable, so in this example, $x_{\pi_i}$ might represent a group of variables in stead of just one. 
+
 
 \paragraph{(Example) Fully Dependent 6 Nodes}
 The total expansion of $p(x_{1:6})$ could be represented as
@@ -385,6 +387,11 @@ or (\textit{\textbf{\#! Important!}})
 \end{align*}
 and we denote the relation as $\left(X_{A} \independent X_{B} | X_{C}\right)$
 
+\subsubsection{Plates}
+In Bayesian methods, we treat parameters as random variables and hence we would like to include them in out graphical model. However, adding a node for each observation is quite cumbersome and thus we introduce plates, which denote replication of random variables. 
+
+
+
 \subsection{Directed Acyclic Graphical Models (DAGM)}
 A directed acyclic graphical model over $N$ random variables look like
 \begin{equation*}
@@ -433,6 +440,233 @@ with the following respective graph
     \end{tikzpicture}
 \end{center}
 As we can see, the introduction of the assumption greatly reduced the complexity of the model. 
+\subsubsection{(Example) Markov Chain}
+The following example has independence relationships that satisfies the Markov Property.
+\begin{equation*}
+    p(x) = p(x_1)p(x_2|x_1)p(x_3|x_2)p(x_4|x_3)...
+\end{equation*}
+and could be represented, in graphical model, as
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (14.5,-18.4) circle (3);
+\draw (14.5,-18.4) node {$x_1$};
+\draw [black] (14.5,-18.4) circle (2.4);
+\draw [black] (24.3,-18.4) circle (3);
+\draw (24.3,-18.4) node {$x_2$};
+\draw [black] (24.3,-18.4) circle (2.4);
+\draw [black] (34.3,-18.4) circle (3);
+\draw (34.3,-18.4) node {$x_3$};
+\draw [black] (34.3,-18.4) circle (2.4);
+\draw [black] (44.3,-18.4) circle (3);
+\draw (44.3,-18.4) node {$x_4$};
+\draw [black] (44.3,-18.4) circle (2.4);
+%\draw [black] (54.1,-18.4) circle (3);
+\draw (54.1,-18.4) node {$...$};
+\draw [black] (17.5,-18.4) -- (21.3,-18.4);
+\fill [black] (21.3,-18.4) -- (20.5,-17.9) -- (20.5,-18.9);
+\draw [black] (27.3,-18.4) -- (31.3,-18.4);
+\fill [black] (31.3,-18.4) -- (30.5,-17.9) -- (30.5,-18.9);
+\draw [black] (37.3,-18.4) -- (41.3,-18.4);
+\fill [black] (41.3,-18.4) -- (40.5,-17.9) -- (40.5,-18.9);
+\draw [black] (47.3,-18.4) -- (51.1,-18.4);
+\fill [black] (51.1,-18.4) -- (50.3,-17.9) -- (50.3,-18.9);
+\end{tikzpicture}
+\end{center}
+
+
+
+
+\subsection{Directed - Separation}
+\subsubsection{(Definition) D - Separation}
+Directed-separation is a notion of connectedness in DAGs in which two (sets of) variables may or may not be connected conditioned on a third (set of) variable(s). D-connection implies conditional dependence and d-separation implies conditional independence.
+\subsubsection{Float Rules Derivation}
+\paragraph{Notation}
+The double circles (or shaded circles) represent the notion of ``conditioned-on''.
+\paragraph{Chain}
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (11.9,-26.7) circle (3);
+\draw (11.9,-26.7) node {$X$};
+\draw [black] (21.9,-26.7) circle (3);
+\draw (21.9,-26.7) node {$Y$};
+\draw [black] (31.8,-26.7) circle (3);
+\draw (31.8,-26.7) node {$Z$};
+\draw [black] (46.6,-26.7) circle (3);
+\draw (46.6,-26.7) node {$X$};
+\draw [black] (56.3,-26.7) circle (3);
+\draw (56.3,-26.7) node {$Y$};
+\draw [black] (56.3,-26.7) circle (2.4);
+\draw [black] (65.9,-26.7) circle (3);
+\draw (65.9,-26.7) node {$Z$};
+\draw [black] (14.9,-26.7) -- (18.9,-26.7);
+\fill [black] (18.9,-26.7) -- (18.1,-26.2) -- (18.1,-27.2);
+\draw [black] (24.9,-26.7) -- (28.8,-26.7);
+\fill [black] (28.8,-26.7) -- (28,-26.2) -- (28,-27.2);
+\draw [black] (49.6,-26.7) -- (53.3,-26.7);
+\fill [black] (53.3,-26.7) -- (52.5,-26.2) -- (52.5,-27.2);
+\draw [black] (59.3,-26.7) -- (62.9,-26.7);
+\fill [black] (62.9,-26.7) -- (62.1,-26.2) -- (62.1,-27.2);
+\end{tikzpicture}
+\end{center}
+In this case, we are interested in knowing whether or not
+\begin{equation*}
+    (X\independent Z)| Y
+\end{equation*}
+From the arrows between the nodes, we know that
+\begin{equation*}
+    P(X,Y,Z) = P(X)P(Y|X)P(Z|Y)
+\end{equation*}
+Then, we have
+\begin{align*}
+    P(X,Z|Y) &= \frac{P(X,Y,Z)}{P(Y)} \\
+    &= \frac{P(X)P(Y|X)P(Z|Y)}{P(Y)} \\
+    &= \frac{P(X,Y)P(Z|Y)}{P(Y)} \\
+    &= P(X|Y)P(Z|Y)
+\end{align*}
+and this completes the proof. \qed
+
+\paragraph{Common Clause}
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (22.8,-21) circle (3);
+\draw (22.8,-21) node {$Y$};
+\draw [black] (17,-32.7) circle (3);
+\draw (17,-32.7) node {$X$};
+\draw [black] (29.1,-32.7) circle (3);
+\draw (29.1,-32.7) node {$Z$};
+\draw [black] (54.9,-21) circle (3);
+\draw (54.9,-21) node {$Y$};
+\draw [black] (54.9,-21) circle (2.4);
+\draw [black] (49.6,-32.7) circle (3);
+\draw (49.6,-32.7) node {$X$};
+\draw [black] (61.7,-32.7) circle (3);
+\draw (61.7,-32.7) node {$Z$};
+\draw [black] (53.66,-23.73) -- (50.84,-29.97);
+\fill [black] (50.84,-29.97) -- (51.62,-29.44) -- (50.71,-29.03);
+\draw [black] (56.41,-23.59) -- (60.19,-30.11);
+\fill [black] (60.19,-30.11) -- (60.22,-29.16) -- (59.36,-29.67);
+\draw [black] (21.47,-23.69) -- (18.33,-30.01);
+\fill [black] (18.33,-30.01) -- (19.14,-29.52) -- (18.24,-29.07);
+\draw [black] (24.22,-23.64) -- (27.68,-30.06);
+\fill [black] (27.68,-30.06) -- (27.74,-29.12) -- (26.86,-29.59);
+\end{tikzpicture}
+\end{center}
+As previous, we are interested in knowing whether or not $(X \perp Z) | Y$. From the graph, we can know that
+\begin{equation*}
+    P(X,Y,Z) = P(Y)P(X|Y)P(Z|Y)
+\end{equation*}
+Then, we have
+\begin{align*}
+    P(X,Z|Y) 
+    &= \frac{P(X,Y,Z)}{P(Y)} \\
+    &= \frac{P(Y)P(X|Y)P(Z|Y)}{P(Y)} \\
+    &= P(X|Y)P(Z|Y)
+\end{align*}
+and this completes the proof. \qed
+
+\paragraph{Explaining Away (Berkson's Paradox)}
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (15.9,-22.2) circle (3);
+\draw (15.9,-22.2) node {$X$};
+\draw [black] (26.8,-21.8) circle (3);
+\draw (26.8,-21.8) node {$Z$};
+\draw [black] (21.7,-33.3) circle (3);
+\draw (21.7,-33.3) node {$Y$};
+\draw [black] (45.8,-21.8) circle (3);
+\draw (45.8,-21.8) node {$X$};
+\draw [black] (57.2,-21.8) circle (3);
+\draw (57.2,-21.8) node {$Z$};
+\draw [black] (51.5,-33.3) circle (3);
+\draw (51.5,-33.3) node {$Y$};
+\draw [black] (51.5,-33.3) circle (2.4);
+\draw [black] (55.87,-24.49) -- (52.83,-30.61);
+\fill [black] (52.83,-30.61) -- (53.64,-30.12) -- (52.74,-29.67);
+\draw [black] (47.13,-24.49) -- (50.17,-30.61);
+\fill [black] (50.17,-30.61) -- (50.26,-29.67) -- (49.36,-30.12);
+\draw [black] (25.58,-24.54) -- (22.92,-30.56);
+\fill [black] (22.92,-30.56) -- (23.7,-30.03) -- (22.78,-29.62);
+\draw [black] (17.29,-24.86) -- (20.31,-30.64);
+\fill [black] (20.31,-30.64) -- (20.38,-29.7) -- (19.5,-30.16);
+\end{tikzpicture}
+\end{center}
+Notice from the graph that we have $P(X,Y,Z) = P(X)P(Z)P(Y|X,Z)$.
+First, I will prove that, in this case, $(X \not\perp Z) | Y$.
+\begin{align*}
+    P(Z|X,Y) &= \frac{P(X)P(Z)P(Y|X,Z)}{P(X)P(Y|X)} \\
+    &= \frac{P(Z)P(Y|X,Z)}{P(Y|X)} \\
+    &\neq P(Z|Y)
+\end{align*}
+For marginal independence, i.e. $(X|Z)$, we want to show that $P(X,Z) = P(X)P(Z)$. 
+\begin{align*}
+    P(X,Z) &= \sum_{Y'} P(X,{Y'},Z) \\
+    &= \sum_{Y'} P(X)P(Z)P({Y'}|X,Z) \\
+    &= P(X)P(Z)    
+\end{align*}
+\qed
+
+\subsubsection{The Bayes-Ball Algorithm}
+To check if $x_A\perp x_B | x_C$, we will need
+\begin{itemize}
+    \item Shade all nodes that were conditioned on, i.e. all nodes of $x_C$
+    \item Place balls at each node in $x_A$ (or $x_B$)
+    \item Let the balls bounce around according to rules that are yet to be states below
+    \begin{itemize}
+        \item If any of the balls reach any of the nodes in $x_B$ from $x_A$ (or reach $x_A$ from $x_B$) then we declare $x_{A} \not \perp x_{B} | x_{C}$
+        \item Otherwise, $x_{A} \perp x_{B} | x_{C}$
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Bayes Ball Rules}
+\paragraph{Chain}
+\begin{center}
+    \includegraphics[scale=0.25]{img/bayes_ball_chain}
+\end{center}
+\paragraph{Common Cause}
+\begin{center}
+    \includegraphics[scale=0.25]{img/bayes_ball_common_cause}
+\end{center}
+\paragraph{Explain Away}
+\begin{center}
+    \includegraphics[scale=0.25]{img/bayes_ball_explain_away}
+\end{center}
+\paragraph{Linear}
+\begin{center}
+    \includegraphics[scale=0.25]{img/bayes_ball_linear}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
