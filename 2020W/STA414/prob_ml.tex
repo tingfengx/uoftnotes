@@ -390,6 +390,11 @@ and we denote the relation as $\left(X_{A} \independent X_{B} | X_{C}\right)$
 \subsubsection{Plates}
 In Bayesian methods, we treat parameters as random variables and hence we would like to include them in out graphical model. However, adding a node for each observation is quite cumbersome and thus we introduce plates, which denote replication of random variables. 
 
+\paragraph{Nested Plates}
+Plates could be nested, in which case their arrows get duplicated also, \textit{\textbf{according to the rule:}} draw an arrow from every copy of the source node to every copy of the destination node.
+
+\paragraph{Crossing Plates}
+Plates can also cross (intersect), in which case the nodes at the intersection have multiple indices and get duplicated a number of times equal to the product of the duplication numbers on all the plates containing them.
 
 
 \subsection{Directed Acyclic Graphical Models (DAGM)}
@@ -638,6 +643,160 @@ To check if $x_A\perp x_B | x_C$, we will need
 \begin{center}
     \includegraphics[scale=0.25]{img/bayes_ball_linear}
 \end{center}
+
+\subsection{Unobserved Variables}
+Certain variables in our models may be unobserved , either some of the time or always, at training time or at test time. Graphically, we use shading to indicate observation.
+\subsubsection{Partially Unobserved Variables}\footnote{An concrete example would be hospital data, where typically a large proportion of the data is missing. }
+If variables are occasionally unobserved hen they are missing data, e.g., undefined inputs, missing class labels, erroneous target values. In this case, we can still model the joint distribution, but we marginalize the missing values
+\begin{align*}
+    \ell(\theta ; \mathcal{D})&=\sum_{\text {complete }} \log p\left(x^{c}, y^{c} | \theta\right)+\sum_{\text {missing }} \log p\left(x^{m} | \theta\right) \\
+    &=\sum_{\text {complete }} \log p\left(x^{c}, y^{c} | \theta\right)+\sum_{\text {missing }} \log \sum_{y} p\left(x^{m}, y | \theta\right)
+\end{align*}
+
+\subsubsection{Latent Variables}
+Above we discussed the case where some data are non-deterministically unobserved. Latent variables refers to those that \textit{\textbf{never observed}}. The handling of the latent variables depends on where it appears in our model,
+\begin{itemize}
+    \item If we never condition on it when computing the probability of the variables we do observe, then we can just forget about it and integrate it out. For example, given $y$, $x$ we fit the model
+        \begin{equation*}
+            p(z, y | x)=p(z | y) p(y | x, w) p(w)
+        \end{equation*}
+    \item If $z$ is not a leaf node, marginalizing over it will induce dependencies between its children. For example, given $y, x$ we can fit the model 
+        \begin{equation*}
+            p(y | x)=\sum_{z} p(y | x, z) p(z)
+        \end{equation*}
+\end{itemize}
+
+\subsubsection{Mixture Models}
+In this case, we are looking at data that has no input on class information. We can sum the labels out,
+\begin{equation*}
+    p(x | \theta)=\sum_{k=1}^{K} p\left(z=k | \theta_{z}\right) p\left(x | z=k, \theta_{k}\right)
+\end{equation*}
+where bayes rule comes in handy for calculating the posterior (class responsibilities) of the mixture component given some data, i.e., 
+\begin{equation*}
+    p\left(z=k | x, \theta_{z}\right)=\frac{p\left(z=k | \theta_{z}\right) p_{k}\left(x | \theta_{k}\right)}{\sum_{j} p\left(z=j | \theta_{z}\right) p_{j}\left(x | \theta_{j}\right)}
+\end{equation*} 
+%
+%\paragraph{(Example) K-Gaussian Mixture Model}
+%\begin{itemize}
+%    \item The density model $p(x|\theta)$ is the marginal density. 
+%\end{itemize}
+
+\subsection{Examples}
+\subsubsection{Second-order Markov Chain}
+Consider the model
+\begin{equation*}
+    p\left(\mathbf{x}_{1: T}\right)=p\left(x_{1}, x_{2}\right) p\left(x_{3} | x_{1}, x_{2}\right) p\left(x_{4} | x_{2}, x_{3}\right) \dots = p\left(x_{1}, x_{2}\right) \prod_{t=3}^{T} p\left(x_{t} | x_{t-1}, x_{t-2}\right)
+\end{equation*}
+which has the graphical representation (double circles mean ``observed'' here)
+\begin{center}
+    \begin{tikzpicture}[scale=0.2]
+    \tikzstyle{every node}+=[inner sep=0pt]
+    \draw [black] (14.9,-18.4) circle (3);
+    \draw (14.9,-18.4) node {$x_1$};
+    \draw [black] (14.9,-18.4) circle (2.4);
+    \draw [black] (23.7,-25.3) circle (3);
+    \draw (23.7,-25.3) node {$x_2$};
+    \draw [black] (23.7,-25.3) circle (2.4);
+    \draw [black] (32.1,-18.4) circle (3);
+    \draw (32.1,-18.4) node {$x_3$};
+    \draw [black] (32.1,-18.4) circle (2.4);
+    \draw [black] (41.2,-25.3) circle (3);
+    \draw (41.2,-25.3) node {$x_4$};
+    \draw [black] (41.2,-25.3) circle (2.4);
+%    \draw [black] (49.2,-18.4) circle (3);
+    \draw (49.2,-18.4) node {$...$};
+    \draw [black] (17.26,-20.25) -- (21.34,-23.45);
+    \fill [black] (21.34,-23.45) -- (21.02,-22.56) -- (20.4,-23.35);
+    \draw [black] (26.02,-23.4) -- (29.78,-20.3);
+    \fill [black] (29.78,-20.3) -- (28.85,-20.43) -- (29.48,-21.2);
+    \draw [black] (34.49,-20.21) -- (38.81,-23.49);
+    \fill [black] (38.81,-23.49) -- (38.47,-22.61) -- (37.87,-23.4);
+    \draw [black] (43.47,-23.34) -- (46.93,-20.36);
+    \fill [black] (46.93,-20.36) -- (46,-20.5) -- (46.65,-21.26);
+    \draw [black] (17.9,-18.4) -- (29.1,-18.4);
+    \fill [black] (29.1,-18.4) -- (28.3,-17.9) -- (28.3,-18.9);
+    \draw [black] (26.7,-25.3) -- (38.2,-25.3);
+    \fill [black] (38.2,-25.3) -- (37.4,-24.8) -- (37.4,-25.8);
+    \end{tikzpicture}
+\end{center}
+we notice that this model essentially assumes ``the present depends on the past only through the current state as well as the last one.''
+
+\subsubsection{Hidden Markov Models (HMMs)}
+HMM is a statistical model in which a system being modelled is assumed to be a Markov Process\footnote{In continuous time, the Markov Chain model is known as Markov Process} with un-observed states. Here is the graphical model, where double circles mean ``observed'' here:
+\begin{center}
+    \begin{tikzpicture}[scale=0.2]
+        \tikzstyle{every node}+=[inner sep=0pt]
+        \draw [black] (13.9,-20.9) circle (3);
+        \draw (13.9,-20.9) node {$z_1$};
+        \draw [black] (24.7,-20.9) circle (3);
+        \draw (24.7,-20.9) node {$z_2$};
+        \draw [black] (35,-20.9) circle (3);
+        \draw (35,-20.9) node {$z_3$};
+        \draw [black] (45.7,-20.9) circle (3);
+        \draw (45.7,-20.9) node {$z_4$};
+        \draw [black] (56.5,-20.9) circle (3);
+        \draw (56.5,-20.9) node {$z_5$};
+%        \draw [black] (67,-20.9) circle (3);
+        \draw (67,-20.9) node {$...$};
+        \draw [black] (13.9,-31.5) circle (3);
+        \draw (13.9,-31.5) node {$x_1$};
+        \draw [black] (13.9,-31.5) circle (2.4);
+        \draw [black] (24.7,-31.5) circle (3);
+        \draw (24.7,-31.5) node {$x_2$};
+        \draw [black] (24.7,-31.5) circle (2.4);
+        \draw [black] (35,-31.5) circle (3);
+        \draw (35,-31.5) node {$x_3$};
+        \draw [black] (35,-31.5) circle (2.4);
+        \draw [black] (45.7,-31.5) circle (3);
+        \draw (45.7,-31.5) node {$x_4$};
+        \draw [black] (45.7,-31.5) circle (2.4);
+        \draw [black] (56.5,-31.5) circle (3);
+        \draw (56.5,-31.5) node {$x_5$};
+        \draw [black] (56.5,-31.5) circle (2.4);
+        \draw [black] (16.9,-20.9) -- (21.7,-20.9);
+        \fill [black] (21.7,-20.9) -- (20.9,-20.4) -- (20.9,-21.4);
+        \draw [black] (27.7,-20.9) -- (32,-20.9);
+        \fill [black] (32,-20.9) -- (31.2,-20.4) -- (31.2,-21.4);
+        \draw [black] (38,-20.9) -- (42.7,-20.9);
+        \fill [black] (42.7,-20.9) -- (41.9,-20.4) -- (41.9,-21.4);
+        \draw [black] (48.7,-20.9) -- (53.5,-20.9);
+        \fill [black] (53.5,-20.9) -- (52.7,-20.4) -- (52.7,-21.4);
+        \draw [black] (59.5,-20.9) -- (64,-20.9);
+        \fill [black] (64,-20.9) -- (63.2,-20.4) -- (63.2,-21.4);
+        \draw [black] (13.9,-23.9) -- (13.9,-28.5);
+        \fill [black] (13.9,-28.5) -- (14.4,-27.7) -- (13.4,-27.7);
+        \draw [black] (24.7,-23.9) -- (24.7,-28.5);
+        \fill [black] (24.7,-28.5) -- (25.2,-27.7) -- (24.2,-27.7);
+        \draw [black] (35,-23.9) -- (35,-28.5);
+        \fill [black] (35,-28.5) -- (35.5,-27.7) -- (34.5,-27.7);
+        \draw [black] (45.7,-23.9) -- (45.7,-28.5);
+        \fill [black] (45.7,-28.5) -- (46.2,-27.7) -- (45.2,-27.7);
+        \draw [black] (56.5,-23.9) -- (56.5,-28.5);
+        \fill [black] (56.5,-28.5) -- (57,-27.7) -- (56,-27.7);
+    \end{tikzpicture}
+\end{center}
+where
+\begin{itemize}
+    \item $z_t$ are hidden states taking on one of $K$ discrete values
+    \item $x_t$ are observed variables taking on values in any space.
+\end{itemize}
+The above graph factorizes into
+\begin{equation*}
+    p\left(X_{1: T}, Z_{1: T}\right)=p\left(Z_{1: T}\right) p\left(X_{1: T} | Z_{1: T}\right)=p\left(Z_{1}\right) \prod_{t=2}^{T} p\left(Z_{t} | Z_{t-1}\right) \prod_{t=1}^{T} p\left(X_{t} | Z_{t}\right)
+\end{equation*}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
