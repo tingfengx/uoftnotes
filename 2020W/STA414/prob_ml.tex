@@ -785,11 +785,42 @@ The above graph factorizes into
     p\left(X_{1: T}, Z_{1: T}\right)=p\left(Z_{1: T}\right) p\left(X_{1: T} | Z_{1: T}\right)=p\left(Z_{1}\right) \prod_{t=2}^{T} p\left(Z_{t} | Z_{t-1}\right) \prod_{t=1}^{T} p\left(X_{t} | Z_{t}\right)
 \end{equation*}
 
+\section{Lecture 3 - Exact Inference}
+\subsection{Sum-Product Inference}
+\subsubsection{(Example) Directed Graph}
+We have the following factorization of the joint distribution
+\begin{equation*}
+    p(C, D, I, G, S, L, H, J)=p(C) p(D | C) p(I) p(G | D, I) p(L | G) P(S | I) p(J | S, L) p(H | J, G)
+\end{equation*}
+and we will need the following potentials
+\begin{equation*}
+    \Phi =\{\phi(C), \phi(C, D), \phi(I), \phi(G, D, I), \phi(L, G), \phi(S, I), \phi(J, S, L), \phi(H, J, G)\}
+\end{equation*}
+consider the problem where we want to infer $P(J)$ with elimination ordering $\prec_{\{C, D, I, H, G, S, L\}}$.\footnote{Note that what comes first in the ordering is the what we want to sum over in the inner most summation} Then,
+\begin{align*}
+    p(J) &= \sum_{L} \sum_{S} \phi(J, L, S) \sum_{G} \phi(L, G) \sum_{H} \phi(H, G, J) \sum_{I} \phi(S, I) \phi(I) \sum_{D} \phi(G, D, I) \sum_{C} \phi(C) \phi(C, D)\\
+    &= ... \underbrace{\sum_{C} \phi(C) \phi(C, D)}_{\tau(D)} \\
+    &= ... \underbrace{\sum_{D} \phi(G, D, I) \tau(D)}_{\tau(G, I)} \\
+    &= ... \underbrace{\sum_{I} \phi(S, I) \phi(I) \tau(G, I)}_{\tau(S, G)} \\
+    &= ... \underbrace{\tau(S, G)\sum_{H} \phi(H, G, J)}_{\tau(S, G)\tau(G, J)} ~~~~ \text{// Note that $\tau(S,G)$ doesn't contain $H$}\\
+    &= ... \underbrace{\sum_{G} \phi(L, G) \tau(S, G) \tau(G, J)}_{\tau(J, L, S)} \\
+    &= ... \underbrace{\sum_{S} \phi(J, L, S) \tau(J, L, S)}_{\tau(J, L)} \\
+    &= ... \underbrace{\sum_{L} \tau(J, L)}_{\tau(J)}\\
+    &= \tau(J)
+\end{align*}
 
-
-
-
-
+\subsubsection{Complexity of VE}
+The complexity of VE is 
+\begin{equation*}
+    \mathcal{O}\left(m k^{N_{\max }}\right)
+\end{equation*}
+where
+\begin{itemize}
+    \item $m$ is the number of initial factors, i.e. the number of terms in the original factorization of the joint probability (given the graphical model)
+    \item $k$ is the number of states each random variable takes (assumed to be equal here)
+    \item $N_i$ is the number of random variables inside each sum $\sum_i$
+    \item $N_{max} \overset{\Delta}{=}\argmax_i N_i$ is the number of random variables inside the largest sum. (Inner sums are counted as one term all together)
+\end{itemize}
 
 
 
