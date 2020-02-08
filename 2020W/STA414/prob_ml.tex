@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage{geometry}
+\usepackage[margin=3cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
@@ -11,6 +11,8 @@
 \usepackage{datetime}
 \usepackage{ccicons}
 \usepackage{tikz}
+\usepackage{todonotes}
+\usepackage{mdframed}
 %\usepackage[outputdir=.texpadtmp]{minted}
 
 % ==== License =====
@@ -610,6 +612,7 @@ For marginal independence, i.e. $(X|Z)$, we want to show that $P(X,Z) = P(X)P(Z)
 \begin{align*}
     P(X,Z) &= \sum_{Y'} P(X,{Y'},Z) \\
     &= \sum_{Y'} P(X)P(Z)P({Y'}|X,Z) \\
+    &= P(X)P(Z)\sum_{Y'}P({Y'}|X,Z) \\
     &= P(X)P(Z)    
 \end{align*}
 \qed
@@ -816,7 +819,7 @@ The complexity of VE is
 \end{equation*}
 where
 \begin{itemize}
-    \item $m$ is the number of initial factors, i.e. the number of terms in the original factorization of the joint probability (given the graphical model)
+    \item $m = |\Phi|$ is the number of initial factors, i.e. the number of terms in the original factorization of the joint probability (given the graphical model)
     \item $k$ is the number of states each random variable takes (assumed to be equal here)
     \item $N_i$ is the number of random variables inside each sum $\sum_i$
     \item $N_{max} \overset{\Delta}{=}\argmax_i N_i$ is the number of random variables inside the largest sum. (Inner sums are counted as one term all together)
