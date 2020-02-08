@@ -5,13 +5,14 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
-\usepackage[dvipsnames]{xcolor}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 \usepackage{datetime}
 \usepackage{ccicons}
 \usepackage{tikz}
-\usepackage{todonotes}
+\usepackage{cancel}
 \usepackage{mdframed}
 %\usepackage[outputdir=.texpadtmp]{minted}
 
@@ -21,6 +22,18 @@
     modifier={by-nc-sa}, 
     version={4.0},
 ]{doclicense}
+
+% ==== todo notes ====
+\usepackage[
+    colorinlistoftodos,
+    prependcaption,
+    textsize=tiny
+]{todonotes}
+\newcommandx{\note}[2][1=]{\todo[linecolor=Thistle,backgroundcolor=Thistle!25,bordercolor=Thistle,#1]{#2}}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
 
 % General
 \newcommand{\mc}[1]{\mathcal{#1}}
@@ -93,6 +106,7 @@
 \begin{document}
 \maketitle
 \doclicenseThis
+
 \section*{Preface} 
 This document is consist of notes from lectures and the online course notes that I, personally, find interesting/important. You can find the online course notes on the course website here: \url{https://probmlcourse.github.io/sta414/}
 
@@ -242,8 +256,8 @@ alternatively, we can define it as
 \begin{equation*}
     P(\theta | T(X)) = P(\theta | X); ~~~\text{\color{Gray} i.e. data doesn't give further info}
 \end{equation*}
-\subsubsection{Neyman Factorization}
-Equivalently to the above, we can write
+\subsubsection{Fisher-Neyman Factorization Theorem}
+If the probability function is $f_\theta(x)$, then $T$ is a sufficient statistic for $\theta$ if and only if non-negative functions $g$ and $h$ can be found such that
 \begin{equation*}
     P(\theta | T(X))=h(x, T(x)) g(T(x), \theta)
 \end{equation*}
@@ -788,7 +802,7 @@ The above graph factorizes into
     p\left(X_{1: T}, Z_{1: T}\right)=p\left(Z_{1: T}\right) p\left(X_{1: T} | Z_{1: T}\right)=p\left(Z_{1}\right) \prod_{t=2}^{T} p\left(Z_{t} | Z_{t-1}\right) \prod_{t=1}^{T} p\left(X_{t} | Z_{t}\right)
 \end{equation*}
 
-\section{Lecture 3 - Exact Inference}
+\section{Lecture 4 - Exact Inference}
 \subsection{Sum-Product Inference}
 \subsubsection{(Example) Directed Graph}
 We have the following factorization of the joint distribution
@@ -826,25 +840,164 @@ where
 \end{itemize}
 
 
+\section{Lecture 5 - Message passing, Hidden Markov Models, and Sampling}
+\subsection{Message Passing}
+\subsubsection{Belief Propagation: Motivation and Definitions}
+Our goal is to compute the marginal of every variable in graph $p(x_i), \forall x_i \in X$. Notice that in a tree, we have\info{Below, $T$ means the set of edges in the tree}
+\begin{equation*}
+    P\left(X_{1: n}\right)=\frac{1}{Z} \prod_{i \in\{1,\dots,n\}} \phi\left(x_{i}\right) \prod_{(i, j) \in T} \phi_{i, j}\left(x_{i}, x_{j}\right)
+\end{equation*}
+and thus, if we want to compute $P(X_1)$ we can marginalize out all other variables
+\begin{align*}
+    P(X_1) = \sum_{x_2,\dots,x_n} P(X_{1:n}) 
+    &= \sum_{x_2,\dots,x_n} \frac{1}{Z} \prod_i \phi\left(x_{i}\right) \prod_{(i, j) \in T} \phi_{i, j}\left(x_{i}, x_{j}\right) \\
+    &\propto \sum_{x_2,\dots,x_n}  \prod_i \phi\left(x_{i}\right) \prod_{(i, j) \in T} \phi_{i, j}\left(x_{i}, x_{j}\right)
+\end{align*}
+Now that we have the goal, we can group what we want to compute into a more structured representation, where we define \textit{\textbf{message-passing}} from variable $j$ to $i \in N(j)$ as
+\begin{equation*}
+    m_{j \rightarrow i}\left(x_{i}\right)=\sum_{x_{j}} \phi_{j}\left(x_{j}\right) \phi_{i j}\left(x_{i}, x_{j}\right) \prod_{k \in N(j) \neq i} m_{k \rightarrow j}\left(x_{j}\right)
+\end{equation*}
+
+\subsubsection{Belief Propagation Algorithm}
+%\unsure{What is meant here in steps 2 and 3?}
+\begin{enumerate}
+    \item Choose an root $r$ arbitrarily, 
+    \item Pass messages from leaves to $r$
+    \item Pass messages from $r$ to leaves\info{Step 2 and 3 here so that we will compute all the $m_{i \rightarrow j}$, $\forall (i, j)$, $(j, i)\in T$, after which we can use them to calculate the marginals using formula in step 4}
+    \item Compute
+        \begin{equation*}
+            p\left(x_{i}\right) \propto \phi_{i}\left(x_{i}\right) \prod_{j \in \mathcal{N}(i)} m_{j \rightarrow i}\left(x_{i}\right), \forall_{i}
+        \end{equation*}
+        \info{Notice that the idea is that we want to calculate \textit{\textbf{all}} of the marginals}
+\end{enumerate}
 
 
+\subsection{Inference in Hidden Markov Models}
+There are the following four kinds of inference that we can do on a HMM, namely
+\begin{itemize}
+    \item \textit{\textbf{Filtering:}} Compute the belief state $p\left(z_{t} | \mathbf{x}_{1: t}\right)$ online. Notice that we call this inference operation filtering because this produces a result smoother than simply computing $p(z_t|\bx_{t})$.
+    \item \textit{\textbf{Smoothing:}} Compute $p\left(z_{t} | \mathbf{x}_{1: T}\right)$ offline. Notice that this computation happens after all $\bx_{1:T}$ observations have been collected and hence is offline.\footnote{A very good intuitive example from KPM is that we have a detective investigating a crime scene, and as we gather more observation, the prediction that we make tends to be more and more certain and less `stochastic'.}\todo{Definition in KPM}
+    \item \textit{\textbf{Fixed lag smoothing:}} Compute $p\left(z_{t-\ell} | \mathbf{x}_{1: t}\right)$, where $\ell>0$ is called the lag. Essentially, we want to do inference on the hidden state $z_\alpha$ and we wait until we observe all of $\bx_{1:\alpha + \ell}$ before we carry out the computation. 
+    \item \textit{\textbf{Prediction:}} In this case, we want to compute $p\left(z_{t+h} | \mathbf{x}_{1: t}\right)$ for some $h > 0$. ($h$ is called the prediction horizon) Let's first take a look at the example where $h = 2$, then
+    \begin{align*}
+        p(z_{t+2}|\bx_{1:t}) 
+        &= \sum_{z_{t+1}}\sum_{z_t}p(z_t, z_{t+1}, z_{t+2}|\bx_{1:t}) \\
+        &= \sum_{z_{t+1}}\sum_{z_t}p(z_t |\bx_{1:t})p(z_{t+1}|z_t, \bx_{1:t})p(z_{t+2}|z_{t+1}, z_{t}, \bx_{1:t}) \\
+        &= \sum_{z_{t+1}} \sum_{z_{t}} p\left(z_{t+2} | z_{t+1}\right) p\left(z_{t+1} | z_{t}\right) p\left(z_{t} | \mathbf{x}_{1: t}\right)
+    \end{align*}
+    where the last step of simplification could be easily justified using Bayes Ball rules. Above, we computed the prediction about the future hidden states, and it can be converted into prediction about the future observations using
+    \begin{equation*}
+        p\left(\mathbf{x}_{t+h} | \mathbf{x}_{1: t}\right)=\sum_{z_{t+h}} p\left(\mathbf{x}_{t+h} | z_{t+h}\right) p\left(z_{t+h} | \mathbf{x}_{1: t}\right)
+    \end{equation*}
+    which is called \textit{\textbf{Posterior Predictive Density}}.
+\end{itemize}
+
+\subsection{The Forward - Backward Algorithm}
+Suppose that we want to find $p(z_t | x_{1:T}), \forall t$, then it can be broken down into two pieces
+\begin{itemize}
+    \item \textit{\textbf{Forward Filtering:}} Compute $p\left(z_{t} | x_{1: t}\right) \quad \forall t$, which effectively is the probability of the hidden state $z_t$ given all past observations, up to including $x_t$. 
+    \item \textbf{\textit{Backward Filtering:}} Compute $p\left(x_{1+t: T} | z_{t}\right)\quad \forall t$, which computes the probability of \textit{all} future observations from $x_{t+1}$ up to including $x_T$ given the current hidden state, i.e. $z_t$.
+\end{itemize}
+Then, the complete smoothing $p(z_t | x_{1:T})$ could be computed as
+\begin{align*}
+    p\left(z_{t} | x_{1: T}\right)
+    &= p\left(x_{1:T}\right)p\left(z_{t}, x_{1: T}\right) \\
+    &\propto p\left(z_{t}, x_{1: T}\right) \\
+    &=p\left(z_{t}, x_{1: t}\right) p\left(x_{t+1: T} | z_{t}, x_{1: t}\right) \\
+    &=p\left(z_{t}, x_{1: t}\right) p\left(x_{t+1: T} | z_{t}\right) && \text{// By Bayes Ball} \\
+    &=(\text{Forward Recursion})(\text{Backward Recursion})
+\end{align*}
+
+\subsubsection{Forward Filtering Recursion}
+%There are two steps that we will do in this recursion, called predict-update cycle\info{From KPM}
+%\begin{itemize}
+%    \item \textit{\textbf{One step ahead predictive density}} can be computed as
+%    \begin{align*}
+%        p\left(z_{t}=j | \mathbf{x}_{1: t-1}\right)
+%        &= \sum_i p(z_t = j, z_{t - 1} = i | \bx_{1:t - 1}) \\
+%        &= \sum_i p(z_t = j| z_{t - 1}= i, \bx_{1:t - 1})p(z_{t - 1} = i| \bx_{1:t - 1}) \\
+%        &= \sum_{i} p\left(z_{t}=j | z_{t-1}=i\right) p\left(z_{t-1}=i | \mathbf{x}_{1: t-1}\right)
+%    \end{align*}
+%    \item \textit{\textbf{Update Step}} is where we absorb the observed data form time $t$ using the Bayes Rule
+%    \begin{align*}
+%        \alpha_{t}(j) 
+%        &\triangleq p\left(z_{t}=j | \mathbf{x}_{1: t}\right)=p\left(z_{t}=j | \mathbf{x}_{t}, \mathbf{x}_{1: t-1}\right) \\
+%        &= \frac{1}{Z_{t}} p\left(\mathbf{x}_{t} | z_{t}=j, \cancel{\mathbf{x}_{1: t-1}}\right) p\left(z_{t}=j | \mathbf{x}_{1: t-1}\right)
+%    \end{align*}
+%    where
+%    \begin{equation*}
+%        Z_{t} \triangleq p\left(\mathbf{x}_{t} | \mathbf{x}_{1: t-1}\right)=\sum_{j} p\left(z_{t}=j | \mathbf{x}_{1: t-1}\right) p\left(\mathbf{x}_{t} | z_{t}=j\right)
+%    \end{equation*}
+%\end{itemize}
+%Below is the version from course notes.\unsure{What is the connection?}
+\begin{align*}
+    \alpha_t(z_t) = p\left(z_{t}, x_{1: t}\right)
+    &=\sum_{z_{t-1}} p\left(z_{t-1}, z_{t}, x_{1: t}\right) \\
+    &= \sum_{z_{t-1}} p\left(x_{t} | z_{t-1}, z_{t}, x_{1: t-1}\right) p\left(z_{t} | z_{t-1}, x_{1: t-1}\right) \underbrace{p\left(z_{t-1}, x_{1: t-1}\right)}_{ = \alpha_{t - 1}(z_{t - 1})}\\
+    \implies &\alpha_{t}\left(z_{t}\right)=p\left(x_{t} | z_{t}\right) \sum_{z_{t-1}} p\left(z_{t} | z_{t-1}\right) \alpha_{t-1}\left(z_{t-1}\right)
+\end{align*}
+Notice that our forward recursion contains our emission, $p(x_t | z_t)$ and transition $p(z_t | z_{t - 1})$. The base case of the recursion could be unwinded into
+\begin{equation*}
+    \alpha_{1}\left(z_{1}\right)=p\left(z_{1}, x_{1}\right)=p\left(z_{1}\right) p\left(x_{1} | z_{1}\right)
+\end{equation*}
 
 
+\subsubsection{Backward Filtering Recursion}
+\begin{align*}
+    p\left(x_{t+1: T} | z_{t}\right)
+    &=\sum_{z_{t+1}} p\left(z_{t+1}, x_{t+1: T} | z_{t}\right) \\
+    &= \sum_{z_{t+1}} p\left(x_{t+2: T} | z_{t+1}, z_{t}, x_{t+1}\right) p\left(x_{t+1} | z_{t+1}, z_{t}\right) p\left(z_{t+1} | z_{t}\right) \\
+    \implies &\beta_{t}\left(z_{t}\right)=\sum_{z_{t+1}} \underbrace{ p\left(x_{t+2 : T} | z_{t+1}\right)}_{ = \beta_{t +1}(z_{t + 1})} p\left(x_{t+1} | z_{t+1}\right) p\left(z_{t+1} | z_{t}\right)
+\end{align*}
+and hence if we recurse the above relationship, we will unwind to the base case
+\begin{equation*}
+    \beta_{1}\left(z_{1}\right)=p\left(x_{3: T} | z_{2}\right) p\left(x_{2} | z_{2}\right) p\left(z_{2} | z_{1}\right)
+\end{equation*}
 
 
+\subsection{Sampling}
+\note{The word sample here refers to a single realization from a distribution rather than a set. }
+The goal is to, 
+\begin{itemize}
+    \item Generate sample $\left\{x^{(r)}\right\}_{r=1}^{R}$ from a probability distribution $p(x)$, and/or
+    \item Estimate expectations of functions $f(x)$ under some distribution $p(x)$, usually we want to estimate moments for a distribution
+    \begin{equation*}
+        E=\underset{x \sim p(x)}{\mathbb{E}}[f(x)]=\int f(x) p(x) d x
+    \end{equation*}
+\end{itemize}
 
+\subsubsection{Ancestral Sampling}
+\paragraph{Generating marginal samples} If you are only interested in sampling a particular set of nodes, you can simply sample from all the nodes jointly, then ignore the nodes you don't need.
 
+\paragraph{Generating conditional samples} If you want to sample conditional on a node with no parents, that's also easy - you can simple do ancestral sampling starting from the nodes you have. \newline \newline
+\textit{\textbf{(\#! Important:)}} However, to sample from a DAG conditional on leaf nodes is hard in the same way that inference is hard in general. E.g. sampling the unknown key in a crypto-system given the cypher-text but not knowing the plaintext. Finding ways to do this approximately is what a lot of the rest of the course will be about.
 
+\subsubsection{Simple Monte Carlo}
+\paragraph{(Definition) - Simple MC} Given $\left\{x^{(r)}\right\}_{r=1}^{R} \sim p(x)$, we want to estimate the expectation $\underset{x \sim p(x)}{\mathbb{E}}[f(x)]$.
+\begin{equation*}
+    E=\underset{x \sim p(x)}{\mathbb{E}}[f(x)] \approx \frac{1}{R} \sum_{r=1}^{R} f\left(x^{(r)}\right)=\hat{E}
+\end{equation*}
+\paragraph{Unbiasedness of MC}
+\begin{align*}
+    \mathbb{E}_{x \sim p\left(\left\{x^{(i)}\right\}_{r=1}^{R}\right)}[\hat{E}]
+    &=\mathbb{E}\left[\frac{1}{R} \sum_{r=1}^{R} f\left(x^{(r)}\right)\right] \\
+    &= \frac{1}{R} \sum_{r=1}^{R} \mathbb{E}\left[f\left(x^{(r)}\right)\right]\\
+    &= \frac{1}{R} \sum_{r=1}^{R} \underset{x \sim p(x)}{\mathbb{E}}[f(x)] \\
+    &= \frac{R}{R} \underset{x \sim p(x)}{\mathbb{E}}[f(x)] \\
+    &= E
+\end{align*}
+\qed
 
-
-
-
-
-
-
-
-
-
+\paragraph{Variance of MC}
+\begin{align*}
+    \operatorname{var}[\hat{E}]
+    &=\operatorname{var}\left[\frac{1}{R} \sum_{r=1}^{R} f\left(x^{(r)}\right)\right] \\
+    &= \frac{1}{R^{2}} \operatorname{var}\left[\sum_{r=1}^{R} f\left(x^{(r)}\right)\right] \\
+    &= \frac{1}{R^{2}} \sum_{r=1}^{R} \operatorname{var}\left[f\left(x^{(r)}\right)\right]\\
+    &= \frac{1}{R}\operatorname{var}\left[f(x) \right]
+\end{align*}
+We notice that the accuracy of MC estimates only depends on the variance of $f$, not on the dimension of $x$. Also, we the number of samples, $R$, increases, the variance $\hat{E}$ will decrease at a rate proportional to $\frac{1}{R}$.
+\qed
 
 
 
