@@ -833,7 +833,7 @@ If we marginalize the above the na\"ive way, then it cost exponentially $\mathca
 \subsection{Sum-Product Inference}
 Let $X = Z \cup Y \wedge Z \cap Y = \emptyset$ be a set of random variables. \note{Here $Y$ is the set that we want to do inference on and thus we are marginalizing over everything in $Z$}. Then, to compute $P(Y)$ for a directed and undirected \unsure{how to generalize to undirected graph?} model could be achieved by the sum product inference algorithm
 \begin{equation*}
-    \tau(Y)=\sum_{z}\prod_{\phi \in \Phi} \phi(\mathrm{Scope}(\phi) \cap Z, \mathrm{Scope}(\phi) \cap Y)\quad \forall Y
+    \tau(Y)=\sum_{z}\prod_{\phi \in \Phi} \phi\left(\mathrm{Scope}(\phi) \cap Z, \mathrm{Scope}(\phi) \cap Y\right)\quad \forall Y
 \end{equation*}
 where the scope for each $\phi$ simply means the set of all random variables that have appeared in that specific $\phi$, and $\Phi$ denotes the set of all $\phi$'s.
 
@@ -888,13 +888,13 @@ where
 \subsubsection{Belief Propagation: Motivation and Definitions}
 Our goal is to compute the marginal of every variable in graph $p(x_i), \forall x_i \in X$. Notice that in a tree, we have\info{Below, $T$ means the set of edges in the tree}
 \begin{equation*}
-    P\left(X_{1: n}\right)=\frac{1}{Z} \prod_{i \in\{1,\dots,n\}} \phi\left(x_{i}\right) \prod_{(i, j) \in T} \phi_{i, j}\left(x_{i}, x_{j}\right)
+    P\left(X_{1: n}\right)=\frac{1}{Z} \prod_{k \in\{1,\dots,n\}} \phi\left(x_{k}\right) \prod_{(i, j) \in T} \phi_{i, j}\left(x_{i}, x_{j}\right)
 \end{equation*}
 and thus, if we want to compute $P(X_1)$ we can marginalize out all other variables
 \begin{align*}
     P(X_1) = \sum_{x_2,\dots,x_n} P(X_{1:n}) 
-    &= \sum_{x_2,\dots,x_n} \frac{1}{Z} \prod_i \phi\left(x_{i}\right) \prod_{(i, j) \in T} \phi_{i, j}\left(x_{i}, x_{j}\right) \\
-    &\propto \sum_{x_2,\dots,x_n}  \prod_i \phi\left(x_{i}\right) \prod_{(i, j) \in T} \phi_{i, j}\left(x_{i}, x_{j}\right)
+    &= \sum_{x_2,\dots,x_n} \frac{1}{Z} \prod_k \phi\left(x_{k}\right) \prod_{(i, j) \in T} \phi_{i, j}\left(x_{i}, x_{j}\right) \\
+    &\propto \sum_{x_2,\dots,x_n}  \prod_k \phi\left(x_{k}\right) \prod_{(i, j) \in T} \phi_{i, j}\left(x_{i}, x_{j}\right)
 \end{align*}
 Now that we have the goal, we can group what we want to compute into a more structured representation, where we define \textit{\textbf{message-passing}} from variable $j$ to $i \in N(j)$ as
 \begin{equation*}
