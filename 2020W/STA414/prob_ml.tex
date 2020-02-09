@@ -803,7 +803,50 @@ The above graph factorizes into
 \end{equation*}
 
 \section{Lecture 4 - Exact Inference}
+\subsection{Variable Elimination}
+\subsubsection{(Simple Example) Chain}
+The example that we will consider is the simple chain
+\begin{equation*}
+    A \rightarrow B \rightarrow C \rightarrow D
+\end{equation*}
+where we want to compute $P(D)$, with no observation\unsure{what is meant by no observation here?} for other variables. We have\note{$X_F$ is the observed set, $X_E$ is the un-observed set, and $X_R$ is everything that is remaining.}
+\begin{equation*}
+    X_{F}=\{D\}, X_{E}=\{\}, X_{R}=\{A, B, C\}
+\end{equation*}
+The graphical model gives the factorization of
+\begin{equation*}
+    p(A, B, C, D)=p(A) p(B | A) p(C | B) p(D | C)
+\end{equation*}
+thus, if we want to find $p(D)$ we can marginalize over all other variables, i.e.
+\begin{align*}
+    p(D)&=\sum_{A, B, C} p(A, B, C, D) \\
+    &=\sum_{C} \sum_{B} \sum_{A} p(A) p(B | A) p(C | B) p(D | C)
+\end{align*}
+If we marginalize the above the na\"ive way, then it cost exponentially $\mathcal{O}(k^n)$. Thus, we need to find a \textit{\textbf{elimination ordering}} that gives us a smaller runtime complexity. We can reduce the complexity by first computing terms that appear across the other marginalization sums, \note{Here $\phi$ means factor, an non-normalized `pdf'}
+\begin{align*}
+    \phi(D) 
+    &= \sum_C p(D|C) \sum_B p(C|B) \sum_A p(A)p(B|A) \\
+    &= \sum_C p(D|C) \sum_B p(C|B) \phi(B) \\
+    &= \sum_C p(D|C) \phi(C)
+\end{align*}
+
 \subsection{Sum-Product Inference}
+Let $X = Z \cup Y \wedge Z \cap Y = \emptyset$ be a set of random variables. \note{Here $Y$ is the set that we want to do inference on and thus we are marginalizing over everything in $Z$}. Then, to compute $P(Y)$ for a directed and undirected \unsure{how to generalize to undirected graph?} model could be achieved by the sum product inference algorithm
+\begin{equation*}
+    \tau(Y)=\sum_{z}\prod_{\phi \in \Phi} \phi(\mathrm{Scope}(\phi) \cap Z, \mathrm{Scope}(\phi) \cap Y)\quad \forall Y
+\end{equation*}
+where the scope for each $\phi$ simply means the set of all random variables that have appeared in that specific $\phi$, and $\Phi$ denotes the set of all $\phi$'s.
+
+\subsubsection{SP - Inference in  Directed Models}
+In a directed model, the $\Phi$ is given by the conditional probability distributions for all variables, i.e.
+\begin{equation*}
+    \Phi=\left\{\phi_{x_{i}}\right\}_{i=1}^{N}=\left\{p\left(x_{i} | \text { parents }\left(x_{i}\right)\right)\right\}_{i=1}^{N}
+\end{equation*}
+The resulting term $\tau(Y)$ will be automatically normalized.
+
+\subsubsection{SP - Inference in Undirected Models}
+For undirected models, $\Phi$ is given by the set of un-normalized potentials, and we \textit{\textbf{must}} normalize the resulting $\tau(Y)$ by $\sum_Y \tau(y)$
+
 \subsubsection{(Example) Directed Graph}
 We have the following factorization of the joint distribution
 \begin{equation*}
