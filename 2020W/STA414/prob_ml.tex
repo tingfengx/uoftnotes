@@ -184,13 +184,13 @@ Still under the generative assumption, where we assume that there is some underl
 \subsection{Operations on Probabilistic Models}
 \begin{itemize}
     \item \textit{\textbf{Generate Data}}: Sample from the model.
-    \item \textit{\textbf{Estimate Likelihood}}: When all variables are either observed or marginalized the result is a single real number which is the probability of the all variables taking on those specific values.
+    \item \textit{\textbf{Estimate Likelihood}}: When all variables are either observed or marginalized, we produce the result which is a single real number that describes the `probability' of the all variables taking on those specific values.
     \item \textit{\textbf{Inference}}: Compute the expected value of some variables given others which are either observed or marginalized. 
     \item \textit{\textbf{Learning}}: Set the parameters of the joint distribution given some observed data to maximize the probability of the observed data. 
 \end{itemize}
 
 \subsection{Desiderata of Probabilistic Models}
-We have to desires for the joint distribution to learn, namely
+We have two desires for the joint distribution to learn, namely
 \begin{itemize}
     \item The marginal and conditional distribution can be computed efficiently
     \item The representation of the joint distribution should be compact. This is especially important when we are dealing with joint distributions over many variables.
@@ -210,7 +210,7 @@ Introducing assumptions results in
     \item a less expressive model
     \item $|\theta|$ (usually, much) smaller
 \end{itemize}
-which can be bad sometimes and is a trade-off that we as modellers have to deal with. 
+which can be bad sometimes (since the model is less expressive) and is a trade-off that we as modellers have to deal with. 
 
 \paragraph{(Example) Fully Independent}
 We assume that $T\independent W \independent M$, then by definition we know, for example, $P(W|T)= P(W)$. Then
@@ -228,7 +228,7 @@ For some observed data $X$, the likelihood describes the likeliness of the data 
 
 In general, we prefer to deal with the log likelihood function, which is defined as
 \begin{equation*}
-    \ell(\theta;X) = \log L(\theta) = \log p(x|\theta)
+    \ell(\theta;X) = \log L(\theta) = \log p(X|\theta)
 \end{equation*}
 
 \subsection{Maximum Likelihood Estimation}
@@ -250,7 +250,7 @@ A statistic is a possibly vector valued \textit{deterministic} function of a set
 \paragraph{(Definition) Sufficient Statistic} 
 is a statistic that conveys exactly the same information about the data generating process that created the data as the entire data itself.\footnote{Could also be interpreted as ``summarize the data with respect to the likelihood''} In formal language, Sufficient Statistic ($T(X)$) for $X$ could be defined as
 \begin{equation*}
-    T(X^{(1)}) = T(X^{(2)})~ \implies~ L(\theta; X^{1}) = L(\theta; X^{2}), ~~\forall \theta
+    T(X^{(1)}) = T(X^{(2)})~ \implies~ L(\theta; X^{(1)}) = L(\theta; X^{(2)}), ~~\forall \theta
 \end{equation*}
 alternatively, we can define it as
 \begin{equation*}
@@ -809,7 +809,7 @@ The example that we will consider is the simple chain
 \begin{equation*}
     A \rightarrow B \rightarrow C \rightarrow D
 \end{equation*}
-where we want to compute $P(D)$, with no observation\unsure{what is meant by no observation here?} for other variables. We have\note{$X_F$ is the observed set, $X_E$ is the un-observed set, and $X_R$ is everything that is remaining.}
+where we want to compute $P(D)$, with no observation\note{No observations for other variables means that we have no `evidence' for other variables. } for other variables. We have\note{$X_F$  is the set of variable that we are interested in, $X_E$ is evidence, and $X_R$ is the set of extraneous variables, i.e. what we marginalize out}
 \begin{equation*}
     X_{F}=\{D\}, X_{E}=\{\}, X_{R}=\{A, B, C\}
 \end{equation*}
@@ -822,7 +822,7 @@ thus, if we want to find $p(D)$ we can marginalize over all other variables, i.e
     p(D)&=\sum_{A, B, C} p(A, B, C, D) \\
     &=\sum_{C} \sum_{B} \sum_{A} p(A) p(B | A) p(C | B) p(D | C)
 \end{align*}
-If we marginalize the above the na\"ive way, then it cost exponentially $\mathcal{O}(k^n)$. Thus, we need to find a \textit{\textbf{elimination ordering}} that gives us a smaller runtime complexity. We can reduce the complexity by first computing terms that appear across the other marginalization sums, \note{Here $\phi$ means factor, an non-normalized `pdf'}
+If we marginalize the above the na\"ive way, then it cost exponentially $\mathcal{O}(k^n)$. Thus, we need to find a \textit{\textbf{elimination ordering}} that gives us a smaller runtime complexity. We can reduce the complexity by first computing terms that appear across the other marginalization sums, \note{Here $\phi$ means factor, an non-normalized ``pmf''}
 \begin{align*}
     \phi(D) 
     &= \sum_C p(D|C) \sum_B p(C|B) \sum_A p(A)p(B|A) \\
@@ -878,8 +878,8 @@ where
 \begin{itemize}
     \item $m = |\Phi|$ is the number of initial factors, i.e. the number of terms in the original factorization of the joint probability (given the graphical model)
     \item $k$ is the number of states each random variable takes (assumed to be equal here)
-    \item $N_i$ is the number of random variables inside each sum $\sum_i$
-    \item $N_{max} \overset{\Delta}{=}\argmax_i N_i$ is the number of random variables inside the largest sum. (Inner sums are counted as one term all together)
+    \item $N_i$ is the number of random variables inside each sum $\sum_i$ \textit{at the time of marginalization}
+    \item $N_{max} \triangleq \max_i N_i$ is the number of random variables inside the largest sum. (Inner sums are counted as one term all together)
 \end{itemize}
 
 
@@ -938,7 +938,7 @@ There are the following four kinds of inference that we can do on a HMM, namely
 \subsection{The Forward - Backward Algorithm}
 Suppose that we want to find $p(z_t | x_{1:T}), \forall t$, then it can be broken down into two pieces
 \begin{itemize}
-    \item \textit{\textbf{Forward Filtering:}} Compute $p\left(z_{t} | x_{1: t}\right) \quad \forall t$, which effectively is the probability of the hidden state $z_t$ given all past observations, up to including $x_t$. 
+    \item \textit{\textbf{Forward Filtering:}} Compute $p\left(z_{t}, x_{1: t}\right) \quad \forall t$, which effectively is the probability of the hidden state $z_t$ given all past observations, up to including $x_t$. 
     \item \textbf{\textit{Backward Filtering:}} Compute $p\left(x_{1+t: T} | z_{t}\right)\quad \forall t$, which computes the probability of \textit{all} future observations from $x_{t+1}$ up to including $x_T$ given the current hidden state, i.e. $z_t$.
 \end{itemize}
 Then, the complete smoothing $p(z_t | x_{1:T})$ could be computed as
