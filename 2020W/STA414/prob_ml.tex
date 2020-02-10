@@ -919,7 +919,7 @@ Now that we have the goal, we can group what we want to compute into a more stru
 There are the following four kinds of inference that we can do on a HMM, namely
 \begin{itemize}
     \item \textit{\textbf{Filtering:}} Compute the belief state $p\left(z_{t} | \mathbf{x}_{1: t}\right)$ online. Notice that we call this inference operation filtering because this produces a result smoother than simply computing $p(z_t|\bx_{t})$.
-    \item \textit{\textbf{Smoothing:}} Compute $p\left(z_{t} | \mathbf{x}_{1: T}\right)$ offline. Notice that this computation happens after all $\bx_{1:T}$ observations have been collected and hence is offline.\footnote{A very good intuitive example from KPM is that we have a detective investigating a crime scene, and as we gather more observation, the prediction that we make tends to be more and more certain and less `stochastic'.}\todo{Definition in KPM}
+    \item \textit{\textbf{Smoothing:}} Compute $p\left(z_{t} | \mathbf{x}_{1: T}\right)$ offline. Notice that this computation happens after all $\bx_{1:T}$ observations have been collected and hence is offline.\footnote{A very good intuitive example from KPM is that we have a detective investigating a crime scene, and as we gather more observation, the prediction that we make tends to be more and more certain and less `stochastic'.}\note{Definition in KPM is different from course note}
     \item \textit{\textbf{Fixed lag smoothing:}} Compute $p\left(z_{t-\ell} | \mathbf{x}_{1: t}\right)$, where $\ell>0$ is called the lag. Essentially, we want to do inference on the hidden state $z_\alpha$ and we wait until we observe all of $\bx_{1:\alpha + \ell}$ before we carry out the computation. 
     \item \textit{\textbf{Prediction:}} In this case, we want to compute $p\left(z_{t+h} | \mathbf{x}_{1: t}\right)$ for some $h > 0$. ($h$ is called the prediction horizon) Let's first take a look at the example where $h = 2$, then
     \begin{align*}
@@ -941,7 +941,7 @@ Suppose that we want to find $p(z_t | x_{1:T}), \forall t$, then it can be broke
     \item \textit{\textbf{Forward Filtering:}} Compute $p\left(z_{t}, x_{1: t}\right) \quad \forall t$, which effectively is the probability of the hidden state $z_t$ given all past observations, up to including $x_t$. 
     \item \textbf{\textit{Backward Filtering:}} Compute $p\left(x_{1+t: T} | z_{t}\right)\quad \forall t$, which computes the probability of \textit{all} future observations from $x_{t+1}$ up to including $x_T$ given the current hidden state, i.e. $z_t$.
 \end{itemize}
-Then, the complete smoothing $p(z_t | x_{1:T})$ could be computed as
+Then, the complete smoothing $p(z_t | x_{1:T})$\note{This is called \textbf{Latent sequence given observations in HMM} in the course notes} could be computed as
 \begin{align*}
     p\left(z_{t} | x_{1: T}\right)
     &= p\left(x_{1:T}\right)p\left(z_{t}, x_{1: T}\right) \\
