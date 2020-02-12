@@ -300,18 +300,47 @@ In $\mathbf{Q}$ basis, each coordinate gets multiplied by $\left(1-\alpha \lambd
 \end{itemize}
 The result is that we will need to set our learning rate such that
 \begin{equation}
-    \alpha < \frac{2}{\lambda_{\max}} \quad\quad \lambda_{\max} \triangleq \max_i \lambda_i
+    \alpha < \frac{2}{\lambda_{\max}} \quad\quad\quad \text{where}\, \lambda_{\max} \triangleq \max_i \lambda_i
 \end{equation}
-to prevent instability (and/or divergence). \todo{What is this?} We can bound the rate of convergence in another direction, 
+to prevent instability (divergence). Notice that the goal here is to prevent divergence rather than preventing oscillations, this is why we have the 2 on the numerator. We can bound the rate of convergence in another direction, 
 \begin{equation}
     \alpha \lambda_{i}<\frac{2 \lambda_{i}}{\lambda_{\max }}
 \end{equation}
-We call $\lambda_{\max} / \lambda_{\min}$ as \textit{\textbf{condition number}} of $\mathbf{A}$. The larger the condition number, the slower the convergence of gradient, vice versa. 
+We call $\lambda_{\max} / \lambda_{\min}$ as \textit{\textbf{condition number}} of $\mathbf{A}$. The larger the condition number, the slower the convergence of gradient, vice versa. Notice that $\lambda_{\max} / \lambda_{\min}$ is large when the difference between the largest smallest eigenvalue is large, i.e. the curvatures have a large difference and this is trouble-some for gradient decent updates. 
 
-\todo{Ill conditioned curvature, normalization}
+\paragraph{Normalization} In the case that we have ravine-like cost surfaces, gradient updates could have a lot of bouncing around. Even more annoyingly, gradient descent updates will calculate a larger update along the direction with steeper gradient, which in the case of ravine will almost certainly cause the gradient updates to overshoot. To overcome this, we introduce normalization, i.e. centring inputs to zero mean and unit variance. This is especially necessary when we have mixed units in inputs. The normalization we apply is
+\begin{equation}
+    \tilde{x}_{j}=\frac{x_{j}-\mu_{j}}{\sigma_{j}}
+\end{equation}
+Notice that if we want to normalize all the outputs of all the layers (including hidden layers) then we can't just normalize the output to have a mean of zero. This is due to the fact that our activations are (usually) non-zero centred, for example logistic non-linearity.
+\begin{itemize}
+    \item The first trick that we can use is to replace logistic non-linearity with $\tanh$ which is also a sigmoid function, but ranges from $-1 to 1$ and thus have a zero centre. 
+    \item A recent method called \textit{\textbf{batch normalization}} explicitly centres each hidden activation. In practice, it often speeds up training by 1.5 to 2 times!
+\end{itemize}
 
 \subsection{Gradient Descent with Momentum}
-\todo{Finish from here}
+\subsubsection{Motivation and GD Updates}
+To deal with ill-conditioned curvatures, we want to introduce a notion of ``history'' through ``acceleration accumulated along the way'' in our gradient descent updates. The updates are
+\begin{align}
+    \mathbf{p} &\gets \mu\mathbf{p} - \alpha \partial_{\boldsymbol{\theta}} \mathcal{J} \\
+    \boldsymbol{\theta} &\gets \boldsymbol{\theta} + \bp
+\end{align}
+where $\alpha$ is the usually learning rate, and $\mu$ is called a damping parameter and should be some value less than 1 (typically 0.99 or 0.9). Intuitively, this is the ``history decay rate'' and if we have $\mu = 1$ then since we have no decay of energy through time, by conservation of energy the updates will never settle down. (which is bad, we don't want this)
+\begin{itemize}
+    \item In the high curvature directions, the gradients cancel each other out, so momentum dampens the oscillations, 
+    \item In the low curvature directions, the gradient point in the same direction, allowing the parameters to ``pick up speed''.
+    \item \textit{\textbf{\#! Important:}} If you increase $\mu$, you should lower $\alpha$ to compensate.
+\end{itemize}
+
+% Focusing on how to tune training hyper-parameters
+\subsection{Debugging Optimization}
+
+
+
+
+
+
+
 
 
 
