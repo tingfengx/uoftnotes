@@ -254,7 +254,18 @@ Below is the number of parameters in a fully connected multilayer perceptron lay
     \item Most of the weights are in the fully connected layers. 
 \end{itemize}
 
-
+\subsection{Supervised Pre-training and Transfer Learning}
+\begin{itemize}
+    \item In practice, we don't usually train an image classifier from scratch since it is unlikely hat we will have millions of cleanly labeled images for our specific datasets. 
+    \item If we want to do a computer vision task, it is common to just ``fine-tune'' a pre-trained convolutional neural net on ImageNet or OpenImage. 
+    \item We will fix most of the weights in the pre-trained network. Only the weights in the last layer will be randomly initialized and learnt on the current dataset/task. 
+\end{itemize}
+\paragraph{Fine-tune, how?}
+\begin{itemize}
+    \item This depends on how many training examples do we have in the new dataset. For example, if we have fewer ew examples, then we can fix more weights from the pre-trained networks and only train a small subset of all weights. Of course, vice versa. 
+    \item This also depends on how similar is the new dataset to the dataset that our pre-trained model was trained on. That is, we need `more' fine-tuning if they have dissimilar datasets.
+    \item \textit{\textbf{\#! Important:}} Learning rate for the fine-tuning stage is often much lower than the learning rate used for training from scratch. \unsure{why?}
+\end{itemize}
 
 
 
