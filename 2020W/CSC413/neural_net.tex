@@ -284,15 +284,34 @@ then the gradient descent updates would be
     &= (\mathbf{I} - \alpha \mathbf{A})\boldsymbol{\theta}_k \\
     \implies \boldsymbol{\theta}_k &= (\mathbf{I} - \alpha \mathbf{A})^k \boldsymbol{\theta}_0
 \end{align}
+Let $\mathbf{A} = \mathbf{Q} \wedge \mathbf{Q}^{\top}$ be the spectral decomposition of $\mathbf{A}$, then
+\begin{align}
+    (\mathbf{I}-\alpha \mathbf{A})^{k} \boldsymbol{\theta}_{0}
+    &=\left(\mathbf{I}-\alpha \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^{\top}\right)^{k} \boldsymbol{\theta}_{0} \\
+    &=\left[\mathbf{Q}(\mathbf{I}-\alpha \boldsymbol{\Lambda}) \mathbf{Q}^{\top}\right]^{k} \boldsymbol{\theta}_{0} \\
+    &= \mathbf{Q}(\mathbf{I}-\alpha \boldsymbol{\Lambda})^{k} \mathbf{Q}^{\top} \boldsymbol{\theta}_{0} && \text{$\mathbf{Q}$ is orthonormal, thus $\mathbf{Q}^\top\mathbf{Q} = \mathbf{I}$} \\
+    &= \mathbf{Q}(\mathbf{I}-\alpha \boldsymbol{\Lambda})^{k} \mathbf{Q}^{-1} \boldsymbol{\theta}_{0}
+\end{align}
+In $\mathbf{Q}$ basis, each coordinate gets multiplied by $\left(1-\alpha \lambda_{i}\right)^{k}$ where $\lambda_i$'s denote eigenvalues of $\mathbf{A}$. Hence, 
+\begin{itemize}
+    \item If $0 < \alpha \lambda_i \leq 1$: decays to zero at a rate that depends on $\alpha \lambda_i$
+    \item If $1 < \alpha \lambda_i \leq 2$: oscillations will happen
+    \item If $\alpha \lambda_i > 2$: then the gradient updates diverges. (unstable)
+\end{itemize}
+The result is that we will need to set our learning rate such that
+\begin{equation}
+    \alpha < \frac{2}{\lambda_{\max}} \quad\quad \lambda_{\max} \triangleq \max_i \lambda_i
+\end{equation}
+to prevent instability (and/or divergence). \todo{What is this?} We can bound the rate of convergence in another direction, 
+\begin{equation}
+    \alpha \lambda_{i}<\frac{2 \lambda_{i}}{\lambda_{\max }}
+\end{equation}
+We call $\lambda_{\max} / \lambda_{\min}$ as \textit{\textbf{condition number}} of $\mathbf{A}$. The larger the condition number, the slower the convergence of gradient, vice versa. 
 
+\todo{Ill conditioned curvature, normalization}
 
-
-
- 
-
-
-
-
+\subsection{Gradient Descent with Momentum}
+\todo{Finish from here}
 
 
 
