@@ -12,6 +12,7 @@
 \usepackage{xargs}
 \usepackage{ccicons}
 \usepackage{mdframed}
+\usepackage{caption}
 \usepackage{cancel}
 \usepackage[outputdir=.texpadtmp]{minted}
 
@@ -72,7 +73,7 @@
 \newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
 \newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
 \newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
-\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
+\newcommand{\qed}{\hfill $\blacksquare$}
 
 % Number Spaces, Vector Space
 \newcommand{\R}{\mathbb{R}}
@@ -165,7 +166,7 @@ Thus, in the case where $\bv^\top\mathbf{H}\bv > 0$, the cost function curves up
 \subsubsection{Definite-ness}
 \begin{itemize}
     \item A matrix $\mathbf{A}$ is positive definite if $\bv^\top\mathbf{A}\bv > 0, \forall \bv \neq \bzero$.
-    \item We sat it is positive semidefinite if $\bv^\top\mathbf{A}\bv \geq 0, \forall \bv \neq \bzero$.
+    \item We say it is positive semidefinite if $\bv^\top\mathbf{A}\bv \geq 0, \forall \bv \neq \bzero$.
     \item Equivalently, matrix is positive definite \textit{if and only if} all its eigenvalues are positive, and is positive semidefinite \textit{iff} all its eigenvalues are non-negative. I will now show the case (one direction) for positive definite-ness. \newline \proof\, Let $\bv \neq 0 \in \real^n$, then we know 
     \begin{align}
         \bv^\top A \bv 
@@ -186,15 +187,108 @@ Thus, in the case where $\bv^\top\mathbf{H}\bv > 0$, the cost function curves up
         = \sum_i \lambda_i z_i^2
     \end{equation}
     Since $\bv \neq \bzero$, we know $\bz = Q^\top \bv \neq \bzero$, we know that $(\dag)$ must be positive and this concludes the proof. \qed
-    \item For any critical point $\boldsymbol{\theta}_*$, if $\mathbf{H}(\boldsymbol{\theta}_*)$ 
+    \item For any critical point $\boldsymbol{\theta}_*$, if $\mathbf{H}(\boldsymbol{\theta}_*)$ exists and is positive definite, then $\boldsymbol{\theta}_\ast$ is a local minimum. \note{In na\"ive words, all directions curve upwards.}
 \end{itemize}
 
+\subsection{Convexity}
+\subsubsection{Convex Sets}
+Recall that we say set $\mathcal{S}$ is convex if any $\bx_0, \bx_1 \in \mathcal{S}$, it holds that
+\begin{equation}
+    (1-\lambda) \mathbf{x}_{0}+\lambda \mathbf{x}_{1} \in \mathcal{S} \quad \text { for } 0 \leq \lambda \leq 1
+\end{equation}
+\subsubsection{Convex Functions}
+We say that a function $f$ is convex if for any $\bx_0, \bx_1$ it holds that 
+\begin{equation}
+    f\left((1-\lambda) \mathbf{x}_{0}+\lambda \mathbf{x}_{1}\right) \leq(1-\lambda) f\left(\mathbf{x}_{0}\right)+\lambda f\left(\mathbf{x}_{1}\right)\quad \text { for } 0 \leq \lambda \leq 1
+\end{equation}
+
+\subsubsection{Convexity Characterization with Hessian}
+If $\mathcal{J}$ is twice differentiable, then we can use a equivalent characterization in terms of the Hessian matrix $\mathbf{H}$
+\begin{itemize}
+    \item A twice diff-able function is convex \textit{iff} its Hessian is positive semidefinite everywhere the function is defined. 
+    \item In the case of univariate function, where the Hessian would be essentially $1$ by $1$, we say it is convex \textit{iff} its second derivative is non-negative everywhere. \todo{Possibly add proof for convexity of squared error, logistic CE, and softmax CE. }
+\end{itemize}
+
+\subsubsection{Convexity Composition Properties}
+\begin{itemize}
+    \item The composition of two convex functions is convex.
+    \item If $f$ is a non-decreasing univariate function and $g$ is a convex function, then $f\circ g$ is convex. 
+\end{itemize}
+
+\subsubsection{Convexity for Linear Models}
+For a linear model, have the hypothesis $z = \bw^\top \bx + b$ is a linear function of $\bw$ and $b$. Now, if the loss is convex as a function of $z$, then it is convex as a function of $\bw$ and $b$. Thus, linear regression, logistic regression, and softmax regression are clearly convex. (by directly applying the rules in the Convexity Composition Properties section above.)
+
+\subsubsection{Non-Convexity of Networks}
+Clearly, we want the cost function of interest to be convex, since if that is the case then there will be no \textit{spurious local minima}, meaning that any local minimum will also be a global minimum. In such case, learning is very convenient since gradient based algorithms can just go downhill all the way. Unfortunately, training a network with hidden units cannot be convex due to permutation symmetries -- we can re-permute the hidden units in a way that preserves the function computed by the network. An example from slides\cite{week4} gives a good intuition of this matter. 
+\begin{figure}[H]
+    \center \includegraphics[width=0.45\textwidth]{img/net_permutation}
+\end{figure}
+\paragraph{Multilayer Neural Net Non-Convex Argument}
+\begin{itemize}
+    \item By definition, if a (cost) function $\mathcal{J}$ is convex, then for any set of points $\boldsymbol{\theta}_{1}, \dots, \boldsymbol{\theta}_{N}$ in its domain, we know
+    \begin{equation}
+        \mathcal{J}\left(\lambda_{1} \boldsymbol{\theta}_{1}+\cdots+\lambda_{N} \boldsymbol{\theta}_{N}\right) \leq \lambda_{1} \mathcal{J}\left(\boldsymbol{\theta}_{1}\right)+\cdots+\lambda_{N} \mathcal{J}\left(\boldsymbol{\theta}_{N}\right) \quad \text { for } \lambda_{i} \geq 0, \sum_{i} \lambda_{i}=1
+    \end{equation}
+    \item Due to permutation symmetry, there are $K!$ (where $K$ is the number of hidden units in a given hidden layer) permutations of the hidden units in a given layer which all compute the same function. 
+    \item Suppose that we average the parameters for all $K!$ permutations, then we get a degenerate network where all the hidden units are identical (i.e. the network learnt nothing using these identical weights).
+    \item Under the assumption that the cost function was convex, this solution would have to be better than the original one (i.e. the one before we average out all the weights in hidden units) and this leads to a contradiction.\footnote{Remark: Generally, it is safe to say that a network that has leant\textit{\textbf{ absolutely nothing }}would have a much higher cost than a network that, at least, converged to a local minimum} \contradiction Thus training a multilayer neural nets is non-convex.\qed
+\end{itemize}
+
+\subsection{Nuisance-ness of Cost Surface}
+In this sub-section, we will discuss how non-nice 
+\subsubsection{Saddle Point}
+A saddle point is a point if
+\begin{itemize}
+    \item $\nabla \mathcal{J}(\boldsymbol{\theta})=\mathbf{0}$, and
+    \item $\mathbf{H}(\boldsymbol{\theta} )$ has some positive and some negative eigenvalues, i.e. some directions with positive curvature and some with negative curvature. 
+\end{itemize}
+This could be troublesome since
+\begin{itemize}
+    \item If we are exactly on the saddle point, then we are stuck - gradient descent won't get us any further.
+    \item In such case, if we inspect the cost, we would judge that the algorithm has converged. However the solution acquired could be far from optimal. 
+\end{itemize}
+We can tackle this problem by perturbing the current weight solution slightly in the weight space so that the weight could start moving again. It is important that we don't initialize all of the weights to zero, we should break the symmetry by using small random values. 
+
+\subsubsection{Plateaux}
+Plateaux happen more than we think they do, here are some examples that very common
+\begin{itemize}
+    \item 0-1 loss
+    \item hard threshold activations
+    \item logistic activations and least square
+\end{itemize}
+\paragraph{Saturated Unit} is when we are in the flat region of the activation function. In the case of logistic non-linearity ($y = 1/(1 + e^{-x})$), when we have very large or very small $x$'s the gradient would be very close to zero and thus the weights update will get stuck (or be extremely slow).   
+\paragraph{Dead Unit} describes an even more extreme case where the gradient is exactly zero. For example, the negative half of the ReLU activation. 
+
+\subsubsection{Ill-Conditioned Curvature}\footnote{This is very common in neural net training.}
+Below is a typical example\cite{week4} of a Ill-conditioned curvature
+\begin{figure}[H]
+    \center \includegraphics[width=0.75\textwidth]{img/ravine}
+    \advance\leftmargini 2em
+    \advance\rightmargin 2em
+    \begin{quotation}
+        As we can see from the gradient updates shown in the level set graph, the solution that we get at each iteration bounces back and forth in the high curvature directions and makes very minimal progress in the low curvature direction. 
+    \end{quotation}
+\end{figure}
+\noindent We can characterize such curvature by noticing that the hessian $\mathbf{H}$ would have some \textit{large} positive eigenvalues and some eigenvalues close to zero, corresponding to high-curvature and low-curvature directions respectively.
+
+\paragraph{Gradient Descent Dynamics}
+Consider a quadratic objective (which is convex)
+\begin{equation}
+    \mathcal{J}(\boldsymbol{\theta})=\frac{1}{2} \boldsymbol{\theta}^{\top} \boldsymbol{A} \boldsymbol{\theta} \quad\quad \text{where $\mathbf{A}$ is $+$-ive semi definite}
+\end{equation}
+then the gradient descent updates would be 
+\begin{align}
+    \boldsymbol{\theta}_{k + 1} 
+    &\gets \boldsymbol{\theta}_k - \alpha \nabla \mathcal{J} (\boldsymbol{\theta}_k) \\
+    &= \boldsymbol{\theta}_k - \alpha \mathbf{A} \boldsymbol{\theta}_k \\
+    &= (\mathbf{I} - \alpha \mathbf{A})\boldsymbol{\theta}_k \\
+    \implies \boldsymbol{\theta}_k &= (\mathbf{I} - \alpha \mathbf{A})^k \boldsymbol{\theta}_0
+\end{align}
 
 
 
 
-
-
+ 
 
 
 
@@ -218,7 +312,7 @@ Thus, in the case where $\bv^\top\mathbf{H}\bv > 0$, the cost function curves up
 \begin{equation}
     (a * b)_{t}=\sum_{\tau} a_{\tau} b_{t-\tau}
 \end{equation}
-where the summation over $\tau$ is a lazy notation for saying summing over all combinations that makes sense. \footnote{We assume infinite zero padding here, more on this later.}
+Here the summation over $\tau$ is a lazy notation for saying summing over all combinations that makes sense. \footnote{We assume infinite zero padding here, more on this later.}
 
 \subsubsection{2-D Convolution}
 Consider two two dimensional arrays, $A$ and $B$. The result of the convolution will be such that the slot at $(A\ast B)_{ij}$ is calculated as
