@@ -6,7 +6,10 @@
 \usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage[pdftex, dvipsnames]{xcolor}
-\usepackage{hyperref}
+\usepackage[
+    colorlinks=false,
+    linkbordercolor=pink
+]{hyperref}
 \usepackage{fancyhdr}
 \usepackage{datetime}
 \usepackage{xargs}
@@ -99,6 +102,7 @@
 
 % Set section number in front of equation enumerations
 \counterwithin{equation}{section}
+\counterwithin{footnote}{section}
 
 \author{\ccLogo \,\,by Xia, Tingfeng}
 \title{\textsc{Neural Net and Deep Learning}}
@@ -318,8 +322,8 @@ Notice that if we want to normalize all the outputs of all the layers (including
     \item A recent method called \textit{\textbf{batch normalization}} explicitly centres each hidden activation. In practice, it often speeds up training by 1.5 to 2 times!
 \end{itemize}
 
-\subsection{Gradient Descent with Momentum}
-\subsubsection{Motivation and GD Updates}
+\subsection{Alternative Gradient Descent}
+\subsubsection{Momentum Gradient Descent}
 To deal with ill-conditioned curvatures, we want to introduce a notion of ``history'' through ``acceleration accumulated along the way'' in our gradient descent updates. The updates are
 \begin{align}
     \mathbf{p} &\gets \mu\mathbf{p} - \alpha \partial_{\boldsymbol{\theta}} \mathcal{J} \\
@@ -332,9 +336,52 @@ where $\alpha$ is the usually learning rate, and $\mu$ is called a damping param
     \item \textit{\textbf{\#! Important:}} If you increase $\mu$, you should lower $\alpha$ to compensate.
 \end{itemize}
 
+\subsubsection{Stochastic Gradient Descent}
+The sort of gradient descent that updates each step using the entire training dataset is called \textit{\textbf{batch training}}. Alternative to that we can use SGD which updates the parameters based on the gradient for one single training example, i.e.
+\begin{equation}
+    \boldsymbol{\theta} \leftarrow \boldsymbol{\theta}-\alpha \nabla \mathcal{J}^{(i)}(\boldsymbol{\theta})
+\end{equation}
+this allows the training to make a lot of progress before seeing all the training data. As the name suggest, this of course will introduce noise, we can show that SGD gives unbiased estimate of the batch gradient, 
+\begin{equation}
+    \mathbb{E}_{i}\left[\nabla \mathcal{J}^{(i)}(\boldsymbol{\theta})\right]=\frac{1}{N} \sum_{i=1}^{N} \nabla \mathcal{J}^{(i)}(\boldsymbol{\theta})=\nabla \mathcal{J}(\boldsymbol{\theta})
+\end{equation}
+
+\subsubsection{Minibatch SGD}
+The problem with SGD with one single training example at a time is that we can't vectorize operations and thus we can't exploit efficient vectorized operations. As a compromise, we can use mini-batch at each update, typically of size $|\mathcal{M}| = S = 100$. 
+\begin{itemize}
+    \item We call one pass through the \textit{entire dataset} as a \textbf{\textit{epoch}}. 
+    \item Larger mini-batches will have smaller variance, 
+        \begin{equation}
+            \operatorname{VAR}\left[\frac{1}{S} \sum_{i=1}^{S} \frac{\partial \mathcal{L}^{(i)}}{\partial \theta_{j}}\right]=\frac{1}{S^{2}} \operatorname{VAR}\left[\sum_{i=1}^{S} \frac{\partial \mathcal{L}^{(i)}}{\partial \theta_{j}}\right]=\frac{1}{S} \operatorname{VAR}\left[\frac{\partial \mathcal{L}^{(i)}}{\partial \theta_{j}}\right]
+        \end{equation}
+    \item If we choose to have larger batches,  then the algorithm will converge using fewer weight updates since increasing batch size decreases the stochasticity. Otherwise, if we choose to have small batches, we will be able to perform more weight updates per second because update operations are now cheaper. 
+    \item \textit{\textbf{\#! Important:}} If actual time is proportional to FLOPs\footnote{Floating Point Operations per second} that a processor can handle, then $S =1$ is optimal.
+    \begin{itemize}
+        \item Under this assumption, 100 updates with $S = 1$ and 1 update with $S = 100$ will require the same amount of operations and thus will require a same amount of time. 
+        \item Clearly, holding everything else equal, we would prefer to have gradients for fresh values of parameter by using 100 updates rather than 1 update. \note{Of course, the $S = 100$ update would be less noisy, but $100$ steps, albeit stochasticity, would almost certainly go further than one step. }
+    \end{itemize}
+    \item The batch size of choice strong depends on the hardware that the algorithm was running on\cite{week4}
+    \begin{figure}[H]
+        \center\includegraphics[width=0.6\textwidth]{img/parallel_flops}
+    \end{figure}
+\end{itemize}
+
+\subsubsection{SGD Learning Rate}
+\begin{itemize}
+    \item In stochastic training, the learning rate also influences the fluctuations due to the stochasticity of the gradients. 
+    \item In practice, we use a large learning rate early in training to that we can converge faster and then gradually decay the learning rate to reduce the fluctuations at the end of training. 
+    \item Notice that by reducing learning rate, we will reduce fluctuations, which can appear to make the loss drop suddenly. However, this can come at the expense of long run performance. \cite{week4}
+        \begin{figure}[H]
+            \center \includegraphics[width=0.75\textwidth]{img/sgd_lr}
+        \end{figure}
+\end{itemize}
+
 % Focusing on how to tune training hyper-parameters
 \subsection{Debugging Optimization}
-
+Here is a table that summarizes different problems that we might encounter during training time, and how to can tackle them \cite{week4}
+\begin{figure}[H]
+    \center\includegraphics[width=0.7\textwidth]{img/training_problems}
+\end{figure}
 
 
 
