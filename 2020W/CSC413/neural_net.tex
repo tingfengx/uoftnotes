@@ -96,16 +96,115 @@
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\independent}{\perp \!\!\! \perp}
 
+% Set section number in front of equation enumerations
+\counterwithin{equation}{section}
+
 \author{\ccLogo \,\,by Xia, Tingfeng}
 \title{\textsc{Neural Net and Deep Learning}}
 \date{\today}
 
 \begin{document}
 \maketitle
-\section*{Preface}
 \doclicenseThis
+
+%\section*{Preface}
+%These notes are based on
+%\begin{itemize}
+%    \item Prof. Roger Grosse's lecture notes from CSC421 fall 2019 offering, and
+%    \item Prof. Jimmy Ba's lecture slides from CSC413 winter 2020 offering. 
+%\end{itemize}
+
 \tableofcontents
 \newpage
+
+
+\section{Optimization}
+\subsection{Prerequisites}
+
+\paragraph{Clairaut's Theorem} states that second order derivatives are such that
+\begin{equation}
+    \frac{\partial^{2} \mathcal{J}}{\partial \theta_{i} \partial \theta_{j}}=\frac{\partial^{2} \mathcal{J}}{\partial \theta_{j} \partial \theta_{i}}
+\end{equation}
+
+\paragraph{The Hessian Matrix} is a symmetric matrix (due to Clairaut's Theorem) defined as
+\begin{equation}
+    \mathbf{H}=\nabla^{2} \mathcal{J}=\left(\begin{array}{cccc}
+{\frac{\partial^{2} \mathcal{J}}{\partial \theta_{1}^{2}}} & {\frac{\partial^{2} \mathcal{J}}{\partial \theta_{1} \partial \theta_{2}}} & {\cdots} & {\frac{\partial^{2} \mathcal{J}}{\partial \theta_{1} \partial_{D}}} \\
+{\frac{\partial^{2} \mathcal{J}}{\partial \theta_{2} \partial \theta_{1}}} & {\frac{\partial^{2} \mathcal{J}}{\partial \theta_{2}^{2}}} & {\cdots} & {\frac{\partial^{2} \mathcal{J}}{\partial \theta_{2} \partial \theta_{D}}} \\
+{\vdots} & {\vdots} & {\ddots} & {\vdots} \\
+{\frac{\partial^{2} \mathcal{J}}{\partial \theta_{D} \partial \theta_{1}}} & {\frac{\partial^{2} \mathcal{J}}{\partial \theta_{D} \partial \theta_{2}}} & {\cdots} & {\frac{\partial^{2} \mathcal{J}}{\partial \theta_{D}^{2}}}
+\end{array}\right)
+\end{equation}
+
+\paragraph{Second-Order Taylor Approximation} Locally, a function can be approximated by its second order Taylor approximation. We have, for $\boldsymbol{\theta}$ that is sufficiently close to $\boldsymbol{\theta}_0$
+\begin{equation}
+    \mathcal{J}(\boldsymbol{\theta}) \approx \mathcal{J}\left(\boldsymbol{\theta}_{0}\right)+ 
+    \underbrace{\nabla \mathcal{J}\left(\boldsymbol{\theta}_{0}\right)^{\top}\left(\boldsymbol{\theta}-\boldsymbol{\theta}_{0}\right)}_{1st~order}
+     +\underbrace{\frac{1}{2}\left(\boldsymbol{\theta}-\boldsymbol{\theta}_{0}\right)^{\top} \mathbf{H}\left(\boldsymbol{\theta}_{0}\right)\left(\boldsymbol{\theta}-\boldsymbol{\theta}_{0}\right)}_{quadratic}
+\end{equation}
+Notice that if $\boldsymbol{\theta}$ is a critical point, then the gradient would be zero. In such case, the approximation will be
+\begin{equation}
+    \mathcal{J}(\boldsymbol{\theta}) \approx \mathcal{J}\left(\boldsymbol{\theta}_{0}\right)+\frac{1}{2}\left(\boldsymbol{\theta}-\boldsymbol{\theta}_{0}\right)^{\top} \mathbf{H}\left(\boldsymbol{\theta}_{0}\right)\left(\boldsymbol{\theta}-\boldsymbol{\theta}_{0}\right)
+\end{equation}
+
+\paragraph{Spectral Decomposition}
+Since the Hessian matrix is symmetric, we know that it is spectral decompose-able, that is\note{Notice that orthogonal matrices are \textit{\textbf{necessarily}} invertible, with transpose and inverse equal to each other.}
+\begin{equation}
+    \mathbf{H}=\mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^{\top} = \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^{-1}
+\end{equation}
+where $\mathbf{Q}$ is the (orthogonal) matrix where columns are the eigenvectors and $\boldsymbol{\Lambda}$ is the diagonal matrix with eigenvalues on diagonal. 
+
+
+\subsection{Determining Curvature}
+Often, we refer to the hessian matrix $\mathbf{H}$ as the curvature of a function. Suppose that we are moving along a line defined by $\boldsymbol{\theta} + t\bv$ for some vector $\bv$. According to the second order Taylor Approximation, we have
+\begin{equation}
+    \mathcal{J}(\boldsymbol{\theta}+t \mathbf{v}) \approx \mathcal{J}(\boldsymbol{\theta})+t \nabla \mathcal{J}(\boldsymbol{\theta})^{\top} \mathbf{v}+\frac{t^{2}}{2} \mathbf{v}^{\top} \mathbf{H}(\boldsymbol{\theta}) \mathbf{v}
+\end{equation}
+Thus, in the case where $\bv^\top\mathbf{H}\bv > 0$, the cost function curves up, i.e. has \textit{\textbf{positive curvature}} where as in the case $\bv^\top\mathbf{H}\bv < 0$, it has a \textit{\textbf{negative curvature}}.
+
+\subsubsection{Definite-ness}
+\begin{itemize}
+    \item A matrix $\mathbf{A}$ is positive definite if $\bv^\top\mathbf{A}\bv > 0, \forall \bv \neq \bzero$.
+    \item We sat it is positive semidefinite if $\bv^\top\mathbf{A}\bv \geq 0, \forall \bv \neq \bzero$.
+    \item Equivalently, matrix is positive definite \textit{if and only if} all its eigenvalues are positive, and is positive semidefinite \textit{iff} all its eigenvalues are non-negative. I will now show the case (one direction) for positive definite-ness. \newline \proof\, Let $\bv \neq 0 \in \real^n$, then we know 
+    \begin{align}
+        \bv^\top A \bv 
+        = \bv^\top Q\Lambda Q^\top \bv = (\dag)
+    \end{align}
+    Now, if we define $\bz = \bv^\top Q$, we have
+    \begin{equation}
+        (\dag) = \bz \Lambda \bz^\top
+        = \begin{bmatrix}
+            z_1 \\ \vdots \\ z_n
+        \end{bmatrix}\begin{bmatrix}
+            \lambda_1 & & \\
+            & \ddots & \\
+            & & \lambda_n
+        \end{bmatrix}\begin{bmatrix}
+            z_1 & \dots & z_n
+        \end{bmatrix}
+        = \sum_i \lambda_i z_i^2
+    \end{equation}
+    Since $\bv \neq \bzero$, we know $\bz = Q^\top \bv \neq \bzero$, we know that $(\dag)$ must be positive and this concludes the proof. \qed
+    \item For any critical point $\boldsymbol{\theta}_*$, if $\mathbf{H}(\boldsymbol{\theta}_*)$ 
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Convolutional Neural Net and Image Classification}
 \subsection{Motivations for Convolution Layer}
 \begin{itemize}
@@ -266,23 +365,6 @@ Below is the number of parameters in a fully connected multilayer perceptron lay
     \item This also depends on how similar is the new dataset to the dataset that our pre-trained model was trained on. That is, we need `more' fine-tuning if they have dissimilar datasets.
     \item \textit{\textbf{\#! Important:}} Learning rate for the fine-tuning stage is often much lower than the learning rate used for training from scratch. \unsure{why?}
 \end{itemize}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 \newpage
