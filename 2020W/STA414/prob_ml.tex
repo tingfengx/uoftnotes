@@ -274,8 +274,9 @@ Factorizes as
     p(x|\theta) = \mathcal{N}(x|\mu, \sigma)
     &= \frac{1}{\sqrt{2\pi \sigma^2}}\exp \left(- \frac{1}{2\sigma^2} (x - \mu)^2 \right) \\
     &= \frac{1}{\sqrt{2\pi \sigma^2}}\exp \left(- \frac{1}{2\sigma^2} (x^2 - 2x\mu + \mu^2) \right) \\
-    &= \underbrace{
-        \frac{1}{\sqrt{2\pi}\sigma} \exp\left( \frac{-\mu^2}{2\sigma^2} \right)}_{\log A(\eta)}
+    &= 
+        \underbrace{\frac{1}{\sqrt{2\pi}\sigma}}_{h(x)} 
+        \underbrace{\exp\left( \frac{-\mu^2}{2\sigma^2} \right)}_{g(\eta)}
     \exp\left(
     \underbrace{
         \begin{bmatrix}
@@ -294,7 +295,7 @@ Factorizes as
 
 \section{Lecture 3 - Directed Graphical Models}
 \subsection{Decision Theory (Utility Theory)}
-Let $a$ denote action, and $a^*$ be the optimal one. Also use $s$ to denote state and $V(\cdot)$ be the value function. We have, in general
+Let $a$ denote action, and $a^*$ be the optimal one. Also use $s$ to denote state and $V(\cdot)$\note{Often, it is very hard to find a/the good/best value function that quantifies everything using a numerical value. } be the value function. We have, in general
 \begin{equation*}
     a^* = \arg\min_a/\argmax_a \underbrace{{\mathbb{E}}_{p(s\vert a, knowledge)}\left[V(s)\right]}_{u(a)~ \overset{\Delta}{=} ~\text{utility of action $a$}}
 \end{equation*}
