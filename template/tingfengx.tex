@@ -1,19 +1,29 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
-\usepackage[pdftex, dvipsnames]{xcolor}
-\usepackage{hyperref}
+\usepackage[
+    pdftex, 
+    dvipsnames
+]{xcolor}
+\usepackage[
+    colorlinks=false,
+    linkbordercolor=pink
+]{hyperref}
 \usepackage{fancyhdr}
 \usepackage{datetime}
+\usepackage{xargs}
 \usepackage{ccicons}
-\usepackage{todonotes}
 \usepackage{mdframed}
+\usepackage{caption}
 \usepackage{cancel}
-%\usepackage[outputdir=.texpadtmp]{minted}
+\usepackage[nottoc]{tocbibind}
+\usepackage[
+    outputdir=.texpadtmp
+]{minted}
 
 % ==== License =====
 \usepackage[
@@ -32,7 +42,6 @@
 \newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
 \newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
 \newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
-\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
 
 % General
 \newcommand{\mc}[1]{\mathcal{#1}}
@@ -73,7 +82,7 @@
 \newcommand{\proofsuperset}{\tit{\underline{Proof($\supseteq$):}}}
 \newcommand{\proofsubset}{\tit{\underline{Proof($\subseteq$):}}}
 \newcommand{\contradiction}{$\longrightarrow\!\longleftarrow$}
-\newcommand{\qed}{\hfill $\mathcal{Q}.\mathcal{E}.\mathcal{D}.\dagger$}
+\newcommand{\qed}{\hfill $\blacksquare$}
 
 % Number Spaces, Vector Space
 \newcommand{\R}{\mathbb{R}}
@@ -89,7 +98,7 @@
 \newcommand{\double}[1]{\mathbb{#1}} % Set to behave like that on word
 \newcommand{\trans}[3]{$#1:#2\rightarrow{}#3$}
 \newcommand{\map}[3]{\text{$\left[#1\right]_{#2}^{#3}$}}
-\newcommand{\dime}[1]{\text{dim}(#1)}
+\newcommand{\dime}[1]{\mathrm{dim}(#1)}
 \newcommand{\mat}[2]{M_{#1 \times #2}(\R)}
 \newcommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
 \newcommand{\basecase}{\textsc{\underline{Basis Case:}} }
@@ -97,6 +106,9 @@
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\independent}{\perp \!\!\! \perp}
 
+% Set section number in front of equation enumerations
+\counterwithin{equation}{section}
+\counterwithin{footnote}{section}
 \author{\ccLogo \,\,by Xia, Tingfeng}
 \title{}
 \date{\today}
