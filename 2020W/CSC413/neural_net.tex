@@ -17,6 +17,7 @@
 \usepackage{mdframed}
 \usepackage{caption}
 \usepackage{cancel}
+\usepackage[nottoc]{tocbibind}
 \usepackage[outputdir=.texpadtmp]{minted}
 
 % ==== License =====
@@ -333,8 +334,17 @@ where $\alpha$ is the usually learning rate, and $\mu$ is called a damping param
 \begin{itemize}
     \item In the high curvature directions, the gradients cancel each other out, so momentum dampens the oscillations, 
     \item In the low curvature directions, the gradient point in the same direction, allowing the parameters to ``pick up speed''.
-    \item \textit{\textbf{\#! Important:}} If you increase $\mu$, you should lower $\alpha$ to compensate.
+    \item \textit{\textbf{\#! Important:}} If you increase $\mu$, you should lower $\alpha$ to compensate. Here is a demonstration for the case where gradient is constant. In such case, 
+        \begin{align}
+            \bp &= -\alpha \partial_{\boldsymbol{\theta}}\mathcal{J} \\
+            \implies \bp_1 &= \mu \bp_0 - \alpha \partial_{\boldsymbol{\theta}} \mathcal{J} = - \alpha \mu \partial_{\boldsymbol{\theta}} \mathcal{J} - \alpha \partial_{\boldsymbol{\theta}} \mathcal{J} \\
+            \implies \bp_2 &= - \alpha\mu^2 \partial_{\boldsymbol{\theta}} \mathcal{J} - \alpha\mu \partial_{\boldsymbol{\theta}} \mathcal{J} - \alpha \partial_{\boldsymbol{\theta}} \mathcal{J} \\
+            \implies \bp_k &= -\alpha \left(\sum_{i = 1}^k \mu^i\right) \partial_{\boldsymbol{\theta}} \mathcal{J} \overset{k\rightarrow\infty}{\rightsquigarrow} \frac{-\alpha}{1 - \mu} \partial_{\boldsymbol{\theta}} \mathcal{J}
+        \end{align}
+    Thus, if we want to ``keep'' the optimal velocity of approaching optimal spot, we will need to keep a balance between $\mu$ and $\alpha$. \qed
 \end{itemize}
+
+
 
 \subsubsection{Stochastic Gradient Descent}
 The sort of gradient descent that updates each step using the entire training dataset is called \textit{\textbf{batch training}}. Alternative to that we can use SGD which updates the parameters based on the gradient for one single training example, i.e.
