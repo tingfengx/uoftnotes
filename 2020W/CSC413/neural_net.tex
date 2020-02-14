@@ -5,10 +5,14 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
-\usepackage[pdftex, dvipsnames]{xcolor}
 \usepackage[
-    colorlinks=false,
-    linkbordercolor=pink
+    pdftex, 
+    dvipsnames
+]{xcolor}
+\usepackage[
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=Thistle
 ]{hyperref}
 \usepackage{fancyhdr}
 \usepackage{datetime}
@@ -18,7 +22,9 @@
 \usepackage{caption}
 \usepackage{cancel}
 \usepackage[nottoc]{tocbibind}
-\usepackage[outputdir=.texpadtmp]{minted}
+\usepackage[
+    outputdir=.texpadtmp
+]{minted}
 
 % ==== License =====
 \usepackage[
@@ -113,12 +119,8 @@
 \maketitle
 \doclicenseThis
 
-%\section*{Preface}
-%These notes are based on
-%\begin{itemize}
-%    \item Prof. Roger Grosse's lecture notes from CSC421 fall 2019 offering, and
-%    \item Prof. Jimmy Ba's lecture slides from CSC413 winter 2020 offering. 
-%\end{itemize}
+\section*{Note}
+These notes are based Prof. Roger Grosse's lecture notes as well as Prof. Jimmy Ba's lecture slides with varying level of specificity for different chapters and section. The course website is available at \url{https://csc413-2020.github.io/}
 
 \tableofcontents
 \newpage
@@ -240,7 +242,7 @@ Clearly, we want the cost function of interest to be convex, since if that is th
 \end{itemize}
 
 \subsection{Nuisance-ness of Cost Surface}
-In this sub-section, we will discuss how non-nice 
+In this sub-section, we will discuss different non-nice things that can happen to a neural net's optimization surface. 
 \subsubsection{Saddle Point}
 A saddle point is a point if
 \begin{itemize}
