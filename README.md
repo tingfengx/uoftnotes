@@ -40,28 +40,33 @@
    
 
 ## &#x1F4BB; Typesetting in \LaTeX
+<details>
+  <summary><b>(Legacy) Compiling with Makefile</b></summary>
+  
 - Compiled using ```pdflatex```:
-   ``````
-   $ pdflatex --version
-   pdfTeX 3.14159265-2.6-1.40.20 (TeX Live 2019)
-   kpathsea version 6.3.1
-   Copyright 2019 Han The Thanh (pdfTeX) et al.   
-   ``````
+``````
+$ pdflatex --version
+pdfTeX 3.14159265-2.6-1.40.20 (TeX Live 2019)
+kpathsea version 6.3.1
+Copyright 2019 Han The Thanh (pdfTeX) et al.   
+``````  
+  
 - Compilation automated with ```latexmk```:
-   ``````
-   $ latexmk -version
-   Latexmk, John Collins, 26 Dec. 2019. Version 4.67
-   ``````
-   This is particularly useful to automate the multiple runs of ```pdflatex``` needed for some documents.
+``````
+$ latexmk -version
+Latexmk, John Collins, 26 Dec. 2019. Version 4.67
+``````  
+This is particularly useful to automate the multiple runs of ```pdflatex``` needed for some documents.  
 - Please note that some of these notes used the LaTeX package `minted`. To compile the documents containing `minted` using ```latexmk```, you need to use the shell escape flag. Please (create if not exist) add the following to your `~/.latexmkrc`.
-   ``````
-   $latex = 'latex -interaction=nonstopmode -shell-escape';
-   $pdflatex = 'pdflatex -interaction=nonstopmode -shell-escape';
-   ``````
-- [```./template/tingfengx.tex```](https://github.com/tingfengx/uoftnotes/blob/master/template/tingfengx.tex) is the template that I use which contains my custom commands. 
+``````
+$latex = 'latex -interaction=nonstopmode -shell-escape';
+$pdflatex = 'pdflatex -interaction=nonstopmode -shell-escape';
+``````  
+- [Make](https://www.gnu.org/software/make/) is a build automation tool that automatically builds executable programs and libraries from source code by reading files called Makefiles which specify how to derive the target program. In the project, we are using it to automate the compilation of the pdf documents from the LaTeX source codes using ```pdflatex``` as well as clean up all the not needed auxilary log files. 
+</details>
 
-## Makefile
-[Make](https://www.gnu.org/software/make/) is a build automation tool that automatically builds executable programs and libraries from source code by reading files called Makefiles which specify how to derive the target program. In the project, we are using it to automate the compilation of the pdf documents from the LaTeX source codes using ```pdflatex``` as well as clean up all the not needed auxilary log files. 
+## Template
+- [```./template/tingfengx.tex```](https://github.com/tingfengx/uoftnotes/blob/master/template/tingfengx.tex) is the template that I use which contains my custom commands. 
 
 ## License 
 [![licensebuttons by-nc-sa](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0)    
