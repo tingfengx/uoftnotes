@@ -1248,7 +1248,7 @@ and
 
 The main problem with this method, however, comes from the accuracy and cost of evaluating at lattice. If we want to sample $D$ uniformly spaced points in one dimension and the system has $N$ dimensions in total. Then, the the complexity is asymptotically $\mathcal{O}(D^N)$ which grows exponentially as dimension grows and soon become intractable. 
 
-\subsection{Sampling}
+\subsection{Sampling Procedure}
 Note: Importance Sampling doesn't help us solve the problem of generating samples from $p(x)$, rather it is a method that helps us estimate expectation of a function $\phi (x)$, i.e. problem 2. 
 \paragraph{Assumptions}
 \begin{enumerate}
@@ -1295,7 +1295,7 @@ In rejection sampling we assume again a one-dimensional density $p(x) = \tilde p
 \end{align}
 It is somewhat important to note that in rejection sampling we care only about the proportion, and we need a $q$, or $\tilde q$ actually, that ``covers'' $p$, or $\tilde p$ actually. This means that we don't care, and thus don't need to know the normalizing constant to perform the sampling procedure. Na\"ively, we can just scale $q$ to a huge $\tilde q$, and as long as it covers $\tilde p$, we are in a good shape. 
 
-\paragraph{Sampling} The procedure works as follows
+\paragraph{Sampling Procedure} The procedure works as follows
 \begin{enumerate}
     \item Generate two random numbers, the first $x$ is such that $x \sim q(x)$, and the second $u$ is generated such that $u \sim Unif[0, c\tilde q(x)]$
     \item Evaluate $\tilde p(x)$ and accept or reject the sample $x$ by comparing the value of $u$ with the value of $\tilde p(x)$, to be more specific
@@ -1317,8 +1317,29 @@ It is somewhat important to note that in rejection sampling we care only about t
 \end{itemize}
 
 
-\subsection{Metropolis-Hasting Method} 
+\subsection{Metropolis-Hasting Method: Example of MCMC}
+The proposed importance sampling and rejection sampling work well only if the proposal density $q(x)$ is similar to $p(x)$. In general, in a high dimensional case, such $q$ is very hard to find. 
+In Metropolis-Hasting, in contrast to importance and rejection sampling methods, it is not necessary for $q(x'| x^{(t)})$ to lock similar to $p(x)$ in order for the algorithm to be useful. The density $q(x'| x^{(t)})$ might be a simple distribution such as a gaussian centred at $x^{(t)}$, but can in general be any \textit{fixed} density from which we can draw samples. 
+\paragraph{Sampling Procedure}
+\begin{itemize}
+    \item A tentative new state $x'$ is generated from the proposal density $q(x'|x^{(t)})$, then we compute
+        \begin{equation}
+            a=\frac{\tilde{p}\left(x^{\prime}\right) q\left(x^{(t)} | x^{\prime}\right)}{\tilde{p}\left(x^{(t)}\right) q\left(x^{\prime} | x^{(t)}\right)}
+        \end{equation}
+    \item If $a \geq 1$, then the new state is accepted. 
+    \item Otherwise, the new state is accepted with probability $a$. Then, we perform update as follows,
+    \begin{equation}
+        x^{(t+1)} \gets \text{accepted}\,\,?\,\, x^{\prime} \,\,:\,\,x^{(t)} 
+    \end{equation}
+\end{itemize}
 
+\paragraph{Note on Difference} Notice that in rejection sampling, rejected points are discarded and have no influence on the list of samples $x^{(r)}_r$ that we collected. Here, a rejection causes the current state to be written again onto the list. 
+
+\paragraph{Convergence and MCMC} Metropolis-Hastings converges to $p(x)$ for any $q\left(x^{\prime} | x^{(t)}\right) \geq 0 \quad \forall x^{\prime}, x^{(t)}$ as $t \rightarrow \infty$. That is, out list of samples is such that
+\begin{equation}
+    \{x^{(r)}\}_{r=1}^{R} \rightarrow p(x)
+\end{equation}
+The Metropolis-Hastings method is an example of a Markov Chain Monte Carlo method. In contrast to rejection sampling, where the accepted points are independent samples from the desired distribution, MCMC methods involve a Markov process in which a sequence of states is generated, each sample $x^{(t)}$ having a probability distribution that depends on the previous value, $x^{(t - 1)}$. Since successive samples are dependent, the Markov chain may have to run for a considerable time in order to generate samples that are effectively independent samples from $p$. 
 
 
 
