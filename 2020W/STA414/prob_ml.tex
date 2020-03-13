@@ -1199,7 +1199,7 @@ we have
     \end{equation}
     \item We can frame ELBO as a trade off
     \begin{equation}
-        \mathcal{L}(\phi ; x) = \underbrace{\underset{z \sim q_{\phi}}{\mathbb{E}}[\log p(x | z)]}_{(\dag)} - \underbrace{D_{K L}\left(q_{\phi}(z | x) \| p(z)\right)}_{(\ddag)}
+        \mathcal{L}(\phi ; x) = \underbrace{\underset{z \sim q_{\phi}}{\mathbb{E}}[\log p(x | z)]}_{(\dag)} - \underbrace{D_{\kl }\left(q_{\phi}(z | x) \| p(z)\right)}_{(\ddag)}
     \end{equation}
     \begin{itemize}
         \item $(\dag)$ is ``reconstruction likelihood'', i.e. how probable is $x$ given $z$, which encourages the model to choose the distribution which best reconstructs the data. 
@@ -1208,18 +1208,116 @@ we have
 \end{enumerate}
 
 
+\section{Sampling and Monte Carlo Methods}
+\subsection{Motivation: Sampling}
+Note: In this section, we refer to a ``sample'' as a single realization $x$ that is from a probability distribution $p(x)$.\footnote{This is different from the normal sense of sample, which means one batch of sample from a distribution.}
+
+\paragraph{Problems to be solved} Monte Carlo methods are computational techniques that make use of random numbers, it aims to solve one or both of the following problems
+\begin{enumerate}
+    \item To generate samples
+        \begin{equation}
+            \{x^{(r)}\}_{r=1}^{R} \sim p(x)
+        \end{equation}
+    \item and to estimate expectations of functions $(\phi(x) )$ under the distribution of $p(x)$, i.e.,
+        \begin{equation}
+            \Phi=\underset{x \sim p(x)}{\mathbb{E}}[\phi(x)]=\int \phi(x) p(x) d x
+        \end{equation}
+\end{enumerate}
+
+\paragraph{Sampling $p(x)$ is like hornets' nest}
+To sample from
+\begin{equation}
+    p(x)=\frac{\tilde{p}(x)}{Z}
+\end{equation}
+there are two main complications even if we know how to evaluate $\tilde p (x)$
+\begin{enumerate}
+    \item We don't typically know the normalizing constant, $Z$.
+    \item Even if we did know $Z$, the problem of drawing samples from $p(x)$ is still a chanlenging one, especially in high-dimensional spaces, because there is no obvious way to sample from $p$\todo{Should this be $\tilde p$ ??} without enumerating most or all of the  possible states. \note{Note: There are only a handful of distribution, for example gaussian distribution, that we can easily sample from in a high dimensional space. }
+\end{enumerate}
+
+\subsection{Lattice Discretization}
+Imagine that we wish to draw samples from the density
+$p(x)=\frac{\tilde{p}(x)}{Z}$, then what we can do is discretize the variable $x$ and sample from the discrete probability distribution over a finite set of uniformly spaced points $S = \{x_i\}_i$. Then for $x_i \in S$, we evaluate $\tilde p (x_i)$ after which we can compute the normalizer
+\begin{equation}
+    Z = \sum_i \tilde p_i (x_i)
+\end{equation}
+and
+\begin{equation}
+    p_{i}=\frac{\tilde{p}_{i}}{Z}
+\end{equation}
+
+The main problem with this method, however, comes from the accuracy and cost of evaluating at lattice. If we want to sample $D$ uniformly spaced points in one dimension and the system has $N$ dimensions in total. Then, the the complexity is asymptotically $\mathcal{O}(D^N)$ which grows exponentially as dimension grows and soon become intractable. 
+
+\subsection{Sampling}
+Note: Importance Sampling doesn't help us solve the problem of generating samples from $p(x)$, rather it is a method that helps us estimate expectation of a function $\phi (x)$, i.e. problem 2. 
+\paragraph{Assumptions}
+\begin{enumerate}
+    \item To do importance sampling, we still need to assume that we can evaluate $p(x)$ (density that we wish to draw samples from) within a multiplicative constant. To be precise, we can evaluate a function $\tilde p(x)$ such that 
+        \begin{equation}
+            p(x) = \tilde p(x) / Z
+        \end{equation}
+    \item We further assume that we have a simpler density, $q(x)$ from which it is easy to \textit{\textbf{sample}} from, i.e., $x \sim q(x)$ and easy to \textit{\textbf{evaluate}}, i.e., $tilde q(x)$
+        \begin{equation}
+            q(x)=\frac{\tilde{q}(x)}{Z_{q}}
+        \end{equation}
+    where the density $q(x)$ is referred to as the sampler density. 
+\end{enumerate}
+\paragraph{Importance Sampling}
+In importance sampling, we generate in total $R$ samples from $q(x)$, i.e. $\left\{x^{(r)}\right\}_{r=1}^{R} \sim q(x)$. If these points were samples from $p(x)$ then we could estimate $\Phi$ by
+\begin{equation}
+    \Phi=\underset{x \sim p(x)}{\mathbb{E}}[\phi(x)] \approx \frac{1}{R} \sum_{r=1}^{R} \phi\left(x^{(r)}\right)=\hat{\Phi}
+\end{equation}
+i.e., we could use a \textit{{Simple Monte Carlo Estimator}}. The problem is that these sample are from $q$ rather than $p$ which can be completely unrelated densities. To solve this over-represented/under-represented problem, we can take into account that we are sampling from a different distribution by introducing weights, (essentially corrections)
+\begin{align}
+    \tilde{w}_{r}=\frac{\tilde{p}\left(x^{(r)}\right)}{\tilde{q}\left(x^{(r)}\right)}
+\end{align}
+Finally, we re-write our estimator under $q$, i.e.
+\begin{align}
+    \Phi 
+    &= \int \phi(x) p(x) dx \\
+    &= \int \phi(x) \frac{p(x)}{q(x)} q(x) dx \\
+    &\approx \frac{1}{R} \sum_{r = 1}^R \phi (x^{(r)}) \frac{p\left(x^{(r)}\right)}{q\left(x^{(r)}\right)} \\
+    &= \frac{Z_q}{Z_p} \frac{1}{R}\sum_{r=1}^R \phi(x^{(r)}) \cdot \frac{\tilde p(x^{(r)})}{\tilde q(x^{(r)})}\\ 
+    &= \frac{Z_q}{Z_p} \frac{1}{R}\sum_{r=1}^R \phi(x^{(r)}) \cdot \tilde w_r  && \text{since } w_{r}=\frac{\tilde{w}_{r}}{\sum_{r=1}^{R} \tilde{w}_{r}}\\
+    &= \frac{\frac{1}{R}\sum_{r=1}^R \phi(x^{(r)}) \cdot \tilde w_r}{\frac{1}{R}\sum_{r=1}^R \tilde w_r} && \text{since } \frac{Z_{p}}{Z_{q}}=\frac{1}{R} \sum_{r=1}^{R} \tilde{w}_{r}\\ 
+    &= \frac{1}{R}\sum_{r=1}^R \phi(x^{(r)}) \cdot w_r \\ &= \hat \Phi_{iw}
+\end{align}
+The estimator $\hat \Phi_iw$ is biased, but is consistent.
+
+\paragraph{Pitfalls} As it is easy to see, if we choose $q$ to be some short tailed distribution, we might not get a good coverage for samples on $p$, and thus making the estimation not accurate. Notice that we want to support the entire real line with this method\footnote{Or otherwise this will just be uniform sampling. Indeed, importance sampling is a generalization of uniform sampling. } and hence we cannot use a na\"ive uniform over a certain range, and using uniform over the entire real line will cause uniform distribution pdf to be infinitely small everywhere. 
+
+\paragraph{Remedy} As a way to (semi-) solve the above pitfall, we can choose $q$ to be a heavy-tailed distribution, for example Cauchy. Of course, the best of all solution is to find a $q$ that looks like $p$, but this is in a lot of cases an un achievable goal. 
+
+\subsection{Rejection Sampling}
+In rejection sampling we assume again a one-dimensional density $p(x) = \tilde p(x) /Z$ that is too complicated a function for us to be able to sample from it directly. We assume that we have a simpler \textit{\textbf{proposal}} density $q(x)$ which we can evaluate (within a multiplicative factor $Z_q$, as before), and from which we can generate samples. We further assume that we know the value of a constant $c$ such that
+\begin{align}
+    c \tilde q(x) > \tilde p(x) \quad \text{for some $c$ constant}\, , \forall x
+\end{align}
+It is somewhat important to note that in rejection sampling we care only about the proportion, and we need a $q$, or $\tilde q$ actually, that ``covers'' $p$, or $\tilde p$ actually. This means that we don't care, and thus don't need to know the normalizing constant to perform the sampling procedure. Na\"ively, we can just scale $q$ to a huge $\tilde q$, and as long as it covers $\tilde p$, we are in a good shape. 
+
+\paragraph{Sampling} The procedure works as follows
+\begin{enumerate}
+    \item Generate two random numbers, the first $x$ is such that $x \sim q(x)$, and the second $u$ is generated such that $u \sim Unif[0, c\tilde q(x)]$
+    \item Evaluate $\tilde p(x)$ and accept or reject the sample $x$ by comparing the value of $u$ with the value of $\tilde p(x)$, to be more specific
+    \begin{itemize}
+        \item If $u > \tilde p(x)$, then we reject $x$, 
+        \item otherwise we accept $x$, effectively adding $x$ to our set of samples. (value of $u$ is discarded, and in the next iteration $u$ will be sampled again from, possibly, a different uniform distribution. )
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{Pitfalls}
+\begin{itemize}
+    \item Rejection sampling works the best if we are able to find $q$ that is a good approximation to $p$. If $q$ is very different from $p$ then, for $cq$ to exceed $p$ everywhere, $c$ will almost always necessarily be large. This will cause us a very high rejection ratio, and making the algorithm super inefficient. 
+    \item In high-dimensional space, the problem is even worse and it is very likely that the requirement that $c \tilde q > \tilde p$ will force $c$ to be so huge that acceptances will be very rare indeed. 
+    \item Besides, finding such a value of $c$ may be difficult too, since in many problems we know neither where the modes of $\tilde p$ are located nor how high they are. 
+    \item In general, $c$ grows exponentially with the dimensionality $N$, so the acceptance rate is expected to be exponentially small in $N$, since
+    \begin{equation}
+        \text{ acceptance rate } =\frac{\text { area under } \tilde{p}}{\text { area under } c \tilde{q}}=\frac{1}{Z}
+    \end{equation}\todo{vas ist das?}
+\end{itemize}
 
 
-
-
-
-
-
-
-
-
-
-
+\subsection{Metropolis-Hasting Method} 
 
 
 
