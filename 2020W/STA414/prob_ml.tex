@@ -1208,7 +1208,7 @@ we have
 \end{enumerate}
 
 
-\section{Sampling and Monte Carlo Methods}
+\section{Lecture 8 - Sampling and Monte Carlo Methods}
 \subsection{Motivation: Sampling}
 Note: In this section, we refer to a ``sample'' as a single realization $x$ that is from a probability distribution $p(x)$.\footnote{This is different from the normal sense of sample, which means one batch of sample from a distribution.}
 
@@ -1282,7 +1282,7 @@ Finally, we re-write our estimator under $q$, i.e.
     &= \frac{\frac{1}{R}\sum_{r=1}^R \phi(x^{(r)}) \cdot \tilde w_r}{\frac{1}{R}\sum_{r=1}^R \tilde w_r} && \text{since } \frac{Z_{p}}{Z_{q}}=\frac{1}{R} \sum_{r=1}^{R} \tilde{w}_{r}\\ 
     &= \frac{1}{R}\sum_{r=1}^R \phi(x^{(r)}) \cdot w_r \\ &= \hat \Phi_{iw}
 \end{align}
-The estimator $\hat \Phi_iw$ is biased, but is consistent.
+The estimator $\hat \Phi_{iw}$ is biased, but is consistent.
 
 \paragraph{Pitfalls} As it is easy to see, if we choose $q$ to be some short tailed distribution, we might not get a good coverage for samples on $p$, and thus making the estimation not accurate. Notice that we want to support the entire real line with this method\footnote{Or otherwise this will just be uniform sampling. Indeed, importance sampling is a generalization of uniform sampling. } and hence we cannot use a na\"ive uniform over a certain range, and using uniform over the entire real line will cause uniform distribution pdf to be infinitely small everywhere. 
 
@@ -1340,6 +1340,48 @@ In Metropolis-Hasting, in contrast to importance and rejection sampling methods,
     \{x^{(r)}\}_{r=1}^{R} \rightarrow p(x)
 \end{equation}
 The Metropolis-Hastings method is an example of a Markov Chain Monte Carlo method. In contrast to rejection sampling, where the accepted points are independent samples from the desired distribution, MCMC methods involve a Markov process in which a sequence of states is generated, each sample $x^{(t)}$ having a probability distribution that depends on the previous value, $x^{(t - 1)}$. Since successive samples are dependent, the Markov chain may have to run for a considerable time in order to generate samples that are effectively independent samples from $p$. 
+
+
+\section{Lecture 9 - Amortized Inference and Variational Auto Encoders}
+\subsection{Motivations}
+%\subsubsection{SVI on a Per-Example LVM don't Scale to Large Data}
+%Suppose that we are trying to use a per-example LVM for a model containing $N$ entities, each of which we are trying to get a, hopefully good, $q_\phi$ of. Then, we can na\"ively model this using the simple variational methods from Lecture 8. However, there is a complication if we try to solve this this way. Namely, at each step of gradient descent, we will have to update all of the $N$ $\phi_i$'s, which causes some of the update estimates very out of date.\footnote{Let's say $N = 1000$, then when we perform updates through sub-sampling, the $1000$'th update estimate is 1000 steps out of date! Notice that these are just estimates, and are quite fragile, so 1000 steps changes the \textit{\textbf{true posterior}} a lot. }
+
+\subsubsection{Efficient Use of (Accumulative) Partial Evidence}
+With enough experience, doctors, plumbers, detectives, etc. can very quickly tell what is going on and what they still need more information about, if they've seen enough similar situations. Hence, perhaps we could somehow train a neural network to look at the data for a person $x_i$, and then output an approximate posterior $q_{\phi_{i}}\left(z_{i} | x_{i}\right)$
+
+\subsection{Amortized Inference}
+Here ``amortized'' essentially means to spread out over time. Previously, we do SVI from scratch every time we see a new datapoint. Now, instead, we will gradually learn a function that can look at the data for a person $x_i$, and then output an approximate posterior $q_{\phi}\left(z_{i} | x_{i}\right)$. This is known as a \textit{\textbf{recognition model}}, instead of a separate $\phi_i$ for each data example, we will just have a single global $\phi$ that specifies the parameter of the recognition model. Because the relationship between data and posteriors is complex and hard to specify by hand, we will do this through a neural net. (we make the neural net learn the function!)
+
+\subsubsection{Simple Example (Parametrizing Gaussian)}
+We have seen one way to specify a probability distribution given an input with neural networks in assignment 2: we can simply have a network take in $x_i$, and output the mean and variance vector for a Gaussian, parametrized as\note{The graphical model for such model specification has $\phi$ \textit{\textbf{outside of}} the plate, which means we only have one global $\phi$ to update and optimize.}
+\begin{align}
+    q_{\phi}\left(z_{i} | x_{i}\right)=\mathcal{N}\left(z_{i} | \mu_{\phi}\left(x_{i}\right), \Sigma_{\phi}\left(x_{i}\right)\right)
+\end{align}
+
+\subsubsection{Amortized Inference - Algorithmic Procedure}
+\begin{enumerate}
+    \item Sample a datapoint
+    \item compute parameters of approximate posterior (recognition)
+    \item compute gradient of Monte Carlo estimate of ELBO with respect to $\phi$, i.e. $\nabla_\phi \overset{\sim MC}{ELBO}$
+    \item update according to gradient descent
+\end{enumerate}
+Then, when we want to make predictions about a new datapoint, we can use out fast recognition model if we want. Of course, we might also want to stop and do something slower but more accurate, for example like per-sample SVI, and/or MCMC.
+
+\subsubsection{Optimizing Model Parameters}
+Now that $p_\theta (x)$ depends on parameters $\theta$, then the ELBO is a function of both $\phi$ and $\theta$. We can optimize them together, still, using the re-parametrize trick we saw earlier.
+\begin{align}
+    \nabla_{\theta, \phi} \mathcal{L}(\phi)
+    &=\nabla_{\theta, \phi} \mathbb{E}_{z \sim q_{\phi}(z | x)}\left[\log p_{\theta}(x, z)-\log q_{\phi}(z | x)\right] \\
+    &=\mathbb{E}_{\epsilon \sim p(\epsilon)} \nabla_{\theta, \phi}\left[\log p_{\theta}(x, T(\phi, \epsilon))-\log q_{\phi}(T(\phi, \epsilon) | x)\right]
+\end{align}
+This allows us to jointly fit the model parameters and the recognition network, by subsampling training examples and using simple Monte Carlo with gradient descent optimizers. Such formulation is referred to as a variational auto encoder, VAE.
+
+
+
+
+
+
 
 
 
