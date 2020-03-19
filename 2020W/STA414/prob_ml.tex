@@ -1375,18 +1375,84 @@ Now that $p_\theta (x)$ depends on parameters $\theta$, then the ELBO is a funct
     &=\nabla_{\theta, \phi} \mathbb{E}_{z \sim q_{\phi}(z | x)}\left[\log p_{\theta}(x, z)-\log q_{\phi}(z | x)\right] \\
     &=\mathbb{E}_{\epsilon \sim p(\epsilon)} \nabla_{\theta, \phi}\left[\log p_{\theta}(x, T(\phi, \epsilon))-\log q_{\phi}(T(\phi, \epsilon) | x)\right]
 \end{align}
-This allows us to jointly fit the model parameters and the recognition network, by subsampling training examples and using simple Monte Carlo with gradient descent optimizers. Such formulation is referred to as a variational auto encoder, VAE.
+This allows us to jointly fit the model parameters and the recognition network, by subsampling training examples and using simple Monte Carlo with gradient descent optimizers. Such formulation is referred to as a variational auto encoder, VAE (See Figure \ref{vae} for layout of architecture).
 
+\begin{figure}[h]
+    \begin{center}
+        \begin{tikzpicture}[scale=0.2]
+        \tikzstyle{every node}+=[inner sep=0pt]
+        \draw (16.2,-32.6) node {$x$};
+        \draw (3.2,-25.7) node {$\mu_{z|x}$};
+        \draw (28.6,-25.7) node {$\Sigma_{z|x}$};
+        \draw (16.2,-17.7) node {$z \rightharpoonup z|x\sim N(\mu_{z|x},\Sigma_{z|x})$};
+        \draw (3.2,-9.5) node {$\mu_{x|z}$};
+        \draw (28.6,-9.5) node {$\Sigma_{x|z}$};
+        \draw (16.2,-1) node {$\hat{x} \rightharpoonup x|z\sim N(\mu_{x|z}, \Sigma_{x|z})$};
+        \draw [black] (5.75,-24.13) -- (13.65,-19.27);
+        \fill [black] (13.65,-19.27) -- (12.7,-19.27) -- (13.23,-20.12);
+        \draw [black] (26.08,-24.07) -- (18.72,-19.33);
+        \fill [black] (18.72,-19.33) -- (19.12,-20.18) -- (19.66,-19.34);
+        \draw [black] (13.55,-31.19) -- (5.85,-27.11);
+        \fill [black] (5.85,-27.11) -- (6.32,-27.92) -- (6.79,-27.04);
+        \draw [black] (18.82,-31.14) -- (25.98,-27.16);
+        \fill [black] (25.98,-27.16) -- (25.04,-27.11) -- (25.52,-27.98);
+        \draw (32.28,-29.67) node [below] {$q_\phi(z|x)\mbox{  }[\mathrm{Encoder\,\, Net}]$};
+        \draw [black] (13.66,-16.1) -- (5.74,-11.1);
+        \fill [black] (5.74,-11.1) -- (6.15,-11.95) -- (6.68,-11.1);
+        \draw [black] (18.7,-16.05) -- (26.1,-11.15);
+        \fill [black] (26.1,-11.15) -- (25.15,-11.18) -- (25.71,-12.01);
+        \draw [black] (5.71,-7.86) -- (13.69,-2.64);
+        \fill [black] (13.69,-2.64) -- (12.75,-2.66) -- (13.29,-3.5);
+        \draw [black] (26.13,-7.8) -- (18.67,-2.7);
+        \fill [black] (18.67,-2.7) -- (19.05,-3.56) -- (19.62,-2.74);
+        \draw (32.26,-4.75) node [above] {$p_\theta(x|z)\mbox{  }[\mathrm{Decoder\,\, Net}]]$};
+        \end{tikzpicture}
+    \end{center}
+    \caption{\label{vae}Variational Autoencoder Architecture}
+\end{figure}
 
+\subsection{Variational Auto Encoders (VAEs)}
+\subsubsection{Autoencoders: Definition and Problems}
+An autoencoder takes an input $x$, and encodes it into a code vector $z$\footnote{Notice that for autoencoders to actually ``encode'' the inputs, we necessarily have to choose the dimension of $z$ so that it forms a bottleneck. If we allow $z$ to have the same (or even larger) dimensionally with/than $x$ and $\hat x$, then likely the model will learn two identity mappings!}, after which the code vector $z$ is decoded into $\hat{x}$ that is ``similar'' to $x$, our original data. Essentially, what we want to learn is two mappings, namely the encoder $g(x) \rightarrow z$ and the decoder $f(z) \rightarrow \hat{x}$. In general, $g$ and $f$ could be arbitrarily complex, and thus we model them neural nets. The optimization goal of such problem is to minimize the reconstruction error, i.e. 
+\begin{align}
+    \mathcal J = \texttt{reconstruction\_error} (x, \hat{x})\label{autoencoder_cost}
+\end{align}
+\paragraph{Unsupervised Nature of Autoencoders} Notice that here the cost defined in equation \ref{autoencoder_cost} doesn't rely on \textit{any} explicit label input. Rather, it is a form of unsupervised learning, where the learning goal is to learn the mappings to reconstruct the inputs, i.e. $\tilde x = f\circ g(x) \approxeq x$.
 
+\subsubsection{Problems with Deterministic Autoencoders \label{deterministic_problems}} 
+\paragraph{Proximity in data space doesn't mean proximity in feature space}
+The codes that we learn by the model is deterministic, i.e.
+\begin{align}
+    \begin{array}{l}
+    g\left(x_{1}\right)=z_{1} \Rightarrow f\left(z_{1}\right)=\tilde{x}_{1} \\
+    g\left(x_{2}\right)=z_{2} \Rightarrow f\left(z_{2}\right)=\tilde{x}_{2}
+    \end{array}
+\end{align}
+but proximity in feature space is not enforced for inputs in close proximity in data space, i.e.
+\begin{align}
+    z_{1} \approx z_{2} \not \implies x_{1} \approx x_{2}
+\end{align}
+If the space has regions where no data gets encoded to, and you sample/generate a variation from there, the decoder will generate an unrealistic output, because the decoder has no idea how to deal with that region of the latent space. During training, it never saw encoded vectors coming from that region of latent space
+\paragraph{Adding Noise By Hand is Hard} We said that we wish to embed $x$'s into a lower dimension space, and code it as $z$. However, in practice it is very hard to determine what the low dimension $z$ should be. Similar to this, 
+\begin{enumerate}
+    \item We can add noise to data before encoding, after which we try to reconstruct the original data. But how much noise?
+    \item We can add noise to the latent variable, code, $z$ after encoding, after which we try to reconstruct the original data. Again, how much noise should we add?
+\end{enumerate}
 
+\subsubsection{Variational Auto Encoders}
+In an hope to address the problems above, we introduce stochasticity into out model: even for the same input, while the mean and standard deviations remain the same, the actual encoding will somewhat vary on every single pass simply due to sampling. Figure \ref{vae} illustrates the architecture of a variational autoencoder. 
 
+\paragraph{VAE Solves Problems in Section \ref{deterministic_problems}, WHY?} The VAE generation model learns to reconstruct its inputs not only from the encoded points but also from the area around them. This allows the generation model to generate new data by sampling from an ``area/volume'' instead of only being able to generate already seen data corresponding to the particular fixed encoded points. 
 
+\subsubsection{Utilization of Latent Variable Models} 
+The question is: once we have obtained the model, what do we do with it? 
 
-
-
-
-
+If a latent variable model has a compact prior and vector valued code $z$'s, we can
+\begin{enumerate}
+    \item Sample new data to check the model,
+    \item Encode (sample from the approximate posterior) of two data points, and interpolate between them in the latent space, then decode along the path
+    \item Learn a function to predict some property of the examples from the low-dimensional $z$ space instead of directly rom $x$. (semi-supervised learning, essentially use unsupervised learning to cleanup the data, and to learn a ``better'' representation.)
+\end{enumerate}
 
 
 
