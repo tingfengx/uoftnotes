@@ -1248,7 +1248,7 @@ and
 
 The main problem with this method, however, comes from the accuracy and cost of evaluating at lattice. If we want to sample $D$ uniformly spaced points in one dimension and the system has $N$ dimensions in total. Then, the the complexity is asymptotically $\mathcal{O}(D^N)$ which grows exponentially as dimension grows and soon become intractable. 
 
-\subsection{Sampling Procedure}
+\subsection{Importance Sampling}
 Note: Importance Sampling doesn't help us solve the problem of generating samples from $p(x)$, rather it is a method that helps us estimate expectation of a function $\phi (x)$, i.e. problem 2. 
 \paragraph{Assumptions}
 \begin{enumerate}
@@ -1262,7 +1262,7 @@ Note: Importance Sampling doesn't help us solve the problem of generating sample
         \end{equation}
     where the density $q(x)$ is referred to as the sampler density. 
 \end{enumerate}
-\paragraph{Importance Sampling}
+\paragraph{Sampling Procedure}
 In importance sampling, we generate in total $R$ samples from $q(x)$, i.e. $\left\{x^{(r)}\right\}_{r=1}^{R} \sim q(x)$. If these points were samples from $p(x)$ then we could estimate $\Phi$ by
 \begin{equation}
     \Phi=\underset{x \sim p(x)}{\mathbb{E}}[\phi(x)] \approx \frac{1}{R} \sum_{r=1}^{R} \phi\left(x^{(r)}\right)=\hat{\Phi}
