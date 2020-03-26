@@ -13,9 +13,8 @@
 #### &#x1F4D8; 2020 Winter  
 - [**STA414**](https://tingfengx.github.io/uoftnotes/2020W/STA414/prob_ml.pdf), Statistical Methods for Machine Learning II. 
 - [**CSC413**](https://tingfengx.github.io/uoftnotes/2020W/CSC413/neural_net.pdf), Neural Net and Deep Learning. 
-- **CSC369**
 - [**CSC309**](https://tingfengx.github.io/uoftnotes/2020W/CSC309/web_prog.pdf), Programming on the Web. Notes on technical stuff covered in the course. 
-- [**ENV200**](https://tingfengx.github.io/uoftnotes/2020W/ENV200/env_sci.pdf), Science and Environment. Consisting of notes from the book and lecture slides. 
+- [**ENV200**](https://tingfengx.github.io/uoftnotes/2020W/ENV200/env_sci.pdf), Science and Environment. Consisting of notes from the book and lecture slides. (**Archived**)
 <!-- - **MAT337** -->
   
 ### **Notes that have already finished typesetting:**  
