@@ -1411,7 +1411,7 @@ This allows us to jointly fit the model parameters and the recognition network, 
     \caption{\label{vae}Variational Autoencoder Architecture}
 \end{figure}
 
-\subsection{Variational Auto Encoders (VAEs)}
+\subsection{Variational Auto Encoders (VAEs)\label{vae lecture}}
 \subsubsection{Autoencoders: Definition and Problems}
 An autoencoder takes an input $x$, and encodes it into a code vector $z$\footnote{Notice that for autoencoders to actually ``encode'' the inputs, we necessarily have to choose the dimension of $z$ so that it forms a bottleneck. If we allow $z$ to have the same (or even larger) dimensionally with/than $x$ and $\hat x$, then likely the model will learn two identity mappings!}, after which the code vector $z$ is decoded into $\hat{x}$ that is ``similar'' to $x$, our original data. Essentially, what we want to learn is two mappings, namely the encoder $g(x) \rightarrow z$ and the decoder $f(z) \rightarrow \hat{x}$. In general, $g$ and $f$ could be arbitrarily complex, and thus we model them neural nets. The optimization goal of such problem is to minimize the reconstruction error, i.e. 
 \begin{align}
@@ -1430,7 +1430,7 @@ The codes that we learn by the model is deterministic, i.e.
 \end{align}
 but proximity in feature space is not enforced for inputs in close proximity in data space, i.e.
 \begin{align}
-    z_{1} \approx z_{2} \not \implies x_{1} \approx x_{2}
+    z_{1} \approx z_{2} \not\implies x_{1} \approx x_{2}
 \end{align}
 If the space has regions where no data gets encoded to, and you sample/generate a variation from there, the decoder will generate an unrealistic output, because the decoder has no idea how to deal with that region of the latent space. During training, it never saw encoded vectors coming from that region of latent space
 \paragraph{Adding Noise By Hand is Hard} We said that we wish to embed $x$'s into a lower dimension space, and code it as $z$. However, in practice it is very hard to determine what the low dimension $z$ should be. Similar to this, 
@@ -1454,9 +1454,142 @@ If a latent variable model has a compact prior and vector valued code $z$'s, we 
     \item Learn a function to predict some property of the examples from the low-dimensional $z$ space instead of directly rom $x$. (semi-supervised learning, essentially use unsupervised learning to cleanup the data, and to learn a ``better'' representation.)
 \end{enumerate}
 
+\section{Lecture 10 - Normalizing Flows}
+Normalizing Flows, just like VAEs (Section \ref{vae lecture}) and GANs (Section \ref{gan lecture}), is a generative modelling method. 
+
+\paragraph{Definition} A normalizing flow is a learnt transformation from a simple distribution (base\footnote{Although we call this simple distribution a base distribution, we should really think of it as a gaussian. (Aside: this is where the name of ``normalizing'' comes from.)}) to a complex distribution (target). The goal is to make the complex distribution look like our data. The learnt transformation is a composition of a sequence of mappings that are
+\begin{itemize}
+    \item invertible, and
+    \item differentiable
+\end{itemize}
+Let's now discuss this idea more formally and explain why we would need the mappings to be invertible and differentiable. 
+
+\paragraph{More Formal Objective} Suppose that you have a random variable $\real^D \ni Z \sim p_Z$ at hand. The distribution $p_Z$ is called a \textit{\textbf{base distribution}}, which has to satisfy the following
+\begin{itemize}
+    \item known,
+    \item tractable to sample, and
+    \item tractable to evaluate density $p_Z(\cdot )$
+\end{itemize}
+A typical candidate for the base distribution would be a simple gaussian. The \textit{\textbf{target distribution}} $\real^D \ni X \sim p_X$ is a complex distribution transformed from $p_Z$ in a tractable way. 
 
 
+\subsection{The Transformation - Generative and Normalizing Directions}
+\paragraph{Generative Direction} is the direction where we compute $X = f(Z)$, where f is (1) invertible and (2) differentiable with Jacobian
+\begin{equation}
+    \partial f(\overbar Z) = \left. \frac{\mathrm d f}{\mathrm d Z} \right|_{Z = \overbar Z}
+\end{equation} 
+\paragraph{Normalizing Direction}
+is the reverse of the above operation, i.e. 
+\begin{equation}
+    Z = g(X) = f^{-1}(X)
+\end{equation}
+where $g$ is (1) trivially invertible\footnote{since it is defined as inverse of $f$} and (2) differentiable with Jacobian
+\begin{equation}
+    \partial g(\overbar X) = \left. \frac{\mathrm d g}{\mathrm d X} \right| _{X = \overbar X}
+\end{equation}
 
+\subsection{Arbitrary Expressiveness\label{expressiveness in normalizing flows}}
+It has been shown that if $f$, the generative direction mapping, is arbitrarily expressive, then $p_Z$ can be transformed into \textit{\textbf{any}} $p_X$.
 
+\subsection{Generative Goals} 
+\begin{itemize}
+    \item \textbf{\textit{Sampling/Generating:}} should be easy to do, since $Z \sim p_Z$ is by design easy to sample from, and from there we can compute the tractable transformation $X = f(Z)$. 
+    \item \textit{\textbf{Evaluating Density:}} suppose that we have $X \sim p_{data}$ and then we know $Z = g(X)$. Our goal is to find evaluations of $p_X(\cdot)$. The na\"ive pitfall is summarized below. In general, we have 
+    \begin{equation}
+        p_X(X) = p_Z(g(X)) \left| \partial g(X)\right| \label{change of variables rv}
+    \end{equation}
+    and this is called the \textit{\textbf{change of variables formula for R.V.s}}
+\end{itemize}
 
+\paragraph{Pitfall in Evaluating Density in Generative Goals} The pitfall is that we might na\"ively think 
+\begin{equation}
+    P_X(X) \overset{?}{=} p_Z(g(X))
+\end{equation}
+Suppose that $Z \sim \mathrm{Unif} [0, 1]$, and $X = f(Z) = 2Z$. Then, $X \sim \mathrm{Unif} [0, 2]$. If we follow the na\"ive idea above, we will get
+\begin{align}
+    p_X(X = 2) \overset{?}{=} p_Z(2Z = 2) = p_Z(Z = 1) = 1
+\end{align}
+but this must not be the case! Since $X \sim \mathrm{Unif} [0, 2]$ and thus $p_X(X = 2) = 1/2 \neq 1$. \textit{\textbf{\underline{Why did this happen?}}} This is because the mapping also alters the ``lateral volume'' of the random variable, expanding the original 1 into 2. (It might also help to think that the mapping is communicating two spaces with different densities, Unif[0, 1] is more dense than Unif[0, 2].) To account for this, we must take into consider the change in volume, which is equal to 
+\begin{equation}
+    |\partial f(X)| = \left.\det \frac{\mathrm d f}{\mathrm d X} \right|_{X = 2} = \frac{1}{2}
+\end{equation}
+where the general form of the formula is presented in Equation \ref{change of variables rv}.
+
+\subsection{Learning Flows}
+\subsubsection{Learning Directly and Problems Associated}
+To learn the flows, we use maximum likelihood, i.e.
+\begin{align}
+    \boldsymbol{\theta}^* 
+    &= \arg\min_{\boldsymbol{\theta}} \mathbb E_X \left[ - \log p_X(X|\boldsymbol{\theta} )\right] \\
+    &= \arg\min_{\boldsymbol{\theta}} \mathbb E_X \left[ - \log p_Z(g(X)) - \underbrace{\log \det\left[ \partial g(X) \right]}_{(\dagger)} \right]
+\end{align}
+where we expect the $(\dagger )$ Jacobian determinant term to be tractable. However, in the general case, the determinant of a arbitrary $M_{D \times D}(\real)$ matrix, and hence the Jacobian determinant of interest is order of $\mathcal O(D^3)$, which would be too slow and intractable to be inside a training loop. In Section \ref{expressiveness in normalizing flows}, we saw that if we permit $f$ to be arbitrarily expressive, then $p_Z$ can be transformed into any $p_X$. The challenge lies within the fact that \underline{constructing arbitrary bijections is difficult}, and this is where Normalizing Flows is to the rescue! We can think of it this way: Normalizing Flows $\equiv$ Transformations that have Jacobian determinant tractable such that
+\begin{itemize}
+    \item it is easy to compute $|\partial f(Z)|$, and 
+    \item it is tractable to invert $|\partial f(g(X))|^{-1} = |\partial g(x)|$
+\end{itemize}
+
+\subsubsection{Constructing Tractable Flows - General Idea} 
+To do so, we will use the property that \underline{the composition of flows is itself a flow}. To be more precise, suppose that
+\begin{equation}
+    f = f_N \circ f_{N - 1} \circ \cdots \circ f_1 \circ f_0
+\end{equation}
+has inverse 
+\begin{equation}
+    g = g_0 \circ g_1 \circ \cdots \circ g_{N - 1} \circ g_N
+\end{equation}
+with Jacobian Determinant 
+\begin{equation}
+    |\partial g(X)|=\prod_{i=0}^{n}\left|\partial g_{i}(X)\right|
+\end{equation}
+As a consequence, 
+\begin{equation}
+    \log p_X(X) = \log p_Z(g(X)) + \sum_{i = 1}^N \log \left| \partial g_i(X_i) \right|
+\end{equation}
+where $X_i = g_{i + 1} \circ \cdots \circ g_N(X)$ and in particular $X_N = X$. 
+
+\subsubsection{Element-wise Flow Construction\label{element-wise flow construction}} The first method that we propose is element-wise operation of $f$. Suppose that we have 
+\begin{equation}
+    X = \begin{bmatrix}
+            x_1 & x_2 & \cdots x_D
+        \end{bmatrix}^\top \in \real^D
+\end{equation}
+then we construct the mapping as 
+\begin{equation}
+    f(X) = \begin{bmatrix}
+        f_1(x_1) & f_2(x_2) & \cdots & f_D(x_D)
+    \end{bmatrix}^\top
+\end{equation}
+Using such construction, our Jacobian will be diagonal, i.e. 
+\begin{equation}
+    \partial f = \mathrm{diag} \begin{bmatrix}
+        \partial f_1(x_1) & \partial f_2(x_2) & \cdots & \partial f_D(x_D)
+    \end{bmatrix}^\top
+\end{equation}
+and thus the determinant computation is simply
+\begin{equation}
+    \det \partial f = \prod_i \partial f_i(x_i)
+\end{equation}
+which is easy to compute. This method comes with a cost that it can not model any dependence between dimensions of the data, which might be too restrictive considering that we want to model complex data such as image. 
+
+\subsubsection{Affine/Linear Flow Construction}
+This method uses $f$ of the format 
+\begin{equation}
+    f(X) = \mathbf A X + \bb
+\end{equation}
+and the normalizing direction would be 
+\begin{equation}
+    g(Z) = \mathbf A ^{- 1} (Z - \bb)
+\end{equation}
+The Jacobian in this case could be expressed in terms of $\mathbf A$, to be more explicit, we have
+\begin{equation}
+    \partial f = \mathbf A \quad \quad \text{and} \quad \quad \partial g = \mathbf A^{- 1}
+\end{equation}
+and we notice that the determinant computation is still expensive unless we restrict $A$: 
+\begin{itemize}
+    \item \textit{\textbf{Diagonal $\mathbf A$:}} then this is just the element-wise construction we saw in Section \ref{element-wise flow construction},
+    \item \textit{\textbf{Triangular $\mathbf A$:}} then the determinant computation cost is $\mathcal O (D)$ and is much cheaper than the general case. \footnote{In the case that the base distribution is a gaussian of $D$ dimensions, then this construction just describes a multi-variate gaussian distribution with covariance matrix $\mathbf A$.}
+\end{itemize}
+
+\section{Lecture 11 - Generative Adversarial Networks\label{gan lecture}}
 \end{document}
