@@ -12,7 +12,8 @@
 \usepackage[
     colorlinks=true,
     linkcolor=black,
-    urlcolor=Thistle
+    urlcolor=Thistle,
+    citecolor=DarkOrchid
 ]{hyperref}
 \usepackage{fancyhdr}
 \usepackage{datetime}
@@ -119,7 +120,7 @@
 \maketitle
 \doclicenseThis
 
-\section*{Note}
+\section*{Note and Acknowledgement}
 These notes are based Prof. Roger Grosse's lecture notes as well as Prof. Jimmy Ba's lecture slides with varying level of specificity for different chapters and section. The course website is available at \url{https://csc413-2020.github.io/}
 
 \tableofcontents
@@ -341,7 +342,7 @@ where $\alpha$ is the usually learning rate, and $\mu$ is called a damping param
             \bp &= -\alpha \partial_{\boldsymbol{\theta}}\mathcal{J} \\
             \implies \bp_1 &= \mu \bp_0 - \alpha \partial_{\boldsymbol{\theta}} \mathcal{J} = - \alpha \mu \partial_{\boldsymbol{\theta}} \mathcal{J} - \alpha \partial_{\boldsymbol{\theta}} \mathcal{J} \\
             \implies \bp_2 &= - \alpha\mu^2 \partial_{\boldsymbol{\theta}} \mathcal{J} - \alpha\mu \partial_{\boldsymbol{\theta}} \mathcal{J} - \alpha \partial_{\boldsymbol{\theta}} \mathcal{J} \\
-            \implies \bp_k &= -\alpha \left(\sum_{i = 1}^k \mu^i\right) \partial_{\boldsymbol{\theta}} \mathcal{J} \overset{k\rightarrow\infty}{\rightsquigarrow} \frac{-\alpha}{1 - \mu} \partial_{\boldsymbol{\theta}} \mathcal{J}
+            \implies \bp_k &= -\alpha \left(\sum_{i = 0}^k \mu^i\right) \partial_{\boldsymbol{\theta}} \mathcal{J} \overset{k\rightarrow\infty}{\rightsquigarrow} \frac{-\alpha}{1 - \mu} \partial_{\boldsymbol{\theta}} \mathcal{J}
         \end{align}
     Thus, if we want to ``keep'' the optimal velocity of approaching optimal spot, we will need to keep a balance between $\mu$ and $\alpha$. \qed
 \end{itemize}
@@ -361,7 +362,7 @@ this allows the training to make a lot of progress before seeing all the trainin
 \subsubsection{Minibatch SGD}
 The problem with SGD with one single training example at a time is that we can't vectorize operations and thus we can't exploit efficient vectorized operations. As a compromise, we can use mini-batch at each update, typically of size $|\mathcal{M}| = S = 100$. 
 \begin{itemize}
-    \item We call one pass through the \textit{entire dataset} as a \textbf{\textit{epoch}}. 
+    \item We call one pass through the \textit{entire dataset} as an \textbf{\textit{epoch}}. 
     \item Larger mini-batches will have smaller variance, 
         \begin{equation}
             \operatorname{VAR}\left[\frac{1}{S} \sum_{i=1}^{S} \frac{\partial \mathcal{L}^{(i)}}{\partial \theta_{j}}\right]=\frac{1}{S^{2}} \operatorname{VAR}\left[\sum_{i=1}^{S} \frac{\partial \mathcal{L}^{(i)}}{\partial \theta_{j}}\right]=\frac{1}{S} \operatorname{VAR}\left[\frac{\partial \mathcal{L}^{(i)}}{\partial \theta_{j}}\right]
@@ -440,7 +441,7 @@ Usually, we call the matrix/tensor that we convolve the original input with a ``
         \end{equation}
 \end{itemize}
 
-\subsection{Canonical Kernels}\change{Some of these canonical kernels are not working as expected...}
+\subsection{Canonical Kernels}Some of these canonical kernels requires normalization before rendering the result image. The raw processed result may seem too dark/bright.
 \subsubsection{Blurring Kernel}
 \begin{equation}
     \begin{array}{|c|c|c|}
@@ -455,7 +456,7 @@ Usually, we call the matrix/tensor that we convolve the original input with a ``
 \begin{equation}
     \begin{array}{|c|c|c|}
         \hline 0 & {-1} & {0} \\
-        \hline -1 & {5} & {-1} \\
+        \hline -1 & {8} & {-1} \\
         \hline 0 & {-1} & {0} \\
         \hline
     \end{array}
@@ -479,6 +480,13 @@ Usually, we call the matrix/tensor that we convolve the original input with a ``
         \hline 1 & {0} & {-1} \\
         \hline
     \end{array}
+    \quad \quad \text{or} \quad \quad
+    \begin{array}{|c|c|c|}
+        \hline -1 & {0} & {1} \\
+        \hline -2 & {0} & {2} \\
+        \hline -1 & {0} & {1} \\
+        \hline
+    \end{array}
 \end{equation}
 
 \subsection{Convolutional Networks}
@@ -486,7 +494,7 @@ In a Convolutional Neural Net, of course there will be convolution layers, howev
 \subsubsection{Pooling Layer}
 Most commonly, we use the max-pooling operation in the pooling layer, which computes the maximum of the units in a pooling group
 \begin{equation}
-    y_i = \overset{\max}{j \text{in local pooling group}}z_j
+    y_i = \overset{\LARGE{\max}}{\tiny{\text{$j$ in local pooling group}}}~z_j
 \end{equation}
 where $z$ represents the input and $y$ is the output. Typically, we use a $2\times 2$ max pooling unit, which outputs
 \begin{equation}
@@ -514,7 +522,6 @@ After convolution operation, it is common to add a non-linear activation functio
 \end{equation}
 
 \subsubsection{Equivariance and Invariance}
-\todo[inline]{TODO: I have no idea...}
 We want our network's responses to be robust to translations of the input, which could mean the following two things
 \begin{itemize}
     \item Convolution layers are equivariant\footnote{Equivariant means roughly``unchanged in terms of distortion''}: if you translate the inputs, the outputs are translate by the same amount. 
@@ -547,6 +554,8 @@ Below is the number of parameters in a fully connected multilayer perceptron lay
         \hline
     \end{tabular}
 \end{center}
+\subsubsection{Biases in Convolution Layer}
+Essentially, each filter has one scalar bias. Notice that here ``a filter'' is usually a tensor rather than one 2-D kernel. \url{http://cs231n.github.io/convolutional-networks/#convolution-demo} has a nice animated demo on this. 
 
 \subsubsection{Rule of thumb on size}
 \begin{itemize}
@@ -567,8 +576,20 @@ Below is the number of parameters in a fully connected multilayer perceptron lay
     \item \textit{\textbf{\#! Important:}} Learning rate for the fine-tuning stage is often much lower than the learning rate used for training from scratch. \unsure{why?}
 \end{itemize}
 
+\section{Attention and Transformers} 
 
-\newpage
+
+
+
+
+
+
+
+
+
+
+
+\pagebreak
 \bibliographystyle{unsrt}
 \bibliography{ref}
 \end{document}
