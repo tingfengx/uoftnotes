@@ -9,15 +9,15 @@
 ## &#x1F4DA; Notes for some of my courses at University of Toronto  
   
 ### **Notes in progress:**  
-  
-#### &#x1F4D8; 2020 Winter  
-- [**STA414**](https://tingfengx.github.io/uoftnotes/2020W/STA414/prob_ml.pdf), Statistical Methods for Machine Learning II. 
+
+#### &#x1F4D8; 2020 Winter 
 - [**CSC413**](https://tingfengx.github.io/uoftnotes/2020W/CSC413/neural_net.pdf), Neural Net and Deep Learning. 
-- [**CSC309**](https://tingfengx.github.io/uoftnotes/2020W/CSC309/web_prog.pdf), Programming on the Web. Notes on technical stuff covered in the course. 
-- [**ENV200**](https://tingfengx.github.io/uoftnotes/2020W/ENV200/env_sci.pdf), Science and Environment. Consisting of notes from the book and lecture slides. (**Archived**)
-<!-- - **MAT337** -->
+  
   
 ### **Notes that have already finished typesetting:**  
+- [**STA414**](https://tingfengx.github.io/uoftnotes/2020W/STA414/prob_ml.pdf), Statistical Methods for Machine Learning II. 
+- [**CSC309**](https://tingfengx.github.io/uoftnotes/2020W/CSC309/web_prog.pdf), Programming on the Web. Notes on technical stuff covered in the course. 
+- [**ENV200**](https://tingfengx.github.io/uoftnotes/2020W/ENV200/env_sci.pdf), Science and Environment. Consisting of notes from the book and lecture slides. (**Archived**)
 
 #### &#x1f4d7;2019 Fall  
 - [**CSC258**](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. [In plain HTML](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html) 
