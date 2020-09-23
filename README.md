@@ -11,7 +11,7 @@
 ### **Notes in progress:**  
 
 #### &#x1F4D9; 2020 Fall 
-- [**CSC420**]()
+- [**CSC420**](https://tingfengx.github.io/uoftnotes/2020F/CSC420/image_understanding.pdf), Image understanding. 
 - [**CSC458**]()
 - [**ECE568**]()
 - [**CSC324**]()
