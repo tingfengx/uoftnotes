@@ -111,7 +111,7 @@
 \counterwithin{equation}{section}
 \counterwithin{footnote}{section}
 \author{\ccLogo \,\,Tingfeng Xia}
-\title{CSC420 Introduction to Image Understanding}
+\title{\textsc{CS420 Image Understanding}}
 \date{Fall Term, 2020}
 
 \begin{document}
@@ -327,7 +327,7 @@ For a $K \times K$ sized filter / kernel, the process of performing a convolutio
 \subsubsection{Isotropic Gaussian as Separable Filters}
 One famous example of separable filter that we are already familiar with is the Gaussian Filter, assuming isotropic variance. In such case the density breaks down into 
 \begin{align}
-	\text{Gaussian}(x, y; \boldsymbol \mu = \bzero, \Sigma = \operatorname{diag}(\sigma_i) ) 
+	\text{Gaussian}(x, y; \boldsymbol \mu = \bzero, \Sigma = \sigma I) 
 	&= \frac{1}{2 \pi \sigma^{2}} \exp \left\{-\frac{x^{2}+y^{2}}{\sigma^{2}}\right\} \\
 	&= \left[\frac{1}{\sqrt{2 \pi} \sigma} \exp\left\{-\frac{x^{2}}{\sigma^{2}}\right\}\right] \cdot\left[\frac{1}{\sqrt{2 \pi} \sigma} \exp\left\{-\frac{y^{2}}{\sigma^{2}}\right\}\right]
 \end{align}
