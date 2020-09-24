@@ -250,7 +250,7 @@ then,
 	G(i, j)= \langle \mathbf{f}, \mathbf{t}_{i j}\rangle = \norm{\bf}\norm{\bt_{ij}}\cos \theta
 \end{equation}
 which converts two for loops into one inner product. This is much faster to compute as far as codes are concerned. 
-
+\unsure{TODO: above we defined correlation for one pixel as a vector operation, can we define the entire correlation into matrix form}
 %TODO: above we defined correlation for one pixel as a vector operation, can we define the entire correlation into matrix form?
 
 \subsubsection{Normalized Cross-correlation}
@@ -261,7 +261,7 @@ In the task of finding Waldo, we wish to get a score of whether or not a patch o
 where $\theta$ is the angle between vectors $\bf$ and $\bt_{ij}$
 
 \subsection{Boundary Effects}
-Assume we have image size of $m \times n$, and filter size of $k \times k$. Referring to \texttt{cv2.filter2d} in OpenCV and \texttt{filter2(F, I, SHAPE}, we have the following cases: 
+Assume we have image size of $m \times n$, and filter size of $k \times k$. Referring to \texttt{cv2.filter2d} in OpenCV and \texttt{filter2(F, I, SHAPE)}, we have the following cases: 
 \begin{itemize}
 	\item \texttt{shape = `full'} output size is bigger than the image; infinite padding include all reasonable values. Output should have size $(m + 2k - 2) \times ( n + 2k - 2)$
 	\item \texttt{shape = `same'} output size is same as $I$; padding such that output size is equal to input size. 
@@ -269,7 +269,7 @@ Assume we have image size of $m \times n$, and filter size of $k \times k$. Refe
 \end{itemize}
 
 \subsection{Smoothing}
-\subsubsection{Uniform Smooting}
+\subsubsection{Uniform Smoothing}
 \begin{figure}[H]
 	\center\includegraphics[width=0.6\textwidth]{figs/box_filter}
 	\caption{Box Filter}\label{fig:box_filter}
@@ -284,7 +284,7 @@ The box filter depicted in Figure \ref{fig:box_filter} is the exact same filter 
 \end{figure}
 Recall that the gaussian probability distribution is defined as 
 \begin{equation}
-	(2 \pi)^{-\frac{k}{2}} \operatorname{det}(\Sigma)^{-\frac{1}{2}} e^{-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^{\top} \Sigma^{-1}(\mathbf{x}-\boldsymbol{\mu})}
+	\text{Gaussian}(\bx; \boldsymbol{\mu}, \Sigma ) = (2 \pi)^{-\frac{k}{2}} \operatorname{det}(\Sigma)^{-\frac{1}{2}} e^{-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^{\top} \Sigma^{-1}(\mathbf{x}-\boldsymbol{\mu})}
 \end{equation}
 and we can mimic this to develop a filter that has entries mimicking values taken by the gaussian pdf. These filters produce results much nice than averaging in terms of smoothing, as we can see in Figure \ref{fig:filter_comp}.
 
@@ -292,6 +292,119 @@ and we can mimic this to develop a filter that has entries mimicking values take
 
 \subsubsection{Non-isotropic Gaussian Filter}
 In the most general case, gaussian can be non-isotropic, meaning that its variance-covariance matrix \textit{\textbf{is not}} of form $\sigma I$ 
+
+\subsection{Convolution}
+The Convolution operation is defined as
+\begin{equation}
+	G(i, j)=\sum_{u=-k}^{k} \sum_{v=-k}^{k} F(u, v) \cdot I(i-u, j-v)
+	\label{eq:conv}
+\end{equation}
+Notice that this is exactly the same as Correlation defined in Equation \ref{eq:generalfiltering} except that we are flipping the filter in both dimensions (bottom to top, right to left). \note{In the case of Gaussian / box filters, since the filter will be symmetric about both horizontal and vertical axis, $F \ast I = F \otimes I$.}
+
+\subsubsection{Properties of Convolution}
+Convolution is a Linear Operation, meaning that if $f, g$ and $h$ are three convolution operators, and $\lambda \in \real$ then
+\begin{itemize}
+	\item \textit{\textbf{Commutative}}: $f * g=g * f$
+	\item \textit{\textbf{Associative}}: $f *(g * h)=(f * g) * h$
+	\item \textit{\textbf{Distributive}}: $f *(g+h)=f * g+f * h$
+	\item \textit{\textbf{Assoc. with scalar multiplier}}: $\lambda \cdot(f * g)=(\lambda \cdot f) * g$
+\end{itemize}
+
+\subsubsection{Convolution w/ Fourier Transforms}
+The Fourier transform of two convolved images is the inner product of their individual Fourier Transforms, i.e.
+\begin{equation}
+	\mathcal{F}(f * g)= \langle \mathcal{F}(f), \mathcal{F}(g) \rangle
+\end{equation}
+\paragraph{Implications} The computational complexity of Fourier Transform is much lower than that of convolution. Also notice that inner products are fast to compute. \unsure{Confirm and finish this !}
+
+
+\subsection{Separable Filters}
+For a $K \times K$ sized filter / kernel, the process of performing a convolution requires $K^2$ operations per pixel, summing up to a total of $\#\text{pixels} \times K^2$ for an entire image. In many cases, though not all, we can speed this process up by (1) performing a 1-D horizontal convolution followed by (2) a 1D vertical convolution, requiring only $2K$ operations! When we can do this trick, we call the kernel ``separable''. And a filter is separable iff it is the outer product of two vectors (each a 1D filter):
+\begin{equation}
+	\exists?\, \bv, \bh \in \real^K, s.t.\,\, F=\mathbf{v} \mathbf{h}^{\top}	
+\end{equation}
+
+\subsubsection{Isotropic Gaussian as Separable Filters}
+One famous example of separable filter that we are already familiar with is the Gaussian Filter, assuming isotropic variance. In such case the density breaks down into 
+\begin{align}
+	\text{Gaussian}(x, y; \boldsymbol \mu = \bzero, \Sigma = \operatorname{diag}(\sigma_i) ) 
+	&= \frac{1}{2 \pi \sigma^{2}} \exp \left\{-\frac{x^{2}+y^{2}}{\sigma^{2}}\right\} \\
+	&= \left[\frac{1}{\sqrt{2 \pi} \sigma} \exp\left\{-\frac{x^{2}}{\sigma^{2}}\right\}\right] \cdot\left[\frac{1}{\sqrt{2 \pi} \sigma} \exp\left\{-\frac{y^{2}}{\sigma^{2}}\right\}\right]
+\end{align}
+Such factorization of gaussian pdf indicates us that we should have two 1-D filters that are 1-D gaussian each. 
+
+\subsubsection{Moving Average as Separable Filters}
+The na\"ive moving average filter that we encountered earlier is also separable, in which case
+\begin{equation}
+	F = \begin{bmatrix}
+		1 & \hdots & 1 \\
+		\vdots & \ddots & \vdots \\
+		1 & \hdots & 1
+	\end{bmatrix} / K^2 = \begin{bmatrix}
+		1/K & \dots & 1/K
+	\end{bmatrix}^\top  \begin{bmatrix}
+		1/K & \dots & 1/K
+	\end{bmatrix}
+\end{equation}
+
+\subsubsection{Edge Detector Kernel as Separable Filters}
+The edge detector \unsure{Come back: left or right edge detector?}
+\begin{equation}
+	F = \begin{bmatrix}
+		-1 & 0 & 1 \\
+		-2 & 0 & 2 \\
+		-1 & 0 & 1
+	\end{bmatrix} / 8; \quad \bv = \begin{bmatrix}
+		-1 & 0 & 1
+	\end{bmatrix} / 2; \quad F = \bv^\top \bv
+\end{equation}
+
+\subsubsection{Separable-ness of Filters}
+A systematic way of checking if a kernel is separable if by looking at the singular value decomposition of the filter. \textit{\textbf{If only one singular value is non-zero, the it is separable}}
+\begin{equation}
+	F=\mathbf{U} \Sigma \mathbf{V}^{\top}=\sum_{i} \sigma_{i} u_{i} v_{i}^{\top}
+\end{equation}
+with $\Sigma=\operatorname{diag}\left(\sigma_{i}\right)$. Then, we can get the vertical and horizontal filter through
+\begin{equation}
+	F_\text{vertical} \gets \sqrt{\sigma_{1}} \mathbf{u}_{1} \quad\quad F_\text{horizontal} \gets \sqrt{\sigma_{1}} \mathbf{v}_{1}^{\top }
+\end{equation}
+
+
+\section{Edge Detection}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
