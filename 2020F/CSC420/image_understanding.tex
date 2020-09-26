@@ -22,9 +22,11 @@
 \usepackage{caption}
 \usepackage{cancel}
 \usepackage[nottoc]{tocbibind}
-\usepackage[
-    outputdir=.texpadtmp
-]{minted}
+%\usepackage[
+%    outputdir=.texpadtmp
+%]{minted}
+% for windows compatibility
+\usepackage{float}
 
 % ==== License =====
 \usepackage[
@@ -291,7 +293,7 @@ and we can mimic this to develop a filter that has entries mimicking values take
 \paragraph{Specification} The Gaussian Filter $G$ is parametrized by two parameters $\Sigma = \sigma I$ (isotropic) and $\boldsymbol{\mu}$. In application, $\boldsymbol{\mu}$ doesn't matter, we always want to make sure that the peak of the gaussian pdf corresponds to the centre pixel of the filter. The size of the filter depends on our choice of $\Sigma$, e.g. it doesn't make much sense if our kernel includes values more than $2\sigma$'s away. We also need to normalize all the taken values again, to make sure the filter we chose sums up to one!
 
 \subsubsection{Non-isotropic Gaussian Filter}
-In the most general case, gaussian can be non-isotropic, meaning that its variance-covariance matrix \textit{\textbf{is not}} of form $\sigma I$ 
+In the most general case, Gaussian can be non-isotropic, meaning that its variance-covariance matrix \textit{\textbf{is not}} of form $\sigma I$ 
 
 \subsection{Convolution}
 The Convolution operation is defined as
@@ -368,20 +370,63 @@ with $\Sigma=\operatorname{diag}\left(\sigma_{i}\right)$. Then, we can get the v
 \begin{equation}
 	F_\text{vertical} \gets \sqrt{\sigma_{1}} \mathbf{u}_{1} \quad\quad F_\text{horizontal} \gets \sqrt{\sigma_{1}} \mathbf{v}_{1}^{\top }
 \end{equation}
-
+ 
 
 \section{Edge Detection}
+\paragraph{Insights}
+\begin{itemize}
+	\item Edge detection involves mapping image to a set of \textit{\textbf{curves}} or \textit{\textbf{line segments}} or \textit{\textbf{contours}}.
+	\item Such representation is more compact than pixels. Notice that for a coloured (ordinary, not HDR) $m \times n$ image, we will need $m \times n \times 3 \times 8$ bits to store all the information. However, for edges $m \times n$ would suffice. 
+	\item They are particularly useful due to their invariance towards illumination - it thus helps computers see better. Aside: edges are also important for recognition for human. 
+\end{itemize}
 
+\subsection{Origin of Edges}
+\begin{figure}[H]
+\center\includegraphics[width=0.6\textwidth]{figs/edge_types.png}
+\caption{Four origins of edges \label{fig:edge_types}}
+\end{figure}
+Figure \ref{fig:edge_types} illustrates the four types of edges that can occur. 
+\begin{itemize}
+\item \textit{\textbf{Surface Normal Discontinuity}} is where surface normals change direction abruptly. 
+\item \textit{\textbf{Depth Discontinuity}} is caused by depth discrepancy between two objects from the angle of the viewer. For example here in Figure \ref{fig:edge_types}, the background and the bottle causes a depth discontinuity. 
+\item \textit{\textbf{Surface Colour Discontinuity}} is for example the edge of black text T on a white bottle. 
+\item \textit{\textbf{Illumination Discontinuity}} is when there is a shadow causing difference in light. 
+\end{itemize}
 
+\subsection{Characterizing Edges}
+\paragraph{Definition} An edge is a place of rapid change in image intensity function. The means that at places where edges occur, the intensity function should be steep, and the first derivative of the intensity at that position should correspond to extrema. 
 
+\subsection{Derivatives with Convolution}
+Consider an image $f(x, y)$ defined for $x\in \mathbb Z ^{\geq 1, \leq m}, y \in \mathbb Z ^{\geq 1 , \leq n}$, how can we differentiate this digital image given that it is not continuous? The answer is we take the first order forward discrete derivative (finite difference), i.e. 
+\begin{equation}
+\frac{\partial f(x, y)}{\partial x} \approx \frac{f[x+1, y] - f[x, y]}{1}
+\end{equation}
+and
+\begin{equation}
+\frac{\partial f(x, y)}{\partial y} \approx \frac{f[x, y + 1] - f[x, y]}{1}
+\end{equation}
 
+\paragraph{Correlation Filter}
+Clearly we can implement the above as kernels, 
+\begin{equation}
+H_x = \begin{bmatrix}
+	0 & 0 & 0 \\	
+	0 & -1 & 1 \\
+	0 & 0 & 0 \\
+\end{bmatrix} \quad \text{and} \quad H_y = \begin{bmatrix}
+	0 & 1 & 0 \\	
+	0 & -1 & 0 \\
+	0 & 0 & 0 \\
+\end{bmatrix}
+\end{equation}
+then, we have
+\begin{equation}
+\left[ f \otimes H_x \right]_{(i, j)} = \left. \frac{\partial f(x, y)}{\partial x}\right|_{(i, j)} 
+\quad \text{and} \quad 
+\left[ f \otimes H_y \right]_{(i, j)} = \left. \frac{\partial f(x, y)}{\partial y}\right|_{(i, j)} 
+\end{equation}
 
-
-
-
-
-
-
+\subsection{Canonical Finite Difference Filters}
 
 
 
