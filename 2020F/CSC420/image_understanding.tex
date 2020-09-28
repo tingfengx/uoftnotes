@@ -373,14 +373,15 @@ with $\Sigma=\operatorname{diag}\left(\sigma_{i}\right)$. Then, we can get the v
  
 
 \section{Edge Detection}
-\paragraph{Insights}
+\subsection{Characterization of Edges}
+\subsubsection{Insights}
 \begin{itemize}
 	\item Edge detection involves mapping image to a set of \textit{\textbf{curves}} or \textit{\textbf{line segments}} or \textit{\textbf{contours}}.
 	\item Such representation is more compact than pixels. Notice that for a coloured (ordinary, not HDR) $m \times n$ image, we will need $m \times n \times 3 \times 8$ bits to store all the information. However, for edges $m \times n$ would suffice. 
 	\item They are particularly useful due to their invariance towards illumination - it thus helps computers see better. Aside: edges are also important for recognition for human. 
 \end{itemize}
 
-\subsection{Origin of Edges}
+\subsubsection{Origin of Edges}
 \begin{figure}[H]
 \center\includegraphics[width=0.6\textwidth]{figs/edge_types.png}
 \caption{Four origins of edges \label{fig:edge_types}}
@@ -393,10 +394,10 @@ Figure \ref{fig:edge_types} illustrates the four types of edges that can occur.
 \item \textit{\textbf{Illumination Discontinuity}} is when there is a shadow causing difference in light. 
 \end{itemize}
 
-\subsection{Characterizing Edges}
+\subsubsection{Characterizing Edges}
 \paragraph{Definition} An edge is a place of rapid change in image intensity function. The means that at places where edges occur, the intensity function should be steep, and the first derivative of the intensity at that position should correspond to extrema. 
 
-\subsection{Derivatives with Convolution}
+\subsection{Convolution as Derivative - Measure of Rapid Change}
 Consider an image $f(x, y)$ defined for $x\in \mathbb Z ^{\geq 1, \leq m}, y \in \mathbb Z ^{\geq 1 , \leq n}$, how can we differentiate this digital image given that it is not continuous? The answer is we take the first order forward discrete derivative (finite difference), i.e. 
 \begin{equation}
 \frac{\partial f(x, y)}{\partial x} \approx \frac{f[x+1, y] - f[x, y]}{1}
@@ -426,23 +427,154 @@ then, we have
 \left[ f \otimes H_y \right]_{(i, j)} = \left. \frac{\partial f(x, y)}{\partial y}\right|_{(i, j)} 
 \end{equation}
 
-\subsection{Canonical Finite Difference Filters}
+\subsubsection{Canonical Finite Difference Filters}
+\paragraph{The Prewitt Kernel} is more symmetric, and averages each pixel from neighbouring pixels only. Also this filter applies a tiny blurring on the direction that it is not detecting edge. ($M_x$ is blurring for vertical direction. )
+\begin{equation}
+	M_x = 
+	\begin{bmatrix}
+		-1 & 0 & 1 \\
+		-1 & 0 & 1 \\
+		-1 & 0 & 1
+	\end{bmatrix} \quad \text{and} \quad M_y = \begin{bmatrix}
+		1 & 1 & 1 \\
+		0 & 0 & 0 \\
+		-1 & -1 & -1
+	\end{bmatrix}
+\end{equation}
+
+\paragraph{Sobel Filter} is more common. Same as Prewitt, in the direction of that the kernel is not detecting edges, it applies a bit blurring effect. \textit{However, in Sobel, the blurring is a Gaussian blur.}  
+\begin{equation}
+	M_x = 
+	\begin{bmatrix}
+		-1 & 0 & 1 \\
+		-2 & 0 & 2 \\
+		-1 & 0 & 1
+	\end{bmatrix} \quad \text{and} \quad M_y = \begin{bmatrix}
+		1 & 2 & 1 \\
+		0 & 0 & - \\
+		-1 & -2 & -1
+	\end{bmatrix}
+\end{equation}
+
+\paragraph{Roberts Kernel} detects diagonal edges; 
+\begin{equation}
+	M_x = \begin{bmatrix}
+		0 & 1 \\
+		-1 & 0
+	\end{bmatrix} \quad \text{and} \quad M_y = \begin{bmatrix}
+		1 & 0 \\
+		0 & -1
+	\end{bmatrix}
+\end{equation}
+
+\subsection{Image Gradient}
+\subsubsection{Gradient Defined}
+The gradient of an image $f: \real ^2 \rightarrow \real$ is defined, exactly the same as usual, as
+\begin{equation}
+	\nabla f=\left[\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right]
+\end{equation}
+
+\subsubsection{Edge Direction}
+The gradient always points in the direction of most rapid change in intensity. This means that if
+\begin{equation}
+	\nabla f=\left[\frac{\partial f}{\partial x} \neq 0, \rightarrow 0\right]
+\end{equation}
+then that position corresponds to a vertical edge. If 
+\begin{equation}
+	\nabla f = \left[ \rightarrow 0, \frac{\partial f}{\partial y} \neq 0 \right]
+\end{equation}
+when we are at a horizontal edge. At a slanted edge, we will get
+\begin{equation}
+	\nabla f=\left[\frac{\partial f}{\partial x} \neq 0 , \frac{\partial f}{\partial y} \neq 0 \right]
+\end{equation}
+
+\subsubsection{Gradient Direction}
+The gradient direction (i.e. orientation of edge normal) is given by
+\begin{equation}
+	\tan  \theta = \frac{\partial f}{\partial y} / \frac{\partial f}{\partial x} \implies \theta = \arctan \left(\frac{\partial f}{\partial y} / \frac{\partial f}{\partial x}\right)
+\end{equation}
+
+\subsubsection{Edge Strength}
+The edge strength is given by the $L_2$ norm of the gradient vector:  
+\begin{equation}
+	\|\nabla f\|=\sqrt{\left(\frac{\partial f}{\partial x}\right)^{2}+\left(\frac{\partial f}{\partial y}\right)^{2}} 
+\end{equation}
+
+\subsection{Effects of Noise}
+\begin{figure}[H]
+	\center\includegraphics[width=0.6\textwidth]{figs/noisy_input}
+	\caption{\label{fig:noisy_input}Illustration of noisy input problem.}
+\end{figure}
+As shown in Figure \ref{fig:noisy_input}, when we have edges that are not sharp, the image is noisy and thus cause the derivative messy. 
+
+\subsubsection{Overcoming Noisiness \label{sec:overcome_noisiness}}
+The solution to the problem is easy. We simply first smooth the input signal and then look for edges. I.e., for an input image $f$, and noise reduction filter (e.g. Gaussian) $h$, we find extremum in $\frac{\partial }{\partial x}\left( h \ast f \right)$
+
+\subsubsection{Faster Method Through Conv / Corre}
+We know that correlation is associative, i.e. $f *(g * h)=(f * g) * h$. We can use this property to speed up our method of overcoming noisiness mentioned in Section \ref{sec:overcome_noisiness}. Consider an image $I\in \mat{m}{n}$, smoothing filter $G\in \mat{k}{k}$, and $x$-derivative kernel $F \in \mat{k}{k}$. Then, 
+\begin{align}
+	\frac{\partial }{\partial x} (G \ast I) 
+	&= F \ast ( G \ast I )) \\
+	&= (F \ast G) \ast I\label{eq:fast_filter_conv}
+\end{align}
+and since $k \ll m, n$, Equation \ref{eq:fast_filter_conv} i  s much faster to compute. 
+
+\subsubsection{Generalization: Derivative Theorem of Convolution}
+For a image $f$, with filter $h$, we have
+\begin{equation}
+	\frac{\partial}{\partial x}(h * f)=\left(\frac{\partial h}{\partial x}\right) * f=h *\left(\frac{\partial f}{\partial x}\right)
+\end{equation}
+i.e. rather than convolving the image with the filter and then take the derivative, we first get the derivative of the filter and convolve the result with the image. \note{This saves us one operation.}
+
+\subsubsection{Remark: on Gaussian Derivative Filters' Parameter}
+We know that if we apply the derivative of gaussian as a filter to an image, it finds the edges on the smoothened version of the image. However, the detected structures differ depending on the Gaussian's std. deviation chosen. 
+\begin{itemize}
+	\item If we have a large $\sigma$, then the filter detects edges of larger scale
+	\item else if we have a small $\sigma$, we will be detecting finer structures. 
+\end{itemize}
 
 
+\subsection{Canny's Edge Detector}
+\subsubsection{Procedure}
+\begin{enumerate}
+	\item Filter images with derivative of gaussian (horizontal and vertical directions)
+	\item Find magnitude and orientation of gradient
+	\item Non-maximum suppression
+	\item Linking and thresholding (hysteresis)
+	\begin{itemize}
+		\item Define two thresholds: low and high
+		\item Use the high threshold to start edge curves and the low threshold to continue them
+	\end{itemize}
+\end{enumerate}
+
+\paragraph{Parameters}
+There are three parameters (hyper-parameters) that we need to fix for the algorithm, namely scale of Gaussian in step 1, and low / high thresholds in step 4. There are no magical way in tuning them, so it requires quite a lot of experimentation. 
+
+\subsubsection{Non-Maximum Suppression (Thick Edges Problem)}
+\begin{itemize}
+	\item check if pixel is local maximum along gradient direction?
+	\item if yes, take it; otherwise neglect it. 
+\end{itemize}
+i.e. in an image $f$ we take $(i, j)$ if in a local area 
+\begin{equation}
+	\forall (i', j'), I(i, j) > I (i',j')
+\end{equation}
+then keep $\norm{\nabla f} \gets \norm{\nabla f}$ otherwise $\norm{\nabla f} \gets 0$
+
+\subsubsection{Hysteresis Thresholding (Discontinuous Edges Problem)}
+\begin{itemize}
+	\item Filter at high threshold, getting strong edges. Call this result $S$
+	\item Filter at low threshold, getting weak edges, call this result $W$
+	\item Along directions where edges develop in $S$, if there is an edge in $W$ at the same spot, then we adopt it. Continue until a point where norm of gradient is below the low threshold. 
+\end{itemize}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+\subsection{Laplacian of Gaussians: Another Approach to Edge Detection}
+Consider (noisy) image $f$, and a Gaussian filter $h$. We have the laplacian of $h$, as $\frac{\partial^{2}}{\partial x^{2}} h$, and then we calculate 
+\begin{equation}
+	\left(\frac{\partial^{2}}{\partial x^{2}} h\right) \ast f
+\end{equation}
+where zero-crossings in the resulting graph correspond to edges. 
 
 
 
