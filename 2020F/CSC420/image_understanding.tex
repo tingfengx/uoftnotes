@@ -451,7 +451,7 @@ then, we have
 		-1 & 0 & 1
 	\end{bmatrix} \quad \text{and} \quad M_y = \begin{bmatrix}
 		1 & 2 & 1 \\
-		0 & 0 & - \\
+		0 & 0 & 0 \\
 		-1 & -2 & -1
 	\end{bmatrix}
 \end{equation}
@@ -576,12 +576,48 @@ Consider (noisy) image $f$, and a Gaussian filter $h$. We have the laplacian of 
 \end{equation}
 where zero-crossings in the resulting graph correspond to edges. 
 
-
-
-
-
-
-
+\subsection{Auxiliaries} 
+\subsubsection{Connection: Sobel Filter and Gaussian Blur} 
+We already know that 
+\begin{equation}
+	F *(G * I)=(F * G) * I
+\end{equation}
+and suppose 
+\begin{equation}
+	F = \begin{bmatrix}
+		-1 & 0 & 1
+	\end{bmatrix}\quad \text{and} \quad \begin{bmatrix}
+		1 & 2 & 1 \\
+		2 & 4 & 2 \\
+		1 & 2 & 1 
+	\end{bmatrix} / 14
+\end{equation}
+then if we use the convolution sequence on the right, we will get 
+\begin{equation}
+	\left[
+		\begin{array}{ccccc}
+			-1 & -2 & 0 & 2 & 1 \\
+			-2 & -4 & 0 & 4 & 2 \\
+			-1 & -2 & 0 & 2 & 1
+		\end{array}
+	\right] \in \mat{3}{5}
+\end{equation}
+as an intermediate result. But this non-square result is not ``nice''. So more commonly we use 
+\begin{equation}
+	G = 
+	\begin{bmatrix}
+		1 & 2 & 1 
+	\end{bmatrix}^ \top / 4
+\end{equation}
+in which case 
+\begin{equation}
+	F * G = \begin{bmatrix}
+		-1 & 0 & 1 \\
+		-2 & 0 & 2 \\
+		-1 & 0 & 1
+	\end{bmatrix}
+\end{equation}
+and we notice that the result is exact the same as Sobel Filter we mentioned earlier. 
 
 
 
