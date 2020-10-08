@@ -619,6 +619,137 @@ in which case
 \end{equation}
 and we notice that the result is exact the same as Sobel Filter we mentioned earlier. 
 
+\section{Image Pyramids}
+In Linear Filter section, we talked about the technique of using correlation / convolution to aid us find Waldo in a picture. However, that method relies on the filter and the matching portion in the image being the same size. What should we do when we have the template, but just a thumbnail image of the filter? 
+
+\subsection{Image Sub-Sampling}
+The goal is very simple, how do we make a smaller sized image out of an original image? e.g. 1/4 sized, 1/8 sized...
+\subsubsection{Na\"ive Solution} Simply remove some columns and rows based on a predetermined rule, e.g. remove one in every two row / column. In our example, the remaining pixel makes a 1/2 sized image. We can do this again and again, creating an $1 / 2^n$ sized image. 
+\paragraph{Pitfall - Natural Image} This very simple solution creates images that look very crufty (containing very sharp noises). 
+\paragraph{Pitfall - Synthetic Image} In a computer synthesized image where there is a box, with line width of 1px. Now I wish to resize the image by a factor of 2 by taking away every other column and every other row (1st, 3rd, 5th, etc). But then, if any of the column / row of pixel in the image is the same as the ``every other row'' discarded, then we have problem - our box will have missing sides. And this is not a rare event. 
+
+\subsubsection{Aliasing}
+Aliasing could occur when we sample from a source signal, and due to limitations in the sampling rate / density we get a completely different sampled signal output. We say that the sampling rate is not high enough to capture the amount of detail in the original signal. \info{This is commonly seen when we take a photograph for a digital screen and view it on a display with not high-enough resolution. } 
+
+\subsubsection{Nyquist Rate (Nyquist-Shannon Theorem)}
+Poor sampling creates aliasing. To do sampling right, we need to understand the structure of the input signal. The minimum sampling rate is called the Nyquist Rate\footnote{nameed after Sir Harry Nyquist. \url{https://en.wikipedia.org/wiki/Nyquist\%E2\%80\%93Shannon_sampling_theorem}}. Harry states that 
+\begin{itemize}
+	\item One should look at the frequencies of the signal, and
+	\item find the highest frequency via Fourier Transform. 
+	\item To sample properly, you need to sample with at least twice that highest frequency. 
+\end{itemize}
+In short, we need
+\begin{equation}
+	\text{Sampling Freq.} > 2 \times \text{Max Freq. Component of Original Signal}
+\end{equation}
+
+\subsubsection{Gaussian Pre-Filtering}
+We now see that high frequency signals are ``some-what'' the problem in signal sub sampling. In image, this typically correspond to sharp edges. The solution to this problem is to use a Gaussian Filter to help us do a pre-filtering. The blurring helps aggregate, at each resulting pixel positions, information from pixels around, making the image smoother \footnote{I think this can also be explained by Statistical Multiplexing.} 
+
+\paragraph{Theory Behind}
+Recall that Gaussians are exponential, so we can write the pdf $f(x)$ up to a scaler multiplicand difference 
+\begin{equation}
+	f(x) = \exp\{-ax^2\} \propto \frac{1}{\sigma \sqrt {2 \pi }} \exp\left\{\frac{-x^2}{2\sigma^2} \right\}
+\end{equation}
+where $a = 1 / 2\sigma^2$. Then, the Fourier Transformation is
+\begin{align}
+	F(f(x)) 
+	&= \int_{-\infty}^{+\infty} e^{-a x^{2}} e^{-2 \pi i k x} \mathrm d \, x = f(f(x)) (k) \\
+	&= \int_{-\infty}^{+\infty} e^{-ax^2} \left( \cos ( -2\pi i k x ) + i\sin ( -2\pi i kx )\right) \mathrm d \, x \\
+	&= \int_{-\infty}^{+\infty} e^{-ax^2} \cos ( -2\pi i k x ) \mathrm d \, x \\
+	&= \sqrt{\frac{\pi}{a}} \exp \left\{ \frac{-\pi^2 k^2}{a} \right\} 
+\end{align}
+
+\subsubsection{Image Pyramids}
+A sequence of images created with Gaussian blurring and downsampling is called a Gaussian Pyramid. \info{In CV, this is called a \textit{mip map}}We represent a $N \times N$ sized image as a pyramid of $1 \times 1$, $2 \times 2$, ..., $2^k \times 2^k$ images, assuming $N = 2^k$. 
+
+\subsection{Image Up Sampling}
+Now we consider the opposite question: if an image is too small, how can we make it 10 times larger? 
+
+\subsubsection{Na\"ive Solution}
+We can repeat each row and column 10 times and create a ``quasi'' sized up image. 
+\paragraph{Pitfall} We notice that this method of sizing up just made the size of the image larger, but it does so by creating blobs of pixels representing the same pixel. This result is not desirable. 
+
+\subsubsection{1-D Signal Linear Interpolation}
+We can make a linear interpolation between neighbouring discrete points in the input signal to create a better up sampling solution. Suppose input is $F(x)$, and between points $x_1$ and $x_2$, we wish to sample a $x$. Then, 
+\begin{equation}
+	x = \alpha x_1 + (1 - \alpha ) x_2, \alpha \in (0, 1)
+\end{equation}
+and the estimated signal strength (by linear interpolation) is
+\begin{equation}
+	\hat F(x) = \alpha F(x_1) + ( 1 - \alpha ) F (x_2) , \alpha \in (0, 1)
+\end{equation}
+Rewriting and substituting gives us the final formula of 
+\begin{equation}
+	\hat F(x) = \frac{x_{2}-x}{x_{2}-x_{1}} F\left(x_{1}\right)+\frac{x-x_{1}}{x_{2}-x_{1}} F\left(x_{2}\right)
+\end{equation}
+
+\subsubsection{1-D Linear Interpolation Via Convolution}
+Consider 1-D input signal $F$, and we first ``expand'' it (filling gaps between signal points with 0s). We call this expanded version $G'$. Then, to get final result $G$, it suffices to compute
+\begin{equation}
+	G = h \ast G'
+\end{equation}
+
+\begin{figure}[H]
+	\center\includegraphics[width=0.7\textwidth]{figs/up_sample_conv}
+	\caption{Worked example of up sampling with linear interpolation via convolution. $h$ shown is the convolution filter, $G'$ is the expanded input, and $G$ is final result. \label{fig:up_sample_conv}}
+\end{figure}
+
+\paragraph{Example ($d = 3$)} We can work out a $h$ in a simple case of $d = 3$, as shown in Figure \ref{fig:up_sample_conv}. But what about the general case? What should be my reconstruction filter $h$, such that $G = h \ast G'$?
+
+\paragraph{General Case} In general, we can find $h$ using
+\begin{equation}
+	h=\left[0, \frac{1}{d}, \ldots, \frac{d-1}{d}, 1, \frac{d-1}{d}, \ldots, \frac{1}{d}, 0\right]
+\end{equation}
+where $d$ is the up-sampling factor to help determine the reconstruction filter. Notice that the filter is symmetric. 
+
+
+\subsubsection{1-D Non-Linear Interpolations}
+Previously we saw that we can use linear interpolation between points to help us reconstruct signals in up sampling. We can also use nonlinear functions as interpolation, for example
+\begin{itemize}
+	\item \begin{equation}
+		\operatorname{sinc}(x) \equiv \left\{\begin{array}{ll}
+			1 & \text { for } x=0 \\
+			\frac{\sin x}{x} & \text { otherwise }
+		\end{array}\right.
+	\end{equation} produces so called ``ideal'' reconstruction
+	\item $\prod(x)$ produces nearest neighbour interpolation. 
+	\item $\Lambda(x)$ is our familiar linear interpolation
+	\item $\text{Gauss}(x)$ makes gaussian reconstruction
+\end{itemize}
+
+
+\subsubsection{2-D Image Interpolation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
