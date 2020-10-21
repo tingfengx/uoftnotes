@@ -533,7 +533,6 @@ We know that if we apply the derivative of gaussian as a filter to an image, it 
 	\item else if we have a small $\sigma$, we will be detecting finer structures. 
 \end{itemize}
 
-
 \subsection{Canny's Edge Detector}
 \subsubsection{Procedure}
 \begin{enumerate}
@@ -722,8 +721,148 @@ Previously we saw that we can use linear interpolation between points to help us
 \subsubsection{2-D Image Interpolation}
 
 
+\section{Interest (Key) Point Detection}
+\subsection{Review: Taylor Expansion}
+In general, if we have a function $f$ that is $\mathcal C^1$ around a point $a$, than for all $x$ in a neighbour hood of $a$, 
+\begin{equation}
+	f(x) \approx f(a) + f'(a)(x - a)
+\end{equation}
+Let's call $x - a$ as $y$, and since the value is small, lets call $a$ as $\Delta y$. Then,
+\begin{equation}
+	f(y + \Delta y) = f(y) + f'(y)\Delta y
+\end{equation}
+This also works for $\real^2 \rightarrow \real$ functions, and in particular works for images, in which
+\begin{equation}
+	I(x+u,y+v) \approx I(x, y) + u\partial_x I(x, y) + v\partial_y I (x, y)
+\end{equation}
 
+\subsection{The Problem and Goal}
+Given two (or more) images of the same subject or very similar subjects, identify (at least some points in both images).
+\begin{itemize}
+	\item We have to be able to run the detection procedure independently per image,
+	\item we need to generate enough points to increase our chance of detecting matching pts, 
+	\item we should not generate too many key pts, or otherwise the algorithm will be really slow in checking matching pairs. 
+\end{itemize}
+ 
+\subsubsection{Na\"ive Point Choosing Criteria}
+We want to detect points that represent ``corners'' of objects in the image. This makes these patches more unique. If all the edges of corners are $x$ and $y$ axis aligned, then we can just choose points where both $x$ and $y$ directional partial derivatives are large. But this clearly is not a general solution. 
 
+\subsection{Harris Corner Detector}
+\subsubsection{Second Moment Matrix / Structure Tensor}
+Define the weighted sum (called weighted sum of squares difference)
+\begin{equation}
+	E(u, v) = \sum_x \sum_y w(x, y)\left( I(x, y) - I(x + u, y + v) \right)^2
+\end{equation}
+Here $w(\cdot, \cdot)$ is called a window or weight function, $I(\cdot, \cdot)$ is called the intensity function. Our final goal is to make $E(u, v)$ large for any small $(u, v)$. We can expand $E$,
+\begin{align}
+	E_{wssd}(u, v) 
+	&= \sum_x\sum_y w(x, y) \left( I(x, y) - I(x + u, y + v) \right)^2 \\
+	&\approx \sum_x\sum_y w(x, y) \left( I(x, y) - I(x, y) - u\partial x I(x, y) - v\partial_y I(x,y) \right)^2 \\
+	&= \sum_x \sum_y w(x, y) (u^2 \partial_x I \partial x I + 2uv \partial_xI \partial_yI + v^2 \partial_y I \partial_y I) \\
+	&= \sum_x \sum_y w(x, y) \begin{bmatrix}
+		u & v
+	\end{bmatrix}\begin{bmatrix}
+		(\partial_x I )^2 & \partial_x I \partial_y I \\
+		\partial_x I \partial_y I & (\partial_y I )^2 
+	\end{bmatrix}\begin{bmatrix}
+		u \\ v 
+	\end{bmatrix}
+\end{align}
+since the $u, v$ extraneous variables, we can move them out, 
+\begin{align}
+	E_{wssd}(u, v) = \begin{bmatrix}
+		u & v
+	\end{bmatrix} \underbrace{\left( \sum_x \sum_y w(x, y)\begin{bmatrix}
+		(\partial_x I )^2 & \partial_x I \partial_y I \\
+		\partial_x I \partial_y I & (\partial_y I )^2 
+	\end{bmatrix}\right)}_{M\in\mat{2}{2}}  \begin{bmatrix}
+		u \\ v 
+	\end{bmatrix}
+\end{align} 
+
+\subsubsection{Properties of Structure Tensor}
+For convinience, let $\dagger = \begin{bmatrix}
+		(\partial_x I )^2 & \partial_x I \partial_y I \\
+		\partial_x I \partial_y I & (\partial_y I )^2 
+	\end{bmatrix}$
+\begin{itemize}
+	\item Clearly $W$ is symmetric and real, so it must have all real eigenvalues. 
+	\item $\det \dagger = 0$, so at least one of the eigenvalues of $\dagger$ is zero: $\lambda_1 = 0$ and $\lambda_2 \geq 0$. We say that $\dagger$ is a \textit{\textbf{positive semi-definite matrix}}.
+	\item $\det M = \sum_x\sum_y w(x, y) \det (\dagger )$. The sum of positive semi-definite matrices is also positive semi-definite. Hence the eigenvalues of $M$ are all $\geq 0$. (there are two of them).
+	\item Since it is symmetric and real, according to Spectral Theorem, this matrix is diagonalizable, and the rotation matrices are orthonormal.\footnote{Orthonormal: $V^\top V = VV^\top = I$ and $V^\top = V^{-1}$}We have 
+	\begin{equation}
+		M  = V \begin{bmatrix}
+			\lambda_1 & 0 \\
+			0 & \lambda_2
+		\end{bmatrix} V^{-1} = V \begin{bmatrix}
+			\lambda_1 & 0 \\
+			0 & \lambda_2
+		\end{bmatrix} V^{\top}
+	\end{equation} 
+\end{itemize}
+
+\subsubsection{Weight Sum of Squared Difference Maximization}
+We saw above that we can diagonalize $M$, and if we expand this into $E_{wssd}$, then 
+\begin{equation}
+	E_{wssd}(u, v) = \begin{bmatrix}
+		u & v
+	\end{bmatrix} V \begin{bmatrix}
+		\lambda_1 & 0 \\
+		0 & \lambda_2
+	\end{bmatrix} V^{-1} \begin{bmatrix}
+		u \\ v
+	\end{bmatrix}
+\end{equation}
+and this is big when both the two eigenvalues $\lambda_1$ and $\lambda_2$ are large. 
+
+\subsubsection{Reverse Construction of Corners from WSSD Max Vals. }
+Above we saw the relationship between $E_{wssd}$ and the eigenvalues, now we use this relationship to find out where in the image are the corners. 
+\begin{itemize}
+	\item If both $\lambda$'s are small: Boring areas, not much change
+	\item else if both $\lambda$'s are big: corner!
+	\item else if just one of them is big, then it is an edge. 
+\end{itemize}
+
+\subsubsection{Harris Corner Detector (Harris and Stephens, 88')} \info{This is a heuristic function that is high when both eigenvalues are large, and low when at least one eigenvalue os small. }
+\begin{equation}
+	R = \lambda_{0} \lambda_{1}-\alpha\left(\lambda_{0}+\lambda_{1}\right)^{2}=\operatorname{det}(M)-\alpha \cdot \operatorname{trace}(M)^{2}
+\end{equation}
+where $R$ is rotationally invariant and downweighs edge-like features where $\lambda_1 \gg \lambda_0$. $\alpha$ here is a hyper-parameter that is typically $0.04$ to $0.06$. If we plot R on axis of $\lambda_1$ and $\lambda_2$, then we will see 
+\begin{itemize}
+	\item when $\lambda_1$ and $\lambda_2$ both large, then $R$ will be large
+	\item when they are both small, $R$ will be close to zero
+	\item and when one of them small, the other large, $R$ will be negative. 
+\end{itemize}
+
+\paragraph{Note on Interchanging Notation} Notice that 
+\begin{equation}
+	\det M = \det V \det \begin{bmatrix}
+		\lambda_1 & 0 \\
+		0 & \lambda_2
+	\end{bmatrix} \det V^{-1} 
+\end{equation}
+but since $V$ is orthonormal, and importantly a rotation matrix, it has a determinant of $1$. \footnote{Recall that determinant can be defined as the change of volume of unit square / cube after transformation. Rotating doesn't change the volume of the shape, so determinant is 1. } Hence, $\det M = \lambda_1\lambda_2$. 
+
+\paragraph{Using Non-explicit Values} We can notice that the formula is in terms of det and trace operators, rather than just of the eigenvalues. Although these two forms are same mathematically, they have different compute time. (you don not need to compute eigenvalues!)
+
+\subsubsection{Shi and Tomas, 94'}
+Shi and Tomas, 94' proposed using the smallest eigenvalue of $M$, i.e. $\lambda_0^{-1/2}$
+
+\subsubsection{Trigges, 04'}
+Suggested 
+\begin{equation}
+	\lambda_0 - \alpha \lambda_1
+\end{equation}
+also reduces the response at 1D edges, where aliasing errors sometimes inflate the smaller eigenvalue. 
+
+\subsubsection{Brown et al, 05'}
+Suggested using the harmonic mean
+\begin{equation}
+	\frac{\operatorname{det}(M)}{\operatorname{trace}(M)}=\frac{\lambda_{0} \lambda_{1}}{\lambda_{0}+\lambda_{1}}
+\end{equation}
+
+\section{Motion and Optical Flow}
+Perceiving, understanding and predicting motion is an important. Obviously, in this case the minimum amount of frame that we will need is two. Even the intelligent human brain can be fooled - we have all seen those static picture that seems to be moving. 
 
 
 
