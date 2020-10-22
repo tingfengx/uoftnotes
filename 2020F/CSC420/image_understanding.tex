@@ -993,9 +993,88 @@ is precisely the second moment matrix.
 Optimal motion vector satisfies Lucas-Kanade Equation (Equation \ref{eq:lucas kanade equation}). It takes the form $A^\top A \bd = A^\top \bb$ and then ideally, we can solve $\bd = (A^\top A)^{-1} (A^\top \bb)$. Clearly it is not always ideal, so we summarize the solvability conditions as follows:
 \begin{itemize}
 	\item $A^\top A$ is invertible, i.e $\det (A^\top A) \neq 0$
-	\item $A^\top A$ should not be too small due to noise: eigenvalues $\lambda_1, \lambda_2$ of $A^\top A$ should not be too small
+	\item $A^\top A$ should not be too small due to noise: eigenvalues $\lambda_1, \lambda_2$ of $A^\top A$ should not be too small\footnote{RWe need this to be not close to singular, if it is close to singular, it's determinant will be close to zero, and the inverse will blowup. }
 	\item $A^\top A$ should be well conditioned: $\max \{\lambda_1, \lambda_2\} / \min \{\lambda_1, \lambda_2 \}$ should not be too large. 
 \end{itemize}
+
+\paragraph{Importance of Eigenvectors} The eigenvectors here summarizes the distribution of gradient of the image $I$, within this window of $K \times K $. 
+\begin{itemize}
+	\item Suppose that the two eigenvectors are such that $\lambda_1 \geq \lambda_2$, and they have respective eigenvectors $\be_1$ and $\be_2$. Then we know that $\be_1$ is the direction that is maximally aligned with the gradient of the image in the $K \times K$ window. Let's now further suppose that $\lambda_1 > 0 \wedge \lambda_2 = 0$, then the gradient is always a multiple of $\be_1$, since there is no eigen-compinent from $\be_2$ due to $\lambda_2 = 0$. This is the case if and only if $I$ varies along with the direction $\be_1$ and is constant along $\be_2$. Edges!
+	\item If $\lambda_1 = \lambda_2$, then the gradient in the $K \times K$ window has no prominent direction, which happens when we have rotational symmetry within the window!
+\end{itemize}
+
+\subsubsection{Best Case and Pitfalls}
+\paragraph{Edges Causes Problems}
+In real world images, slanted edges in images make things harder. Only one of the two eigenvalues will be small, and the other one will be large. 
+
+\paragraph{Low Texture Regions Don't Work} When $\partial_x I$ and $\partial_y I$ are small (in terms of magnitude), we cannot easily recover motion. We will have small $\lambda_1$ and $\lambda_2$ in this case. 
+
+\paragraph{High textured region works the best} In this case gradients are different, with large magnitudes, and we have large $\lambda_1$ and $\lambda_2$. 
+
+
+\subsubsection{Errors in Lukas-Kanade}
+What are the potentioal causes of erros in this procesure? 
+\begin{itemize}
+	\item Suppose $A^\top A$ is easily inveritible
+	\item Suppose there is not much noise in the image
+\end{itemize}
+When our assumptions are violated, we can easily catch them through our calculation, 
+\begin{itemize}
+	\item brightness constancy \textit{\textbf{not}} satisfied
+	\item the motion is \textit{\textbf{not}} small
+	\item A point does \textit{\textbf{not}} move like its neighbours: window size is too large, but what is the ideal window size? 
+\end{itemize}
+
+\subsection{Iterative Refinement: Dealing w/ Larger Movements}
+The idea behind is to break down large movements into smaller ones, and we can let our Lucas Kanade solution handle the small movement. The procedure is as follows;
+\begin{enumerate}
+	\item Initialize $(x', y') = (x, y)$
+	\item Compute $(u, v)$ by
+		\begin{multline}
+			\left[\begin{array}{cc}
+				\sum_{\bp '} \partial_x I(\bp) \partial_x I(\bp) & \sum_{\bp '} \partial_x I(\bp) \partial_y I(\bp) \\
+				\sum_{\bp '} \partial_x I(\bp) \partial_y I(\bp) & \sum_{\bp '} \partial_y I(\bp) \partial_y I(\bp)
+				\end{array}\right]\left[\begin{array}{l}
+				u \\
+				v
+				\end{array}\right] \\ =-\left[\begin{array}{c}
+				\sum_{\bp '} \partial_x I(\bp) \partial_t I(\bp) \\
+				\sum_{\bp '} \partial_y I(\bp) \partial_t I(\bp)
+			\end{array}\right]
+		\end{multline}
+		but with $\partial_t I = I(x', y' , t + 1) - I(x, y, t)$, where $(x, y)$ is the original position. 
+	\item Shift the window by $(u, v)$: $x' = x' + u$; $y' = y' + v$
+	\item Recompute $\partial_t I$,
+	\item repeat steps 2 - 4 until small changes.\info{I think this means small motion displacement.} Note: use interpolation for sub-pixel values. 
+\end{enumerate}
+$u(next) = u(current) + u(prev); \, v(next) = v(current) + v(prev)$ and they tends to zero. 
+
+\subsection{Coarse to Fine Optical Flow Estimation}
+How much motion is ``small''? This is hard to answer, but we are sure if it is in terms of just a few pixels (maybe 1) then the motion is small. We can contruct a gaussian image pyramid for each frame, and at a downsampled layer, we perform iterative Lucas Kanade. We then refine, using calculations, the motion detected to the original image. 
+
+\paragraph{A Few Details}
+\begin{itemize}
+	\item Top Level
+	\begin{itemize}
+		\item Apply L-K to get a flow field representing the flow from the frist frame to the second frame, 
+		\item apply this flow field to warp the first frame toward the second frame
+		\item rerun the L-K on the new warped image to get a flow field from it to the second frame. 
+		\item repeat until convergence
+	\end{itemize}
+	\item Next Level
+	\begin{itemize}
+		\item Upsample the flow field to the next level as the first guess of the flow at that level
+		\item apply this flow field to warp the first frame towards the second frame
+		\item rerun L-K and warping till convergence as above
+	\end{itemize}
+	\item etc
+\end{itemize}
+
+
+
+
+
+
 
 
 
