@@ -723,7 +723,7 @@ Previously we saw that we can use linear interpolation between points to help us
 
 \section{Interest (Key) Point Detection}
 \subsection{Review: Taylor Expansion}
-In general, if we have a function $f$ that is $\mathcal C^1$ around a point $a$, than for all $x$ in a neighbour hood of $a$, 
+In general, if we have a function $f$ that is $\mathcal C^1$\footnote{Will need $\mathcal C^\infty$ if we want entire taylor series, but we are just using first order approximation here. } around a point $a$, than for all $x$ in a neighbour hood of $a$, 
 \begin{equation}
 	f(x) \approx f(a) + f'(a)(x - a)
 \end{equation}
@@ -862,28 +862,140 @@ Suggested using the harmonic mean
 \end{equation}
 
 \section{Motion and Optical Flow}
-Perceiving, understanding and predicting motion is an important. Obviously, in this case the minimum amount of frame that we will need is two. Even the intelligent human brain can be fooled - we have all seen those static picture that seems to be moving. 
+Perceiving, understanding and predicting motion is an important. Obviously, in this case the minimum amount of frame that we will need is two. Even the intelligent human brain can be fooled - we have all seen those static picture that seems to be moving. The question we wish explore in this section are
+\begin{itemize}
+	\item Extract visual features\footnote{E.g. Edges, corners, textures, objects are all so called visual features} (corners, textured areas) and ``track'' them over multiple frames
+	\item Recover image motion at each pixel from spatiotemporal image brightness variations. This is called \textit{\textbf{Optical Flow}}.
+\end{itemize}
+ 
+\paragraph{Applications}
+\begin{itemize}
+	\item We may wish to achieve video stabilization (removing shaking), 
+	\item analyzing moving objects in a (series of?) static frame
+\end{itemize}
 
+\paragraph{Feature Tracking}
+Given two subsequent frames, say we want to estimate the point translation. Some assumptions that we make are (as proposed in the original Optical Flow paper; these assumptions are very strong)
+\begin{itemize}
+	\item Brightness constancy: projection of the same point looks the same in every frame, 
+	\item small motion: points fo not move very far,
+	\item spatial coherence: points (in a patch) move like their neighbours
+\end{itemize}
 
+\subsection{Brightness Constancy Constraint}
+Suppose we have video and at time $t$, pixel location $(x, y)$ have brightness level $I(x, y, t)$. Then, if during time $t \rightarrow t + 1$ it had a displacement $(u, v)$, then it must be that
+\begin{equation}
+	I(x, y, t)=I(x+u, y+v, t+1)
+\end{equation}
+We can expand RHS, using Taylor approximation, around $(x, y, t)$, 
+\begin{equation}
+	I(x+u, y+v, t+1) \approx I (x, y, t) + u \partial_x I + v\partial_y I + 1 \partial_t I
+\end{equation}
+then we can reorder
+\begin{equation}
+	I(x+u, y+v, t+1) - I(x, y, t) = \approx u \partial_x I + v\partial_y I + 1 \partial_t I\label{eq:brightness constancy equation taylor expanded}
+\end{equation}
+But since we assumed brightness constancy, the LHS of Equation \ref{eq:brightness constancy equation taylor expanded} must be at least very close to zero. Then,
+\begin{align}
+	& u \partial_x I + v\partial_y I + 1 \partial_t I = 0 \\
+	\implies & \nabla I \cdot \begin{bmatrix}
+		u & v
+	\end{bmatrix} ^\top + \partial_t I = 0  \label{eq:brightness constraint equation}
+\end{align}
+where $\nabla I$ is obtained by treating $t$ as extraneous. We notice that our goal is to solve the image motion vector $\begin{bmatrix}
+	u & v
+\end{bmatrix}^\top$, but we have only one equation for two unknown variables. 
 
+\subsubsection{Pitfall} The component of the motion perpendicular to the gradient (parallel to edge) cannot be measured. If $(u, v)$ satisfies the brightness constraint equation (Equation \ref{eq:brightness constraint equation}), then so does $\left(u+u^{\prime}, v+v^{\prime}\right)$ if $\nabla I \cdot\left[\begin{array}{ll}
+u^{\prime} & 
+v^{\prime}
+\end{array}\right]^\top =0$.\footnote{Since $\nabla I \cdot \begin{bmatrix}
+	u + u' & v + v'
+\end{bmatrix}^\top = \nabla I \cdot \begin{bmatrix}
+	u  & v 
+\end{bmatrix}^\top + \nabla I \cdot \begin{bmatrix}
+	u' & v'
+\end{bmatrix}^\top$ but $\nabla I \cdot \begin{bmatrix}
+	u' & v'
+\end{bmatrix}^\top$ could be potentially zero if the motion $\begin{bmatrix}
+	u' & v'
+\end{bmatrix}$ is along direction perpendicular to gradient. }This tells us that the brightness Constancy Constraint will not help us recover motion along direction perpendicular to image gradient. 
 
+\subsection{Ambiguities}
+\subsubsection{The Aperture Problem}
+The aperture which was used to capture a motion can limit the way we interpret the motion. See a gif from wikipedia: \url{https://en.wikipedia.org/wiki/Motion_perception#The_aperture_problem} which illustrates this phenomenon. In na\"ive words, we cannot recover motion that was not seen. 
 
+\subsubsection{The Barber Pole Illusion}
+The revolving pole at entrance to barbers is really just revolving, but we perceive it as if it was moving upwards. 
 
+\subsection{Spatial Coherent Constraint: Solving Ambiguities}
+The solution lies within how we can get more equations for a pixel. We need help from the Spatial Coherent Constraint. Assume that a pixel's neighbours have the same motion vector $(u, v)$, and if we assume a $5\times 5$ window, that gives us $25$ equations per pixel, then we will have
+\begin{equation}
+	\forall \,\,\text{pixel $\bp$ in the 5 by 5 window}, \nabla I (\bp) \cdot \begin{bmatrix}
+		u & v
+	\end{bmatrix}^\top + \partial_t I (\bp) = 0
+\end{equation}
+Now we can expand the for all quantifier into a matrix operation, 
+\begin{equation}
+	\begin{bmatrix}
+		\partial_x I (\bp_1) & \partial_y I (\bp_1) \\
+		\vdots & \vdots \\
+		\partial_x I (\bp_{25}) & \partial_y I (\bp_{25})
+	\end{bmatrix} \begin{bmatrix}
+		u \\ v
+	\end{bmatrix} + \begin{bmatrix}
+		\partial_t I (\bp_1) \\
+		\vdots \\
+		\partial_t I (\bp_{25})
+	\end{bmatrix} = 0 
+\end{equation}
+and we rearrange it into a standard linear system form ($A \bd = \bb$),\footnote{$A\in \mat{25}{2}, \bd \in \mat{2}{1}, \bb \in \mat{25}{1}$. Here $\bd$ is the motion vector that is unknown and we want to solve for it. }
+\begin{equation}
+	\underbrace{\begin{bmatrix}
+		\partial_x I (\bp_1) & \partial_y I (\bp_1) \\
+		\vdots & \vdots \\
+		\partial_x I (\bp_{25}) & \partial_y I (\bp_{25})
+	\end{bmatrix}}_{\triangleq A} \underbrace{\begin{bmatrix}
+		u \\ v
+	\end{bmatrix}} _{\triangleq \bd} = \underbrace{- \begin{bmatrix}
+		\partial_t I (\bp_1) \\
+		\vdots \\
+		\partial_t I (\bp_{25})
+	\end{bmatrix}}_{\triangleq \bb}
+\end{equation}
+\subsubsection{Lucas-Kanade Equation: Least Squares Solution} Least Squares Solution for the motion vector $\bd$ is given by
+\begin{multline}
+	A^\top A \bd = A^\top\bb \quad\iff \\ \quad \left[\begin{array}{cc}
+		\sum_{\bp '} \partial_x I(\bp) \partial_x I(\bp) & \sum_{\bp '} \partial_x I(\bp) \partial_y I(\bp) \\
+		\sum_{\bp '} \partial_x I(\bp) \partial_y I(\bp) & \sum_{\bp '} \partial_y I(\bp) \partial_y I(\bp)
+		\end{array}\right]\left[\begin{array}{l}
+		u \\
+		v
+		\end{array}\right] =-\left[\begin{array}{c}
+		\sum_{\bp '} \partial_x I(\bp) \partial_t I(\bp) \\
+		\sum_{\bp '} \partial_y I(\bp) \partial_t I(\bp)
+	\end{array}\right]\label{eq:lucas kanade equation}
+\end{multline}
+where the summations are over all pixels in the $K \times K$ window. (In our case, $5\times 5$). Equation \ref{eq:lucas kanade equation} is called the Lucas-Kanade Equation. 
+\subsubsection{Connection: Second Moment Matrix}
+We can notice that 
+\begin{equation}
+	A^\top A = \left[
+		\begin{array}{cc}
+			\sum_{\bp '} \partial_x I(\bp) \partial_x I(\bp) & \sum_{\bp '} \partial_x 	I(\bp) 	\partial_y I(\bp) \\
+			\sum_{\bp '} \partial_x I(\bp) \partial_y I(\bp) & \sum_{\bp '} \partial_y I(\bp) 	\partial_y I(\bp)
+		\end{array}
+	\right]
+\end{equation}
+is precisely the second moment matrix. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\subsubsection{Solvability Condition}
+Optimal motion vector satisfies Lucas-Kanade Equation (Equation \ref{eq:lucas kanade equation}). It takes the form $A^\top A \bd = A^\top \bb$ and then ideally, we can solve $\bd = (A^\top A)^{-1} (A^\top \bb)$. Clearly it is not always ideal, so we summarize the solvability conditions as follows:
+\begin{itemize}
+	\item $A^\top A$ is invertible, i.e $\det (A^\top A) \neq 0$
+	\item $A^\top A$ should not be too small due to noise: eigenvalues $\lambda_1, \lambda_2$ of $A^\top A$ should not be too small
+	\item $A^\top A$ should be well conditioned: $\max \{\lambda_1, \lambda_2\} / \min \{\lambda_1, \lambda_2 \}$ should not be too large. 
+\end{itemize}
 
 
 
