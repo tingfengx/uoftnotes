@@ -1070,6 +1070,149 @@ How much motion is ``small''? This is hard to answer, but we are sure if it is i
 	\item etc
 \end{itemize}
 
+\section{Scale Invariant Interest Point Detection}
+In last section, we talked about corner detection. If we zoom in on an area that was classified as a corner, at some point, it might cease to be a corner and become an edge. Hence, corner location is not scale invariant! 
+
+\paragraph{End Goal} is to be able to match an object in different images where the object appears in different scale, rotation, viewpoints, etc. How?\footnote{How can we independently select interest points in each image, such that the detections are repeatable across different scales?}
+
+\subsection{Characteristics of Good Features}
+\subsubsection{Repeatability}
+Repeatability means that the same feature should be found in several images despite geometric and photometric transformations. 
+\subsubsection{Saliency}
+Saliency means each feature we compute should be distinctive. We don't want each point in image A correspond to many interest points in another image B. If this is the case, it is really hard to find the correct correspondence. 
+\subsubsection{Compactness and Efficiency}
+We want out feature vectors ``represent'' fewer elements than the actual image pixels, and at the same time we want these features to represent something meaningful. 
+\subsubsection{Locality}
+We always want out features to be computed from a local and small area from the image. Hopefully, this helps us handle occlusions. E.g. a car with two wheels with a feature vector representing one of the wheels, and now if half of the car is block by something, the algorithm can still recognize this car model from the wheel it is able to see.   
+
+\subsection{Blob Detection}
+\paragraph{Definition (Blob)} A blob in a image is a patch of pixels that share some common property. e.g. they all have the same grayscale intensity values. 
+
+\subsubsection{The Goal: Blob Filter}
+We wish to have a template of some sort, so that patches of the image could be compared against. We would like to have score that measure the similarity between a patch and template, and only be high when they match, and low otherwise. Scientist have drawn inspirations upon biological vision systems, particularly from a type of cell called centre-surround receptive field.\footnote{with an excitatory centre and an inhibitory surrounding. They have been identified with usages such as edge enhancement, which enables human to perform better in detection and localization, and tracking of small objects.}
+
+\subsubsection{Mexican-hat Shaped Filter 1-D Intuition}
+\begin{figure}
+	\center\includegraphics[width=\textwidth]{figs/mexican_hat_gaussian}
+	\caption{Construction of Mexican Hat Filter from Gaussian (1D Example)\label{fig:mexicanhat}}
+\end{figure}
+By taking second derivative of the Gaussian density, and taking negative we get the Mexican Hat filter (1D). Figure \ref{fig:mexicanhat} illustrates the process. Around the centre of this hat, we will see positive values, e.g. approx. from -1 to 1 in our example. And if we go beyond the threshold, ($> 1 \vee < -1$) the the filter has negative values. This makes this function perfect for the role of blob detector! The 2D case can be easily obtained by revolving the 1D Mexican hat around zero point. 
+
+\subsubsection{Laplacian of Gaussian Filter (2-D Formal)} Suppose $G: \real^2 \rightarrow \real$ specifies a Gaussian density, then 
+\begin{equation}
+	(\operatorname{LoG}(x,y) = \, ) \, L(x, y) \triangleq \Delta G = \partial_{xx} G + \partial_{yy} G
+\end{equation}
+is the laplacian\footnote{Note: Laplacian operator is a second order differential operator in the 2D Euclidian space. It is defined as the divergence of the gradient of the function. In our case, the function is gaussian density. $\Delta \bf = \nabla^2 \bf = \nabla \cdot\nabla \bf $} of Gaussian. Now let's derive this. We start with the 2D gaussian density (assuming isotropic density, i.e. $\Sigma = \sigma I$), which is
+\begin{equation}
+	G(x, y) = \underbrace{\frac{1}{2\pi \sigma^2}}_{c\in \real} \exp \underbrace{\left\{ - \frac{x^2 + y^2 }{2\sigma^2} \right\}}_{f(x,y)} = c e^{f(x,y)}
+\end{equation}
+Then,
+\begin{align}
+	\partial_x G = c \partial_x f e^{f(x,y)} \quad \implies \quad \partial_{xx} G &= c\left( \partial_{xx}f e^{f(x, y)} + \partial_x f\partial_x f e^{f(x,y)} \right) \\
+	&= c \left( - \frac{1}{\sigma^2} e^{f(x,y)} + \frac{x^2}{\sigma^4} e^{f(x,y)} \right) \\
+	&= c \left( \frac{x^2 - \sigma^2}{\sigma^4} \right) e^{f(x, y)}
+\end{align}
+and similarly, 
+\begin{equation}
+	\partial_{yy} G = c\left( \frac{y^2 - \sigma^2}{\sigma^4}\right)e^{f(x, y)} 
+\end{equation}
+then arrive at our final form 
+\begin{align}
+	L(x, y) 
+	&= c \left( \frac{x^2 - \sigma^2}{\sigma^4} \right) e^{f(x, y)} + c\left( \frac{y^2 - \sigma^2}{\sigma^4}\right)e^{f(x, y)} \\
+	&= \frac{1}{\pi \sigma^4} \left( \frac{x^2 + y^2}{2\sigma^2} - 1\right) \exp\left\{ - \frac{(x^2 + y^2)}{2\sigma^2} \right\}
+\end{align}
+The above final result will give us the inverse Mexican Hat ($\real^2 \rightarrow \real$). 
+
+\subsubsection{LoG and Derivative of Gaussian wrt Variance} Recall that 
+\begin{equation}
+	\operatorname{LoG} (x, y)  = \frac{1}{\pi \sigma^4} \left( \frac{x^2 + y^2}{2\sigma^2} - 1\right) \exp\left\{ - \frac{(x^2 + y^2)}{2\sigma^2} \right\}
+\end{equation}
+and 
+\begin{equation}
+	G(x, y)=\underbrace{\frac{1}{2 \pi \sigma^{2}}}_{c \in \mathbb{R}} \exp \underbrace{\left\{-\frac{x^{2}+y^{2}}{2 \sigma^{2}}\right\}}_{f(x, y)}=c e^{f(x, y)}
+\end{equation}
+clearly they look similar to one another. Now we want to find how they are connected mathematically. Staring at the equation, let's start with making them look them by cancelling and constants in front. We have
+\begin{align}
+	\operatorname{LoG}(x,y) 
+	&= G(x,y,\sigma) \frac{2\pi\sigma^2}{\pi\sigma^4} \left( \frac{x^2 + y^2}{2\sigma^2} - 1\right) \\
+	&= G(x, y) \frac{1}{\sigma^{2}}\left(\frac{x^{2}+y^{2}}{\sigma^{2}}-2\right)
+\end{align}
+We can also derive that \note{add derivation to this, homework. }
+\begin{equation}
+	\frac{\partial G}{\partial \sigma}=\frac{1}{\sigma}\left(\frac{\left(x^{2}+y^{2}\right)}{\sigma^{2}}-2\right) G(x, y, \sigma)
+\end{equation}
+but wait! The above two equations look more than ``just similar'', in fact
+\begin{equation}
+	\partial_\sigma G = \sigma\operatorname{LoG}(x, y) = \sigma \Delta G(x, y) \label{eq:derivative of gaussian wrt sigma}
+\end{equation}
+
+\subsubsection{Difference of Gaussians\label{sec:difference of gaussians}}
+By definition, the difference of gaussians is calculated as
+\begin{align}
+	\operatorname{DoG} (x, y, \sigma, k) 
+	&= G(x, y, \sigma) - G (x, y, k\sigma) \\
+	&= \frac{1}{2\pi\sigma^2}\exp\left\{ - \frac{x^2 + y^2}{2\sigma^2} \right\} - \frac{1}{2\pi k^2\sigma^2}\exp\left\{ - \frac{x^2 + y^2}{2k^2\sigma^2} \right\}
+\end{align}
+Then, 
+\begin{align}
+	\frac{-1}{k - 1} \operatorname{DoG} 
+	&= \frac{G(x, y, \sigma) - G(x, y, k\sigma)}{\sigma - k \sigma} \sigma \\
+	&\overset{k \rightarrow 1}{\approx} \frac{\partial G}{\partial \sigma}\cdot \sigma
+\end{align} 
+Recall from Equation \ref{eq:derivative of gaussian wrt sigma}, then we know
+\begin{equation}
+	\operatorname{DoG} \approx (1 - k) \sigma \frac{\partial G}{\partial \sigma} = (1 - k) \sigma^2 \Delta G(x, y). 
+\end{equation}
+
+\subsubsection{Approximating Laplacian of Gaussian w/ Difference of Gaussians}
+To see how the above two sections relate, we will need one example. Suppose we have an image $I(x,y)$, $\sigma(s) = 2^s$, $R(x,y,\sigma) = \left( G(x,y,\sigma) \ast I(x,y) \right)$. Now let's take the derivative of $R$ with respect to the scale parameter $s$ here, 
+\begin{align}
+	\frac{\partial R}{\partial s} 
+	&= \frac{\partial G}{\partial s} \ast I(x,y) \\
+	&= \log 2 \sigma(s) \left( \frac{\partial G}{\partial \sigma} \ast I(x,y)\right) \\
+	&= \log 2 \sigma^2 \Delta G(x,y) \ast I(x,y)
+\end{align}
+Now notice the final result from Section \ref{sec:difference of gaussians} Difference of Gaussians contains a similar filter as what we just derived. Scientist uses difference of gaussians as approximation for laplacian of gaussian filter. 
+
+\paragraph{But Why Isn't LoG Good Enough?} The LoG filter is a non-separable one, and things get especially bad when we need a filter of large size. The laplacian of gaussian filter however, is a lot faster in terms of computation time since it is separable. 
+
+\subsubsection{Applying Laplacian of Gaussian 1-D}
+When we try to use laplacian of gaussian to detect blob, we first convolve the input signal with the LoG with some arbitrary $\sigma$. Then we gradually increase the sigma, and find extremes that are scale invariant in terms of $\sigma$. 
+
+\subsubsection{Characteristic Scale} We define the characteristic scale as the scale that produces peak (min / max) of the Laplacian response. This means that to detect a blob of certain size, we will need a Laplacian of Gaussian of a certain ``scale'' - the characteristic scale!
+
+\subsubsection{Applying Laplacian of Gaussian 2-D}
+\begin{figure}[H]
+	\center\includegraphics[width=0.85\textwidth]{figs/2d_log}
+	\caption{Using Laplacian of Gaussian to find interest points in 2D case (images). Interest points are local maxima in both position and scale. \label{fig:2d_log}}
+\end{figure}
+Applying Laplacian of Gaussian in 2D image case is similar to the 1D case presented earlier, just this time we have an array of output maps (really a tensor). Figure \ref{fig:2d_log} illustrates the input and output. The interest points that we want to find are local maxima in both position and scale, i.e. interest points are consistent along vertical direction in the output tensor. 
+
+\subsubsection{Lowe's Difference of Gaussian}
+First compute a Gaussian image pyramid, and then compute the Difference of Gaussians
+\begin{equation}
+	D(x, y, \rho)=I(x, y) *(G(x, y, k \rho)-G(x, y, \rho))
+\end{equation}
+for $\rho=\left\{\sigma, k \sigma, k^{2} \sigma, \ldots, k^{s-1} \sigma\right\}$ where $k = 2^{1/s}$. The application process is quite similar to the LoG one we discussed above, we will need to compute
+\begin{align}
+	&I_s = I * G_{k^s \sigma} \\
+	&\quad \vdots \\
+	&I_2 = I * G_{k^2\sigma} \\
+	&I_1 = I * G_{k^1\sigma} \\
+	&I_0 = I * G_{k^0\sigma}
+\end{align}
+Then we compute their differences (element-wise). There should be $s$ difference maps, i.e. $I_1 - I_0, I_2 - I_1, ...$. Once we are done with the current scale, we will do it for the next one. (this is why we need the gaussian pyramid in the first place.) Finally, we find local maxima in scale, and do a bit of pruning of bad maxima.\footnote{Look over every $x$ and $y$, what is the highest response in the scale space? We will keep all points with response greater than a certain threshold. } We are done! 
+
+\subsubsection{Other Interest Point Detectors}
+\begin{itemize}
+	\item Lindeberg: Laplacian of Gaussian
+	\item Lowe: DoG (Typically called the SIFT interest point detector)
+	\item Mikolajczyk \& Schmid: Hessian / Harris laplacian / Affine
+	\item Tuyttelaars \& Van Gool: EBR and IBR
+	\item Matas: MSER
+	\item Kadir \& Brady: Salient Regions
+\end{itemize}
 
 
 
