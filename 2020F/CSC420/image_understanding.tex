@@ -25,7 +25,7 @@
 %\usepackage[
 %    outputdir=.texpadtmp
 %]{minted}
-% for windows compatibility
+%for windows compatibility
 \usepackage{float}
 
 % ==== License =====
@@ -1202,7 +1202,7 @@ for $\rho=\left\{\sigma, k \sigma, k^{2} \sigma, \ldots, k^{s-1} \sigma\right\}$
 	&I_1 = I * G_{k^1\sigma} \\
 	&I_0 = I * G_{k^0\sigma}
 \end{align}
-Then we compute their differences (element-wise). There should be $s$ difference maps, i.e. $I_1 - I_0, I_2 - I_1, ...$. Once we are done with the current scale, we will do it for the next one. (this is why we need the gaussian pyramid in the first place.) Finally, we find local maxima in scale, and do a bit of pruning of bad maxima.\footnote{Look over every $x$ and $y$, what is the highest response in the scale space? We will keep all points with response greater than a certain threshold. } We are done! 
+Then we compute their differences (element-wise). There should be $s$ difference maps, i.e. $I_1 - I_0, I_2 - I_1, ...$. Once we are done with the current scale, we will do it for the next one. (this is why we need the gaussian pyram id in the first place.) Finally, we find local maxima in scale, and do a bit of pruning of bad maxima.\footnote{Look over every $x$ and $y$, what is the highest response in the scale space? We will keep all points with response greater than a certain threshold. } We are done! 
 
 \subsubsection{Other Interest Point Detectors}
 \begin{itemize}
@@ -1213,6 +1213,100 @@ Then we compute their differences (element-wise). There should be $s$ difference
 	\item Matas: MSER
 	\item Kadir \& Brady: Salient Regions
 \end{itemize}
+
+
+\section{Scale Invariant Feature Transform (SIFT)}
+%\paragraph{Process of Identifying and Matching Interest Points}
+%\begin{itemize}
+%	\item Detection: Identify the interest points
+%	\item Description: Extract a feature descriptor around each interest point
+%	\item Matching: Determine correspondence between descriptors in two views
+%\end{itemize}
+\subsection{Step 1: Difference of Gaussians as Feature Detector}
+The first step is the same as described in section Lowe's Diffrence of Gaussian. First compute a Gaussian image pyramid, and then compute the Difference of Gaussians
+\begin{equation}
+	D(x, y, \rho)=I(x, y) *(G(x, y, k \rho)-G(x, y, \rho))
+\end{equation}
+for $\rho=\left\{\sigma, k \sigma, k^{2} \sigma, \ldots, k^{s-1} \sigma\right\}$ where $k = 2^{1/s}$. The application process is quite similar to the LoG one we discussed above, we will need to compute
+\begin{align}
+	&I_s = I * G_{k^s \sigma} \\
+	&\quad \vdots \\
+	&I_2 = I * G_{k^2\sigma} \\
+	&I_1 = I * G_{k^1\sigma} \\
+	&I_0 = I * G_{k^0\sigma}
+\end{align}
+Then we compute their differences (element-wise). There should be $s$ difference maps, i.e. $I_1 - I_0, I_2 - I_1, ...$.
+
+\subsection{Step 2: Extracting Feature Points}
+For each key-point, we take the Gaussian-blurred image at corresponding scale $\rho$. Notice that this information needs to be stored as a pair. We will need this in the following steps. 
+
+\subsection{Step 3: Gradient Magnitude and Orientation}
+Compute the gradient magnitude and the orientation in neighbourhood of each keypoint proportional to the detect scale. To achieve so, we first blur the image with gaussian wth respective $\rho$, 
+\begin{equation}
+	I \ast G_\rho
+\end{equation}
+Then, compute, on a $16 \times 16$ neighbour around the key-point, the magnitude of gradients 
+\begin{equation}
+	|\nabla I(x, y)|=\sqrt{\left(\frac{\partial\left(I(x, y) * G_{\rho}\right)}{\partial x}\right)^{2}+\left(\frac{\partial\left(I(x, y) * G_{\rho}\right)}{\partial y}\right)^{2}}
+\end{equation}
+and the gradient orientation
+\begin{equation}
+	\theta(x, y)=\arctan \left(\frac{\partial I * G_{\rho}}{\partial y} / \frac{\partial I * G_{\rho}}{\partial x}\right)
+\end{equation}
+
+\subsection{Step 4: Dominant Orientation Extraction}
+In this step, we wish to weigh gradients closer to the centre of the $16 \times 16$ patch higher. We can achieve so by element-wisely scale the gradient magnitudes according to a gaussian density
+\begin{equation}
+	\nabla I(x, y) \mid \cdot G_{1.5 \rho}(d)
+\end{equation}
+then we compute a histogram of gradient orientations, each bin covers $10\deg$. The orientation giving the peak in the histogram is the key point's orientation. 
+
+\subsection{Step 5: Computing the Feature Vector}
+Compute a 128 dimensional descriptor: $4 \times 4$ grid, each cell is a histogram of 8 orientation bins relative to dominant orientation. Each descriptor has 
+\begin{equation}
+	P_i = (x_i, y_i, \rho_i, \vartheta_i ) \quad\text{and} \quad f_i = ... \in \real^{128}
+\end{equation}
+where $x_i, y_i$ marks the location, $\rho_i$ marks scale, $\vartheta_i$ is the orientation and $f_i$ is the feature vector. This step is a bit abstract and hard to follow, let's dive deeper. Figure \ref{fig:compute feature vector SIFT} illustrates the process. Each $4 \times 4$ component in the original $16 \times 16$ window contributes to the 128 dim\footnote{The original $16 \times 16$ grid is now treated as a $4 \times 4$, since each $4 \times 4$ subunit is now treated as one entity. There is one 8 bin histogram in each $4 \times 4$ grid, and thus we have $4 \times 4 \times 8 = 128$ bin values in total. } vector as one unit, via a 8 bin histogram. 
+\begin{figure}[H]
+	\center\includegraphics[width=0.9\textwidth]{figs/compute_feature_vector_SIFT}
+	\caption{The $4 \times 4$ grid 8 bin vote transformation process. \label{fig:compute feature vector SIFT}}
+\end{figure}
+
+\subsubsection{Achieving Rotation Invariance} Our method as it is now is rotation dependent, i.e. if I rotate the original input image, everything will change. But how can we make it rotation invariant? At this point, we already have the dominant orientation from Step 4, so we just make the 8 bins based on the dominant orientation direction. 
+
+\subsubsection{Achieving Illumination Independence} To achieve this, we just need to use some thresholding. Suppose we have an feature vector \texttt{f1} $\in \real^{128}$, then\footnote{I am using pseudo-code here just to make everything easier... }
+\begin{equation}
+	\texttt{f2[j] = f1[j] > thres ? thres : f1[j], for each j }
+\end{equation}
+Finally, we need to normalize \texttt{f2}, 
+\begin{equation}
+	\texttt{f = (f2 .- mean(f2)) ./ normL2(f2)}
+\end{equation}
+
+\subsection{Properties of SIFT}
+SIFT is invariant to
+\begin{itemize}
+	\item scale, and 
+	\item rotation
+\end{itemize}
+SIFT is partially invariant to 
+\begin{itemize}
+	\item Illumination changes (sometimes even day vs night) 
+	\item Camera viewpoint ( up to about 60 deg of freedom of out of plane rotation.  
+	\item Occlusion, clutter \note{why?}
+\end{itemize}
+Also it is important that SIFT is fast and efficient, can be run in real time! There are also a lot of code available :D. 
+
+
+\subsection{PCA-SIFT} 
+The dimensionality of SIFT is pretty high, we need 128 dimensions for each key point. We can try to reduce he dimensionality using linear dimensionality reduction such as Principle Component Analysis (PCA). We can reduce the dimensionality of each descriptor to 10 or so with PCA. 
+
+
+
+
+
+
+
 
 
 
