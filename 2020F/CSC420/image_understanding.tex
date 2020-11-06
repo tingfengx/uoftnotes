@@ -1302,9 +1302,17 @@ Also it is important that SIFT is fast and efficient, can be run in real time! T
 The dimensionality of SIFT is pretty high, we need 128 dimensions for each key point. We can try to reduce he dimensionality using linear dimensionality reduction such as Principle Component Analysis (PCA). We can reduce the dimensionality of each descriptor to 10 or so with PCA. 
 
 
-
-
-
+\subsection{Matching Local Descriptors}
+So far, we have talked about SIFT, which computes a bunch of local descriptors for interest points. But now we want to match the features between pairs of images. Ideally, a match is a correspondence between a local part of the object on one image to the same local part of the object in another image. The na\"ive approach on this is to brute force compare all possible pairs of interest points detected in two images, and see if we have a match by computing a distance metric such as Euclidean distance. But can we rely solely on this min Euclidean distance criteria as the indicator of a match? There will be cases that several close matches exist, which essentially means that the system is not confident on one choice. To address this, we introduce the ratio
+\begin{equation}
+	\phi_{i}=\frac{\left\|f_{i}-f_{i}^{\prime *}\right\|}{\left\|f_{i}-f_{i}^{\prime **}\right\|} = \frac{{\text {Distance to closest}}}{{\text {Distance to second closest}}}
+\end{equation}
+where $f_i^{\prime \ast}$ is the closest and $f_i^{\prime \ast\ast}$ is the second closest. If $\phi_i$ is small enough, then we have a reliable match. Otherwise if $\phi_i$ is large, then the system is unconfident. Notice that
+\begin{itemize}
+	\item High threshold introduces false positives, i.e. incorrect matches being returned, while
+	\item Low threshold results in false negatives, i.e. too many correct matches being missed. 
+\end{itemize}
+Typically, we pick $\phi_i < 0.8 $
 
 
 
