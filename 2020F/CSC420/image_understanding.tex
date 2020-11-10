@@ -1013,9 +1013,9 @@ In real world images, slanted edges in images make things harder. Only one of th
 
 
 \subsubsection{Errors in Lukas-Kanade}
-What are the potentioal causes of erros in this procesure? 
+What are the potential causes of errors in this procedure? 
 \begin{itemize}
-	\item Suppose $A^\top A$ is easily inveritible
+	\item Suppose $A^\top A$ is easily invertible
 	\item Suppose there is not much noise in the image
 \end{itemize}
 When our assumptions are violated, we can easily catch them through our calculation, 
@@ -1050,7 +1050,7 @@ The idea behind is to break down large movements into smaller ones, and we can l
 $u(next) = u(current) + u(prev); \, v(next) = v(current) + v(prev)$ and they tends to zero. 
 
 \subsection{Coarse to Fine Optical Flow Estimation}
-How much motion is ``small''? This is hard to answer, but we are sure if it is in terms of just a few pixels (maybe 1) then the motion is small. We can contruct a gaussian image pyramid for each frame, and at a downsampled layer, we perform iterative Lucas Kanade. We then refine, using calculations, the motion detected to the original image. 
+How much motion is ``small''? This is hard to answer, but we are sure if it is in terms of just a few pixels (maybe 1) then the motion is small. We can construct a gaussian image pyramid for each frame, and at a downsampled layer, we perform iterative Lucas Kanade. We then refine, using calculations, the motion detected to the original image. 
 
 \paragraph{A Few Details}
 \begin{itemize}
@@ -1086,7 +1086,7 @@ We want out feature vectors ``represent'' fewer elements than the actual image p
 We always want out features to be computed from a local and small area from the image. Hopefully, this helps us handle occlusions. E.g. a car with two wheels with a feature vector representing one of the wheels, and now if half of the car is block by something, the algorithm can still recognize this car model from the wheel it is able to see.   
 
 \subsection{Blob Detection}
-\paragraph{Definition (Blob)} A blob in a image is a patch of pixels that share some common property. e.g. they all have the same grayscale intensity values. 
+\paragraph{Definition (Blob)} A blob in an image is a patch of pixels that share some common property. e.g. they all have the same grayscale intensity values. 
 
 \subsubsection{The Goal: Blob Filter}
 We wish to have a template of some sort, so that patches of the image could be compared against. We would like to have score that measure the similarity between a patch and template, and only be high when they match, and low otherwise. Scientist have drawn inspirations upon biological vision systems, particularly from a type of cell called centre-surround receptive field.\footnote{with an excitatory centre and an inhibitory surrounding. They have been identified with usages such as edge enhancement, which enables human to perform better in detection and localization, and tracking of small objects.}
@@ -1223,7 +1223,7 @@ Then we compute their differences (element-wise). There should be $s$ difference
 %	\item Matching: Determine correspondence between descriptors in two views
 %\end{itemize}
 \subsection{Step 1: Difference of Gaussians as Feature Detector}
-The first step is the same as described in section Lowe's Diffrence of Gaussian. First compute a Gaussian image pyramid, and then compute the Difference of Gaussians
+The first step is the same as described in section Lowe's Difference of Gaussian. First compute a Gaussian image pyramid, and then compute the Difference of Gaussians
 \begin{equation}
 	D(x, y, \rho)=I(x, y) *(G(x, y, k \rho)-G(x, y, \rho))
 \end{equation}
@@ -1314,18 +1314,201 @@ where $f_i^{\prime \ast}$ is the closest and $f_i^{\prime \ast\ast}$ is the seco
 \end{itemize}
 Typically, we pick $\phi_i < 0.8 $
 
+\section{Planar Objects Matching in New Viewpoints}
+\subsection{Review: Linear Transformations}
+Linear transformations / linear maps are combinations of Scale, rotation, shear and mirror. A transformation $T$ maps from one vector space into another one, and $T: V\rightarrow W$ is linear iff $\forall \bu, \bv \in V, k \in \real$
+\begin{itemize}
+	\item $T(\bu + \bv) = T(\bu) + T(\bv) \in W$
+	\item $T(k\bu) = kT(\bu)$
+\end{itemize}
+In our context of image, and in our task of finding the transformation between viewpoint changes of images, we will be dealing with $2\times 2$ images, and the linear map will be achieved via a matrix multiplication 
+\begin{equation}
+	\left[\begin{array}{l}
+		x^{\prime} \\
+		y^{\prime}
+		\end{array}\right]=\left[\begin{array}{ll}
+		a & b \\
+		c & d
+		\end{array}\right]\left[\begin{array}{l}
+		x \\
+		y
+	\end{array}\right]
+\end{equation}
+And there are several canonical transformation matrices (form) that get used often
+\paragraph{Scaling Matrix}
+\begin{equation}
+	\left[\begin{array}{l}
+		x^{\prime} \\
+		y^{\prime}
+		\end{array}\right]=\left[\begin{array}{ll}
+		s_1 & 0 \\
+		0 & s_2
+		\end{array}\right]\left[\begin{array}{l}
+		x \\
+		y
+	\end{array}\right]
+\end{equation}
 
+\paragraph{Rotation Matrix} Counter-clock wise rotation $\theta$ radian of the original vector space. 
+\begin{equation}
+	\left[\begin{array}{l}
+		x^{\prime} \\
+		y^{\prime}
+		\end{array}\right]=\left[\begin{array}{ll}
+		\cos \theta & -\sin\theta \\
+		\sin\theta & \cos\theta
+		\end{array}\right]\left[\begin{array}{l}
+		x \\
+		y
+	\end{array}\right]
+\end{equation}
 
+\paragraph{Sheer Matrix} `distorts' rectangles into parallelograms. 
+\begin{equation}
+	\left[\begin{array}{l}
+		x^{\prime} \\
+		y^{\prime}
+		\end{array}\right]=\left[\begin{array}{ll}
+		1 & \lambda\, | \,0 \\
+		0\, | \,1 & 1
+		\end{array}\right]\left[\begin{array}{l}
+		x \\
+		y
+	\end{array}\right]
+\end{equation}
 
+\paragraph{Mirror Matrix} Let
+\begin{equation}
+	A = \begin{bmatrix}
+		-1 & 0 \\ 0 & -1
+	\end{bmatrix} \quad B = \begin{bmatrix}
+		-1 & 0 \\ 0 & 1 
+	\end{bmatrix} \quad C = \begin{bmatrix}
+		1 & 0 \\
+		0 & -1
+	\end{bmatrix}
+\end{equation}
+then, $A$ mirrors both $x$ and $y$ directions, and $B, C$ mirrors only $x$ or only $y$ respectively. 
 
+\subsubsection{Properties of Linear Transformations}
+\begin{itemize}
+	\item Origin always maps to origin, and 
+	\item lines always map to lines, and 
+	\item parallel lines remain parallel, and 
+	\item ratios are preserved, and 
+	\item closed under composition, meaning that we can collapse a serial of matrix together before applying it. Often, this is computationally more efficient. 
+\end{itemize}
 
+\subsection{Affine Transformations}
+So far, we've discussed linear transformations, which only accounts for transformation not translation. To address, we introduce the affine transformation, which takes the general form of 
+\begin{equation}
+	\left[\begin{array}{l}
+		x^{\prime} \\
+		y^{\prime}
+		\end{array}\right]=\left[\begin{array}{ll}
+		a & b \\
+		c & d
+		\end{array}\right]\left[\begin{array}{l}
+		x \\
+		y
+		\end{array}\right]+\left[\begin{array}{l}
+		e \\
+		f
+	\end{array}\right] = \left[\begin{array}{lll}
+		a & b & e \\
+		c & d & f
+		\end{array}\right]\left[\begin{array}{l}
+		x \\
+		y \\
+		1 
+	\end{array}\right]
+\end{equation}
 
+\subsubsection{Properties of Affine Transformations}
+\begin{itemize}
+	\item {\color{Orange} Origin does not necessarily map to origin. }
+	\item Lines map to lines, and
+	\item parallel lines remain parallel
+	\item ratios are preserved, and 
+	\item closed under composition, and 
+	\item rectangles go parallelograms
+\end{itemize}
 
+\subsubsection{Approximating View Point Changes}
+Affine transformation approximates viewpoint changes for roughly planar objects and roughly orthographic cameras. 
 
+\subsubsection{Computing the Affine Transformation}
+Let $(x_i,y_i)$ be a point on the reference (model) image and $x_i', y_i'$ its match in the test image. An affine transformation $A$ maps $(x_i,y_i)$ to $(x_i',y_i')$:
+\begin{equation}
+	\left[\begin{array}{l}
+		x_{i}^{\prime} \\
+		y_{i}^{\prime}
+		\end{array}\right]=\left[\begin{array}{lll}
+		a & b & e \\
+		c & d & f
+		\end{array}\right]\left[\begin{array}{l}
+		x_{i} \\
+		y_{i} \\
+		1
+	\end{array}\right]
+\end{equation}
+where the matrix with elements $a, b, ..., f$ is a unknown matrix. This system gives us 2 equations, but we have 6 unknowns to solve for. To address, we can rewrite this into a simple linear system. (still 2 equations with 6 unknowns)
+\begin{equation}
+	\begin{bmatrix}
+		x_i & y_i & 0 & 0 & 1 & 0 \\
+		0 & 0 & x_i & y_i & 0 & 1
+	\end{bmatrix} \begin{bmatrix}
+		a \\ b \\ c \\ d \\ e \\ f 
+	\end{bmatrix} = \begin{bmatrix}
+		x_i' \\ y_i'
+	\end{bmatrix}
+\end{equation}
+but the catch is that we have more than one match! and for each match we have two equations. We can stack all the equations up\footnote{Vertically stack the matrices} and make it a bigger system, still with just 6 unknowns. Let's call this stacked system as 
+\begin{equation}
+	P\ba = \bp'
+\end{equation}
+Notice that here it suffices to have three matching points to solve for the affine transformation. If we have three matches, then computing $A$ is really easy:
+\begin{equation}
+	\ba = P^{-1}\bp'
+\end{equation}
+However, the more matching points data we have, the more reliable it will be, and in this case, we do the least squares estimation
+\begin{equation}
+	\underset{a, b, ..., f}{\operatorname{min}} \norm{P\ba - \bp'}_2^2
+\end{equation} 
+which has a closed form solution
+\begin{equation}
+	\ba = (P^\top P) ^{-1} P^\top \bp'
+\end{equation}
+where $(P^\top P) ^{-1} P^\top$ is called Moore-Penrose Pseudo-inverse. 
 
+\subsubsection{RANdom SAmple Consensus (RANSEC)}
+In previous sections, we assumed that there will be good correspondence between points. However, in reality, this might not be true, and we might suffer from outliers. In particular, least square estimation is very sensitive to outliers. RANSAC is here to the rescue. The approach is quite simple, and is as follows:
+\begin{itemize}
+	\item Take the minimal number of points to compute what we want. In a Simple Linear Regression (SLR) line example, two point. And in our affine example of matching two images, three matches. 
+	\item By ``take'' we mean choose at random from all points
+	\item fit a line to the selected pair of points 
+	\item count the number of all points that agree with\footnote{within some $\delta$ neighbourhood of the line} the line: calling them inliers.
+	\item repeat this many times, remember the number of inliers for each trial, and the respective points selected for the generation of that specific line
+	\item among several trials, select the one with the largest number of inliers. 
+\end{itemize}
 
-
-
+\paragraph{How many iterations?}  
+\begin{itemize}
+	\item Suffience number of trials $S$ must be tried
+	\item Let $p$ be the probability that any given correspondence is valid and $P$ be the total probability of success after $S$ trials. 
+	\item The likelihood in one trial that all $k$ random samples are inliers is $p^k$, then
+	\item At least one one the $k$ points is an outlier has probability $(1 - p^k)$,
+	\item All $S$ trials are bad has probability $(1 - p^k)^S$, then
+	\item the probability of a least one is good is
+		\begin{equation}
+			P = 1 - (1 - p^k)^S
+		\end{equation}
+	\item and it is possible to solve 
+		\begin{equation}
+			S = \frac{\log (1 - P)}{\log (1 - p^k)} 
+		\end{equation}
+		where $P \uparrow \implies S\uparrow$, and $p\downarrow \implies S\uparrow$, and $k \uparrow \implies S\uparrow$
+\end{itemize}
 
 
 \end{document}
