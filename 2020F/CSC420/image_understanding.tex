@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
+\usepackage[parfill]{parskip}
 \usepackage[
     pdftex, 
     dvipsnames
@@ -1509,6 +1510,149 @@ In previous sections, we assumed that there will be good correspondence between 
 		\end{equation}
 		where $P \uparrow \implies S\uparrow$, and $p\downarrow \implies S\uparrow$, and $k \uparrow \implies S\uparrow$
 \end{itemize}
+
+%\section{Machine Learning Vision}
+%This section is skipped. 
+
+\section{Camera Models}
+Images are 2D projections of the real world scene, it captures two kinds of information
+\begin{itemize}
+	\item Geometric: positions, points, lines, curves, etc
+	\item Photometric: intensity, color
+\end{itemize}
+There is a complex 2D - 3D relationship between the 2D image captured by an camera and the actual scene which is in 3D. We use the camera model to approximate these relationships. We will discuss how are 3D primitives projected onto the image plane. We can do this using a linear 3D to 2D projection matrix. 
+
+\subsection{Pinhole Camera Model}
+The distance from the camera pinhole to the image plane (which has the upside down, left-side right image projected) is called the focal length, denoted $f$. A virtual image plane is between the camera pinhole and the object in the world. It will be exactly focal length away from the camera centre, and it will have the exact same sized image as the image plane. (except this one is not upside down and left-side right. ) It is easier to consider this plane. Now the goal is to find how the object in the world projects to the (virtual) image plane. 
+
+\subsection{Camera / Image Coordinate System}
+We define the camera pinhole as the origin $\bzero \in \real^3$, it is called the optical centre. We use the right hand rule for specification of axis positive orientations. That is, from the perspective of the camera, towards left means positive in $X$ direction, and upwards means positive in $Y$ direction and further away from the camera (increase in depth of field) corresponds to positive direction in $Z$. 
+
+The $Z$ axis is given the name of \textbf{Optical Axis} or \textbf{Principal Axis}. It is orthogonal to the (virtual) image plane between the object in the world and the camera centre. The camera coordinate axes $X, Y$ are parallel to the image plane. The principal point $\bp$ denotes the point where the principal axis intersects with the image plane. Note that $\norm{\bp}$ is equal to the focal length. 
+
+We denote the image axes with $x$ and $y$. An image we see is of course represented with these axes. We call this an image coordinate system. 
+
+\subsection{Projection}
+Suppose we have a point $Q\in\real^3 = (\bx, \by, \bz)^\top$. (suppose that it $\bz > f$) Then, using similar triangles (actually 3D similar triangles in this case), we know that this $Q$ will appear on the virtual image plane at
+\begin{equation}
+	\left(\frac{f \cdot \bx}{\bz}, \frac{f \cdot \by}{\bz}, f\right)^{\top}
+\end{equation}
+The notion above is relative to the principal point $\bp$, but on a 2D projection the depth information is extraneous, and we can disregard it. We do so by essentially moving the origin to $(0, 0)$ in the image. Let $\bp$ have coordinates $(p_x, p_y)$ on the image plane in terms of the image coordinate system, then the projection is
+\begin{equation}
+	\left(\frac{f \cdot \bx}{\bz}+p_{x}, \frac{f \cdot \by}{\bz}+p_{y}, 0\right)^{\top}
+\end{equation}
+then the depth dimension is no longer useful and we have the actual projection onto the 2D image plane by throwing the last coordinate, i.e. 
+\begin{equation}
+	Q = (\bx, \by, \bz)^\top \rightsquigarrow q = \left(\frac{f \cdot \bx}{\bz}+p_{x}, \frac{f \cdot \by}{\bz}+p_{y}\right)^{\top} \label{eq:perspective projection original}
+\end{equation}
+Notice that this is not a linear transformation, since we have a division of $\bz$ in in the new coordinate. (it is linear in terms of $1/\bz$ but not in terms of $\bz$). The problem now is how I can make this $\rightsquigarrow$ happen, but linearly. 
+
+We will use homogeneous coordinates (aka projective coordinates), which simply append 1 to the vector. For a 2D position $(x, y)$, it becomes $(x, y, 1)$. Similarly for 3D positions, which will turn into a 4D vector. 
+
+\begin{mdframed}
+	\paragraph{Side Note: Homogeneous Coordinates}
+A brief summarization of what homogeneous coordinates are ... borrowed from \url{https://en.wikipedia.org/wiki/Homogeneous_coordinates#Notation}
+\begin{itemize}
+	\item Any point in the projective plane is represented by a triple $(X, Y, Z)$, called the homogeneous coordinates or projective coordinates of the point, where $X, Y$ and $Z$ are not all 0.
+	\item The point represented by a given set of homogeneous coordinates is unchanged if the coordinates are multiplied by a common factor. 
+	\item Conversely, two sets of homogeneous coordinates represent the same point if and only if one is obtained from the other by multiplying all the coordinates by the same non-zero constant.
+	\item When Z is not 0 the point represented is the point (X/Z, Y/Z) in the Euclidean plane.
+	\item When Z is 0 the point represented is a point at infinity.
+	\item Note that the triple (0, 0, 0) is omitted and does not represent any point. The origin is represented by (0, 0, 1).
+\end{itemize}
+\end{mdframed}
+
+In homogeneous coordinates, scaling doesn't affect anything, i.e. $(x, y, 1)$ is congruent with $(wx, wy, w)$ for $w\in\real \neq 0$. This fits the our projection line model, since all points along a projection line map to a single point $\bq$ on the image. We can write what we want in Equation \ref{eq:perspective projection original} homogeneous coordinates, 
+\begin{equation}
+	Q=(\bx, \by, \bz)^{\top} \quad \rightarrow \quad q=\left[\begin{array}{c}
+		\frac{f \cdot \bx}{\bz} + p_{X} \\
+		\frac{f \cdot \by}{\bz} + p_{y} \\
+		1
+		\end{array}\right] \sim\left[\begin{array}{c}
+		f \cdot \bx + \bz \cdot p_{x} \\
+		f \cdot \by + \bz \cdot p_{y} \\
+		\bz
+	\end{array}\right]
+\end{equation}
+and then we can write this as a matrix multiplication
+\begin{equation}
+	Q = \begin{bmatrix}
+		\bx, \by, \bz
+	\end{bmatrix}^\top \rightarrow 
+	\begin{bmatrix}
+		f\bx + \bz p_x \\
+		f\by + \bz p_y \\
+		\bz
+	\end{bmatrix} = \begin{bmatrix}
+		f & 0 & p_x \\
+		0 & f & p_y \\
+		0 & 0 & 1
+	\end{bmatrix} \begin{bmatrix}
+		\bx \\ \by \\ \bz
+	\end{bmatrix}
+\end{equation}
+where we denote 
+\begin{equation}
+	K = \begin{bmatrix}
+		f & 0 & p_x \\
+		0 & f & p_y \\
+		0 & 0 & 1
+	\end{bmatrix}
+\end{equation}
+is called the \textbf{camera calibration matrix} or \textbf{intrinsic parameter matrix}. The parameters in $K$ are called \textbf{internal camera parameters}.
+
+Finally,
+\begin{equation}
+	K \begin{bmatrix}
+		\bx, \by, \bz
+	\end{bmatrix}^\top = \begin{bmatrix}
+		wx \\ wy \\ w
+	\end{bmatrix} \rightarrow q = \begin{bmatrix}
+		x \\y 
+	\end{bmatrix} \implies \begin{cases}
+		x = \frac{f\bx}{\bz} \cdot p_{x} \\
+		y = \frac{f\by}{\bz} \cdot p_{y}
+	\end{cases}
+\end{equation}
+
+\subsection{Camera Calibration Matrix}
+We presented that the Camera Calibration Matrix is denoted as $K$, and has values (this first formulation assumes square pixels)
+\begin{equation}
+	K = \begin{bmatrix}
+		f & 0 & p_x \\
+		0 & f & p_y \\
+		0 & 0 & 1
+	\end{bmatrix}
+\end{equation}
+It can be a little more complicated, as pixels may not be square, (different focal length in $x$ and $y$ direction, denoted by $f_x$ and $f_y$ respectively.) 
+\begin{equation}
+	K = \begin{bmatrix}
+		f_x & 0 & p_x \\
+		0 & f_y & p_y \\
+		0 & 0 & 1
+	\end{bmatrix}
+\end{equation}
+and there might be a skew angle $\theta$ between $x$ and $y$ image axis
+\begin{equation}
+	K = \begin{bmatrix}
+		f_x & -f_x\cot \theta & p_x \\
+		0 & f_y / \sin\theta & p_y \\
+		0 & 0 & 1
+	\end{bmatrix}
+\end{equation}
+
+\subsection{Projection Properties}
+\subsubsection{Many to One Projection}
+
+
+
+
+
+
+
+
+
+
 
 
 \end{document}
