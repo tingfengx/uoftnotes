@@ -1643,8 +1643,125 @@ and there might be a skew angle $\theta$ between $x$ and $y$ image axis
 
 \subsection{Projection Properties}
 \subsubsection{Many to One Projection}
+In the case of many to one projection, any points along same ray map to same point in image. Particularly,
+\begin{itemize}
+	\item Points always map to points, and 
+	\item lines usually, though not always, map to lines. (A line going through the principle point maps to a point instead!) \note{wait shouldn't this be: principle axis maps to a point? } 
+	\item planes usually, though not always, map to planes. (A plane going through principal point projects to line)
+\end{itemize}
 
+\subsubsection{Vanishing Point}
+Parallel lines converge at a vanishing point. Each different direction in the world has its own vanishing point. All lines in the same direction in 3D intersect at the same vanishing point. Notice that this vanishing point is not necessarily inside the virtual image plane, but parallel lines in the world always converge to the same vanishing point. 
 
+A line that passes through $V$ with direction $D$ can be written as
+\begin{equation}
+	X = V + tD\quad t \in\real
+\end{equation}
+Then if we project it, we have
+\begin{equation}
+	\left[\begin{array}{c}
+			w x \\
+			w y \\
+			w
+		\end{array}\right]=K X=\left[\begin{array}{ccc}
+			f & 0 & p_{x} \\
+			0 & f & p_{y} \\
+			0 & 0 & 1
+		\end{array}\right]\left[\begin{array}{c}
+			V_{x}+t D_{x} \\
+			V_{y}+t D_{y} \\
+			V_{z}+t D_{z}
+		\end{array}\right]=\left[\begin{array}{c}
+			f V_{x}+f t D_{x}+p_{x} V_{z}+t p_{x} D_{z} \\
+			f V_{y}+f t D_{y}+p_{y} V_{z}+t p_{y} D_{z} \\
+			V_{z}+t D_{z}
+	\end{array}\right]
+\end{equation}
+then we move infinitely far from the camera by taking $t \rightarrow \infty$ and compute $x, y$\footnote{when $t \rightarrow \infty$, $fV_x, p_xV_z, V_z$ are all constants, and thus are small numbers. They don't matter. Same for the $y$ ones. }
+\begin{equation}
+	x=\lim _{t \rightarrow \infty} \frac{f V_{x}+f t D_{x}+p_{x} V_{z}+t p_{x} D_{z}}{V_{z}+t D_{z}}=\frac{f D_{x}+p_{x} D_{z}}{D_{z}}
+\end{equation}
+\begin{equation}
+	y=\lim _{t \rightarrow \infty} \frac{f V_{y}+f t D_{y}+p_{y} V_{z}+t p_{y} D_{z}}{V_{z}+t D_{z}}=\frac{f D_{y}+p_{y} D_{z}}{D_{z}}
+\end{equation}
+Importantly, this solution is independent of $V$, meaning that all lines with direction $D$ go to this point. 
+
+\paragraph{*} Vanishing point can also be computed in another way. If we translate line with direction $D$ to the camera centre, the the intersection of the line with the virtual image plane is the vanishing point corresponding to direction $D$!
+
+We must also remember that vanishing points might not exist. In cases where lines parallel to image plane are also parallel in the image, they intersect at infinity! Also, for lines in the same 3D plane, the vanishing points lie on a line. We all it a vanishing line. The vanishing line for the ground plane is a horizon line. 
+
+\subsection{Camera Extrinsics}
+The world is not described in camera coordinates, it is described by yet another system which is $(X_{world}, Y_{world}, Z_{world})$. The camera is placed at location $c$. Suppose our point of interest is $Q$, then clearly $Q - c$ makes the position relative to the camera. But the problem is what is $Q$ in camera's coordinate system? 
+
+Suppose $u, v, w$ are three orthogonal directions of camera in room coordinate system. (much like a basis for movements of the camera.) Our goal is to have a rotation matrix $R$, that can take us from the world coordinate to the camera coordinate. Clearly the $R$ is such that $R \begin{bmatrix}
+	u & v & w
+\end{bmatrix} = I$ and $R R^\top = I$. 
+Let 
+\begin{equation}
+	R = \begin{bmatrix}
+		u^\top & v^\top & w^\top
+	\end{bmatrix} \in\mat{3}{3}
+\end{equation}
+Then, $\begin{bmatrix}
+	X' & Y' & Z'
+\end{bmatrix}^\top$ in camera coordinates is
+\begin{equation}
+	\begin{bmatrix}
+		X' \\ Y' \\ Z'
+	\end{bmatrix} = R \left( \begin{bmatrix}
+		X \\ Y \\ Z
+	\end{bmatrix} - c \right) = \begin{bmatrix}
+		R & -Rc
+	\end{bmatrix}\begin{bmatrix}
+		X \\ Y \\ Z \\ 1
+	\end{bmatrix}
+\end{equation}
+where $\begin{bmatrix}
+		X & Y & Z & 1
+	\end{bmatrix}$ is in room / world coordinates. 
+
+\subsection{Projection Equations}
+The projection matrix $P$ models the culmulativeeffect of all intrinsic and extrinsic parameters. We use homogenous coordinates for 2D and 3D:
+\begin{equation}
+	q = \begin{bmatrix}
+		ax \\ ay \\ a
+	\end{bmatrix} = P \begin{bmatrix}
+		X \\ Y \\ Z \\ 1
+	\end{bmatrix}
+\end{equation}
+It can be computed as
+\begin{equation}
+\mathrm{P}=\underbrace{\left[\begin{array}{ccc}
+		f & 0 & p_{x} \\
+		0 & f & p_{y} \\
+		0 & 0 & 1
+	\end{array}\right]}_{\text {intrinsics } K} \underbrace{\left[\begin{array}{cccc}
+		1 & 0 & 0 & 0 \\
+		0 & 1 & 0 & 0 \\
+		0 & 0 & 1 & 0
+	\end{array}\right]}_{\text {projection }} \underbrace{\underbrace{\left[\begin{array}{cc}
+	\mathrm{R}_{3 \times 3} & 0_{3 \times 1} \\
+	0_{1 \times 3} & 1
+	\end{array}\right]}_{\text {rotation }} \underbrace{\left[\begin{array}{cc}
+	\mathrm{I}_{3 \times 3} & \mathrm{~T}_{3 \times 1} \\
+		0_{1 \times 3} & 1
+	\end{array}\right]}_{\text {translation }}}_{\begin{bmatrix}
+		R  &  -c
+	\end{bmatrix}}
+\end{equation}
+To get a point $q$ in the image plane, I need to compute
+\begin{equation}
+	P(X, Y, Z, 1)^\top
+\end{equation}
+where $P\in\mat{3}{4}$. This gives me a 3 by 1 vector. Now I divide all coordinates with the third coordinate (making the third coordinate equal to 1), and then drop the last coordinate. 
+
+The projection matrix can be compactly written as 
+\begin{equation}
+	P = K \begin{bmatrix}
+		R & -c
+	\end{bmatrix}
+\end{equation}
+The (brutal) truth is in most cases you don't have $P$ at all, so you can't really compute any projections. When you have a calibrated camera, then someone typically gives you $P$. And then projection is easy. 
 
 
 
