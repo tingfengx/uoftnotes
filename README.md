@@ -11,30 +11,30 @@
 ### **Notes in progress:**  
 
 #### &#x1F4D9; 2020 Fall 
-- [**CSC420**](https://tingfengx.github.io/uoftnotes/2020F/CSC420/image_understanding.pdf), Image understanding. 
+- [**CSC420**](https://tingfengx.github.io/uoftnotes/2020F/CSC420/image_understanding.pdf). Introduction to basic concepts in computer vision. Extraction of image features at multiple scales. Robust estimation of model parameters. Multiview geometry and reconstruction. Image motion estimation and tracking. Object recognition. Deep Learning approaches to vision. 
   
   
 ### **Notes that have already finished typesetting:**  
 #### &#x1F4D8; 2020 Winter  
-- [**STA414**](https://tingfengx.github.io/uoftnotes/2020W/STA414/prob_ml.pdf), Statistical Methods for Machine Learning II. 
+- [**STA414**](https://tingfengx.github.io/uoftnotes/2020W/STA414/prob_ml.pdf). Probabilistic foundations of supervised and unsupervised learning methods such as naive Bayes, mixture models, and logistic regression. Gradient-based fitting of composite models including neural nets. Exact inference, stochastic variational inference, and Marko chain Monte Carlo. Variational autoencoders and generative adversarial networks.
 - [**CSC309**](https://tingfengx.github.io/uoftnotes/2020W/CSC309/web_prog.pdf), Programming on the Web. Notes on technical stuff covered in the course. 
 - [**ENV200**](https://tingfengx.github.io/uoftnotes/2020W/ENV200/env_sci.pdf), Science and Environment. Consisting of notes from the book and lecture slides. (**Archived**)
-- [**CSC413 (Archived)**](https://tingfengx.github.io/uoftnotes/2020W/CSC413/neural_net.pdf), Neural Net and Deep Learning. 
+- [**CSC413 (Archived)**](https://tingfengx.github.io/uoftnotes/2020W/CSC413/neural_net.pdf). An introduction to neural networks and deep learning. Backpropagation and automatic differentiation. Architectures: convolutional networks and recurrent neural networks. Methods for improving optimization and generalization. Neural networks for unsupervised and reinforcement learning.
 
 #### &#x1f4d7;2019 Fall  
-- [**CSC258**](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. [In plain HTML](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html) 
+- [**CSC258**](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. [In plain HTML](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html). Topics include computer structures, machine languages, instruction execution, addressing techniques, and digital representation of data. Computer system organization, memory storage devices, and microprogramming. Block diagram circuit realizations of memory, control and arithmetic functions. 
    - [Midterm Pre-test checklist](https://tingfengx.github.io/uoftnotes/2019F/CSC258/midterm_checklist.pdf)  
    - [Final Review Notes (Mainly On Assembly)](https://tingfengx.github.io/uoftnotes/2019F/CSC258/final_review.pdf)
 - [**PHL245**](https://tingfengx.github.io/uoftnotes/2019F/PHL245/modern_sym_logic.pdf), Modern Symbolic Logic. (Currently archived)
 - [**CSC311**](https://tingfengx.github.io/uoftnotes/2019F/CSC311/intro_ml.pdf), A cheat sheet for the exams, as allowed by the course syllabus. (**Archived**) Please note that this version was not finished. If you want to find an usable open source cheat sheet for CSC311, I point you to [these](https://github.com/AndyTQ/Aid-Sheets) aid sheets by [@AndyTQ](https://github.com/AndyTQ). 
-- [**CSC373**](https://tingfengx.github.io/uoftnotes/2019F/CSC373/algorithms.pdf), Miscellaneous notes from MIT open courseware (6.006 and 6.046J), aiming to help get a better understanding of the course materials. 
-- [**STA302**](https://tingfengx.github.io/uoftnotes/2019F/STA302/regression.pdf). Note from SJS and KNN.  
+- [**CSC373**](https://tingfengx.github.io/uoftnotes/2019F/CSC373/algorithms.pdf), Miscellaneous notes from MIT open courseware (6.006 and 6.046J). Focusing on NP-completeness: polynomial time reductions, examples of various NP-complete problems, self-reducibility. 
+- [**STA302**](https://tingfengx.github.io/uoftnotes/2019F/STA302/regression.pdf). Introduction to data analysis with a focus on regression. Initial Examination of data. Correlation. Simple and multiple regression models using least squares. Inference for regression parameters, confidence and prediction intervals. Diagnostics and remedial measures. Interactions and dummy variables. Variable selection. Least squares estimation and inference for non-linear regression.
 
   
 #### &#x1F4d5; 2019 Winter 
-- [**MAT224**](https://tingfengx.github.io/uoftnotes/2019W/MAT224/MAT224.pdf), Linear Algebra II. Collection of (nearly) all the theorems presented in the book/mentioned during lecture. 
-- [**STA261**](https://tingfengx.github.io/uoftnotes/2019W/STA261/test_statistics_manuel.pdf), Statistics II. A manuel for common test statistics.
-- [**MAT237**](https://tingfengx.github.io/uoftnotes/2019W/MAT237/advanced_calc_review.pdf), Advanced Calculus. A Collection of Theorems, with focus on fall 2018 term which was not present in the notes that I typesetted together with [@yuchenWYC](https://github.com/yuchenWYC).  
+- [**MAT224**](https://tingfengx.github.io/uoftnotes/2019W/MAT224/MAT224.pdf), Linear Algebra II. Collection of (nearly) all the theorems presented in the book/mentioned during lecture. Topic include fields, complex numbers, vector spaces over a field, linear transformations, matrix of a linear transformation, kernel, range, dimension theorem, isomorphisms, change of basis, eigenvalues, eigenvectors, diagonalizability, real and complex inner products, spectral theorem, adjoint/self-adjoint/normal linear operators, triangular form, nilpotent mappings, Jordan canonical form.
+- [**STA261**](https://tingfengx.github.io/uoftnotes/2019W/STA261/test_statistics_manuel.pdf), Statistics II. A manuel for common test statistics. Topics include statistical models, parameters, and samples. Estimators for parameters, sampling distributions for estimators, and the properties of consistency, bias, and variance. The likelihood function and the maximum likelihood estimator. Hypothesis tests and confidence regions.
+- [**MAT237**](https://tingfengx.github.io/uoftnotes/2019W/MAT237/advanced_calc_review.pdf), Advanced Calculus. A Collection of Theorems, with focus on fall 2018 term which was not present in the notes that I typesetted together with [@yuchenWYC](https://github.com/yuchenWYC). Topics include sequences and series. Uniform convergence. Convergence of integrals. Elements of topology in R^2 and R^3. Differential and integral calculus of vector valued functions of a vector variable, with emphasis on vectors in two and three dimensional euclidean space. Extremal problems, Lagrange multipliers, line and surface integrals, vector analysis, Stokes' theorem, Fourier series, calculus of variations.
 
 ### **Other notes that I participated in typesetting:**  
 - **MAT237**, Advanced Calculus, a short guide to theorems, lemmas and propositions. This particular set of notes was made together with [@yuchenWYC](https://github.com/yuchenWYC). [@AndyTQ](https://github.com/AndyTQ) et al. also made some useful comments for the improvment of the .tex file. They are available [here](https://github.com/yuchenWYC/MAT237). 
