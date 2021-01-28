@@ -4,24 +4,23 @@
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 <!-- [![HitCount](http://hits.dwyl.io/tingfengx/uoftnotes.svg)](http://hits.dwyl.io/tingfengx/uoftnotes) -->
 
-
-
 ## &#x1F4DA; Notes for some of my courses at University of Toronto  
   
 ### **Notes in progress:**  
-
+#### &#128210; 2021 Winter
+- [**CSC317/CSC418**](https://tingfengx.github.io/uoftnotes/2021W/CSC317/image_understanding.pdf). Identification and characterization of the objects manipulated in computer graphics, the operations possible on these objects, efficient algorithms to perform these operations, and interfaces to transform one type of object to another. Display devices, display data structures and procedures, graphical input, object modelling, transformations, illumination models, primary and secondary light effects; graphics packages and systems. Students, individually or in teams, implement graphical algorithms or entire graphics systems.
+  
+### **Notes that have already finished typesetting:**  
 #### &#x1F4D9; 2020 Fall 
 - [**CSC420**](https://tingfengx.github.io/uoftnotes/2020F/CSC420/image_understanding.pdf). Introduction to basic concepts in computer vision. Extraction of image features at multiple scales. Robust estimation of model parameters. Multiview geometry and reconstruction. Image motion estimation and tracking. Object recognition. Deep Learning approaches to vision. 
   
-  
-### **Notes that have already finished typesetting:**  
 #### &#x1F4D8; 2020 Winter  
-- [**STA414**](https://tingfengx.github.io/uoftnotes/2020W/STA414/prob_ml.pdf). Probabilistic foundations of supervised and unsupervised learning methods such as naive Bayes, mixture models, and logistic regression. Gradient-based fitting of composite models including neural nets. Exact inference, stochastic variational inference, and Marko chain Monte Carlo. Variational autoencoders and generative adversarial networks.
+- [**STA414/CSC412**](https://tingfengx.github.io/uoftnotes/2020W/STA414/prob_ml.pdf). Probabilistic foundations of supervised and unsupervised learning methods such as naive Bayes, mixture models, and logistic regression. Gradient-based fitting of composite models including neural nets. Exact inference, stochastic variational inference, and Marko chain Monte Carlo. Variational autoencoders and generative adversarial networks.
 - [**CSC309**](https://tingfengx.github.io/uoftnotes/2020W/CSC309/web_prog.pdf), Programming on the Web. Notes on technical stuff covered in the course. 
 - [**ENV200**](https://tingfengx.github.io/uoftnotes/2020W/ENV200/env_sci.pdf), Science and Environment. Consisting of notes from the book and lecture slides. (**Archived**)
 - [**CSC413 (Archived)**](https://tingfengx.github.io/uoftnotes/2020W/CSC413/neural_net.pdf). An introduction to neural networks and deep learning. Backpropagation and automatic differentiation. Architectures: convolutional networks and recurrent neural networks. Methods for improving optimization and generalization. Neural networks for unsupervised and reinforcement learning.
 
-#### &#x1f4d7;2019 Fall  
+#### &#x1f4d7; 2019 Fall  
 - [**CSC258**](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. [In plain HTML](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html). Topics include computer structures, machine languages, instruction execution, addressing techniques, and digital representation of data. Computer system organization, memory storage devices, and microprogramming. Block diagram circuit realizations of memory, control and arithmetic functions. 
    - [Midterm Pre-test checklist](https://tingfengx.github.io/uoftnotes/2019F/CSC258/midterm_checklist.pdf)  
    - [Final Review Notes (Mainly On Assembly)](https://tingfengx.github.io/uoftnotes/2019F/CSC258/final_review.pdf)
