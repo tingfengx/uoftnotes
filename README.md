@@ -8,7 +8,7 @@
   
 ### **Notes in progress:**  
 #### &#128210; 2021 Winter
-- [**CSC317/CSC418**](https://tingfengx.github.io/uoftnotes/2021W/CSC317/image_understanding.pdf). Identification and characterization of the objects manipulated in computer graphics, the operations possible on these objects, efficient algorithms to perform these operations, and interfaces to transform one type of object to another. Display devices, display data structures and procedures, graphical input, object modelling, transformations, illumination models, primary and secondary light effects; graphics packages and systems. Students, individually or in teams, implement graphical algorithms or entire graphics systems.
+- [**CSC317/CSC418**](https://tingfengx.github.io/uoftnotes/2021W/CSC317/computer_graphics.pdf). Identification and characterization of the objects manipulated in computer graphics, the operations possible on these objects, efficient algorithms to perform these operations, and interfaces to transform one type of object to another. Display devices, display data structures and procedures, graphical input, object modelling, transformations, illumination models, primary and secondary light effects; graphics packages and systems. Students, individually or in teams, implement graphical algorithms or entire graphics systems.
   
 ### **Notes that have already finished typesetting:**  
 #### &#x1F4D9; 2020 Fall 
