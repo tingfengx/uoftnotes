@@ -126,6 +126,60 @@
 \section{Raster Image} This section will be added later. 
 \section{Ray Casting} This section will be added later. 
 \section{Ray Tracing}
+\subsection{Light and Surfaces}
+There are two types of lights, namely directional and point light sources. 
+\begin{itemize}
+	\item The directional light has its light direction independent of the object, this typically happens when the light is very far away. (e.g. the sun)
+	\item On the other hand, point light are such that the direction of light depends on position of object relative to light. Think of this as a light bulb in a room. 
+\end{itemize}
+\subsection{Shading}
+The goal of shading is to compute the light reflected toward camera. As an algorithm it expects the following inputs: eye direction, light direction for each of many lights, surface normal, and surface parameters such as color and shininess. 
+
+\paragraph{The Surface Normal} at a hit point can be computed, depending on the type of specification
+\begin{itemize}
+	\item Polygon normal: cross product of two non-collinear edges, 
+	\item Implicit surface normal $f(p) = 0$: $gradient(f)(p)$
+	\item Explicit parametric surface $f(a,b)$: 
+	\begin{equation}
+		\frac{\partial f(s, b)}{\partial s} \times \frac{\partial f(a, t)}{\partial t}
+	\end{equation}
+\end{itemize}
+
+\subsection{Light Falloff}
+The light falloff aims to model the concept of diminishing light intensity based on distance. Suppose the light source has intensity of $I$, then, at a point that is $r$ (Euclidean Distance) away from the light source, the light intensity from that particular light source would be
+\begin{equation}
+	\text{Intensity}(I, r) = I / r^2
+\end{equation}
+Clearly, when we are at the light source, $r = 0$ and we attain the max intensity. 
+
+\subsection{Diffuse Reflection}
+In the case of diffuse reflection, light are scattered uniformly in all directions, i.e. he surface color is the same for all viewing directions. The amount of light captured by a surface obeys Lamber's cosine law. (We call this Lambertian surface.) Figure \ref{lambert} illustrates the relationship. 
+
+\begin{figure}
+	\centering \includegraphics[width=0.7\textwidth]{figs/lambert}
+	\caption{\label{lambert} Illustration of Lambert's cosine law. }
+\end{figure}
+
+\subsection{Lambertian Shading} 
+The Lambertian Shading is independent of view direction. Let's call $L_d:=$ diffusely reflected light, $k_d:=$ diffuse coefficient, and $I:=$ illumination from source, then 
+\begin{equation}
+	L_{d}=k_{d}\left(I / r^{2}\right) \max (0, \mathbf{n} \cdot \mathbf{l})
+\end{equation}
+This produces a matte appearance. 
+
+\subsection{Shadows}
+Surface is only illuminated if nothing blocks its view of the light. With ray tracing it's easy to check if a point in the scene is in shadow, all you have to do is just shoot a ray from the point\footnote{This ``point'' means the actual location in 3d of what a pixel on the image projects to. } to the light and intersect it with the scene.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
