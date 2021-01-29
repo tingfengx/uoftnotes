@@ -273,7 +273,12 @@ We can derive that our unknown of interest $\bt$ is such that
 \begin{equation}
 	\bt = -\frac{c_l}{c_t}\bl + \frac{c_l}{c_t} \cos(\theta_l) \bn - \cos (\theta_t ) \bn
 \end{equation}
-
+To take refractions into account, we just need to slightly modify the ray tracing template presented previously. Namely, we will need to add 
+\begin{verbatim}
+	...
+	colour += raytrace(reflectedRay, depth+1)
+	colour += raytrace(refractedRay, depth+1)
+\end{verbatim}
 
 
 
