@@ -228,7 +228,7 @@ With a perfect mirror, only when $\br = \bv$ in Figure \ref{mirror reflection} w
 where $k_s$ is yet another set of coefficient guarding three channels, $I_s$ is the three channel intensity (distance decay taken into account already), and $shiny$ is a constant hyper-parameter raised to exponent dictating how fast the $(\bv \cdot \br)$ diminishes to $0$. A large $shiny$ exponent will make the surface more glossy, while a smaller one will make the surface more matte-looking. 
 
 \subsection{Blinn(-Phong) Specular Shading}
-Blinn specular shading is just another formulation.\footnote{This very simple and widely used model for specular highlights was proposed by Phong (Phong, 1975) and later updated by Blinn (J. F. Blinn, 1976) to the form most commonly used today.} Figure \ref{blinn} illustrate what we want to calculate. Let's call the point of reflection $\bo$, then in Phong model, we used $\br\bo\bv$ to model the angle and here in Blinn we will be using $\bh\bo\bn$ instead. Notice that however, we do need to calculate an extra vector $\bh$ that is the normalized sum of $\bv$ and $\bl$, i.e. 
+Blinn specular shading is just another formulation.\footnote{This very simple and widely used model for specular highlights was proposed by Phong (Phong, 1975) and later updated by Blinn (J. F. Blinn, 1976) to the form most commonly used today.} Figure \ref{blinn} illustrate what we want to calculate. Let's call the point of reflection $\bo$, then in Phong model, we used $angle\br\bo\bv$ to model the angle and here in Blinn we will be using $\angle\bh\bo\bn$ instead. Notice that however, we do need to calculate an extra vector $\bh$ that is the normalized sum of $\bv$ and $\bl$, i.e. 
 \begin{equation}
 	\mathbf{h}=\frac{\mathbf{v}+1}{\|\mathbf{v}+1\|}
 \end{equation}
@@ -245,7 +245,7 @@ where $k_s$ is our guarding coefficients, $I$ is the intensity at the point of r
 
 \subsection{Local Illumination}
 \begin{itemize}
-	\item Usually include ambient, diffuse, Phong\unsure{isn't this Blinn??} in one model
+	\item Usually include ambient, diffuse, Blinn-Phong in one model
 	\begin{equation}
 		\begin{aligned}
 			L &=L_{a}+L_{d}+L_{s} \\
@@ -265,7 +265,7 @@ where $k_s$ is our guarding coefficients, $I$ is the intensity at the point of r
 {\center \includegraphics[width=1.0\textwidth]{figs/ray trace}}
 
 \subsection{Refraction - Snell's Law}
-Consider a surface with normal $\bn$, with incoming light vector $-\bl$ (so $\bl$ is pointing into the surface), call $\theta_l := \bn\bo\bl$. Suppose the refracted light vector is named $\bt$ with $theta_t:= \bt\bo (-\bn )$, then Snell's Law states that
+Consider a surface with normal $\bn$, with incoming light vector $-\bl$ (so $\bl$ is pointing into the surface), call $\theta_l := \angle\bn\bo\bl$. Suppose the refracted light vector is named $\bt$ with $\theta_t:= \angle \bt\bo (-\bn )$, then Snell's Law states that
 \begin{equation}
 	c_l \sin\theta_l = c_t \sin \theta_t
 \end{equation}
@@ -280,13 +280,46 @@ To take refractions into account, we just need to slightly modify the ray tracin
 	colour += raytrace(refractedRay, depth+1)
 \end{verbatim}
 
+\subsection{Ray Tracing: Pros and Cons}
+Ray tracing provides a unifying framework for all of the following
+\begin{itemize}
+	\item Hidden surface removal, 
+	\item shadow computation, 
+	\item reflection of light, 
+	\item refraction of light, 
+	\item globular specular interaction 
+\end{itemize}
+but at the same time it presents some deficiencies
+\begin{itemize}
+	\item intersection computation time can be long, (solution: bounding volumes, next time)
+	\item recursive algorithm can lead to exponential complexity, (solution: stochastic sampling)
+	\item ignores light transport mechanisms involving diffuse surfaces. 
+\end{itemize}
 
-
-
-
-
-
-
+\subsection{Caustics}
+\subsection{Radiosity}
+\subsection{The Rending Equation}
+\begin{equation}
+	L_{o}(\bx, \bw)
+	=
+	L_{e}(\bx, \bw) 
+	+
+	\int_{\Omega} f_{r}\left(\bx, \bw^{\prime}, \bw\right) L_{i}\left(\bx, \bw^{\prime}\right)\left(\bw^{\prime} \cdot \bn\right) \mathrm{d} \bw^{\prime}
+\end{equation}
+where 
+\begin{align}
+	&L_{o}(x, \vec{w}) = \text{outgoing light at $\bx$ direction $\bw$} \\
+	&L_{e}(x, \vec{w}) = \text{emitted light at position $\bx$ and direction $\bw$} \\
+	&\int_\Omega \dots \mathrm d \bw = \text{reflected light at position $\bx$ and direction $\bw$}
+\end{align}
+where 
+\begin{align}
+	&f_{r}\left(\bx, \bw^{\prime}, \bw\right) 
+	= \text{BRDF: a function describing how light is reflected at an opaque surface} \\
+	&L_{i}\left(\bx, \bw^{\prime}\right) 
+	= \text{the incoming light from all directions}
+\end{align}
+\subsection{Soft Light}
 
 
 
