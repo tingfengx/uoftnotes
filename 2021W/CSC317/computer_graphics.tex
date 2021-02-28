@@ -203,6 +203,151 @@ The Porter/Duff operations table in Figure \ref{porter duff} shows all 12 possib
 % Ray Casting
 %%%%%%%%%%%%%%%%%%%%%
 \section{Ray Casting} 
+In introductory Ray Casting, we consider scenes with no lighting whatsoever, and we consider rays originating from the eye point (camera), through the virtual image plane, and finally hit the objects in the scene. Our goal could be summarized with the following pseudocode, 
+\begin{minted}{text}
+  for each image pixel {
+    generate a ray
+    for each scene object { 
+      if ray intersects object
+        then do something. e.g. set pixel color
+    }
+  }
+\end{minted}
+
+\subsection{Ray}
+We introduce the following parametrization of a ray
+\begin{equation}
+	p(t) = \be + t(\bs - \be)
+\end{equation}
+where $\be$ is the eye point, $\bs$ is a known point along the path and $p(t)$ is a parametrization of ``point along the ray''. Notice that under our parametrization, we have $p(0) = \be$ and $p(1) = \bs$. 
+
+\subsection{Camera Device}
+We consider the simplest ideal pin hole camera, where the pinhole has an infinitesimal size. In real world, this would not be the case. In a real pinhole camera, an aperture is present instead of pinhole. An aperture has a certain (small) size, but it is big enough to cause the image formed become blurry, due to the nature of light. A more complex camera system introduces lens to correct the aperture, i.e. to focus. 
+
+The camera basis could be calculated as follows
+\begin{equation}
+	\bw = -view, \quad 
+	\bu = view \times up, \quad
+	\bv = \bw \times \bu
+\end{equation}
+
+\subsection{Projection - Orthographic and Perspective}
+The most naive ray generation is probably orthographic, where all the rays generated are parallel to each other and they are orthonormal to the image plane. This may sound abstract, but when you draw a cube on paper with parallel edges, you are essentially considering an orthographic projection. 
+
+A more natural looking approach is perspective projection, where rays all originate from the eye point. Each ray will pass through one pixel in the virtual image plane, and finally may or may not intersect an object in the scene. Depending on whether the ray hits an object, different operations are done to the manipulate the resulting image. 
+
+\subsubsection{Transforming Between Coordinate Systems}
+\begin{figure}
+	\center\includegraphics[width=0.7\textwidth]{figs/standard pixel coordinate systems}
+	\caption{\label{fig:standard pixel coordinate system} The Standard Pixel Coordinate System. }
+\end{figure}
+Figure \ref{fig:standard pixel coordinate system} shows the standard pixel coordinate system, where the centre of the bottom left corner pixel is marked as the origin, $(0, 0)$. We will need to handle this subtlety when casting rays. 
+
+Consider $n_x, n_y$ to be the number of pixels on $X$ and $Y$ directions respectively, and $width, height$ to be the physical width and height of the image (size of image plane). Then, 
+\begin{itemize}
+	\item Bottom left corner (pixel space) is $(-1/2, -1/2)$,
+	\item Top right corner (pixel space) is $(n_x - 1/2, n_y - 1/2)$, 
+	\item Bottom left corner (camera space) is $(-width / 2, -height / 2)$, 
+	\item Top right corner (camera space) is $(width / 2, height / 2)$
+\end{itemize}
+Do notice in the camera space, if we start at the position at the camera, and move in the direction of $view$ ($-\bw$) then we shall arrive at the centre of the image plane, rather than any corner. Solving the above, we know that pixel at position $(i, j)$ in the raster image has the position $(u, v)$ where
+\begin{equation}
+	u = \frac{width}{n_x} \left( i + \frac{1}{2} \right) - \frac{width}{2} \label{eq:u transform}
+\end{equation}
+and 
+\begin{equation}
+	v = \frac{height}{n_y} \left( j + \frac{1}{2} \right) - \frac{height}{2} \label{eq:v transform}
+\end{equation}
+
+\subsection{Ray Equations}
+\subsubsection{... in Camera Space}
+We previously stated that the ray equation should have the form 
+\begin{equation}
+	\bp(t) = \be + t(\bs - \be)
+\end{equation}
+In camera space, we will be at the starting point of the ray, which means that the eye point is exactly origin. Substituting this information into the equation, we have
+\begin{equation}
+	\mathbf{p}(t)=\left[\begin{array}{l}
+		0 \\
+		0 \\
+		0
+		\end{array}\right]+t\left(\left[\begin{array}{l}
+		u(i) \\
+		v(j) \\
+		-d
+		\end{array}\right]-\left[\begin{array}{l}
+		0 \\
+		0 \\
+		0
+	\end{array}\right]\right) = t\begin{bmatrix}
+		u(i) \\ v(j) \\ -d
+	\end{bmatrix}
+\end{equation}
+where $d$ is the length between the eye point and the image plane, commonly known as focal length. And $u, v$ calculated using Equations \ref{eq:u transform} and \ref{eq:v transform}. 
+
+\subsubsection{... in World Space}
+The world space representation could be attained using a change of coordinates, 
+\begin{equation}
+	\mathbf{p}(t)=\mathbf{e}+t(u(i) \mathbf{u}+v(j) \mathbf{v}+-d \mathbf{w}) 
+\end{equation}
+which could be written in matrix form 
+\begin{equation}
+	\bp(t) = \be + t \begin{bmatrix}
+		\bu & \bv & \bw
+	\end{bmatrix}_{M_{3 \times 3}(\real)} \begin{bmatrix}
+		u(i) \\ v(j) \\-d
+	\end{bmatrix}
+\end{equation}
+where the 3-by-3 matrix in the middle is called the Camera Transformation Matrix, and rest elements calculated as previous. 
+
+\subsection{Intersection Tests}
+Now that we have discussed how to generate a ray and how to get the ray in different representations, it is time to move to the \texttt{if} statement in our pseudo code, which was to check if an intersection exists between a ray and a scene object. 
+\subsubsection{Ray-Plane Intersection}
+A plane is defined by the equation ($\bq$ such that satisfies the following)
+\begin{equation}
+	\bn \cdot ( \bq - \bp_0) = 0
+\end{equation}
+where $\bn$ is the surface normal and $\bp_0$ is a point on the surface. To see if a ray intersects with a plane, it suffices to substitute $\bp$ with the parametrized ray equation, and try to solve for $t$, i.e. we want to solve for $t$ in
+\begin{equation}
+	\bn \cdot ((\be + t\bd) - \bp_0) = 0
+\end{equation}
+where $\bd$ is the ray direction, equal to $\bs - \be$. Solving the above yields
+\begin{equation}
+	t = \frac{-\bn \cdot ( \be - \bp_0)}{\bn \cdot \bd}
+\end{equation}
+Notice that the intersection exists iff $t \in \real$, in particular if $\bn$ and $\bd$ are collinear, then $t$ would blow up. In practice, it is usually useful to do the checking first, to avoid numeric issues. 
+
+\subsubsection{Ray-Sphere Intersection}
+We use an implicit equation to define a sphere that is centred at $\bc$ with radius $r$ ($\bq$ such that satisfies the following)
+\begin{equation}
+	(\bq - \bc) \cdot (\bq - \bc) - r^2 = 0
+\end{equation}
+Again, we substitute $\bq$ with the ray parametrization, 
+\begin{equation}
+	(\be + t \bd - \bc ) \cdot (\be + t \bd - \bc ) - r^2 = 0 
+\end{equation}
+expanding and rearranging yields
+\begin{equation}
+	(\bd \cdot \bd) t^2 + 2\bd \cdot (\be - \bc) t + (\be - \bc) \cdot (\be - \bc) - r^2 = 0
+\end{equation}
+To solve this, we can resort to the quadratic equation. First we calculate the discriminant, 
+\begin{equation}
+	\Delta = (2\bd \cdot (\be - \bc)) ^2 - 4(\bd \cdot \bd)((\be - \bc) \cdot (\be - \bc) - r^2)
+\end{equation}
+Clearly, if $\Delta < 0$ then there is no intersection. If $\Delta = 0$ then the ray is tangential to the sphere, and the ray has two intersection points with the sphere otherwise. The exact solution(s) could be calculated as 
+\begin{equation}
+	t = \frac{-2\bd\cdot(\be - \bc) \pm \sqrt{\Delta}}{2\bd \cdot \bd}
+\end{equation}
+
+\subsubsection{Ray-Triangle Intersection}
+In this case, we parametrized a triangle as 
+\begin{equation}
+	\bq = \bp_0 + \alpha \bt_1 + \beta \bt_2
+\end{equation}
+where $\bp_0$ is a vertex of the triangle and $\bt_1, \bt_2$ are two edges shooting outwards from $\bp_0$. In order to make this a triangle, there are several constraints, namely
+\begin{equation}
+	\alpha \geq 0, \quad \beta \geq 0, \quad \alpha + \beta \leq 1.
+\end{equation}
 
 
 
