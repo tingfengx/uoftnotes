@@ -25,6 +25,7 @@
 \usepackage[
     outputdir=.texpadtmp
 ]{minted}
+\usepackage[parfill]{parskip}
 
 % ==== License =====
 \usepackage[
@@ -125,7 +126,58 @@
 	\item Textbook: Shirley, P., \& Marschner, S. (2009). \textit{Fundamentals of Computer Graphics (Third Edition)}. 
 \end{itemize}
 \tableofcontents
-\section{Raster Image} This section will be added later. 
+\section{Raster Image}
+An image is a distribution of light energy on a 2D film. Digital images today are represented as rectangular arrays of pixels. 
+\subsection{Raster Devices}
+\subsubsection{Raster Displays} These are displays that are comprised of a certain number of pixel units. Each of these pixel units contains three subpixels - red, green, and blue. When we say a display is $1920 \times 1080$, we mean that the display has that many pixels in the two directions, this also means that we have, at subpixel level, $1920 \times 1080 \times 3$ ``elements'' on the display. 
+
+\subsubsection{Raster Input Devices}
+The raster input filter we will introduce is Bayer Filter. In each pixel of a Bayer Filter, there is only one color - either red, green, or blue. Due to the nature of human eyesight, we are more sensitive to the color green. Hence, the Bayer Filter has twice green elements as compared to red and blue.\footnote{Patterns to the Bayer Filter may vary. The one presented in slides is BGGR.}
+
+\subsubsection{Data Types for Raster Images}
+Storage for $1024^2$ image (1 megapixel)
+\begin{itemize}
+	\item bitmap: 128KB, 
+	\item grayscale 8bpp: $1024^2 \times 8 / 8 / 1024^2 = $1MB, 
+	\item grayscale 16bpp: $1024^2 \times 16 / 8 / 1024^2 = $2MB, 
+	\item color 24bpp: 3MB, \footnote{24bpp means 24 bits per pixel, so 8 bits for each color: 0 - 255}
+	\item floating point high dynamic range color: 12MB
+\end{itemize}
+
+\subsubsection{Gamma Correction}
+On a display, the intensity is non-linear with respect to input intensity. The Gamma correction relationship is formularized as 
+\begin{equation}
+	\text{display intensity} = \text{max display intensity} a^\gamma
+\end{equation}
+where $a$ is the amplitude from the image in the range in $[0, 1]$. The $\gamma$ is what we can set, usually in display settings. To set the right gamma correction, we need to find image amplitude that is equal to half of the display's brightness, then
+\begin{equation}
+	\frac{1}{2} = a^\gamma \quad 
+	\implies \quad
+	\gamma = \frac{\ln .5}{\ln a}
+\end{equation}
+
+\subsubsection{Modelling Transparency}
+Simple RGB is great, but that only gets us solid colours, meaning that we cannot model transparency information with it. RGBA addresses this by simply appending an alpha channel variable to the end of the original triplet, making it a RGBA quadruple. We will also need this for the Porter/Duff Composition described below. 
+
+\subsection{Image Composition}
+Compositing is about layering images on top of one another. But there are many ways to do the composition, i.e. which image goes at the top and how you handle places with transparency. The Porter/Duff Composition\footnote{\url{http://ssp.impulsetrain.com/porterduff.html}} is a unified approach for this problem. 
+
+Suppose we have two images source and destination. We we try to combine these two images, each pixel of the result can be divided into four regions: Both, Source, Dest, and Neither. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Ray Casting} This section will be added later. 
 \section{Ray Tracing}
 \subsection{Light and Surfaces}
@@ -321,6 +373,83 @@ where
 \end{align}
 \subsection{Soft Light}
 
+\section{Spatial Data Structures - Bounding Volume Hierarchy}
+In many applications of computer graphics, it is crucial that we can quickly perform queries on a set scene. However, the brute force solution may turn out to be computationally too costly. In a remedy to this problem, we introduce the idea of spatial data structures. These structures partition spaces into smaller ones: (following characterizations are from the text book (Shirley, P., \& Marschner, S., 2009).)
+\begin{itemize}
+	\item Structures that group objects together into a hierarchy are object partitioning schemes: objects are divided into disjoint groups, but the groups may end up overlapping in space.
+	\item Structures that divide space into disjoint regions are space partitioning schemes: space is divided into separate partitions, but one object may have to intersect more than one partition.
+	\item Space partitioning schemes can be regular, in which space is divided into uniformly shaped pieces, or irregular, in which space is divided adaptively into irregular pieces, with smaller pieces where there are more and smaller objects.
+\end{itemize}
+
+\subsection{(Axis Aligned) Bounding Boxes}
+To derive, let's start with the 2D case. Suppose we have a bounding box described by four lines, 
+\begin{align}
+	x &= x_{\min}, &\text{the lower horizontal line}, \\
+	x &= x_{\max}, &\text{the upper horizontal line}, \\
+	y &= y_{\min}, &\text{the left vertical line}, \\
+	y &= y_{\max}, &\text{the right vertical line}. 
+\end{align}
+Then, consider the ray $x = x_e + tx_d, y = y_e + ty_d$, where we see that only when $t$ satisfies the four constraints described in Figure \ref{bbt} will the ray hit the box. Arithmetically, we calculate\footnote{Note that this solution does not address the divide by zero error discussed in the following section. }
+\begin{align}
+	t_{x\min} &= x_d \geq 0 \,?\, (x_{\min} - x_e) / x_d : (x_{\max} - x_e) / x_d \\
+	t_{x\max} &= x_d \geq 0 \,?\, (x_{\max} - x_e) / x_d : (x_{\min} - x_e) / x_d \\
+	t_{y\min} &= y_d \geq 0 \,?\, (y_{\min} - y_e) / y_d : (y_{\max} - y_e) / y_d \\
+	t_{y\max} &= y_d \geq 0 \,?\, (y_{\max} - y_e) / y_d : (y_{\min} - y_e) / y_d
+\end{align}
+Then if $t_{x\min} > t_{y\max} \lor  t_{y\min} > t_{x\max} $ then the ray missed the bounding box. Otherwise, there is a hit. \footnote{This if statement condition could be derived from Figure \ref{bbt}: when the two intervals have no intersection, then we have a miss. }
+
+\begin{figure}
+	\center\includegraphics[width=0.7\textwidth]{figs/bounding box solve t}
+	\caption{\label{bbt}2D Bounding Box Hit Criterion}
+\end{figure}
+
+\subsubsection{Handling Divide by Zero}
+There is yet another concern that needs to be addressed in our formulation: divide by zero errors when $x_d = \pm 0$ or $y_d = \pm 0$. The detailed derivations can be found on pages 281 - 282 of the text book. We note the results here: 
+\begin{equation}
+	a = 1 / x_d, b = 1 / y_d
+\end{equation}
+\paragraph{If $(a \geq 0)$ then}
+\begin{equation}
+	t_{x\min} = a(x_{\min} - x_e); \quad t_{x\max} = a(x_{\max} - x_e)
+\end{equation}
+\vspace{-3em}
+\paragraph{else}
+\begin{equation}
+	t_{x\min} = a(x_{\max} - x_e); \quad t_{x\max} = a(x_{\min} - x_e)
+\end{equation}
+
+\paragraph{If $(b \geq 0)$ then}
+\begin{equation}
+	t_{y\min} = b(y_{\min} - y_e); \quad t_{y\max} = b(y_{\max} - y_e)
+\end{equation}
+\vspace{-3em}
+\paragraph{else}
+\begin{equation}
+	t_{y\min} = b(y_{\max} - y_e); \quad t_{y\max} = b(y_{\min} - y_e)
+\end{equation}
+Then, again, if $t_{x\min} > t_{y\max} \lor  t_{y\min} > t_{x\max} $ then the ray missed the bounding box. Otherwise, there is a hit. \footnote{This if statement condition could be derived from Figure \ref{bbt}: when the two intervals have no intersection, then we have a miss. }
+
+
+\subsubsection{Handling 3D Bounding Boxes}
+This is almost exactly the same as what we presented in the previous sub-subsection. We calculate a extra $c$ for the $z$ axis: $c = 1 / z_d$
+\paragraph{If $(c \geq 0)$ then}
+\begin{equation}
+	t_{z\min} = c(z_{\min} - z_e); \quad t_{z\max} = c(z_{\max} - z_e)
+\end{equation}
+\vspace{-3em}
+\paragraph{else}
+\begin{equation}
+	t_{z\min} = c(z_{\max} - z_e); \quad t_{z\max} = c(z_{\min} - z_e)
+\end{equation}
+However, this time the return conditions requires a bit more calculations
+\begin{equation}
+	lmin = \max\left\{ t_{\ast\min} \right\} \quad \text{is the largest of all min}
+\end{equation}
+and 
+\begin{equation}
+	smax = \min\left\{ t_{\ast\max} \right\} \quad \text{is the smallest of all max}
+\end{equation}
+Then, if $smax < lmin$, the ray missed the box; otherwise, there is a hit. 
 
 
 
