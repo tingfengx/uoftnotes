@@ -126,6 +126,11 @@
 	\item Textbook: Shirley, P., \& Marschner, S. (2009). \textit{Fundamentals of Computer Graphics (Third Edition)}. 
 \end{itemize}
 \tableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Raster Images
+%%%%%%%%%%%%%%%%%%%%%
 \section{Raster Image}
 An image is a distribution of light energy on a 2D film. Digital images today are represented as rectangular arrays of pixels. 
 \subsection{Raster Devices}
@@ -162,23 +167,51 @@ Simple RGB is great, but that only gets us solid colours, meaning that we cannot
 \subsection{Image Composition}
 Compositing is about layering images on top of one another. But there are many ways to do the composition, i.e. which image goes at the top and how you handle places with transparency. The Porter/Duff Composition\footnote{\url{http://ssp.impulsetrain.com/porterduff.html}} is a unified approach for this problem. 
 
-Suppose we have two images source and destination. We we try to combine these two images, each pixel of the result can be divided into four regions: Both, Source, Dest, and Neither. 
+Suppose we have two images source and destination. We we try to combine these two images, each pixel of the result can be divided into four regions: Both, Source, Dest, and Neither. The formula for this operation is a linear combination of contents of the four regions, where the weights are the ares of each region: 
+\begin{equation}
+	A_{src}[s] + A_{dest}[d] + A_{both}[b] 
+\end{equation}
+where
+\begin{itemize}
+	\item $[s]$ is either 0 or the color of the source pixel, 
+	\item $[d]$ is either 0 or the color of the destination pixel, 
+	\item $[b]$ is either 0, the color of the source pixel or the color of the destination pixel.
+\end{itemize}
+With the alpha channel being interpreted as coverage, the areas are given by these formulas: 
+\begin{align}
+	&A_{src} = \alpha_s (1 - \alpha_d) \\
+	&A_{dst} = \alpha_d (1 - \alpha_s) \\
+	&A_{both} = \alpha_s \alpha_d
+\end{align}
+The alpha channel of the result is computed in a similar way: 
+\begin{equation}
+	A_{src} [as] + A_{dest} [ad] + A_{both} [ab]
+\end{equation}
+where 
+\begin{itemize}
+	\item $[as]$ and $[ad]$ are either 0 or 1 depending on whether the source and destination regions are present, and 
+	\item $[ab]$ is 0 when both regions is blank (transparent), and 1 otherwise. 
+\end{itemize}
+The Porter/Duff operations table in Figure \ref{porter duff} shows all 12 possible scenarios. 
+\begin{figure}
+	\center\includegraphics[width=0.7\textwidth]{figs/porter duff}
+	\caption{\label{porter duff} Porter/Duff operators table. }
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Ray Casting
+%%%%%%%%%%%%%%%%%%%%%
+\section{Ray Casting} 
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-\section{Ray Casting} This section will be added later. 
+%%%%%%%%%%%%%%%%%%%%%
+% Ray Tracing
+%%%%%%%%%%%%%%%%%%%%%
 \section{Ray Tracing}
 \subsection{Light and Surfaces}
 There are two types of lights, namely directional and point light sources. 
@@ -282,10 +315,10 @@ where $k_s$ is yet another set of coefficient guarding three channels, $I_s$ is 
 \subsection{Blinn(-Phong) Specular Shading}
 Blinn specular shading is just another formulation.\footnote{This very simple and widely used model for specular highlights was proposed by Phong (Phong, 1975) and later updated by Blinn (J. F. Blinn, 1976) to the form most commonly used today.} Figure \ref{blinn} illustrate what we want to calculate. Let's call the point of reflection $\bo$, then in Phong model, we used $angle\br\bo\bv$ to model the angle and here in Blinn we will be using $\angle\bh\bo\bn$ instead. Notice that however, we do need to calculate an extra vector $\bh$ that is the normalized sum of $\bv$ and $\bl$, i.e. 
 \begin{equation}
-	\mathbf{h}=\frac{\mathbf{v}+1}{\|\mathbf{v}+1\|}
+	\mathbf{h}=\frac{\mathbf{v}+\bl}{\|\mathbf{v}+\bl\|}
 \end{equation}
 The specular reflected intensities can be calculated
-\begin{equation}
+\begin{equation}ci
 	L = k_s \circ I \max \{ 0, \bn \cdot \bh \}^p
 \end{equation}
 where $k_s$ is our guarding coefficients, $I$ is the intensity at the point of reflection (distance decay taken into account already), $p$ is something similar to $shiny$ from before. Again, a larger $p$ means a shinier surface and  a smaller one means more matte-looking. 
