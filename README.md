@@ -66,7 +66,8 @@ $pdflatex = 'pdflatex -interaction=nonstopmode -shell-escape';
 </details>
 
 ## Template
-- [```./template/tingfengx.tex```](https://github.com/tingfengx/uoftnotes/blob/master/template/tingfengx.tex) is the template that I use which contains my custom commands. 
+- [```./template/tingfengx.tex```](./template/tingfengx.tex) is the template that I use which contains my custom commands. 
+- Or checkout [```./template/tingfengx_article_minimal.tex```](./template/tingfengx_article_minimal.tex) if you want something minimal. 
 
 ## License 
 [![licensebuttons by-nc-sa](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0)    
