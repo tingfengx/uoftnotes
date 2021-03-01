@@ -349,11 +349,6 @@ where $\bp_0$ is a vertex of the triangle and $\bt_1, \bt_2$ are two edges shoot
 	\alpha \geq 0, \quad \beta \geq 0, \quad \alpha + \beta \leq 1.
 \end{equation}
 
-
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%
 % Ray Tracing
 %%%%%%%%%%%%%%%%%%%%%
@@ -551,6 +546,10 @@ where
 \end{align}
 \subsection{Soft Light}
 
+
+%%%%%%%%%%%%%%%%%%%%%
+% BVH - AABB
+%%%%%%%%%%%%%%%%%%%%%
 \section{Spatial Data Structures - Bounding Volume Hierarchy}
 In many applications of computer graphics, it is crucial that we can quickly perform queries on a set scene. However, the brute force solution may turn out to be computationally too costly. In a remedy to this problem, we introduce the idea of spatial data structures. These structures partition spaces into smaller ones: (following characterizations are from the text book (Shirley, P., \& Marschner, S., 2009).)
 \begin{itemize}
@@ -607,7 +606,6 @@ There is yet another concern that needs to be addressed in our formulation: divi
 \end{equation}
 Then, again, if $t_{x\min} > t_{y\max} \lor  t_{y\min} > t_{x\max} $ then the ray missed the bounding box. Otherwise, there is a hit. \footnote{This if statement condition could be derived from Figure \ref{bbt}: when the two intervals have no intersection, then we have a miss. }
 
-
 \subsubsection{Handling 3D Bounding Boxes}
 This is almost exactly the same as what we presented in the previous sub-subsection. We calculate a extra $c$ for the $z$ axis: $c = 1 / z_d$
 \paragraph{If $(c \geq 0)$ then}
@@ -628,6 +626,26 @@ and
 	smax = \min\left\{ t_{\ast\max} \right\} \quad \text{is the smallest of all max}
 \end{equation}
 Then, if $smax < lmin$, the ray missed the box; otherwise, there is a hit. 
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Meshes
+%%%%%%%%%%%%%%%%%%%%%
+\section{Meshes}
+\subsection{Topology}
+Topology is concerned with the connectivity of a mesh. We will assume that our meshes are 2-manifolds. A 2-manifold is a surface for which the neighbourhood around any point can be flattened onto the plane. 
+
+\subsection{Watertight}
+When a mesh have no holes, we say that it is water tight. On a similar note, meshes are \textit{\textbf{stricter}} then soups. When we have a triangle soup, we impose no limits on the connectivity between the neighbouring triangles - it could be disjoint everywhere.
+
+\subsection{Geometry}
+Geometrically, a mesh is a piecewise planar surface. It is 
+\begin{itemize}
+	\item planar almost everywhere, 
+	\item except maybe at the edges where the triangles join. 
+\end{itemize}
+Very often, it is a piecewise planar approximation of a smooth surface. 
+
 
 
 
