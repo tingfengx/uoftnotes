@@ -145,14 +145,14 @@ Storage for $1024^2$ image (1 megapixel)
 	\item bitmap: 128KB, 
 	\item grayscale 8bpp: $1024^2 \times 8 / 8 / 1024^2 = $1MB, 
 	\item grayscale 16bpp: $1024^2 \times 16 / 8 / 1024^2 = $2MB, 
-	\item color 24bpp: 3MB, \footnote{24bpp means 24 bits per pixel, so 8 bits for each color: 0 - 255}
+	\item color 24bpp: 3MB, \footnote{24bpp means 24 bits per pixel, so 8 bits for each color: 0 - 255 unsigned 8bit int}
 	\item floating point high dynamic range color: 12MB
 \end{itemize}
 
 \subsubsection{Gamma Correction}
 On a display, the intensity is non-linear with respect to input intensity. The Gamma correction relationship is formularized as 
 \begin{equation}
-	\text{display intensity} = \text{max display intensity} a^\gamma
+	(\text{display intensity}) = (\text{max display intensity}) \,\, a^\gamma
 \end{equation}
 where $a$ is the amplitude from the image in the range in $[0, 1]$. The $\gamma$ is what we can set, usually in display settings. To set the right gamma correction, we need to find image amplitude that is equal to half of the display's brightness, then
 \begin{equation}
