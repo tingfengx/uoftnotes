@@ -632,6 +632,7 @@ Then, if $smax < lmin$, the ray missed the box; otherwise, there is a hit.
 % Meshes
 %%%%%%%%%%%%%%%%%%%%%
 \section{Meshes}
+\color{red}\textbf{I cannot figure out an effective way to present this chapter.} \color{black}
 \subsection{Topology}
 Topology is concerned with the connectivity of a mesh. We will assume that our meshes are 2-manifolds. A 2-manifold is a surface for which the neighbourhood around any point can be flattened onto the plane. 
 
@@ -645,6 +646,132 @@ Geometrically, a mesh is a piecewise planar surface. It is
 	\item except maybe at the edges where the triangles join. 
 \end{itemize}
 Very often, it is a piecewise planar approximation of a smooth surface. 
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Transformations, Shaders, and Rasterization
+%%%%%%%%%%%%%%%%%%%%%
+\section{Transformations, Shaders, and Rasterization}
+\subsection{Transformations}
+A transformation in graphics is also known as a deformation. It is defined as
+\begin{quotation}
+	A function $f$, mapping points / vectors to points / vectors. 
+\end{quotation}
+Simple transformations are usually invertible. Its applications include placing objects in a scene, composing an object from parts, and animating objects. 
+
+\subsubsection{Linear Transformations}
+The simplest kind of transformation is probably the well known linear transformation. A transformation map $T: \real^n \rightarrow \real^m$ is such that 
+\begin{equation}
+	\real^n \ni \bx \overset{T}{\rightarrow} \by \in \real^m  
+\end{equation}
+This is usually written in matrix form, where a matrix $A\in\mat{n}{m}$ is our operator for the transformation $T$.
+
+\subsubsection{2D-Scaling}
+Let $\bx = [x, y]^\top$ be the input, then
+\begin{equation}
+	A = \begin{bmatrix}
+		s_x & 0 \\ 
+		0 & s_y
+	\end{bmatrix}
+\end{equation}
+is called the scaling matrix, where $s_x, s_y$ specifies the scale in each of the two basis directions respectively. When the scaling factors are the same, we call this scaling uniform. 
+
+\subsubsection{2D-Rotation}
+The rotation matrix is 
+\begin{equation}
+	\text{rotate}(\phi) = \begin{bmatrix}
+		\cos \phi & - \sin \phi \\
+		\sin \phi & \cos \phi
+	\end{bmatrix}
+\end{equation}
+
+\subsubsection{2D-Shear}
+The shear transformation translate a box into a parallelogram of the same height. In some sense, it produces the same box punched from one direction at the top. It is defined as 
+\begin{equation}
+	A = \begin{bmatrix}
+		1 & s \\
+		0 & 1
+	\end{bmatrix}
+\end{equation}
+
+\subsubsection{2D Affine Translation\label{sec:2daffine}}
+Linear transformations that we mentioned above does not handle translation, which arguably would be quite common in computer graphics, especially when you want to move scene objects around. Notice that in a if we want transform something in $\real^2$, then we have been using 2 by 2 matrices up until now. But such sized matrices does not have enough room for us to put in some extra constant translation terms! We address this via going into a subspace in 3D. 
+
+Let $\bx = [x, y]^\top \in \real^2$ be the point that we wish to transform, then 
+\begin{equation}
+	\begin{bmatrix}
+		a_{11} & a_{12} & t_x \\
+		a_{21} & a_{22} & t_y \\
+		0      & 0      & 1 \\
+	\end{bmatrix} \begin{bmatrix}
+		x \\ y \\ 1
+	\end{bmatrix} = \begin{bmatrix}
+		a_{11}x + a_{12}y + t_x \\
+		a_{21}x + a_{22}y + t_y \\
+		1
+	\end{bmatrix}
+\end{equation}
+to obtain the result, we simply neglect the `1' to get back to 2D. 
+
+\subsubsection{Homogeneous Coordinates}
+It turns out that the the trick we used in Section \ref{sec:2daffine} is quite useful, especially when it comes to handling some complex transformations. This is called the Homogeneous Coordinates system. For a Cartesian point (2D) $[x, y]^\top$, it's respective Homogeneous Coordinate is $[x, y, 1]^\top$. On the other hand, the Homogeneous coordinate $[x, y, w]^\top$ is $[x/w, y/w]^\top$ in 2D cartesian. 
+
+Homogeneous points are equal if they represent the same Cartesian Point. For example 
+\begin{equation}
+	\begin{bmatrix}
+		4 & -6 & 2
+	\end{bmatrix}^\top \equiv \begin{bmatrix}
+		-6 & 9 & -3
+	\end{bmatrix}^\top
+\end{equation}
+
+The point $[x, y, w]^\top$ with $w = 0$ represents points at infinity, though with direction $[x, y]^\top$ and thus provide a natural representation for vectors, distinct from points in Homogeneous coordinates. To be extra concrete, $[x, y]^\top$ could be represented as $[x, y, 0]^\top$ to mean \textbf{a vector}, not a point. (i.e., direction only). 
+
+\subsubsection{Properties of 2D Transformations}
+The below items are such that the transformation mentioned earlier are a strict super set of transformations mentioned later. For example, the set of affine transformations is a strict subset of homography. 
+\begin{itemize}
+	\item These 3-by-3 transformations matrices, when invertible, are called homographies. Homography transformations \textbf{map lines to lines}. That is, for points that lie on a line, if we transform all these points, the result also lie on a line. 
+	\item Affine transformations preserve parallelism in lines, it is more restricted than homographies. Examples: shear, scale.
+	\item Conformal transformations, compared to affine transformations, further preserve the angle between lines. Examples: uniform scale.
+	\item Rigid transformations, compared to conformal transformations, additionally preserve the lengths of the line segments. Examples: rotate, translate.
+\end{itemize}
+
+\subsubsection{Homography: Mapping of Four Pts}
+A 3-by-3 homography transformation matrix has only a degree of freedom of 8. This is because the bottom right corner of this matrix must be the fixed value 1. Hence, we only need four points to solve for a homography matrix exactly. Each points will constitute two equations, resulting in a system of 8 equations. 
+
+\subsubsection{Affine Properties: Composition}
+Affine transforms are closed under composition. i.e. applying transformations $(A_1, \bt_1)$ and $(A_2, \bt_2)$ in sequence results in an overall affine transformation
+\begin{equation}
+	\bp' = A_2 (A_1 \bp + \bt_1) + \bt_2 = (A_2A_1) \bp + (A_2\bt_1 + \bt_2) 
+\end{equation}
+
+\subsubsection{Composing Transformations}
+Any sequence of linear transformations can be concatenated into a single 3-by-3 matrix. In general, however, mappings do not commute. Although in some special cases they do. 
+
+\subsubsection{Affine - Geometric View Point}
+From linear algebra, we know that a linear map is essentially a change of basis map. In this sense, affine transformations can be viewed a two step process: a change of basis, and a translation of origin. 
+
+\subsubsection{Transforming Tangents and Normals}
+Tangents can be written as the difference of points on an object. Say $\bt = \bp - \bq$. The transformed tangent is 
+\begin{equation}
+	\bt' = M\bp - M \bq = M(\bp - \bq) = M\bt
+\end{equation}
+So the tangent of the transformed object is just the tangent itself transformed. 
+
+On the other hand, surface normal $\bn' \neq M\bn$. Consider the case where we scale the object in $x$-direction. Say $\bn' = H\bn$, let's try solving for $H$. We know that 
+\begin{equation}
+	\bt'^\top \bn' = 0 \implies (M\bt)^\top (H\bn) = 0 \implies \bt^\top (M^\top H) \bn = 0
+\end{equation}
+remember that $\bt^\top \bn = 0$, so $H = (M^\top) ^{-1} \neq M$. 
+
+\subsection{Projections}
+\subsubsection{Camera Models}
+There are two major types of camera models, namely parallel projections and perspective projections.In parallel projection model, the light beams travel in the same direction, but with different origins. However, in perspective projection, the light beams travels through a same eye point origin, and they each go towards a different direction. 
+
+\subsubsection{Perspective Projection}
+
+
+
 
 
 
