@@ -769,6 +769,52 @@ remember that $\bt^\top \bn = 0$, so $H = (M^\top) ^{-1} \neq M$.
 There are two major types of camera models, namely parallel projections and perspective projections.In parallel projection model, the light beams travel in the same direction, but with different origins. However, in perspective projection, the light beams travels through a same eye point origin, and they each go towards a different direction. 
 
 \subsubsection{Perspective Projection}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{figs/perpective projection 3d}
+	\caption{Perspective Projection Transformation Matrix (In Homogeneous Coordinates). \textbf{Note:} There is a minor error in this figure, $\bp' = (x', y', z')$. \label{fig:perspective projection 3d}}
+\end{figure}
+Figure \ref{fig:perspective projection 3d} illustrates the matrix of perspective projection in homogeneous coordinates. Notice that 
+\begin{itemize}
+	\item $y' = y \frac{d}{z}$, 
+	\item $x' = x \frac{d}{z}$, 
+	\item $z' = d$. 
+\end{itemize}
+The insight here is that $p'$ and $p$ \textit{should be the same}\footnote{using the definition of `same' for homogeneous coordinates} because they are along the same direction vector. This means that the forth term in homogeneous coordinates here should be $w' = z/d$. To summarize, 
+\begin{equation}
+	\bp' = \begin{bmatrix}
+		x' \\ y' \\ z' \\ w'
+	\end{bmatrix} = \begin{bmatrix}
+		1 & 0 & 0 & 0 \\ 
+		0 & 1 & 0 & 0 \\
+		0 & 0 & 1 & 0 \\
+		0 & 0 & 1/d & 0
+	\end{bmatrix}\begin{bmatrix}
+		x \\ y \\ z \\ 1
+	\end{bmatrix} = \begin{bmatrix}
+		x \\ y \\ z \\ z/d
+	\end{bmatrix}
+\end{equation}
+
+\subsubsection{Canonical View Volume}
+\begin{itemize}
+	\item Projection transforms your geometry into a canonical view volume in normalized device coordinates. 
+	\item only $x$ and $y$ coordinates will be mapped onto the screen. 
+	\item $z$ direction will be almost useless, but used for depth test. 
+\end{itemize}
+
+\subsubsection{Projections Onto the Screen}
+... to be added later. In the mean time, this source summarizes this topic very well: \url{https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/projection-stage}
+
+\subsection{Modern Graphics Pipeline}
+
+
+
+
+
+
+
+
 
 
 
