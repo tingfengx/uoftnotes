@@ -40,7 +40,7 @@
    
 
 ## &#x1F4BB; Typesetting in \LaTeX
-Most of these notes are written with a software called TeXpad. Unfortunatelly, this brilliant application is only available on MacOS right now. But if you are using a Mac, I would highly recommend you try it out. (I was not paid by TeXpad in anyway lol. )
+Most of these notes were written with a software called TeXpad. Unfortunatelly, this brilliant application is only available on MacOS right now. But if you are using a Mac, I would highly recommend you try it out. (I was not paid by TeXpad in anyway lol. )
 <details>
   <summary><b>(Legacy) Compiling with Makefile</b></summary>
   
