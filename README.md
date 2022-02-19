@@ -5,6 +5,7 @@
 <!-- [![HitCount](http://hits.dwyl.io/tingfengx/uoftnotes.svg)](http://hits.dwyl.io/tingfengx/uoftnotes) -->
 
 ## &#x1F4DA; Notes for some of my courses at University of Toronto  
+continued at [tingfengx/uclanotes](https://tingfengx.com/uclanotes/)...  
   
   
 ### **Notes that have already finished typesetting:**  
