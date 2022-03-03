@@ -9,17 +9,18 @@ continued at [tingfengx/uclanotes](https://tingfengx.com/uclanotes/)...
   
   
 ### **Notes that have already finished typesetting:**  
+  
 #### &#128210; 2021 Winter
 - [**CSC317/CSC418**](https://tingfengx.github.io/uoftnotes/2021W/CSC317/computer_graphics.pdf). Identification and characterization of the objects manipulated in computer graphics, the operations possible on these objects, efficient algorithms to perform these operations, and interfaces to transform one type of object to another. Display devices, display data structures and procedures, graphical input, object modelling, transformations, illumination models, primary and secondary light effects; graphics packages and systems. Students, individually or in teams, implement graphical algorithms or entire graphics systems.
 #### &#x1F4D9; 2020 Fall 
 - [**CSC420**](https://tingfengx.github.io/uoftnotes/2020F/CSC420/image_understanding.pdf). Introduction to basic concepts in computer vision. Extraction of image features at multiple scales. Robust estimation of model parameters. Multiview geometry and reconstruction. Image motion estimation and tracking. Object recognition. Deep Learning approaches to vision. 
-  
+   
 #### &#x1F4D8; 2020 Winter  
 - [**STA414/CSC412**](https://tingfengx.github.io/uoftnotes/2020W/STA414/prob_ml.pdf). Probabilistic foundations of supervised and unsupervised learning methods such as naive Bayes, mixture models, and logistic regression. Gradient-based fitting of composite models including neural nets. Exact inference, stochastic variational inference, and Marko chain Monte Carlo. Variational autoencoders and generative adversarial networks.
 - [**CSC309**](https://tingfengx.github.io/uoftnotes/2020W/CSC309/web_prog.pdf), Programming on the Web. Notes on technical stuff covered in the course. 
 - [**ENV200**](https://tingfengx.github.io/uoftnotes/2020W/ENV200/env_sci.pdf), Science and Environment. Consisting of notes from the book and lecture slides. (**Archived**)
 - [**CSC413 (Archived)**](https://tingfengx.github.io/uoftnotes/2020W/CSC413/neural_net.pdf). An introduction to neural networks and deep learning. Backpropagation and automatic differentiation. Architectures: convolutional networks and recurrent neural networks. Methods for improving optimization and generalization. Neural networks for unsupervised and reinforcement learning.
-
+  
 #### &#x1f4d7; 2019 Fall  
 - [**CSC258**](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.pdf), Computer Organizations. [In plain HTML](https://tingfengx.github.io/uoftnotes/2019F/CSC258/computer_organizations.html). Topics include computer structures, machine languages, instruction execution, addressing techniques, and digital representation of data. Computer system organization, memory storage devices, and microprogramming. Block diagram circuit realizations of memory, control and arithmetic functions. 
    - [Midterm Pre-test checklist](https://tingfengx.github.io/uoftnotes/2019F/CSC258/midterm_checklist.pdf)  
@@ -67,8 +68,7 @@ $pdflatex = 'pdflatex -interaction=nonstopmode -shell-escape';
 </details>
 
 ## Template
-- [```./template/tingfengx.tex```](./template/tingfengx.tex) is the template that I use which contains my custom commands. 
-- Or checkout [```./template/tingfengx_article_minimal.tex```](./template/tingfengx_article_minimal.tex) if you want something minimal. 
+Check out my commands and templates at https://tingfengx.com/tex/. 
 
 ## License 
 [![licensebuttons by-nc-sa](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0)    
