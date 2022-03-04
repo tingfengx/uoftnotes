@@ -11,7 +11,8 @@ continued at [tingfengx/uclanotes](https://tingfengx.com/uclanotes/)...
 ### **Notes that have already finished typesetting:**  
   
 #### &#128210; 2021 Winter
-- [**CSC317/CSC418**](https://tingfengx.github.io/uoftnotes/2021W/CSC317/computer_graphics.pdf). Identification and characterization of the objects manipulated in computer graphics, the operations possible on these objects, efficient algorithms to perform these operations, and interfaces to transform one type of object to another. Display devices, display data structures and procedures, graphical input, object modelling, transformations, illumination models, primary and secondary light effects; graphics packages and systems. Students, individually or in teams, implement graphical algorithms or entire graphics systems.
+- [**CSC317/CSC418**](https://tingfengx.github.io/uoftnotes/2021W/CSC317/computer_graphics.pdf). Identification and characterization of the objects manipulated in computer graphics, the operations possible on these objects, efficient algorithms to perform these operations, and interfaces to transform one type of object to another. Display devices, display data structures and procedures, graphical input, object modelling, transformations, illumination models, primary and secondary light effects; graphics packages and systems. Students, individually or in teams, implement graphical algorithms or entire graphics systems.  
+    
 #### &#x1F4D9; 2020 Fall 
 - [**CSC420**](https://tingfengx.github.io/uoftnotes/2020F/CSC420/image_understanding.pdf). Introduction to basic concepts in computer vision. Extraction of image features at multiple scales. Robust estimation of model parameters. Multiview geometry and reconstruction. Image motion estimation and tracking. Object recognition. Deep Learning approaches to vision. 
    
